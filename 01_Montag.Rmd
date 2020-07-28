@@ -2,6 +2,6 @@
 
 Hier sehen wir die Startansicht wenn wir Stata öffnen:
 ```{r screenshot, fig.cap= "Startansicht Stata16", echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("./_images/01_Stata1.png")
+knitr::include_graphics("01_Stata1.png")
 ```
  
