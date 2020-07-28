@@ -25,9 +25,22 @@ library(Statamarkdown)
 library(ggeffects)
 ```
 
-# Herzlich Willkommen!
+# Herzlich Willkommen! {-}
 
-Hier entsteht das Begleitskript zum 40. Methodenseminar 
+Hier entsteht das Begleitskript zum 40. Methodenseminar "Uni- und bivariate Statistik mit Stata" von und mit Sebastian Schnettler und Andreas Filser vom 14.09 bis zum 18.09.2020. 
 
 Weitere Informationen zum Methodenseminar, den Link zur Anmeldung und alles weitere finden Sie [hier](https://training.gesis.org/?site=pDetails&child=full&pID=0x387DA6358EF341928F67355388570B76&subID=0x0BFDFA4D3CA1443E9E87F9FFDF305FB3)
 
+
+
+```{r, out.width='80%', fig.asp=.75, fig.align='center', echo=F}
+ggplot(data = tibble(x1 = runif(50,0,100),
+                     y1 = runif(50,0,10) + .5* x1/10 - 0.002 * x1^2/10,
+                     z1 = runif(50,0,100)  ), aes(x = x1, y = y1, color = z1)) +
+  theme_minimal() +
+  geom_point(size = 3) + 
+  scale_color_gradient(low = "#f7fcf0", high = "#084081", guide =F)
+```
+
+
+-----
