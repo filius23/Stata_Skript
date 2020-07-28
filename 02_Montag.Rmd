@@ -1,0 +1,1 @@
+# Arbeiten mit Datensätzen in Stata {#Stata2} 

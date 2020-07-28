@@ -31,7 +31,7 @@ Hier entsteht das Begleitskript zum 40. Methodenseminar "Uni- und bivariate Stat
 
 Weitere Informationen zum Methodenseminar, den Link zur Anmeldung und alles weitere finden Sie [hier](https://training.gesis.org/?site=pDetails&child=full&pID=0x387DA6358EF341928F67355388570B76&subID=0x0BFDFA4D3CA1443E9E87F9FFDF305FB3)
 
-
+Los geht's mit dem [Einstieg](#Stata1)
 
 ```{r, out.width='80%', fig.asp=.75, fig.align='center', echo=F}
 ggplot(data = tibble(x1 = runif(50,0,100),
