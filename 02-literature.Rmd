@@ -1,0 +1,47 @@
+# Einstieg
+```{r opts1, include=F}
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(echo = T)
+library(Statamarkdown)
+```
+So können wir einen Datensatz in Stata einlesen:
+```{stata load,collectcode=TRUE}
+use "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus 1980-2016\ZA4586_v1-0-0.dta" , clear
+```
+
+Mit `keep` können wir bestimmte Zeilen auswählen, `inrange(variable,von,bis)` ist eine hilfreiche Abkürzung dafür:
+
+```{stata keep,collectcode=TRUE}
+keep if year == 2010 & educ > 0 & inrange(educ,1,5)
+```
+
+
+```{stata miss1,collectcode=TRUE}
+keep if inc > 0 & work == 1
+```
+
+
+```{stata miss2,collectcode=TRUE}
+keep if age > 0
+```
+
+## Stata Output
+
+----
+```{stata model_S, echo = T,collectcode=TRUE}
+reg inc i.sex##c.age i.educ ,  noheader  
+```
+----
+
+----
+```{stata tab_S, echo = T,collectcode=TRUE}
+tab educ
+```
+----
+
+----
+```{r, eval = F}
+myimages2 <- c("D:/oCloud/RFS/images/101_engine_R.png","D:/oCloud/RFS/images/101_cockpit_rstudio2.png")
+knitr::include_graphics(myimages2)
+```
+----

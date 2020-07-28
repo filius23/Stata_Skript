@@ -1,0 +1,52 @@
+---
+title: "Markdown Stata testdrive"
+author: "Andreas Filser"
+output: html_document
+#   pdf_document:
+#     highlight: kate
+# header-includes:
+#   - \usepackage{xcolor,soul,mdframed,color,amsmath}
+---
+
+```{r setup, echo = F, message=F, warning = F}
+.libPaths("D:/R-library")
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(echo = T)
+library(tidyverse) # enthÃ¤lt auch readr & tidyr
+library(prediction)
+library(ggeffects)
+library(janitor)
+# install_github("hemken/Statamarkdown")
+library(Statamarkdown)
+library(ggeffects)
+```
+
+```{stata Sdata_prep,collectcode=TRUE}
+qui use "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus 1980-2016\ZA4586_v1-0-0.dta" , clear
+qui keep if year == 2010 & educ > 0 & inrange(educ,1,5) 
+qui keep if inc > 0 & work == 1
+qui keep if age > 0
+```
+
+## Stata Output
+
+----
+```{stata model_S, echo = T,collectcode=TRUE}
+reg inc i.sex##c.age i.educ ,  noheader  
+```
+----
+
+----
+```{stata tab_S, echo = T,collectcode=TRUE}
+tab educ
+```
+----
+
+----
+```{r, echo = F}
+myimages2 <- c("D:/oCloud/RFS/images/101_engine_R.png","D:/oCloud/RFS/images/101_cockpit_rstudio2.png")
+knitr::include_graphics(myimages2)
+```
+
+----
+

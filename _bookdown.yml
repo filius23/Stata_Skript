@@ -1,0 +1,5 @@
+book_filename: "Stata_Skript"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
