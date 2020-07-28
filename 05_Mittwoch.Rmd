@@ -1,1 +1,67 @@
 # Datenvisualisierung in Stata {#dataviz} 
+
+```{r setup5, echo = F, message=F, warning = F}
+.libPaths("D:/R-library")
+knitr::opts_chunk$set(collapse = TRUE)
+library(Statamarkdown)
+```
+
+```{stata Sdata_prep,collectcode=TRUE}
+use "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus 1980-2016\ZA4586_v1-0-0.dta" , clear
+```
+
+
+
+Für Grafiken gilt noch mehr als für alle anderen Aspekte in Stata: ausprobieren und sehen, was passiert! Nachdem in der Regel ja zumindest eine ungefähre Vorstellung existiert, wie die zu erstellende Grafik aussehen soll, sind Grafik-Gallerieren ein guter Startpunkt das eigene Trial & Error.
+
+Eine Übersicht zu allen verfügbaren Visualierungen inklusive Beispielbefehlen findet sich beispielsweise [hier](https://www.stata.com/support/faqs/graphics/gph/stata-graphs/) oder [hier](https://www.stata.com/features/example-graphs/).
+
+
+## Grafik-Syntax in Stata
+
+In Anlehung an die 
+
+Die Syntax für Graphiken in Stata unterscheidet sich vom dem bisher Kennengelernten. 
+
+(1)  Grafik-Befehle bestehen aus zwei Teilen: dem Befehl `graph` und der Angabe eines Grafik-Typs. Im folgenden Befehl ist `box` der Grafik-Typ:  `graph box rent`
+
+```{stata, echo=1, results="hide"}
+graph box inc, over(sex)
+graph export "boxplot.svg", replace
+```
+
+(2) Beim Grafik-Typ `twoway` muss der sog. Plottyp, spezifiziert werden. Bspw. für ein Streudiagramm mit dem Befehl `scatter`:
+`graph twoway scatter rent size` 
+
+(3) `twoway`-Grafiken  können übereinander gelegt werden. So können wir durch Kombination der Plottypen `scatter` und `lfit` ein Streudiagram mit einer Regressionsgerade[^51] kombinieren:
+ `graph twoway (scatter rent size) (lfit rent size)`
+Eine alternative Schreibweise mit `||` führt zur gleichen Grafik:
+`graph twoway scatter rent size || lfit rent size`
+ 
+[^51]: Was genau das ist, werden wir am Donnerstag genauer besprechen. Für den Moment nur so viel: die Gerade gibt den Zusammenhangstrend beider Variablen wieder.
+
+(4) Optionen von `graph` können Unteroptionen haben oder aus einer Liste von Optionen zusammengesetzt werden. Hier zwei Beispiele: `xlabel(#20, angle(90))` oder `xscale(range(0 300) reverse alt)`.
+
+(5) Das Aussehen von Grafiken wird durch sog. Grafik-Schemata beeinflusst. Die Änderung des Grafik-Schemas kann dieselbe Grafik mit einem deutlich anderen Aussehen erzeugen:
+`set scheme economist`
+`scatter rent size`
+```{r}
+
+```
+
+Das Schema `lean2` kann mit  `net install gr0002_3, from(http://www.stata-journal.com/software/sj4-3)` installiert werden
+
+Wenn Sie auf Ihrem Bildschirm das gleiche Grafik-Layout sehen wollen, wie das hier abgedruckte, müssen Sie das Grafik-Schema `s2mono` verwenden:
+`set scheme s2mono`
+Gefällt Ihnen das farbige Layout besser, können wor `s2color` oder ein anderes
+Grafik-Schema verwenden. Eine Übersicht zu 
+
+`help schemes`
+
+## Farben
+
+[Instagram](https://www.instagram.com/colours.cafe/)
+
+[ColorBrewer](https://colorbrewer2.org)
+
+[colorhex](https://www.color-hex.com/)

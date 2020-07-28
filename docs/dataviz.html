@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>GESIS Methodenseminar 2020</title>
+  <title>5 Datenvisualisierung in Stata | GESIS Methodenseminar 2020</title>
   <meta name="description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
   <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="GESIS Methodenseminar 2020" />
+  <meta property="og:title" content="5 Datenvisualisierung in Stata | GESIS Methodenseminar 2020" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="GESIS Methodenseminar 2020" />
+  <meta name="twitter:title" content="5 Datenvisualisierung in Stata | GESIS Methodenseminar 2020" />
   
   <meta name="twitter:description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="Stata1.html"/>
+<link rel="prev" href="desc2.html"/>
+<link rel="next" href="lin-reg.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -166,28 +166,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">GESIS Methodenseminar 2020</h1>
-<h2 class="subtitle"><em>Skript zur Stata-Übung</em></h2>
-<p class="author"><em>Andreas Filser</em></p>
-<p class="date"><em>Stand: 28.07.2020</em></p>
+<div id="dataviz" class="section level1">
+<h1><span class="header-section-number">5</span> Datenvisualisierung in Stata</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="dataviz.html#cb1-1"></a><span class="kw">use</span> <span class="st">&quot;D:\Studium</span><span class="ch">\01</span><span class="st">_Oldenburg\Lehre\Datensaetze\Allbus 1980-2016\ZA4586_v1-0-0.dta&quot;</span> , <span class="kw">clear</span></span>
+<span id="cb1-2"><a href="dataviz.html#cb1-2"></a></span>
+<span id="cb1-3"><a href="dataviz.html#cb1-3"></a></span>
+<span id="cb1-4"><a href="dataviz.html#cb1-4"></a>. <span class="kw">use</span> <span class="st">&quot;D:\Studium</span><span class="ch">\01</span><span class="st">_Oldenburg\Lehre\Datensaetze\Allbus 1980-2016\ZA4586_v1-&gt; .dta&quot;</span> , <span class="kw">clear</span></span>
+<span id="cb1-5"><a href="dataviz.html#cb1-5"></a>(ALLBUS Kumulation 1980-2016)</span></code></pre></div>
+<p>Für Grafiken gilt noch mehr als für alle anderen Aspekte in Stata: ausprobieren und sehen, was passiert! Nachdem in der Regel ja zumindest eine ungefähre Vorstellung existiert, wie die zu erstellende Grafik aussehen soll, sind Grafik-Gallerieren ein guter Startpunkt das eigene Trial &amp; Error.</p>
+<p>Eine Übersicht zu allen verfügbaren Visualierungen inklusive Beispielbefehlen findet sich beispielsweise <a href="https://www.stata.com/support/faqs/graphics/gph/stata-graphs/">hier</a> oder <a href="https://www.stata.com/features/example-graphs/">hier</a>.</p>
+<div id="grafik-syntax-in-stata" class="section level2">
+<h2><span class="header-section-number">5.1</span> Grafik-Syntax in Stata</h2>
+<p>In Anlehung an die</p>
+<p>Die Syntax für Graphiken in Stata unterscheidet sich vom dem bisher Kennengelernten.</p>
+<ol style="list-style-type: decimal">
+<li>Grafik-Befehle bestehen aus zwei Teilen: dem Befehl <code>graph</code> und der Angabe eines Grafik-Typs. Im folgenden Befehl ist <code>box</code> der Grafik-Typ: <code>graph box rent</code></li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="dataviz.html#cb2-1"></a><span class="kw">graph</span> box inc, <span class="bn">over</span>(sex)</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Beim Grafik-Typ <code>twoway</code> muss der sog. Plottyp, spezifiziert werden. Bspw. für ein Streudiagramm mit dem Befehl <code>scatter</code>:
+<code>graph twoway scatter rent size</code></p></li>
+<li><p><code>twoway</code>-Grafiken können übereinander gelegt werden. So können wir durch Kombination der Plottypen <code>scatter</code> und <code>lfit</code> ein Streudiagram mit einer Regressionsgerade<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> kombinieren:
+<code>graph twoway (scatter rent size) (lfit rent size)</code>
+Eine alternative Schreibweise mit <code>||</code> führt zur gleichen Grafik:
+<code>graph twoway scatter rent size || lfit rent size</code></p></li>
+</ol>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Optionen von <code>graph</code> können Unteroptionen haben oder aus einer Liste von Optionen zusammengesetzt werden. Hier zwei Beispiele: <code>xlabel(#20, angle(90))</code> oder <code>xscale(range(0 300) reverse alt)</code>.</p></li>
+<li><p>Das Aussehen von Grafiken wird durch sog. Grafik-Schemata beeinflusst. Die Änderung des Grafik-Schemas kann dieselbe Grafik mit einem deutlich anderen Aussehen erzeugen:
+<code>set scheme economist</code>
+<code>scatter rent size</code></p></li>
+</ol>
+<p>Das Schema <code>lean2</code> kann mit <code>net install gr0002_3, from(http://www.stata-journal.com/software/sj4-3)</code> installiert werden</p>
+<p>Wenn Sie auf Ihrem Bildschirm das gleiche Grafik-Layout sehen wollen, wie das hier abgedruckte, müssen Sie das Grafik-Schema <code>s2mono</code> verwenden:
+<code>set scheme s2mono</code>
+Gefällt Ihnen das farbige Layout besser, können wor <code>s2color</code> oder ein anderes
+Grafik-Schema verwenden. Eine Übersicht zu</p>
+<p><code>help schemes</code></p>
 </div>
-<div id="herzlich-willkommen" class="section level1 unnumbered">
-<h1>Herzlich Willkommen!</h1>
-<p>Hier entsteht das Begleitskript zum 40. Methodenseminar “Uni- und bivariate Statistik mit Stata” von und mit Sebastian Schnettler und Andreas Filser vom 14.09 bis zum 18.09.2020.</p>
-<p>Weitere Informationen zum Methodenseminar, den Link zur Anmeldung und alles weitere finden Sie <a href="https://training.gesis.org/?site=pDetails&amp;child=full&amp;pID=0x387DA6358EF341928F67355388570B76&amp;subID=0x0BFDFA4D3CA1443E9E87F9FFDF305FB3">hier</a></p>
-<p>Los geht’s mit dem <a href="Stata1.html#Stata1">Einstieg</a></p>
-<p><img src="_images/00_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
-<hr />
+<div id="farben" class="section level2">
+<h2><span class="header-section-number">5.2</span> Farben</h2>
+<p><a href="https://www.instagram.com/colours.cafe/">Instagram</a></p>
+<p><a href="https://colorbrewer2.org">ColorBrewer</a></p>
+<p><a href="https://www.color-hex.com/">colorhex</a></p>
 
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Was genau das ist, werden wir am Donnerstag genauer besprechen. Für den Moment nur so viel: die Gerade gibt den Zusammenhangstrend beider Variablen wieder.<a href="dataviz.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="Stata1.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="desc2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lin-reg.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
