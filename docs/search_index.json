@@ -1,6 +1,6 @@
 [
 ["index.html", "GESIS Methodenseminar 2020 Skript zur Stata-Übung Herzlich Willkommen!", " GESIS Methodenseminar 2020 Skript zur Stata-Übung Andreas Filser Stand: 28.07.2020 Herzlich Willkommen! Hier entsteht das Begleitskript zum 40. Methodenseminar “Uni- und bivariate Statistik mit Stata” von und mit Sebastian Schnettler und Andreas Filser vom 14.09 bis zum 18.09.2020. Weitere Informationen zum Methodenseminar, den Link zur Anmeldung und alles weitere finden Sie hier Los geht’s mit dem Einstieg "],
-["Stata1.html", "1 Einstieg in Stata", " 1 Einstieg in Stata Figure 1.1: Startansicht Stata16 "],
+["Stata1.html", "1 Einstieg in Stata", " 1 Einstieg in Stata Hier sehen wir die Startansicht wenn wir Stata öffnen: Figure 1.1: Startansicht Stata16 "],
 ["Stata2.html", "2 Arbeiten mit Datensätzen in Stata", " 2 Arbeiten mit Datensätzen in Stata "],
 ["desc1.html", "3 Deskriptive Statistik", " 3 Deskriptive Statistik "],
 ["desc2.html", "4 Mehr deskriptive Statistik", " 4 Mehr deskriptive Statistik "],

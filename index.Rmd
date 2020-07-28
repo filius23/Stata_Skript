@@ -34,7 +34,7 @@ Weitere Informationen zum Methodenseminar, den Link zur Anmeldung und alles weit
 Los geht's mit dem [Einstieg](#Stata1)
 
 ```{r index_illustration, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("./_images/00_scatter.png")
+knitr::include_graphics("00_scatter.png")
 ```
 
 
