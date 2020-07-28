@@ -29,7 +29,7 @@ library(ggeffects)
 
 -----
 
-Hier entsteht das Begleitskript zum Methodenseminar "Uni- und bivariate Statistik mit Stata" von und mit Sebastian Schnettler und Andreas Filser vom 14.09 bis zum 18.09.2020. 
+Hier entsteht das Begleitskript zum GESIS Methodenseminar "Uni- und bivariate Statistik mit Stata" von und mit Sebastian Schnettler und Andreas Filser vom 14.09 bis zum 18.09.2020. 
 
 Weitere Informationen zum Methodenseminar, den Link zur Anmeldung und alles weitere finden Sie [hier](https://training.gesis.org/?site=pDetails&child=full&pID=0x387DA6358EF341928F67355388570B76&subID=0x0BFDFA4D3CA1443E9E87F9FFDF305FB3)
 

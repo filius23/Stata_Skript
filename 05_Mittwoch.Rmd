@@ -42,7 +42,7 @@ knitr::include_graphics("05_box.png")
 Beim Grafik-Typ `twoway` muss der sog. Plottyp, spezifiziert werden. Bspw. für ein Streudiagramm mit dem Befehl `scatter`:
 
 ```{stata twoway1, echo=1, results="hide"}
-graph twoway scatter age inc
+graph twoway scatter inc age
 graph export "05_twoway1.png", replace
 ```
 
@@ -54,12 +54,12 @@ knitr::include_graphics("05_twoway1.png")
 
 ### Kombinieren von zwei twoway-Grafiken
 `twoway`-Grafiken  können übereinander gelegt werden. So können wir durch Kombination der Plottypen `scatter` und `lfit` ein Streudiagram mit einer Regressionsgerade[^51] kombinieren:
- `graph twoway (scatter age inc) (lfit age inc)`
+ `graph twoway (scatter inc age) (lfit inc age)`
 Eine alternative Schreibweise mit `||` führt zur gleichen Grafik:
-`graph twoway scatter age inc || lfit age inc`
+`graph twoway scatter inc age || lfit inc age`
 
 ```{stata twoway2, echo = F,results="hide",collectcode=TRUE}
-graph twoway (scatter age inc) (lfit age inc)
+graph twoway (scatter inc age) (lfit inc age)
 graph export "05_line_scatter.png", replace
 ```
 
@@ -73,10 +73,11 @@ knitr::include_graphics("05_line_scatter.png")
 Optionen von `graph` können Unteroptionen haben oder aus einer Liste von Optionen zusammengesetzt werden. Hier zwei Beispiele: `xlabel(#20, angle(90))` oder `xscale(range(0 300) reverse alt)`.
 
 ### Vorlagen
-Das Aussehen von Grafiken wird durch sog. Grafik-Schemata beeinflusst. Die Änderung des Grafik-Schemas kann dieselbe Grafik mit einem deutlich anderen Aussehen erzeugen.
+Das Aussehen von Grafiken wird durch sog. Grafik-Schemata beeinflusst. Beispielsweise wird mit `, scheme(sj)`  die Grafik nach den Vorlage des Stata Journals erstellt:
 
-```{stata theme, echo = F,results="hide",collectcode=TRUE}
-graph twoway (scatter age inc) (lfit age inc), scheme(economist)
+
+```{stata theme, echo = 1,results="hide",collectcode=TRUE}
+graph twoway (scatter inc age) (lfit inc age), scheme(sj)
 graph export "05_line_scatter_theme.png", replace
 ```
 
@@ -84,11 +85,15 @@ graph export "05_line_scatter_theme.png", replace
 knitr::include_graphics("05_line_scatter_theme.png")
 ```
 
+Mit `graph query, schemes` wird eine Liste der verfügbaren Schemata angezeigt.
+
+
 Weitere Optionen bieten zB die [blindschemes](https://www.stata-journal.com/article.html?article=gr0070) von Daniel Bischof oder [lean2](https://www.stata-journal.com/sjpdf.html?articlenum=gr0002) von Svend Juul. Beide müssen zunächst mit `ssc install blindschemes` bzw. `net install gr0002_3, from(http://www.stata-journal.com/software/sj4-3)` installiert werden und stehen dann zur Verfügung, zB 
 
 Hier noch ein Beispiel mit `plotplain` aus `blindschemes`:
-```{stata theme2, echo = F,results="hide",collectcode=TRUE}
-graph twoway (scatter age inc) (lfit age inc), scheme(plotplain)
+```{stata theme2, echo = 1,results="hide",collectcode=TRUE}
+graph twoway (scatter inc age) (lfit inc age), scheme(plotplain) ///
+  legend(cols(2) pos(6))
 graph export "05_line_scatter_theme2.png", replace
 ```
 
@@ -98,8 +103,9 @@ knitr::include_graphics("05_line_scatter_theme2.png")
 
 ...und `lean2`:
 
-```{stata theme3, echo = F,results="hide",collectcode=TRUE}
-graph twoway (scatter age inc) (lfit age inc), scheme(lean2)
+```{stata theme3, echo = 1,results="hide",collectcode=TRUE}
+graph twoway (scatter inc age) (lfit inc age), scheme(lean2) ///
+  legend(cols(2) pos(6))
 graph export "05_line_scatter_theme3.png", replace
 ```
 
@@ -120,14 +126,43 @@ knitr::include_graphics("05_line_scatter_theme3.png")
 [colorhex](https://www.color-hex.com/)
 
 
+### Subgruppen
+
+```{stata colored_scatter, echo=1, results="hide",collectcode=TRUE}
+graph twoway  ( scatter  inc age if sex == 1 , mc("0 62 81") msymbol(o) ) ( scatter  inc age if sex == 2 , mc("254 216 128") msymbol(o)  ) ///
+, scheme(lean2) legend(off) xtitle("")
+```
+```{stata colored_scatter_ex, echo=T, results="hide",collectcode=TRUE}
+graph export "05_bunter_scatter.png", replace
+```
+
+```{r colored_scatter_print, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("05_bunter_scatter.png")
+```
+
+
+```{stata colored_line_scatter, echo=1, results="hide",collectcode=TRUE}
+graph twoway  ( scatter  inc age if sex == 1 , mc("0 62 81") msymbol(o) ) ( scatter  inc age if sex == 2 , mc("254 216 128") msymbol(o)  ) ( lfit  inc age if sex == 1 , lc("black") ) ( lfit  inc age if sex == 2 , lc("orange") msymbol(o)  ) ///
+, scheme(lean2) legend(off) xtitle("")
+```
+```{stata colored_line_scatter_ex, echo=F, results="hide",collectcode=TRUE}
+graph export "05_bunter_line_scatter.png", replace
+```
+
+```{r colored_line_scatter_print, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("05_bunter_line_scatter.png")
+```
+
 ## Abschließendes Beispiel
-```{stata loadbp, echo=2, results="hide",collectcode=TRUE}
+```{stata loadbp, echo=T, results="hide",collectcode=TRUE}
 webuse bpwide, clear
 ```
 
-```{stata fancy_bpplot, echo=2, results="hide",collectcode=TRUE}
-graph box bp_before bp_after, over(agegrp) box(1, color("0 0 128"))  scheme(lean2) ytitle("{stSerif:Blutdruck}{superscript:XX}") 
-title("Blutdruckdaten ({it:fiktiv})") caption("{bf:Quelle}: Stata-Daten {it:bpwide}, ein fiktives Beispiel") 
+```{stata fancy_bpplot, eval=F, results="hide",collectcode=TRUE}
+graph box bp_before bp_after, over(agegrp) box(1, color("0 0 128"))  scheme(lean2) ytitle("{stSerif:Blutdruck}{superscript:XX}") title("Blutdruckdaten ({it:fiktiv})") caption("{bf:Quelle}: Stata-Daten {it:bpwide}, ein fiktives Beispiel") 
+```
+```{stata fancy_bpplot_export, echo=F, results="hide",collectcode=TRUE}
+graph box bp_before bp_after, over(agegrp) box(1, color("0 0 128"))  scheme(lean2) ytitle("{stSerif:Blutdruck}{superscript:XX}") title("Blutdruckdaten ({it:fiktiv})") caption("{bf:Quelle}: Stata-Daten {it:bpwide}, ein fiktives Beispiel") 
 graph export "05_boxplot.png", replace
 ```
 

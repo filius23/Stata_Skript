@@ -1,0 +1,12 @@
+
+
+Running D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Stata_Skript\profile.do ...
+
+
+. graph box inc
+
+. graph export "05_box.png", replace
+(file 05_box.png written in PNG format)
+
+. 
+end of do-file
