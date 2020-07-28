@@ -1,6 +1,6 @@
 # Einstieg in Stata {#Stata1}
 
-```{r index_illustration, echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
+```{r , fig.cap= "Startansicht Stata16", echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
 knitr::include_graphics("./_images/01_Stata1.png")
 ```
  
