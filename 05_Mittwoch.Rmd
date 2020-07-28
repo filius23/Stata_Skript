@@ -132,7 +132,7 @@ knitr::include_graphics("05_line_scatter_theme3.png")
 graph twoway  ( scatter  inc age if sex == 1 , mc("0 62 81") msymbol(o) ) ( scatter  inc age if sex == 2 , mc("254 216 128") msymbol(o)  ) ///
 , scheme(lean2) legend(off) xtitle("")
 ```
-```{stata colored_scatter_ex, echo=T, results="hide",collectcode=TRUE}
+```{stata colored_scatter_ex, echo=F, results="hide",collectcode=TRUE}
 graph export "05_bunter_scatter.png", replace
 ```
 

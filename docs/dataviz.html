@@ -181,18 +181,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-2"><a href="dataviz.html#cb1-2"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt; 0</span>
 <span id="cb1-3"><a href="dataviz.html#cb1-3"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span>
 <span id="cb1-4"><a href="dataviz.html#cb1-4"></a><span class="kw">sample</span> 25 <span class="co">//25% Stichprobe aus den Daten -&gt; läuft schneller</span></span>
-<span id="cb1-5"><a href="dataviz.html#cb1-5"></a></span>
+<span id="cb1-5"><a href="dataviz.html#cb1-5"></a>(385 <span class="fu">real</span> changes made, 385 to <span class="fu">missing</span>)</span>
 <span id="cb1-6"><a href="dataviz.html#cb1-6"></a></span>
-<span id="cb1-7"><a href="dataviz.html#cb1-7"></a>. <span class="kw">use</span> <span class="st">&quot;D:\Studium</span><span class="ch">\01</span><span class="st">_Oldenburg\Lehre\Datensaetze\Allbus_2018.dta&quot;</span>, cl(ALLBUS 2018)</span>
+<span id="cb1-7"><a href="dataviz.html#cb1-7"></a>(5 <span class="fu">real</span> changes made, 5 to <span class="fu">missing</span>)</span>
 <span id="cb1-8"><a href="dataviz.html#cb1-8"></a></span>
-<span id="cb1-9"><a href="dataviz.html#cb1-9"></a>. <span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt; 0</span>
-<span id="cb1-10"><a href="dataviz.html#cb1-10"></a>(385 <span class="fu">real</span> changes made, 385 to <span class="fu">missing</span>)</span>
-<span id="cb1-11"><a href="dataviz.html#cb1-11"></a></span>
-<span id="cb1-12"><a href="dataviz.html#cb1-12"></a>. <span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span>
-<span id="cb1-13"><a href="dataviz.html#cb1-13"></a>(5 <span class="fu">real</span> changes made, 5 to <span class="fu">missing</span>)</span>
-<span id="cb1-14"><a href="dataviz.html#cb1-14"></a></span>
-<span id="cb1-15"><a href="dataviz.html#cb1-15"></a>. <span class="kw">sample</span> 25 <span class="co">//25% Stichprobe aus den Daten -&gt; läuft schneller</span></span>
-<span id="cb1-16"><a href="dataviz.html#cb1-16"></a>(2,608 observations deleted)</span></code></pre></div>
+<span id="cb1-9"><a href="dataviz.html#cb1-9"></a>(2,608 observations deleted)</span></code></pre></div>
 <p>Für Grafiken gilt noch mehr als für alle anderen Aspekte in Stata: ausprobieren und sehen, was passiert! Nachdem in der Regel ja zumindest eine ungefähre Vorstellung existiert, wie die zu erstellende Grafik aussehen soll, sind Grafik-Gallerieren ein guter Startpunkt das eigene Trial &amp; Error.</p>
 <p>Eine Übersicht zu allen verfügbaren Visualierungen inklusive Beispielbefehlen findet sich beispielsweise <a href="https://www.stata.com/support/faqs/graphics/gph/stata-graphs/">hier</a> oder <a href="https://www.stata.com/features/example-graphs/">hier</a>.</p>
 <div id="grafik-syntax-in-stata" class="section level2">
@@ -248,16 +241,15 @@ Eine alternative Schreibweise mit <code>||</code> führt zur gleichen Grafik:
 <div id="subgruppen" class="section level3">
 <h3><span class="header-section-number">5.1.7</span> Subgruppen</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="dataviz.html#cb7-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 1 , mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 2 , mc(<span class="st">&quot;254 216 128&quot;</span>) <span class="bn">msymbol</span>(o)  ) <span class="co">///</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="dataviz.html#cb8-1"></a><span class="kw">graph</span> <span class="kw">export</span> <span class="st">&quot;05_bunter_scatter.png&quot;</span>, <span class="kw">replace</span></span></code></pre></div>
 <p><img src="05_bunter_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="dataviz.html#cb9-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 1 , mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 2 , mc(<span class="st">&quot;254 216 128&quot;</span>) <span class="bn">msymbol</span>(o)  ) ( <span class="kw">lfit</span>  inc age <span class="kw">if</span> sex == 1 , lc(<span class="st">&quot;black&quot;</span>) ) ( <span class="kw">lfit</span>  inc age <span class="kw">if</span> sex == 2 , lc(<span class="st">&quot;orange&quot;</span>) <span class="bn">msymbol</span>(o)  ) <span class="co">///</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="dataviz.html#cb8-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 1 , mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 2 , mc(<span class="st">&quot;254 216 128&quot;</span>) <span class="bn">msymbol</span>(o)  ) ( <span class="kw">lfit</span>  inc age <span class="kw">if</span> sex == 1 , lc(<span class="st">&quot;black&quot;</span>) ) ( <span class="kw">lfit</span>  inc age <span class="kw">if</span> sex == 2 , lc(<span class="st">&quot;orange&quot;</span>) <span class="bn">msymbol</span>(o)  ) <span class="co">///</span></span></code></pre></div>
 <p><img src="05_bunter_line_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="abschließendes-beispiel" class="section level2">
 <h2><span class="header-section-number">5.2</span> Abschließendes Beispiel</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="dataviz.html#cb10-1"></a><span class="kw">webuse</span> bpwide, <span class="kw">clear</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="dataviz.html#cb11-1"></a><span class="kw">graph</span> box bp_before bp_after, <span class="bn">over</span>(agegrp) box(1, <span class="kw">color</span>(<span class="st">&quot;0 0 128&quot;</span>))  <span class="dv">scheme</span>(lean2) <span class="bn">ytitle</span>(<span class="st">&quot;{stSerif:Blutdruck}{superscript:XX}&quot;</span>) <span class="bn">title</span>(<span class="st">&quot;Blutdruckdaten ({it:fiktiv})&quot;</span>) <span class="bn">caption</span>(<span class="st">&quot;{bf:Quelle}: Stata-Daten {it:bpwide}, ein fiktives Beispiel&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="dataviz.html#cb9-1"></a><span class="kw">webuse</span> bpwide, <span class="kw">clear</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="dataviz.html#cb10-1"></a><span class="kw">graph</span> box bp_before bp_after, <span class="bn">over</span>(agegrp) box(1, <span class="kw">color</span>(<span class="st">&quot;0 0 128&quot;</span>))  <span class="dv">scheme</span>(lean2) <span class="bn">ytitle</span>(<span class="st">&quot;{stSerif:Blutdruck}{superscript:XX}&quot;</span>) <span class="bn">title</span>(<span class="st">&quot;Blutdruckdaten ({it:fiktiv})&quot;</span>) <span class="bn">caption</span>(<span class="st">&quot;{bf:Quelle}: Stata-Daten {it:bpwide}, ein fiktives Beispiel&quot;</span>) </span></code></pre></div>
 <p><img src="05_boxplot.png" width="80%" style="display: block; margin: auto;" /></p>
 
 </div>
