@@ -69,8 +69,6 @@ knitr::include_graphics("05_line_scatter.png")
  
 [^51]: Was genau das ist, werden wir am Donnerstag genauer besprechen. Für den Moment nur so viel: die Gerade gibt den Zusammenhangstrend beider Variablen wieder.
 
-### Optionen
-Optionen von `graph` können Unteroptionen haben oder aus einer Liste von Optionen zusammengesetzt werden. Hier zwei Beispiele: `xlabel(#20, angle(90))` oder `xscale(range(0 300) reverse alt)`.
 
 ### Vorlagen
 Das Aussehen von Grafiken wird durch sog. Grafik-Schemata beeinflusst. Beispielsweise wird mit `, scheme(sj)`  die Grafik nach den Vorlage des Stata Journals erstellt:
@@ -88,7 +86,7 @@ knitr::include_graphics("05_line_scatter_theme.png")
 Mit `graph query, schemes` wird eine Liste der verfügbaren Schemata angezeigt.
 
 
-Weitere Optionen bieten zB die [blindschemes](https://www.stata-journal.com/article.html?article=gr0070) von Daniel Bischof oder [lean2](https://www.stata-journal.com/sjpdf.html?articlenum=gr0002) von Svend Juul. Beide müssen zunächst mit `ssc install blindschemes` bzw. `net install gr0002_3, from(http://www.stata-journal.com/software/sj4-3)` installiert werden und stehen dann zur Verfügung, zB 
+Weitere Optionen bieten zB die [blindschemes](https://www.stata-journal.com/article.html?article=gr0070) von Daniel Bischof oder [lean2](https://www.stata-journal.com/sjpdf.html?articlenum=gr0002) von Svend Juul. Beide müssen zunächst mit `ssc install blindschemes` bzw. `net install gr0002_3, from("http://www.stata-journal.com/software/sj4-3")` installiert werden und stehen dann zur Verfügung, zB 
 
 Hier noch ein Beispiel mit `plotplain` aus `blindschemes`:
 ```{stata theme2, echo = 1,results="hide",collectcode=TRUE}
@@ -113,11 +111,30 @@ graph export "05_line_scatter_theme3.png", replace
 knitr::include_graphics("05_line_scatter_theme3.png")
 ```
 
- Eine Übersicht zu 
 
-`help schemes`
+### Optionen
+
+Darüber hinaus kann die Grafik mit Hilfe von spezifischen Optionen angepasst werden. 
+
++ `legend`
+  + `pos`
+  + labeln
+
++ Achsenoptionen `xlabel`, `ylabel`, `xtitle`
+
++ `over`
+
++ Darstellungstypen
+  + Symbole/Linientypen
+  +
+
++ Farboptionen `mcolor`, `lcolor`, `graphregion(color(orange))` 
+
+Optionen von `graph` können Unteroptionen haben oder aus einer Liste von Optionen zusammengesetzt werden. Hier zwei Beispiele: `xlabel(#20, angle(90))` oder `xscale(range(0 300) reverse alt)`.
 
 ### Farben
+
+Obwohl es um Darstellungen geht, haben wir noch sehr wenig über Farben gesprochen. 
 
 [Instagram](https://www.instagram.com/colours.cafe/)
 
@@ -153,7 +170,7 @@ graph export "05_bunter_line_scatter.png", replace
 knitr::include_graphics("05_bunter_line_scatter.png")
 ```
 
-## Abschließendes Beispiel
+## Abschließende Beispiele
 ```{stata loadbp, echo=T, results="hide",collectcode=TRUE}
 webuse bpwide, clear
 ```
@@ -170,4 +187,12 @@ graph export "05_boxplot.png", replace
 knitr::include_graphics("05_boxplot.png")
 ```
 
+Auch die Darstellung auf der Startseite dieses Skripts wurde mit als Stata-Grafik erstellt:
 
+```{stata titelbild, eval = F}
+graph twoway  (lfit bp_before bp_after) ( scatter bp_before bp_after if agegrp == 1, mc("0 62 81") msymbol(o) ) ( scatter bp_before bp_after if agegrp == 2, mc("0 125 186") msymbol(o)  ) ( scatter bp_before bp_after if agegrp == 3, mc("214 210 196") msymbol(o)  ), scheme(lean2) legend(off) xtitle("")
+```
+
+```{r titelbild_include, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("00_scatter.png")
+```
