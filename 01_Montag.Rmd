@@ -1,7 +1,73 @@
 # Einstieg in Stata {#Stata1}
 
-Hier sehen wir die Startansicht wenn wir Stata öffnen:
-```{r screenshot, fig.cap= "Startansicht Stata16", echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("01_Stata1.png")
+```{r setup1, echo = F, message=F, warning = F}
+.libPaths("D:/R-library")
+knitr::opts_chunk$set(collapse = TRUE)
+library(Statamarkdown)
 ```
- 
+
+Hier sehen wir die Startansicht von Stata:
+```{r screenshot, fig.cap= "Startansicht Stata16", echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("01_Stata2.png")
+```
+Die Standardansicht von Stata besteht aus mehreren Fenstern:
+
+(1) Kommandos/Befehle
+(2) Ergebnisse
+(3) Variablenübersicht
+(4) Übersicht zu den geladenen Daten
+(5) Befehlshistorie
+
+
+## Taschenrechner
+
+In das Befehlsfeld (1) können wir Kommandos eingeben, z.B. eine Berechnung durchführen. Dazu geben wir zunächst den Befehl `display` und dann die gewünschte Rechnung ein und drücken dann Enter. Der Befehl wird dann im Ergebnisfenster gespiegelt und darunter das Ergebnis ausgegeben:
+
+```{r screenshot_tr, echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("01_Stata3b.png")
+```
+Eingaben und Ergebnisse werden im weiteren Skript so dargestellt:
+```{stata s_input, cleanlog=FALSE, echo=FALSE}
+dis 3 + 12
+dis sqrt(9)
+dis 3^3
+dis 1/182
+```
+
+## DoFile Editor
+
+Zwar funktioniert die direkte Eingabe in das Befehlsfeld, allerdings werden wir im Laufe dieser Woche sehr viel längere und komplexere Befehlsfolgen kennenlernen. Für solche Anwendungen werden in Stata sog. DoFiles angelegt. Darin können Befehle entworfen und für eine spätere Verwendung abgespeichert werden. Um ein DoFile zu öffnen geben wir entweder `doedit` in das Befehlsfeld ein oder klicken auf das Feld "New Do-file-Editor" rechts oben:
+
+```{r screenshot_dof_open, echo = F,out.width = "40%",fig.height= 3.5, fig.align="center"}
+knitr::include_graphics("01_Stata_openDO.png")
+```
+Es öffnet sich ein neues Fenster:
+```{r screenshot_dof_opened, echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("01_Stata5_dofile.png")
+```
+
+In diesem sog. Do-File-Editor können wir Befehle entwerfen. Wenn wir diese dann durchführen möchten, markieren wir die entsprechenden Zeilen und drücken STRG + D. Die ausgeführten Befehle werden wieder im Ergebnisfenster gespiegelt und jeweils darunter die Ergebnisse angezeigt:
+```{r screenshot_dof_run, echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("01_Stata7_dofile_done2.png")
+```
+
+Das DoFile können wir speichern, um es später wieder aufzurufen. Wichtig ist dabei, der gespeicherten Datei die Endung ".do" zu geben, also zum Beispiel "01_Montag.do". Diese DoFiles können dann einfach ausgetauscht werden, um später daran weiter zu arbeiten oder Analysen für Dritte nachvollziehbar zu machen.
+```{r save1,echo = F, out.height="80%",out.width="80%", fig.align="center"}
+knitr::include_graphics("01_Stata7_dofile_done_save.png")
+```
+
+## Datensätze 
+
+Das ist aber alles soweit sehr unspektulär - es gibt schönere und günstigere Taschenrechner. Die eigentliche Stärke von Stata ist aber die Analyse von Datensätzen. Diese müssen zunächst eingelesen werden. Im einfachsten Fall liegen die Daten als Stata-Datensatz (mit der Endung .dta) vor und wir können die Daten wie folgt einlesen:
+
+```{stata readin, eval = F}
+cd "C:/Daten/...."
+use "Allbus_2018.dta", clear
+```
+
+
+
+
+
+
+

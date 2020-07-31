@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1 Einstieg in Stata | GESIS Methodenseminar 2020</title>
   <meta name="description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
-  <meta name="generator" content="bookdown 0.19 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1 Einstieg in Stata | GESIS Methodenseminar 2020" />
   <meta property="og:type" content="book" />
@@ -49,6 +49,7 @@
 
 
 
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
@@ -133,7 +134,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Herzlich Willkommen!</a></li>
-<li class="chapter" data-level="1" data-path="Stata1.html"><a href="Stata1.html"><i class="fa fa-check"></i><b>1</b> Einstieg in Stata</a></li>
+<li class="chapter" data-level="1" data-path="Stata1.html"><a href="Stata1.html"><i class="fa fa-check"></i><b>1</b> Einstieg in Stata</a><ul>
+<li class="chapter" data-level="1.1" data-path="Stata1.html"><a href="Stata1.html#taschenrechner"><i class="fa fa-check"></i><b>1.1</b> Taschenrechner</a></li>
+<li class="chapter" data-level="1.2" data-path="Stata1.html"><a href="Stata1.html#dofile-editor"><i class="fa fa-check"></i><b>1.2</b> DoFile Editor</a></li>
+<li class="chapter" data-level="1.3" data-path="Stata1.html"><a href="Stata1.html#datensätze"><i class="fa fa-check"></i><b>1.3</b> Datensätze</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="Stata2.html"><a href="Stata2.html"><i class="fa fa-check"></i><b>2</b> Arbeiten mit Datensätzen in Stata</a></li>
 <li class="chapter" data-level="3" data-path="desc1.html"><a href="desc1.html"><i class="fa fa-check"></i><b>3</b> Deskriptive Statistik</a></li>
 <li class="chapter" data-level="4" data-path="desc2.html"><a href="desc2.html"><i class="fa fa-check"></i><b>4</b> Mehr deskriptive Statistik</a></li>
@@ -142,12 +147,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.1.1" data-path="dataviz.html"><a href="dataviz.html#aufbau"><i class="fa fa-check"></i><b>5.1.1</b> Aufbau</a></li>
 <li class="chapter" data-level="5.1.2" data-path="dataviz.html"><a href="dataviz.html#twoway"><i class="fa fa-check"></i><b>5.1.2</b> twoway</a></li>
 <li class="chapter" data-level="5.1.3" data-path="dataviz.html"><a href="dataviz.html#kombinieren-von-zwei-twoway-grafiken"><i class="fa fa-check"></i><b>5.1.3</b> Kombinieren von zwei twoway-Grafiken</a></li>
-<li class="chapter" data-level="5.1.4" data-path="dataviz.html"><a href="dataviz.html#optionen"><i class="fa fa-check"></i><b>5.1.4</b> Optionen</a></li>
-<li class="chapter" data-level="5.1.5" data-path="dataviz.html"><a href="dataviz.html#vorlagen"><i class="fa fa-check"></i><b>5.1.5</b> Vorlagen</a></li>
+<li class="chapter" data-level="5.1.4" data-path="dataviz.html"><a href="dataviz.html#vorlagen"><i class="fa fa-check"></i><b>5.1.4</b> Vorlagen</a></li>
+<li class="chapter" data-level="5.1.5" data-path="dataviz.html"><a href="dataviz.html#optionen"><i class="fa fa-check"></i><b>5.1.5</b> Optionen</a></li>
 <li class="chapter" data-level="5.1.6" data-path="dataviz.html"><a href="dataviz.html#farben"><i class="fa fa-check"></i><b>5.1.6</b> Farben</a></li>
 <li class="chapter" data-level="5.1.7" data-path="dataviz.html"><a href="dataviz.html#subgruppen"><i class="fa fa-check"></i><b>5.1.7</b> Subgruppen</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="dataviz.html"><a href="dataviz.html#abschließendes-beispiel"><i class="fa fa-check"></i><b>5.2</b> Abschließendes Beispiel</a></li>
+<li class="chapter" data-level="5.2" data-path="dataviz.html"><a href="dataviz.html#abschließende-beispiele"><i class="fa fa-check"></i><b>5.2</b> Abschließende Beispiele</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="lin-reg.html"><a href="lin-reg.html"><i class="fa fa-check"></i><b>6</b> Regression</a></li>
 <li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a></li>
@@ -176,14 +181,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="Stata1" class="section level1">
 <h1><span class="header-section-number">1</span> Einstieg in Stata</h1>
-Hier sehen wir die Startansicht wenn wir Stata öffnen:
+Hier sehen wir die Startansicht von Stata:
 <div class="figure" style="text-align: center"><span id="fig:screenshot"></span>
-<img src="01_Stata1.png" alt="Startansicht Stata16" width="90%" />
+<img src="01_Stata2.png" alt="Startansicht Stata16" width="90%" />
 <p class="caption">
 Figure 1.1: Startansicht Stata16
 </p>
 </div>
+<p>Die Standardansicht von Stata besteht aus mehreren Fenstern:</p>
+<ol style="list-style-type: decimal">
+<li>Kommandos/Befehle</li>
+<li>Ergebnisse</li>
+<li>Variablenübersicht</li>
+<li>Übersicht zu den geladenen Daten</li>
+<li>Befehlshistorie</li>
+</ol>
+<div id="taschenrechner" class="section level2">
+<h2><span class="header-section-number">1.1</span> Taschenrechner</h2>
+<p>In das Befehlsfeld (1) können wir Kommandos eingeben, z.B. eine Berechnung durchführen. Dazu geben wir zunächst den Befehl <code>display</code> und dann die gewünschte Rechnung ein und drücken dann Enter. Der Befehl wird dann im Ergebnisfenster gespiegelt und darunter das Ergebnis ausgegeben:</p>
+<p><img src="01_Stata3b.png" width="90%" style="display: block; margin: auto;" />
+Eingaben und Ergebnisse werden im weiteren Skript so dargestellt:</p>
+<pre><code>. dis 3 +15
 
+. dis sqrt(9)
+3
+
+. dis 3^3
+27
+
+. dis 1/182
+.00549451</code></pre>
+</div>
+<div id="dofile-editor" class="section level2">
+<h2><span class="header-section-number">1.2</span> DoFile Editor</h2>
+<p>Zwar funktioniert die direkte Eingabe in das Befehlsfeld, allerdings werden wir im Laufe dieser Woche sehr viel längere und komplexere Befehlsfolgen kennenlernen. Für solche Anwendungen werden in Stata sog. DoFiles angelegt. Darin können Befehle entworfen und für eine spätere Verwendung abgespeichert werden. Um ein DoFile zu öffnen geben wir entweder <code>doedit</code> in das Befehlsfeld ein oder klicken auf das Feld “New Do-file-Editor” rechts oben:</p>
+<p><img src="01_Stata_openDO.png" width="40%" style="display: block; margin: auto;" />
+Es öffnet sich ein neues Fenster:
+<img src="01_Stata5_dofile.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>In diesem sog. Do-File-Editor können wir Befehle entwerfen. Wenn wir diese dann durchführen möchten, markieren wir die entsprechenden Zeilen und drücken STRG + D. Die ausgeführten Befehle werden wieder im Ergebnisfenster gespiegelt und jeweils darunter die Ergebnisse angezeigt:
+<img src="01_Stata7_dofile_done2.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>Das DoFile können wir speichern, um es später wieder aufzurufen. Wichtig ist dabei, der gespeicherten Datei die Endung “.do” zu geben, also zum Beispiel “01_Montag.do”. Diese DoFiles können dann einfach ausgetauscht werden, um später daran weiter zu arbeiten oder Analysen für Dritte nachvollziehbar zu machen.
+<img src="01_Stata7_dofile_done_save.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="datensätze" class="section level2">
+<h2><span class="header-section-number">1.3</span> Datensätze</h2>
+<p>Das ist aber alles soweit sehr unspektulär - es gibt schönere und günstigere Taschenrechner. Die eigentliche Stärke von Stata ist aber die Analyse von Datensätzen. Diese müssen zunächst eingelesen werden. Im einfachsten Fall liegen die Daten als Stata-Datensatz (mit der Endung .dta) vor und wir können die Daten wie folgt einlesen:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="Stata1.html#cb2-1"></a>cd <span class="st">&quot;C:/Daten/....&quot;</span></span>
+<span id="cb2-2"><a href="Stata1.html#cb2-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span></code></pre></div>
+
+</div>
 </div>
             </section>
 
