@@ -16,6 +16,7 @@ description: "Dies ist das Begleitskript für die Stata-Übungen zum GESIS Metho
 if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library")  # set library
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(echo = T)
+# knitr::opts_chunk$set(dpi=400)
 library(tidyverse) # enthÃ¤lt auch readr & tidyr
 library(prediction)
 library(ggeffects)

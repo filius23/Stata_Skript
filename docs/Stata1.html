@@ -136,8 +136,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Herzlich Willkommen!</a></li>
 <li class="chapter" data-level="1" data-path="Stata1.html"><a href="Stata1.html"><i class="fa fa-check"></i><b>1</b> Einstieg in Stata</a><ul>
 <li class="chapter" data-level="1.1" data-path="Stata1.html"><a href="Stata1.html#taschenrechner"><i class="fa fa-check"></i><b>1.1</b> Taschenrechner</a></li>
-<li class="chapter" data-level="1.2" data-path="Stata1.html"><a href="Stata1.html#dofile-editor"><i class="fa fa-check"></i><b>1.2</b> DoFile Editor</a></li>
-<li class="chapter" data-level="1.3" data-path="Stata1.html"><a href="Stata1.html#datensätze"><i class="fa fa-check"></i><b>1.3</b> Datensätze</a></li>
+<li class="chapter" data-level="1.2" data-path="Stata1.html"><a href="Stata1.html#darstellung-in-diesem-skript"><i class="fa fa-check"></i><b>1.2</b> Darstellung in diesem Skript</a></li>
+<li class="chapter" data-level="1.3" data-path="Stata1.html"><a href="Stata1.html#dofile-editor"><i class="fa fa-check"></i><b>1.3</b> DoFile Editor</a></li>
+<li class="chapter" data-level="1.4" data-path="Stata1.html"><a href="Stata1.html#datensätze-laden"><i class="fa fa-check"></i><b>1.4</b> Datensätze laden</a></li>
+<li class="chapter" data-level="1.5" data-path="Stata1.html"><a href="Stata1.html#überblicksbefehle"><i class="fa fa-check"></i><b>1.5</b> Überblicksbefehle</a></li>
+<li class="chapter" data-level="1.6" data-path="Stata1.html"><a href="Stata1.html#U1"><i class="fa fa-check"></i><b>1.6</b> Übungen</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="Stata2.html"><a href="Stata2.html"><i class="fa fa-check"></i><b>2</b> Arbeiten mit Datensätzen in Stata</a></li>
 <li class="chapter" data-level="3" data-path="desc1.html"><a href="desc1.html"><i class="fa fa-check"></i><b>3</b> Deskriptive Statistik</a></li>
@@ -199,35 +202,111 @@ Figure 1.1: Startansicht Stata16
 <div id="taschenrechner" class="section level2">
 <h2><span class="header-section-number">1.1</span> Taschenrechner</h2>
 <p>In das Befehlsfeld (1) können wir Kommandos eingeben, z.B. eine Berechnung durchführen. Dazu geben wir zunächst den Befehl <code>display</code> und dann die gewünschte Rechnung ein und drücken dann Enter. Der Befehl wird dann im Ergebnisfenster gespiegelt und darunter das Ergebnis ausgegeben:</p>
-<p><img src="01_Stata3b.png" width="90%" style="display: block; margin: auto;" />
-Eingaben und Ergebnisse werden im weiteren Skript so dargestellt:</p>
-<pre><code>. dis 3 +15
-
-. dis sqrt(9)
-3
-
-. dis 3^3
-27
-
-. dis 1/182
-.00549451</code></pre>
+<p><img src="01_Stata3b.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>Wir können <code>display</code> auch mit <code>dis</code> abkürzen.</p>
+</div>
+<div id="darstellung-in-diesem-skript" class="section level2">
+<h2><span class="header-section-number">1.2</span> Darstellung in diesem Skript</h2>
+<p>Eingaben und Ergebnisse werden im weiteren Skript so dargestellt:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="Stata1.html#cb1-1"></a><span class="kw">display</span> 3 + 12</span></code></pre></div>
+<pre><code>15</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="Stata1.html#cb3-1"></a><span class="kw">display</span> <span class="fu">sqrt</span>(9)</span></code></pre></div>
+<pre><code>3</code></pre>
 </div>
 <div id="dofile-editor" class="section level2">
-<h2><span class="header-section-number">1.2</span> DoFile Editor</h2>
-<p>Zwar funktioniert die direkte Eingabe in das Befehlsfeld, allerdings werden wir im Laufe dieser Woche sehr viel längere und komplexere Befehlsfolgen kennenlernen. Für solche Anwendungen werden in Stata sog. DoFiles angelegt. Darin können Befehle entworfen und für eine spätere Verwendung abgespeichert werden. Um ein DoFile zu öffnen geben wir entweder <code>doedit</code> in das Befehlsfeld ein oder klicken auf das Feld “New Do-file-Editor” rechts oben:</p>
+<h2><span class="header-section-number">1.3</span> DoFile Editor</h2>
+<p>Zwar funktioniert die direkte Eingabe in das Befehlsfeld, allerdings werden wir im Laufe dieser Woche sehr viel längere und komplexere Befehle kennenlernen. Für solche Anwendungen werden in Stata sog. DoFiles angelegt. Darin können Befehle entworfen und für eine spätere Verwendung abgespeichert werden. Um ein DoFile zu öffnen geben wir entweder <code>doedit</code> in das Befehlsfeld ein oder klicken auf das Feld “New Do-file-Editor” rechts oben:</p>
 <p><img src="01_Stata_openDO.png" width="40%" style="display: block; margin: auto;" />
 Es öffnet sich ein neues Fenster:
 <img src="01_Stata5_dofile.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>In diesem sog. Do-File-Editor können wir Befehle entwerfen. Wenn wir diese dann durchführen möchten, markieren wir die entsprechenden Zeilen und drücken STRG + D. Die ausgeführten Befehle werden wieder im Ergebnisfenster gespiegelt und jeweils darunter die Ergebnisse angezeigt:
 <img src="01_Stata7_dofile_done2.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>Das DoFile können wir speichern, um es später wieder aufzurufen. Wichtig ist dabei, der gespeicherten Datei die Endung “.do” zu geben, also zum Beispiel “01_Montag.do”. Diese DoFiles können dann einfach ausgetauscht werden, um später daran weiter zu arbeiten oder Analysen für Dritte nachvollziehbar zu machen.
-<img src="01_Stata7_dofile_done_save.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<img src="01_Stata7_dofile_done_save.png" width="60%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="datensätze" class="section level2">
-<h2><span class="header-section-number">1.3</span> Datensätze</h2>
-<p>Das ist aber alles soweit sehr unspektulär - es gibt schönere und günstigere Taschenrechner. Die eigentliche Stärke von Stata ist aber die Analyse von Datensätzen. Diese müssen zunächst eingelesen werden. Im einfachsten Fall liegen die Daten als Stata-Datensatz (mit der Endung .dta) vor und wir können die Daten wie folgt einlesen:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="Stata1.html#cb2-1"></a>cd <span class="st">&quot;C:/Daten/....&quot;</span></span>
-<span id="cb2-2"><a href="Stata1.html#cb2-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span></code></pre></div>
+<div id="datensätze-laden" class="section level2">
+<h2><span class="header-section-number">1.4</span> Datensätze laden</h2>
+<p>Das ist aber alles soweit sehr unspektulär - es gibt schönere und günstigere Taschenrechner. Die eigentliche Stärke von Stata ist aber die Analyse von Datensätzen. Diese müssen zunächst eingelesen werden. Im einfachsten Fall liegen die Daten als Stata-Datensatz (mit der Endung <code>.dta</code>) vor und wir können die Daten wie folgt einlesen:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="Stata1.html#cb5-1"></a>cd <span class="st">&quot;C:/Users/Andreas/Dokumente/Statistik/&quot;</span></span>
+<span id="cb5-2"><a href="Stata1.html#cb5-2"></a><span class="kw">use</span> <span class="st">&quot;ZA5250_v2-0-0.dta&quot;</span></span></code></pre></div>
+<p>Der Einlesevorgang besteht also aus zwei Befehlen: zuerst geben wir <code>cd</code> den Pfad an, unter welchem der einzulesende Datensatz zu finden ist. Natürlich hängt der Dateipfad aber ganz davon ab, wo Sie den Datensatz gespeichert haben, hier ist es “C:/Users/Andreas/Dokumente/Statistik/”:</p>
+<p><img src="01_directory.png" width="60%" height="60%" style="display: block; margin: auto;" />
+Um den Pfad des Ordners herauszufinden, klicken Sie bei Windows in die obere Adresszeile im Explorerfenster:
+<img src="01_Dateipfad_WIN.png" width="85%" height="85%" style="display: block; margin: auto;" /></p>
+<p>In iOS (Mac) finden Sie den Pfad indem Sie einmal mit der rechten Maustaste auf die Datei und unter Informationen den Reiter “Ort” wählen.</p>
+<p>Wir haben zwei Möglichkeiten zu das aktuelle Arbeitsverzeichnis überprüfen: wir sehen das aktuelle Arbeitsverzeichnis im Stata-Fenster links unten oder wir geben <code>pwd</code> ein:
+<img src="01_Stata_directory.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
+<p>Wir können diese beiden Schritte natürlich auch einfach kombinieren und den gesamten Pfad nach <code>use</code> angeben:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="Stata1.html#cb6-1"></a><span class="kw">use</span> <span class="st">&quot;C:/Users/Andreas/Dokumente/Statistik/ZA5250_v2-0-0.dta&quot;</span></span></code></pre></div>
+<p>Wenn das funktioniert hat, dann sehen wir im Fenster rechts eine Variablenübersicht:
+<img src="01_Stata8_Datensatz_pfeil.PNG" width="90%" style="display: block; margin: auto;" />
+In dieser Variablenübersicht können mit Hilfe des Suchfelds (oranger Kreis) auch nach Variablen suchen:
+<img src="01_Stata8_Datensatz_suche.PNG" width="40%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="überblicksbefehle" class="section level2">
+<h2><span class="header-section-number">1.5</span> Überblicksbefehle</h2>
+<p>Mit <code>describe, short</code> bekommen wir einen Überblick zu den eingelesenen Daten:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="Stata1.html#cb7-1"></a><span class="kw">describe</span>, <span class="kw">short</span></span></code></pre></div>
+<pre><code>Contains data from D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta
+  obs:         3,477                          ALLBUS 2018
+ vars:           708                          28 Mar 2019 16:09
+Sorted by: </code></pre>
+<p>Hier wurde also ein Datensatz geladen, welcher 3477 Fälle/Zeilen (<code>obs</code>) und 708 Variablen/Spalten (<code>vars</code>) enthält.
+(Wir können den Befehl auch als <code>d,s</code> abkürzen)</p>
+<p>Mit <code>browse</code> bekommen wir eine Übersicht des Datensatzes:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="Stata1.html#cb9-1"></a>browse</span></code></pre></div>
+<p><img src="01_Stata9_bro_Datensatz.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>Wenn wir nur einige Variablen betrachten möchten, hängen wir diese einfach <code>browse</code> an:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="Stata1.html#cb10-1"></a>browse eastwest german sex age mstat</span></code></pre></div>
+<p><img src="01_Stata9_bro_Datensatz2.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>Wir können den <code>describe</code> Befehl auch nutzen, um Informationen zu einer Variable zu erhalten. Dazu hängen wir einfach eine oder mehrere Variablen an <code>describe</code> an:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="Stata1.html#cb11-1"></a><span class="kw">describe</span> pv01</span></code></pre></div>
+<pre><code>Running D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Stata_Skript\profile.do . use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta&quot;, clear
+(ALLBUS 2018)
+
+              storage   display    value
+variable name   type    format     label      variable label
+-------------------------------------------------------------------------------
+pv01            byte    %12.0g     pv01       BEFR.: WAHLABSICHT BUNDESTAGSWAHL</code></pre>
+<p>Wir können dabei <code>describe</code> mit <code>d</code> abkürzen:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="Stata1.html#cb13-1"></a><span class="kw">d</span> pv01 age sex</span></code></pre></div>
+<pre><code>Running D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Stata_Skript\profile.do . use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta&quot;, clear
+(ALLBUS 2018)
+
+              storage   display    value
+variable name   type    format     label      variable label
+-------------------------------------------------------------------------------
+pv01            byte    %12.0g     pv01       BEFR.: WAHLABSICHT BUNDESTAGSWAHL
+age             byte    %12.0g     age        ALTER: BEFRAGTE(R)
+sex             byte    %12.0g     sex        GESCHLECHT, BEFRAGTE(R)</code></pre>
+<p>Wenn wir einen neuen Datensatz aus dem Speicher löschen wollen, dann können wir dies mit <code>clear</code>.</p>
+</div>
+<div id="U1" class="section level2">
+<h2><span class="header-section-number">1.6</span> Übungen</h2>
+<ul>
+<li><p>Führen Sie folgende (oder beliebige andere) Taschenrechneraufgaben mit Stata durch:</p>
+<ul>
+<li>2 * 4</li>
+<li>2 / 8</li>
+<li>2 ^ sqrt(4) + 5</li>
+</ul></li>
+<li><p>Laden Sie die Datensätze aus ILIAS herunter!</p></li>
+<li><p>Wechseln Sie mit Hilfe des cd Befehls das Arbeitsverzeichnis!</p>
+<ul>
+<li>In welchem Arbeitsverzeichnis befinden Sie sich aktuell?</li>
+<li>In welchem Ordner haben Sie die Datensätze aus ILIAS abgelegt?</li>
+<li>Navigieren Sie Stata mit <code>cd</code> in eben diesen Ordner, in dem die Datensätze abgelegt sind!</li>
+</ul></li>
+<li><p>Lesen Sie den Allbus 2018 in Stata ein.</p>
+<ul>
+<li>Sie finden den Allbus 2018 in ILIAS.</li>
+<li>Wie viele Fälle hat der Datensatz?</li>
+<li>Unter welchem Variablennamen ist der Familienstand der Befragten ablegt?</li>
+<li>Wie viele Variablen und wie viele Fälle enthält der Datensatz?</li>
+<li>Öffnen Sie das Überblicksfenster!</li>
+<li>Unter welchem Variablennamen ist die Information</li>
+</ul></li>
+</ul>
 
 </div>
 </div>

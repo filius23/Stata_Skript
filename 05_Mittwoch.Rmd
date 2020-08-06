@@ -196,3 +196,9 @@ graph twoway  (lfit bp_before bp_after) ( scatter bp_before bp_after if agegrp =
 ```{r titelbild_include, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
 knitr::include_graphics("00_scatter.png")
 ```
+
+# Bevölkerungspyramide
+
+# Abschließende Bemerkungen
+
+Häufig ist die größte Herausforderung, die Daten so umzustellen, dass sie zum gewünschten `graph`-Befehl passen.
