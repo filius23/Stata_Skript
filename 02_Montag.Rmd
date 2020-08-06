@@ -1,1 +1,189 @@
 # Arbeiten mit Datensätzen in Stata {#Stata2} 
+
+```{r setup2, echo = F, message=F, warning = F}
+.libPaths("D:/R-library")
+knitr::opts_chunk$set(collapse = F)
+library(Statamarkdown)
+# # options(width = 200) # 157
+# # "C:/Program Files/Stata16/StataSE-64.exe"
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+```
+
+Nachdem wir uns in Stata etwas umgesehen haben, können wir uns jetzt 
+```{stata tab_su1, eval = F}
+cd ....
+use "ZA5270_v2-0-0.dta"
+```
+
+## Vorab: Befehlsstruktur
+
+Ganz nebenbei haben wir im Kapitel 1 bereits die ersten Stata-Befehle verwendet. Bevor wir jetzt aber tiefer einsteigen nochmal einmal ganz allgemein:
+
+Die grundsätzliche Struktur von Stata-Kommandos ist immer `befehl variable, optionen`. Zunächst geben wir also immer an, was passieren soll - bisher war das eben zum Beispiel eine Beschreibung (`describe`) einer Variable: 
+```{stata commands1, eval = F}
+describe sex
+```
+```{stata commands2, echo = F}
+set linesize 100
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+describe sex
+```
+Diese können wir mit der Option `short` abändern. Optionen werden nach einem `,` angegeben:
+
+```{stata commands1s, eval = F}
+describe sex, simple
+```
+
+```{stata commands2s, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+describe sex, simple
+```
+
+Befehle ohne Variable beziehen sich immer auf den gesamten Datensatz, bei `describe` bekommen wir damit dann eine Übersicht zum Datensatz:
+```{stata commands3, eval = F}
+describe, short
+```
+
+```{stata commands3show, echo = F}
+set linesize 100
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+describe, short
+```
+
+Mit `help` bekommen wir eine Hilfeseite angezeigt, hilfreich sind dabei vor allem die Beispiele ganz unten:
+```{stata help_desc, eval = F}
+help describe
+```
+
+```{r help_ansicht, echo = F,out.width = "40%",fig.height= 2.5, fig.align="center"}
+knitr::include_graphics("02_help_describe.PNG")
+```
+
+## Auszählen & Überblick erhalten
+
+
+
+```{stata tab_su, eval = F}
+su age
+tab sex
+```
+
+```{stata tabsu2, echo = F, collectcode=TRUE}
+set linesize 80
+use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+su age
+tab sex
+```
+
+## Neue Variablen erstellen
+
+```{stata gen, echo = T, eval = F }
+gen age_mon = age * 12
+su age_mon
+```
+
+```{stata gen2, echo = F,collectcode=TRUE}
+gen age_mon = age * 12
+su age_mon
+```
+
+
+## if Bedingungen
+
++ `>, <, ==, >=, <=`
+
+```{stata browse_if, eval = F}
+browse sex land if age <= 20
+```
+
++ inrange, inlist
+
+## Bestehende Variablen verändern
+```{stata rep, eval = F, echo = T}
+replace age = . if age < 0
+```
+
+## keep & drop
+
+## Nochmal von vorne: Daten neu laden
+
+
+```{stata re_use, eval = F}
+use "ZA5270_v2-0-0.dta"
+```
+
+`no; dataset in memory has changed since last saved`
+
+Wir müssen erst den existierenden Datensatz mit `clear` löschen oder die `clear` Option für `use` verwenden:
+```{stata, eval = F, echo =T }
+clear
+use "ZA5270_v2-0-0.dta"
+use "ZA5270_v2-0-0.dta", clear
+```
+
+## Speichern
+
+Natürlich können wir unsere Daten auch abspeichern, wenn alles wie gewünscht geklappt hat. Dafür gibt es den Befehl `save`, der analog zu `use` funktioniert. Wenn wir allerdings einfach wieder den Original-Datensatznamen angeben und in der Zwischenzeit Variablen erstellt oder gelöscht haben, dann bekommen wir folgende Fehlermeldung:
+
+```{stata, eval = F}
+cd ... 
+save "ZA5270_v2-0-0.dta"
+```
+`file auto.dta already exists`   
+`r(602);`
+
+Wir geben also entweder einen anderen Dateinamen an:
+```{stata, eval = F}
+save "ZA5270_v2-0-0_neu.dta"
+```
+Oder wir teilen Stata mit der Option `replace` explizit mit, dass die Datei überschrieben werden soll:
+```{stata, eval = F}
+save "ZA5270_v2-0-0.dta", replace
+```
+
+## Übungen
+
++ Laden Sie den Datensatz `Allbus2018` in Stata. 
++ Nutzen Sie `d` und `browse`, um sich einen Überblick über den Datensatz zu verschaffen.
++ Wie viele Befagte (Zeilen) enthält der Datensatz?
++ Lassen Sie sich die Variablennamen anzeigen! 
++ Die Variable `sex` gibt das Geschlecht der Befragten an. Welches Skalenniveau hat die Variable? [^4] 
++ Was verbirgt sich hinter der Variable `gkpol`? Sehen Sie im Codebuch nach! Welche Bedeutung hat die Ausprägung 2 für diese Variable?
++ Welches Skalenniveau hat `gkpol`?
++ Welche Information ist in der Variable `respid` abgelegt? 
++ Wie können Sie sich die Zeile anzeigen lassen, welche den/die Befragte*n mit der `respid` 3469 enthält?
++ Wie alt ist der/die Befragte mit der `respid` 3469? Welches Geschlecht hat die Person?
++ Erstellen Sie eine neue Variable mit dem Alter der Befragten im Jahr 2020!   
+
++ Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Datensatz. 
++ Wie viele Spalten hat `nach_1960`? Wie viele Zeilen? Nutzen Sie für Ihre Antwort die Befehle die wir kennen gelernt haben.
+
+[^4]: Diese Frage ist eine inhaltliche, Stata hilft Ihnen hier nicht weiter.
+
+
+
+
+## sortieren
+
+## egen
+
+```{stata, cleanlog = F, eval = F}
+bys agec: egen mean_inc = mean(inc)
+bys agec: keep if _n == 1
+list agec mean_inc
+```
+```{r, eval = F}
+     +-------------------------+
+     |         agec   mean_inc |
+     |-------------------------|
+  1. |  18-29 JAHRE   1026.236 |
+  2. |  30-44 JAHRE   1729.861 |
+  3. |  45-59 JAHRE   1915.664 |
+  4. |  60-74 JAHRE   1567.953 |
+  5. |  75-89 JAHRE   1454.949 |
+     |-------------------------|
+  6. | UEBER 89 JAH   1942.133 |
+     +-------------------------+
+```

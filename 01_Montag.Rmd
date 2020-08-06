@@ -5,6 +5,8 @@
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(dpi=800)
 library(Statamarkdown)
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 ```
 
 Hier sehen wir die Startansicht von Stata:
@@ -122,6 +124,7 @@ Mit `describe, short` bekommen wir einen Überblick zu den eingelesenen Daten:
 describe, short
 ```
 ```{stata desc_actual, echo = F, collectcode=F}
+set linesize 200
 use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
 describe, short
 ```
@@ -150,6 +153,7 @@ describe pv01
 ```
 
 ```{stata des_var1, echo = F, collectcode=F}
+set linesize 200
 use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
 describe pv01
 ```
@@ -159,6 +163,7 @@ d pv01 age sex
 ```
 
 ```{stata des_var4, echo = F, collectcode=F}
+set linesize 200
 use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
 describe pv01 age sex
 ```
