@@ -6,25 +6,3 @@ knitr::opts_chunk$set(collapse = F)
 library(Statamarkdown)
 ```
 
- <!-- ```{stata readin7, echo = F, collectcode=T} -->
-
-
-Mit `describe, short` bekommen wir einen Überblick zu den eingelesenen Daten:
-```{stata desc7, collectcode=F}
-use "D:/Studium/01_Oldenburg/Lehre/Datensaetze/ZA5250_v2-0-0.dta", clear
-describe, short
-```
-
-
-
-````
-```{stata, collectcode=TRUE}`r ''`
-sysuse auto
-summarize
-```
-````
-
-```{stata, collectcode=TRUE}
-sysuse auto
-summarize
-```
