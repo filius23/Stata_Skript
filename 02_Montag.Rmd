@@ -89,6 +89,17 @@ gen age_mon = age * 12
 su age_mon
 ```
 
+## gen ist gut, Kontrolle ist besser
+
+```{stata bro_ansicht_cmd, eval = F}
+bro respid age age_mon
+```
+
+
+```{r bro_ansicht, echo = F,out.width = "40%",fig.height= 2.5, fig.align="center"}
+knitr::include_graphics("02_stata_browse_kontrolle.png")
+```
+
 
 ## if Bedingungen
 
