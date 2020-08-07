@@ -3,8 +3,9 @@
 .RData
 .Ruserdata
 _vorlagen
-~.do
+.do
 .log
 render.R
 ~$stata.pptx
 stata.pptx
+05_Mittwoch.do
