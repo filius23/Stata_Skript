@@ -11,7 +11,7 @@ knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 
 Hier sehen wir die Startansicht von Stata:
 ```{r screenshot, fig.cap= "Startansicht Stata16", echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("01_Stata_intro.PNG")
+knitr::include_graphics("01_Stata_intro.png")
 ```
 Die Standardansicht von Stata besteht aus mehreren Fenstern:
 
@@ -27,7 +27,7 @@ Die Standardansicht von Stata besteht aus mehreren Fenstern:
 In das Befehlsfeld (1) können wir Kommandos eingeben, z.B. eine Berechnung durchführen. Dazu geben wir zunächst den Befehl `display` und dann die gewünschte Rechnung ein und drücken dann Enter. Der Befehl wird dann im Ergebnisfenster gespiegelt und darunter das Ergebnis ausgegeben:
 
 ```{r screenshot_tr, echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("01_Stata3b.PNG")
+knitr::include_graphics("01_Stata3_calc.png")
 ```
 
 Wir können `display` auch mit `dis` abkürzen. 
@@ -58,21 +58,21 @@ dis sqrt(9)
 Zwar funktioniert die direkte Eingabe in das Befehlsfeld, allerdings werden wir im Laufe dieser Woche sehr viel längere und komplexere Befehle kennenlernen. Für solche Anwendungen werden in Stata sog. DoFiles angelegt. Darin können Befehle entworfen und für eine spätere Verwendung abgespeichert werden. Um ein DoFile zu öffnen geben wir entweder `doedit` in das Befehlsfeld ein oder klicken auf das Feld "New Do-file-Editor" rechts oben:
 
 ```{r screenshot_dof_open, echo = F,out.width = "40%",fig.height= 3.5, fig.align="center"}
-knitr::include_graphics("01_Stata_openDO.PNG")
+knitr::include_graphics("01_Stata_open_DOedit.png")
 ```
 Es öffnet sich ein neues Fenster:
 ```{r screenshot_dof_opened, echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("01_Stata5_dofile.PNG")
+knitr::include_graphics("01_Stata5_dofile_editor.png")
 ```
 
 In diesem sog. Do-File-Editor können wir Befehle entwerfen. Wenn wir diese dann durchführen möchten, markieren wir die entsprechenden Zeilen und drücken STRG + D. Die ausgeführten Befehle werden wieder im Ergebnisfenster gespiegelt und jeweils darunter die Ergebnisse angezeigt:
 ```{r screenshot_dof_run, echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("01_Stata7_dofile_done2.PNG")
+knitr::include_graphics("01_Stata7_dofile_routine.png")
 ```
 
 Das DoFile können wir speichern, um es später wieder aufzurufen. Wichtig ist dabei, der gespeicherten Datei die Endung ".do" zu geben, also zum Beispiel "01_Montag.do". Diese DoFiles können dann einfach ausgetauscht werden, um später daran weiter zu arbeiten oder Analysen für Dritte nachvollziehbar zu machen.
 ```{r save1,echo = F, out.width = "60%",fig.height= 3, fig.align="center"}
-knitr::include_graphics("01_Stata7_dofile_done_save.PNG")
+knitr::include_graphics("01_Stata7_dofile_save.png")
 ```
 
 ## Datensätze laden
