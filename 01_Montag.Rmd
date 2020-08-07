@@ -15,11 +15,11 @@ knitr::include_graphics("01_Stata2.png")
 ```
 Die Standardansicht von Stata besteht aus mehreren Fenstern:
 
-(1) Kommandos/Befehle
-(2) Ergebnisse
-(3) Variablenübersicht
-(4) Übersicht zu den geladenen Daten
-(5) Befehlshistorie
+  (1) Kommandos/Befehle
+  (2) Ergebnisse
+  (3) Variablenübersicht
+  (4) Übersicht zu den geladenen Daten
+  (5) Befehlshistorie
 
 
 ## Taschenrechner
