@@ -124,14 +124,35 @@ Mit `describe, short` bekommen wir einen Überblick zu den eingelesenen Daten:
 describe, short
 ```
 ```{stata desc_actual, echo = F, collectcode=F}
-set linesize 200
-use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
 describe, short
 ```
 Hier wurde also ein Datensatz geladen, welcher 3477 Fälle/Zeilen (`obs`) und 708 Variablen/Spalten (`vars`) enthält. 
 (Wir können den Befehl auch als `d,s` abkürzen)
 
-Mit `browse` bekommen wir eine Übersicht des Datensatzes:
+Wir können den `describe` Befehl auch nutzen, um Informationen zu einer Variable zu erhalten. Dazu hängen wir einfach eine oder mehrere Variablen an `describe` an:
+```{stata des_var, eval=FALSE}
+describe pv01
+```
+
+```{stata des_var1, echo = F, collectcode=F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+describe pv01
+```
+Wir können dabei `describe` mit `d` abkürzen:
+```{stata des_var3, eval=FALSE}
+d pv01 age sex
+```
+
+```{stata des_var4, echo = F, collectcode=F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+describe pv01 age sex
+```
+
+Mit `browse` bekommen wir eine Ansicht des Datensatzes:
 ```{stata browse1, eval = F}
 browse
 ```
@@ -147,28 +168,20 @@ browse eastwest german sex age mstat
 knitr::include_graphics("01_Stata9_bro_Datensatz2.png")
 ```
 
-Wir können den `describe` Befehl auch nutzen, um Informationen zu einer Variable zu erhalten. Dazu hängen wir einfach eine oder mehrere Variablen an `describe` an:
-```{stata des_var, eval=FALSE}
-describe pv01
+Wenn wir einen Datensatz aus dem Speicher löschen wollen, dann können wir dies mit `clear`.
+
+## if Bedingung - nur manche Zeilen ansehen
+
+Mit durch Anhängen einer if-Bedingung können wir nur bestimmte Zeilen anzeigen lassen. Zum Beispiel nur die 20-jährigen Befragten
+```{stata browse3, eval = F}
+browse eastwest german sex age mstat if age == 20
 ```
 
-```{stata des_var1, echo = F, collectcode=F}
-set linesize 200
-use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
-describe pv01
-```
-Wir können dabei `describe` mit `d` abkürzen:
-```{stata des_var3, eval=FALSE}
-d pv01 age sex
+Oder Befragte mit einem Einkommen unter 1000 Euro:
+```{stata browse4, eval = F}
+browse eastwest german sex age mstat if inc < 1000
 ```
 
-```{stata des_var4, echo = F, collectcode=F}
-set linesize 200
-use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
-describe pv01 age sex
-```
-
-Wenn wir einen neuen Datensatz aus dem Speicher löschen wollen, dann können wir dies mit `clear`.
 
 
 ## Übungen {#U1}
@@ -187,9 +200,19 @@ Wenn wir einen neuen Datensatz aus dem Speicher löschen wollen, dann können wi
 
 + Lesen Sie den Allbus 2018 in Stata ein.
   + Sie finden den Allbus 2018 in ILIAS.
-  + Wie viele Fälle hat der Datensatz?
-  + Unter welchem Variablennamen ist der Familienstand der Befragten ablegt?
-  + Wie viele Variablen und wie viele Fälle enthält der Datensatz?
+  + Nutzen Sie `d` und `browse`, um sich einen Überblick über den Datensatz zu verschaffen.
   + Öffnen Sie das Überblicksfenster!
+  + Wie viele Fälle hat der Datensatz?
+  + Wie viele Variablen und wie viele Fälle enthält der Datensatz?
+  + Unter welchem Variablennamen ist die Selbsteinschätzung des Gesundheitszustands der Befragten ablegt?
   + Unter welchem Variablennamen ist die Information abgelegt, in welchem Bundesland die Befragten wohnen?
+  + Die Variable `sex` gibt das Geschlecht der Befragten an. Welches Skalenniveau hat die Variable? [^4] 
 
+
+  + Welche Information ist in der Variable `respid` abgelegt? 
+  + Wie können Sie sich die Zeile anzeigen lassen, welche den/die Befragte*n mit der `respid` 3469 enthält?
+  + Wie alt ist der/die Befragte mit der `respid` 3469? Welches Geschlecht hat die Person?
+  
+  
+
+[^4]: Diese Frage ist eine inhaltliche, Stata hilft Ihnen hier nicht weiter.  

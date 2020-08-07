@@ -16,7 +16,7 @@ cd ....
 use "ZA5270_v2-0-0.dta"
 ```
 
-## Vorab: Befehlsstruktur
+## Vorab: Befehlsstruktur & Hilfe
 
 Ganz nebenbei haben wir im Kapitel 1 bereits die ersten Stata-Befehle verwendet. Bevor wir jetzt aber tiefer einsteigen nochmal einmal ganz allgemein:
 
@@ -47,7 +47,7 @@ describe, short
 ```
 
 ```{stata commands3show, echo = F}
-set linesize 100
+set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
 describe, short
 ```
@@ -61,19 +61,79 @@ help describe
 knitr::include_graphics("02_help_describe.PNG")
 ```
 
-## Auszählen & Überblick erhalten
-
-
-
-```{stata tab_su, eval = F}
-su age
-tab sex
+Kommandos in Stata sind zeilenbasiert. D.h. alles was zu einem Kommando gehört, muss in der gleichen Zeile stehen. Umgekehrt wird auch alles, was in einer Zeile steht als Teil des Kommandos verstanden:
+```{stata rowbased, eval = F}
+describe pv01 age sex, short
 ```
 
-```{stata tabsu2, echo = F, collectcode=TRUE}
+```{stata rowbased1, echo = F}
 set linesize 80
-use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+describe pv01 age sex, short
+```
+
+Funktioniert nicht:
+```{stata rowbased2, eval = F}
+d pv01 age 
+sex
+```
+```{stata rowbased2b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+d pv01 age 
+sex
+```
+
+Mit `///` können wir Zeilen verknüpfen:
+```{stata rowbased3, eval = F}
+d pv01 age ///
+sex
+```
+```{stata rowbased3b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+d pv01 age ///
+sex
+```
+
+Außerdem können wir mit `//` Kommentare in unsere DoFiles einfügen. `//` blendet  alles folgende am Ende der Zeile aus:
+```{stata comment, eval = F}
+d pv01 age sex // dies ist ein kommentar
+```
+```{stata comment2, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+d pv01 age sex
+```
+
+
+## Auszählen & Überblick erhalten
+
+Mit `summarize`  und `tabulate` bekommen wir eine Übersicht zu den Kennzahlen bzw. eine Auszählung der Häufigkeiten einer Variable. Dies sind wohl die beiden wichtigsten Befehle in Stata:
+
+```{stata su1, eval = F}
+summarize age
+```
+
+```{stata su1b, echo = F, collectcode=TRUE}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
 su age
+```
+
+```{stata su2, eval = F}
+summarize age inc // klappt auch mit mehreren Variablen
+```
+```{stata su2b, echo = F, collectcode=TRUE}
+summarize age inc // klappt auch mit mehreren Variablen
+```
+
+
+```{stata tab, eval = F}
+tabulate sex
+```
+
+```{stata tabb, echo = F, collectcode=TRUE}
 tab sex
 ```
 
@@ -120,6 +180,7 @@ replace age = . if age < 0
 
 ## Nochmal von vorne: Daten neu laden
 
+Variable gelöscht, die doch nötig ist? Falsch recodiert? Das ist zwar ärgerlich, aber ein riesen Vorteil der DoFile-basierten Datenarbeit mit Stata ist die Reproduzierbarkeit. Wir können einfach nochmal von vorne anfangen. Dazu lesen wir die Original-Daten einfach erneut mit `use` ein. Allerdings ist dann eine Besonderheit zu beachten:
 
 ```{stata re_use, eval = F}
 use "ZA5270_v2-0-0.dta"
@@ -127,10 +188,13 @@ use "ZA5270_v2-0-0.dta"
 
 `no; dataset in memory has changed since last saved`
 
-Wir müssen erst den existierenden Datensatz mit `clear` löschen oder die `clear` Option für `use` verwenden:
+Wir müssen erst den existierenden Datensatz mit `clear` löschen 
 ```{stata, eval = F, echo =T }
 clear
 use "ZA5270_v2-0-0.dta"
+```
+oder die `clear` Option für `use` verwenden:
+```{stata, eval = F, echo =T }
 use "ZA5270_v2-0-0.dta", clear
 ```
 
@@ -157,28 +221,22 @@ save "ZA5270_v2-0-0.dta", replace
 ## Übungen
 
 + Laden Sie den Datensatz `Allbus2018` in Stata. 
-+ Nutzen Sie `d` und `browse`, um sich einen Überblick über den Datensatz zu verschaffen.
-+ Wie viele Befagte (Zeilen) enthält der Datensatz?
-+ Lassen Sie sich die Variablennamen anzeigen! 
-+ Die Variable `sex` gibt das Geschlecht der Befragten an. Welches Skalenniveau hat die Variable? [^4] 
-+ Was verbirgt sich hinter der Variable `gkpol`? Sehen Sie im Codebuch nach! Welche Bedeutung hat die Ausprägung 2 für diese Variable?
-+ Welches Skalenniveau hat `gkpol`?
-+ Welche Information ist in der Variable `respid` abgelegt? 
-+ Wie können Sie sich die Zeile anzeigen lassen, welche den/die Befragte*n mit der `respid` 3469 enthält?
-+ Wie alt ist der/die Befragte mit der `respid` 3469? Welches Geschlecht hat die Person?
+
 + Erstellen Sie eine neue Variable mit dem Alter der Befragten im Jahr 2020!   
 
 + Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Datensatz. 
 + Wie viele Spalten hat `nach_1960`? Wie viele Zeilen? Nutzen Sie für Ihre Antwort die Befehle die wir kennen gelernt haben.
 
-[^4]: Diese Frage ist eine inhaltliche, Stata hilft Ihnen hier nicht weiter.
 
 
 
+## Fortgeschrittene Themen
 
-## sortieren
+### sortieren
 
-## egen
+### egen
+
+`egen` ist die Erweiterung von `gen` und gibt uns die Möglichkeit, eine ganze Reihe von 
 
 ```{stata, cleanlog = F, eval = F}
 bys agec: egen mean_inc = mean(inc)
@@ -198,3 +256,8 @@ list agec mean_inc
   6. | UEBER 89 JAH   1942.133 |
      +-------------------------+
 ```
+
+
+### collapse
+
+Manchmal möchten wir vielleicht nur einen Mittelwert pro Gruppe und die einzelnen Werte interessieren uns gar nicht. Wir möchten unseren Datensatz also verkürzen, sodass er lediglich einen Wert pro Gruppe enthält. Dazu

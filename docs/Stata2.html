@@ -140,10 +140,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3" data-path="Stata1.html"><a href="Stata1.html#dofile-editor"><i class="fa fa-check"></i><b>1.3</b> DoFile Editor</a></li>
 <li class="chapter" data-level="1.4" data-path="Stata1.html"><a href="Stata1.html#datensätze-laden"><i class="fa fa-check"></i><b>1.4</b> Datensätze laden</a></li>
 <li class="chapter" data-level="1.5" data-path="Stata1.html"><a href="Stata1.html#überblicksbefehle"><i class="fa fa-check"></i><b>1.5</b> Überblicksbefehle</a></li>
-<li class="chapter" data-level="1.6" data-path="Stata1.html"><a href="Stata1.html#U1"><i class="fa fa-check"></i><b>1.6</b> Übungen</a></li>
+<li class="chapter" data-level="1.6" data-path="Stata1.html"><a href="Stata1.html#if-bedingung---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>1.6</b> if Bedingung - nur manche Zeilen ansehen</a></li>
+<li class="chapter" data-level="1.7" data-path="Stata1.html"><a href="Stata1.html#U1"><i class="fa fa-check"></i><b>1.7</b> Übungen</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="Stata2.html"><a href="Stata2.html"><i class="fa fa-check"></i><b>2</b> Arbeiten mit Datensätzen in Stata</a><ul>
-<li class="chapter" data-level="2.1" data-path="Stata2.html"><a href="Stata2.html#vorab-befehlsstruktur"><i class="fa fa-check"></i><b>2.1</b> Vorab: Befehlsstruktur</a></li>
+<li class="chapter" data-level="2.1" data-path="Stata2.html"><a href="Stata2.html#vorab-befehlsstruktur-hilfe"><i class="fa fa-check"></i><b>2.1</b> Vorab: Befehlsstruktur &amp; Hilfe</a></li>
 <li class="chapter" data-level="2.2" data-path="Stata2.html"><a href="Stata2.html#auszählen-überblick-erhalten"><i class="fa fa-check"></i><b>2.2</b> Auszählen &amp; Überblick erhalten</a></li>
 <li class="chapter" data-level="2.3" data-path="Stata2.html"><a href="Stata2.html#neue-variablen-erstellen"><i class="fa fa-check"></i><b>2.3</b> Neue Variablen erstellen</a></li>
 <li class="chapter" data-level="2.4" data-path="Stata2.html"><a href="Stata2.html#gen-ist-gut-kontrolle-ist-besser"><i class="fa fa-check"></i><b>2.4</b> gen ist gut, Kontrolle ist besser</a></li>
@@ -153,8 +154,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.8" data-path="Stata2.html"><a href="Stata2.html#nochmal-von-vorne-daten-neu-laden"><i class="fa fa-check"></i><b>2.8</b> Nochmal von vorne: Daten neu laden</a></li>
 <li class="chapter" data-level="2.9" data-path="Stata2.html"><a href="Stata2.html#speichern"><i class="fa fa-check"></i><b>2.9</b> Speichern</a></li>
 <li class="chapter" data-level="2.10" data-path="Stata2.html"><a href="Stata2.html#übungen"><i class="fa fa-check"></i><b>2.10</b> Übungen</a></li>
-<li class="chapter" data-level="2.11" data-path="Stata2.html"><a href="Stata2.html#sortieren"><i class="fa fa-check"></i><b>2.11</b> sortieren</a></li>
-<li class="chapter" data-level="2.12" data-path="Stata2.html"><a href="Stata2.html#egen"><i class="fa fa-check"></i><b>2.12</b> egen</a></li>
+<li class="chapter" data-level="2.11" data-path="Stata2.html"><a href="Stata2.html#fortgeschrittene-themen"><i class="fa fa-check"></i><b>2.11</b> Fortgeschrittene Themen</a><ul>
+<li class="chapter" data-level="2.11.1" data-path="Stata2.html"><a href="Stata2.html#sortieren"><i class="fa fa-check"></i><b>2.11.1</b> sortieren</a></li>
+<li class="chapter" data-level="2.11.2" data-path="Stata2.html"><a href="Stata2.html#egen"><i class="fa fa-check"></i><b>2.11.2</b> egen</a></li>
+<li class="chapter" data-level="2.11.3" data-path="Stata2.html"><a href="Stata2.html#collapse"><i class="fa fa-check"></i><b>2.11.3</b> collapse</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="desc1.html"><a href="desc1.html"><i class="fa fa-check"></i><b>3</b> Deskriptive Statistik</a></li>
 <li class="chapter" data-level="4" data-path="desc2.html"><a href="desc2.html"><i class="fa fa-check"></i><b>4</b> Mehr deskriptive Statistik</a></li>
@@ -202,8 +206,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Nachdem wir uns in Stata etwas umgesehen haben, können wir uns jetzt</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="Stata2.html#cb1-1"></a>cd ....</span>
 <span id="cb1-2"><a href="Stata2.html#cb1-2"></a><span class="kw">use</span> <span class="st">&quot;ZA5270_v2-0-0.dta&quot;</span></span></code></pre></div>
-<div id="vorab-befehlsstruktur" class="section level2">
-<h2><span class="header-section-number">2.1</span> Vorab: Befehlsstruktur</h2>
+<div id="vorab-befehlsstruktur-hilfe" class="section level2">
+<h2><span class="header-section-number">2.1</span> Vorab: Befehlsstruktur &amp; Hilfe</h2>
 <p>Ganz nebenbei haben wir im Kapitel 1 bereits die ersten Stata-Befehle verwendet. Bevor wir jetzt aber tiefer einsteigen nochmal einmal ganz allgemein:</p>
 <p>Die grundsätzliche Struktur von Stata-Kommandos ist immer <code>befehl variable, optionen</code>. Zunächst geben wir also immer an, was passieren soll - bisher war das eben zum Beispiel eine Beschreibung (<code>describe</code>) einer Variable:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="Stata2.html#cb2-1"></a><span class="kw">describe</span> sex</span></code></pre></div>
@@ -224,19 +228,60 @@ Sorted by:  </code></pre>
 <p>Mit <code>help</code> bekommen wir eine Hilfeseite angezeigt, hilfreich sind dabei vor allem die Beispiele ganz unten:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="Stata2.html#cb8-1"></a><span class="kw">help</span> <span class="kw">describe</span></span></code></pre></div>
 <p><img src="02_help_describe.PNG" width="40%" style="display: block; margin: auto;" /></p>
+<p>Kommandos in Stata sind zeilenbasiert. D.h. alles was zu einem Kommando gehört, muss in der gleichen Zeile stehen. Umgekehrt wird auch alles, was in einer Zeile steht als Teil des Kommandos verstanden:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="Stata2.html#cb9-1"></a><span class="kw">describe</span> pv01 age sex, <span class="kw">short</span></span></code></pre></div>
+<pre><code>              storage   display    value
+variable name   type    format     label      variable label
+--------------------------------------------------------------------------------
+pv01            byte    %12.0g     pv01       BEFR.: WAHLABSICHT BUNDESTAGSWAHL
+age             byte    %12.0g     age        ALTER: BEFRAGTE(R)
+sex             byte    %12.0g     sex        GESCHLECHT, BEFRAGTE(R)</code></pre>
+<p>Funktioniert nicht:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="Stata2.html#cb11-1"></a><span class="kw">d</span> pv01 age </span>
+<span id="cb11-2"><a href="Stata2.html#cb11-2"></a>sex</span></code></pre></div>
+<pre><code>              storage   display    value
+variable name   type    format     label      variable label
+--------------------------------------------------------------------------------
+pv01            byte    %12.0g     pv01       BEFR.: WAHLABSICHT BUNDESTAGSWAHL
+age             byte    %12.0g     age        ALTER: BEFRAGTE(R)
+
+unrecognized command:  sex
+r(199);
+
+end of do-file
+r(199);</code></pre>
+<p>Mit <code>///</code> können wir Zeilen verknüpfen:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="Stata2.html#cb13-1"></a><span class="kw">d</span> pv01 age <span class="co">///</span></span>
+<span id="cb13-2"><a href="Stata2.html#cb13-2"></a>sex</span></code></pre></div>
+<pre><code>              storage   display    value
+variable name   type    format     label      variable label
+--------------------------------------------------------------------------------
+pv01            byte    %12.0g     pv01       BEFR.: WAHLABSICHT BUNDESTAGSWAHL
+age             byte    %12.0g     age        ALTER: BEFRAGTE(R)
+sex             byte    %12.0g     sex        GESCHLECHT, BEFRAGTE(R)</code></pre>
+<p>Außerdem können wir mit <code>//</code> Kommentare in unsere DoFiles einfügen. <code>//</code> blendet alles folgende am Ende der Zeile aus:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="Stata2.html#cb15-1"></a><span class="kw">d</span> pv01 age sex <span class="co">// dies ist ein kommentar</span></span></code></pre></div>
+<pre><code>              storage   display    value
+variable name   type    format     label      variable label
+--------------------------------------------------------------------------------
+pv01            byte    %12.0g     pv01       BEFR.: WAHLABSICHT BUNDESTAGSWAHL
+age             byte    %12.0g     age        ALTER: BEFRAGTE(R)
+sex             byte    %12.0g     sex        GESCHLECHT, BEFRAGTE(R)</code></pre>
 </div>
 <div id="auszählen-überblick-erhalten" class="section level2">
 <h2><span class="header-section-number">2.2</span> Auszählen &amp; Überblick erhalten</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="Stata2.html#cb9-1"></a>su age</span>
-<span id="cb9-2"><a href="Stata2.html#cb9-2"></a><span class="kw">tab</span> sex</span></code></pre></div>
-<pre><code>(ALLBUS 2018)
-
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
+<p>Mit <code>summarize</code> und <code>tabulate</code> bekommen wir eine Übersicht zu den Kennzahlen bzw. eine Auszählung der Häufigkeiten einer Variable. Dies sind wohl die beiden wichtigsten Befehle in Stata:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="Stata2.html#cb17-1"></a><span class="kw">summarize</span> age</span></code></pre></div>
+<pre><code>    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+         age |      3477     51.5568    17.91249        -32         95</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="Stata2.html#cb19-1"></a><span class="kw">summarize</span> age inc <span class="co">// klappt auch mit mehreren Variablen</span></span></code></pre></div>
+<pre><code>    Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
          age |      3477     51.5568    17.91249        -32         95
-
-
-GESCHLECHT, |
+         inc |      3477    1620.798    1374.651        -50      18000</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="Stata2.html#cb21-1"></a><span class="kw">tabulate</span> sex</span></code></pre></div>
+<pre><code>GESCHLECHT, |
 BEFRAGTE(R) |      Freq.     Percent        Cum.
 ------------+-----------------------------------
        MANN |      1,773       50.99       50.99
@@ -246,15 +291,15 @@ BEFRAGTE(R) |      Freq.     Percent        Cum.
 </div>
 <div id="neue-variablen-erstellen" class="section level2">
 <h2><span class="header-section-number">2.3</span> Neue Variablen erstellen</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="Stata2.html#cb11-1"></a><span class="kw">gen</span> age_mon = age * 12</span>
-<span id="cb11-2"><a href="Stata2.html#cb11-2"></a>su age_mon</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="Stata2.html#cb23-1"></a><span class="kw">gen</span> age_mon = age * 12</span>
+<span id="cb23-2"><a href="Stata2.html#cb23-2"></a>su age_mon</span></code></pre></div>
 <pre><code>    Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
      age_mon |      3477    618.6816    214.9499       -384       1140</code></pre>
 </div>
 <div id="gen-ist-gut-kontrolle-ist-besser" class="section level2">
 <h2><span class="header-section-number">2.4</span> gen ist gut, Kontrolle ist besser</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="Stata2.html#cb13-1"></a>bro respid age age_mon</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb25-1"><a href="Stata2.html#cb25-1"></a>bro respid age age_mon</span></code></pre></div>
 <p><img src="02_stata_browse_kontrolle.png" width="40%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="if-bedingungen" class="section level2">
@@ -262,84 +307,79 @@ BEFRAGTE(R) |      Freq.     Percent        Cum.
 <ul>
 <li><code>&gt;, &lt;, ==, &gt;=, &lt;=</code></li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb14-1"><a href="Stata2.html#cb14-1"></a>browse sex land <span class="kw">if</span> age &lt;= 20</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="Stata2.html#cb26-1"></a>browse sex land <span class="kw">if</span> age &lt;= 20</span></code></pre></div>
 <ul>
 <li>inrange, inlist</li>
 </ul>
 </div>
 <div id="bestehende-variablen-verändern" class="section level2">
 <h2><span class="header-section-number">2.6</span> Bestehende Variablen verändern</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="Stata2.html#cb15-1"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb27-1"><a href="Stata2.html#cb27-1"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span></code></pre></div>
 </div>
 <div id="keep-drop" class="section level2">
 <h2><span class="header-section-number">2.7</span> keep &amp; drop</h2>
 </div>
 <div id="nochmal-von-vorne-daten-neu-laden" class="section level2">
 <h2><span class="header-section-number">2.8</span> Nochmal von vorne: Daten neu laden</h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="Stata2.html#cb16-1"></a><span class="kw">use</span> <span class="st">&quot;ZA5270_v2-0-0.dta&quot;</span></span></code></pre></div>
+<p>Variable gelöscht, die doch nötig ist? Falsch recodiert? Das ist zwar ärgerlich, aber ein riesen Vorteil der DoFile-basierten Datenarbeit mit Stata ist die Reproduzierbarkeit. Wir können einfach nochmal von vorne anfangen. Dazu lesen wir die Original-Daten einfach erneut mit <code>use</code> ein. Allerdings ist dann eine Besonderheit zu beachten:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb28-1"><a href="Stata2.html#cb28-1"></a><span class="kw">use</span> <span class="st">&quot;ZA5270_v2-0-0.dta&quot;</span></span></code></pre></div>
 <p><code>no; dataset in memory has changed since last saved</code></p>
-<p>Wir müssen erst den existierenden Datensatz mit <code>clear</code> löschen oder die <code>clear</code> Option für <code>use</code> verwenden:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="Stata2.html#cb17-1"></a><span class="kw">clear</span></span>
-<span id="cb17-2"><a href="Stata2.html#cb17-2"></a><span class="kw">use</span> <span class="st">&quot;ZA5270_v2-0-0.dta&quot;</span></span>
-<span id="cb17-3"><a href="Stata2.html#cb17-3"></a><span class="kw">use</span> <span class="st">&quot;ZA5270_v2-0-0.dta&quot;</span>, <span class="kw">clear</span></span></code></pre></div>
+<p>Wir müssen erst den existierenden Datensatz mit <code>clear</code> löschen</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="Stata2.html#cb29-1"></a><span class="kw">clear</span></span>
+<span id="cb29-2"><a href="Stata2.html#cb29-2"></a><span class="kw">use</span> <span class="st">&quot;ZA5270_v2-0-0.dta&quot;</span></span></code></pre></div>
+<p>oder die <code>clear</code> Option für <code>use</code> verwenden:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb30-1"><a href="Stata2.html#cb30-1"></a><span class="kw">use</span> <span class="st">&quot;ZA5270_v2-0-0.dta&quot;</span>, <span class="kw">clear</span></span></code></pre></div>
 </div>
 <div id="speichern" class="section level2">
 <h2><span class="header-section-number">2.9</span> Speichern</h2>
 <p>Natürlich können wir unsere Daten auch abspeichern, wenn alles wie gewünscht geklappt hat. Dafür gibt es den Befehl <code>save</code>, der analog zu <code>use</code> funktioniert. Wenn wir allerdings einfach wieder den Original-Datensatznamen angeben und in der Zwischenzeit Variablen erstellt oder gelöscht haben, dann bekommen wir folgende Fehlermeldung:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="Stata2.html#cb18-1"></a>cd ... </span>
-<span id="cb18-2"><a href="Stata2.html#cb18-2"></a><span class="kw">save</span> <span class="st">&quot;ZA5270_v2-0-0.dta&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb31-1"><a href="Stata2.html#cb31-1"></a>cd ... </span>
+<span id="cb31-2"><a href="Stata2.html#cb31-2"></a><span class="kw">save</span> <span class="st">&quot;ZA5270_v2-0-0.dta&quot;</span></span></code></pre></div>
 <p><code>file auto.dta already exists</code><br />
 <code>r(602);</code></p>
 <p>Wir geben also entweder einen anderen Dateinamen an:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="Stata2.html#cb19-1"></a><span class="kw">save</span> <span class="st">&quot;ZA5270_v2-0-0_neu.dta&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb32-1"><a href="Stata2.html#cb32-1"></a><span class="kw">save</span> <span class="st">&quot;ZA5270_v2-0-0_neu.dta&quot;</span></span></code></pre></div>
 <p>Oder wir teilen Stata mit der Option <code>replace</code> explizit mit, dass die Datei überschrieben werden soll:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="Stata2.html#cb20-1"></a><span class="kw">save</span> <span class="st">&quot;ZA5270_v2-0-0.dta&quot;</span>, <span class="kw">replace</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="Stata2.html#cb33-1"></a><span class="kw">save</span> <span class="st">&quot;ZA5270_v2-0-0.dta&quot;</span>, <span class="kw">replace</span></span></code></pre></div>
 </div>
 <div id="übungen" class="section level2">
 <h2><span class="header-section-number">2.10</span> Übungen</h2>
 <ul>
 <li><p>Laden Sie den Datensatz <code>Allbus2018</code> in Stata.</p></li>
-<li><p>Nutzen Sie <code>d</code> und <code>browse</code>, um sich einen Überblick über den Datensatz zu verschaffen.</p></li>
-<li><p>Wie viele Befagte (Zeilen) enthält der Datensatz?</p></li>
-<li><p>Lassen Sie sich die Variablennamen anzeigen!</p></li>
-<li><p>Die Variable <code>sex</code> gibt das Geschlecht der Befragten an. Welches Skalenniveau hat die Variable?<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p></li>
-<li><p>Was verbirgt sich hinter der Variable <code>gkpol</code>? Sehen Sie im Codebuch nach! Welche Bedeutung hat die Ausprägung 2 für diese Variable?</p></li>
-<li><p>Welches Skalenniveau hat <code>gkpol</code>?</p></li>
-<li><p>Welche Information ist in der Variable <code>respid</code> abgelegt?</p></li>
-<li><p>Wie können Sie sich die Zeile anzeigen lassen, welche den/die Befragte*n mit der <code>respid</code> 3469 enthält?</p></li>
-<li><p>Wie alt ist der/die Befragte mit der <code>respid</code> 3469? Welches Geschlecht hat die Person?</p></li>
 <li><p>Erstellen Sie eine neue Variable mit dem Alter der Befragten im Jahr 2020!</p></li>
 <li><p>Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Datensatz.</p></li>
 <li><p>Wie viele Spalten hat <code>nach_1960</code>? Wie viele Zeilen? Nutzen Sie für Ihre Antwort die Befehle die wir kennen gelernt haben.</p></li>
 </ul>
 </div>
-<div id="sortieren" class="section level2">
-<h2><span class="header-section-number">2.11</span> sortieren</h2>
+<div id="fortgeschrittene-themen" class="section level2">
+<h2><span class="header-section-number">2.11</span> Fortgeschrittene Themen</h2>
+<div id="sortieren" class="section level3">
+<h3><span class="header-section-number">2.11.1</span> sortieren</h3>
 </div>
-<div id="egen" class="section level2">
-<h2><span class="header-section-number">2.12</span> egen</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="Stata2.html#cb21-1"></a><span class="kw">bys</span> agec: <span class="kw">egen</span> mean_inc = <span class="kw">mean</span>(inc)</span>
-<span id="cb21-2"><a href="Stata2.html#cb21-2"></a><span class="kw">bys</span> agec: <span class="kw">keep</span> <span class="kw">if</span> <span class="dt">_n</span> == 1</span>
-<span id="cb21-3"><a href="Stata2.html#cb21-3"></a><span class="ot">list</span> agec mean_inc</span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="Stata2.html#cb22-1"></a>     <span class="op">+-------------------------+</span></span>
-<span id="cb22-2"><a href="Stata2.html#cb22-2"></a><span class="st">     </span><span class="er">|</span><span class="st">         </span>agec   mean_inc <span class="op">|</span></span>
-<span id="cb22-3"><a href="Stata2.html#cb22-3"></a><span class="st">     </span><span class="er">|</span><span class="op">-------------------------</span><span class="er">|</span></span>
-<span id="cb22-4"><a href="Stata2.html#cb22-4"></a><span class="st">  </span><span class="fl">1.</span> <span class="op">|</span><span class="st">  </span><span class="dv">18-29</span> JAHRE   <span class="fl">1026.236</span> <span class="op">|</span></span>
-<span id="cb22-5"><a href="Stata2.html#cb22-5"></a><span class="st">  </span><span class="fl">2.</span> <span class="op">|</span><span class="st">  </span><span class="dv">30-44</span> JAHRE   <span class="fl">1729.861</span> <span class="op">|</span></span>
-<span id="cb22-6"><a href="Stata2.html#cb22-6"></a><span class="st">  </span><span class="fl">3.</span> <span class="op">|</span><span class="st">  </span><span class="dv">45-59</span> JAHRE   <span class="fl">1915.664</span> <span class="op">|</span></span>
-<span id="cb22-7"><a href="Stata2.html#cb22-7"></a><span class="st">  </span><span class="fl">4.</span> <span class="op">|</span><span class="st">  </span><span class="dv">60-74</span> JAHRE   <span class="fl">1567.953</span> <span class="op">|</span></span>
-<span id="cb22-8"><a href="Stata2.html#cb22-8"></a><span class="st">  </span><span class="fl">5.</span> <span class="op">|</span><span class="st">  </span><span class="dv">75-89</span> JAHRE   <span class="fl">1454.949</span> <span class="op">|</span></span>
-<span id="cb22-9"><a href="Stata2.html#cb22-9"></a><span class="st">     </span><span class="er">|</span><span class="op">-------------------------</span><span class="er">|</span></span>
-<span id="cb22-10"><a href="Stata2.html#cb22-10"></a><span class="st">  </span><span class="fl">6.</span> <span class="op">|</span><span class="st"> </span>UEBER <span class="dv">89</span> JAH   <span class="fl">1942.133</span> <span class="op">|</span></span>
-<span id="cb22-11"><a href="Stata2.html#cb22-11"></a><span class="st">     </span><span class="op">+-------------------------+</span></span></code></pre></div>
+<div id="egen" class="section level3">
+<h3><span class="header-section-number">2.11.2</span> egen</h3>
+<p><code>egen</code> ist die Erweiterung von <code>gen</code> und gibt uns die Möglichkeit, eine ganze Reihe von</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb34-1"><a href="Stata2.html#cb34-1"></a><span class="kw">bys</span> agec: <span class="kw">egen</span> mean_inc = <span class="kw">mean</span>(inc)</span>
+<span id="cb34-2"><a href="Stata2.html#cb34-2"></a><span class="kw">bys</span> agec: <span class="kw">keep</span> <span class="kw">if</span> <span class="dt">_n</span> == 1</span>
+<span id="cb34-3"><a href="Stata2.html#cb34-3"></a><span class="ot">list</span> agec mean_inc</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="Stata2.html#cb35-1"></a>     <span class="op">+-------------------------+</span></span>
+<span id="cb35-2"><a href="Stata2.html#cb35-2"></a><span class="st">     </span><span class="er">|</span><span class="st">         </span>agec   mean_inc <span class="op">|</span></span>
+<span id="cb35-3"><a href="Stata2.html#cb35-3"></a><span class="st">     </span><span class="er">|</span><span class="op">-------------------------</span><span class="er">|</span></span>
+<span id="cb35-4"><a href="Stata2.html#cb35-4"></a><span class="st">  </span><span class="fl">1.</span> <span class="op">|</span><span class="st">  </span><span class="dv">18-29</span> JAHRE   <span class="fl">1026.236</span> <span class="op">|</span></span>
+<span id="cb35-5"><a href="Stata2.html#cb35-5"></a><span class="st">  </span><span class="fl">2.</span> <span class="op">|</span><span class="st">  </span><span class="dv">30-44</span> JAHRE   <span class="fl">1729.861</span> <span class="op">|</span></span>
+<span id="cb35-6"><a href="Stata2.html#cb35-6"></a><span class="st">  </span><span class="fl">3.</span> <span class="op">|</span><span class="st">  </span><span class="dv">45-59</span> JAHRE   <span class="fl">1915.664</span> <span class="op">|</span></span>
+<span id="cb35-7"><a href="Stata2.html#cb35-7"></a><span class="st">  </span><span class="fl">4.</span> <span class="op">|</span><span class="st">  </span><span class="dv">60-74</span> JAHRE   <span class="fl">1567.953</span> <span class="op">|</span></span>
+<span id="cb35-8"><a href="Stata2.html#cb35-8"></a><span class="st">  </span><span class="fl">5.</span> <span class="op">|</span><span class="st">  </span><span class="dv">75-89</span> JAHRE   <span class="fl">1454.949</span> <span class="op">|</span></span>
+<span id="cb35-9"><a href="Stata2.html#cb35-9"></a><span class="st">     </span><span class="er">|</span><span class="op">-------------------------</span><span class="er">|</span></span>
+<span id="cb35-10"><a href="Stata2.html#cb35-10"></a><span class="st">  </span><span class="fl">6.</span> <span class="op">|</span><span class="st"> </span>UEBER <span class="dv">89</span> JAH   <span class="fl">1942.133</span> <span class="op">|</span></span>
+<span id="cb35-11"><a href="Stata2.html#cb35-11"></a><span class="st">     </span><span class="op">+-------------------------+</span></span></code></pre></div>
+</div>
+<div id="collapse" class="section level3">
+<h3><span class="header-section-number">2.11.3</span> collapse</h3>
+<p>Manchmal möchten wir vielleicht nur einen Mittelwert pro Gruppe und die einzelnen Werte interessieren uns gar nicht. Wir möchten unseren Datensatz also verkürzen, sodass er lediglich einen Wert pro Gruppe enthält. Dazu</p>
 
 </div>
 </div>
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p>Diese Frage ist eine inhaltliche, Stata hilft Ihnen hier nicht weiter.<a href="Stata2.html#fnref1" class="footnote-back">↩︎</a></p></li>
-</ol>
 </div>
             </section>
 
