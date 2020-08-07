@@ -1,7 +1,7 @@
 # Datenvisualisierung in Stata {#dataviz} 
 
 ```{r setup5, echo = F, message=F, warning = F}
-.libPaths("D:/R-library")
+# .libPaths("D:/R-library")
 knitr::opts_chunk$set(collapse = TRUE)
 library(Statamarkdown)
 ```

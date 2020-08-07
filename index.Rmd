@@ -13,17 +13,17 @@ description: "Dies ist das Begleitskript für die Stata-Übungen zum GESIS Metho
 ---
 
 ```{r setup, echo = F, message=F, warning = F}
-if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library")  # set library
+list.of.packages <- c("tidyr","dplyr","readr","haven","rmarkdown","bookdown","devtools","tidyverse","knitr") # Pakete eintragen
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+# if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library")  # set library
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(echo = T)
 # knitr::opts_chunk$set(dpi=400)
-library(tidyverse) # enthÃ¤lt auch readr & tidyr
-library(prediction)
-library(ggeffects)
-library(janitor)
-# install_github("hemken/Statamarkdown")
+# devtools::install_github("hemken/Statamarkdown")
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 library(Statamarkdown)
-library(ggeffects)
 ```
 
 # Herzlich Willkommen! {-}

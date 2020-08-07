@@ -1,7 +1,7 @@
 # Arbeiten mit Datensätzen in Stata {#Stata2} 
 
 ```{r setup2, echo = F, message=F, warning = F}
-.libPaths("D:/R-library")
+# .libPaths("D:/R-library")
 knitr::opts_chunk$set(collapse = F)
 library(Statamarkdown)
 # # options(width = 200) # 157

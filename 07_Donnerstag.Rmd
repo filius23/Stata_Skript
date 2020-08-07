@@ -1,7 +1,7 @@
 # Inferenzstatistik I {#inf1}
 
 ```{r setup7, echo = F, message=F, warning = F}
-.libPaths("D:/R-library")
+# .libPaths("D:/R-library")
 knitr::opts_chunk$set(collapse = F)
 library(Statamarkdown)
 ```
