@@ -243,7 +243,7 @@ save "ZA5270_v2-0-0.dta", replace
 
 
 
-### egen
+### egen {#egen}
 
 `egen` ist die Erweiterung von `gen` und gibt uns die Möglichkeit, eine ganze Reihe von 
 

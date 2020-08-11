@@ -180,10 +180,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4" data-path="dataviz.html"><a href="dataviz.html#abschließende-bemerkungen"><i class="fa fa-check"></i><b>5.4</b> Abschließende Bemerkungen</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="lin-reg.html"><a href="lin-reg.html"><i class="fa fa-check"></i><b>6</b> Regression</a><ul>
-<li class="chapter" data-level="6.1" data-path="lin-reg.html"><a href="lin-reg.html#aufgaben"><i class="fa fa-check"></i><b>6.1</b> Aufgaben</a><ul>
-<li class="chapter" data-level="6.1.1" data-path="lin-reg.html"><a href="lin-reg.html#aufgabe-1"><i class="fa fa-check"></i><b>6.1.1</b> Aufgabe 1</a></li>
-<li class="chapter" data-level="6.1.2" data-path="lin-reg.html"><a href="lin-reg.html#aufgabe-2"><i class="fa fa-check"></i><b>6.1.2</b> Aufgabe 2</a></li>
+<li class="chapter" data-level="6.1" data-path="lin-reg.html"><a href="lin-reg.html#beispieldatensatz"><i class="fa fa-check"></i><b>6.1</b> Beispieldatensatz</a></li>
+<li class="chapter" data-level="6.2" data-path="lin-reg.html"><a href="lin-reg.html#idee-einer-regression"><i class="fa fa-check"></i><b>6.2</b> Idee einer Regression</a></li>
+<li class="chapter" data-level="6.3" data-path="lin-reg.html"><a href="lin-reg.html#residuen"><i class="fa fa-check"></i><b>6.3</b> Residuen</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="lin-reg.html"><a href="lin-reg.html#quadrierte-residuen"><i class="fa fa-check"></i><b>6.3.1</b> Quadrierte Residuen</a></li>
 </ul></li>
+<li class="chapter" data-level="6.4" data-path="lin-reg.html"><a href="lin-reg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>6.4</b> Interpretation der Regression</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="lin-reg.html"><a href="lin-reg.html#residuen-1"><i class="fa fa-check"></i><b>6.4.1</b> Residuen</a></li>
+<li class="chapter" data-level="6.4.2" data-path="lin-reg.html"><a href="lin-reg.html#modellgüte"><i class="fa fa-check"></i><b>6.4.2</b> Modellgüte</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="Stata2.html"><a href="Stata2.html#übungen"><i class="fa fa-check"></i><b>6.5</b> Übungen</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a></li>
 <li class="chapter" data-level="8" data-path="inf2.html"><a href="inf2.html"><i class="fa fa-check"></i><b>8</b> Inferenzstatistik II</a></li>
@@ -211,214 +217,216 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="lin_reg" class="section level1">
 <h1><span class="header-section-number">6</span> Regression</h1>
-<p>Zum Einstieg betrachten wir zunächst einen (fiktiven) Datensatz mit lediglich 4 Fällen. Mit dem <code>data.frame</code> Befehl können wir einen Datensatz erstellen. Unserer hat zunächst lediglich zwei Variablen: var1 und var2</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="lin-reg.html#cb1-1"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">var1 =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">7</span>,<span class="dv">8</span>),</span>
-<span id="cb1-2"><a href="lin-reg.html#cb1-2"></a>                 <span class="dt">var2 =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">6</span>))</span>
-<span id="cb1-3"><a href="lin-reg.html#cb1-3"></a>df</span></code></pre></div>
-<pre><code>##   var1 var2
-## 1    1    2
-## 2    2    4
-## 3    7    7
-## 4    8    6</code></pre>
-<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-2-1.png" width="240" style="display: block; margin: auto;" /></p>
-<p>Wie lassen sich diese Daten beschreiben? Wie können wir einen (möglichen) Zusammenhang zwischen <code>var1</code> und <code>var2</code> beschreiben?</p>
-<p>Eine Möglichkeit, die wir Sie in Statistik1 kennen gelernt haben, war das arithmetische Mittel. Dieses können wir mit <code>mean</code> zB für <code>var2</code> berechnen. Diesen Wert fürgen wir als neue Spalte “mean” in den Datensatz df ein. Anschließend können wir das artih. Mittel einzeichnen.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="lin-reg.html#cb3-1"></a>df<span class="op">$</span>mean &lt;-<span class="st"> </span><span class="kw">mean</span>(df<span class="op">$</span>var2)</span>
-<span id="cb3-2"><a href="lin-reg.html#cb3-2"></a>df</span></code></pre></div>
-<pre><code>##   var1 var2 mean
-## 1    1    2 4.75
-## 2    2    4 4.75
-## 3    7    7 4.75
-## 4    8    6 4.75</code></pre>
-<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-4-1.png" width="288" style="display: block; margin: auto;" />
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-1-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>Mit Regressionsmodellen können wir Zusammenhänge zwischen zwei metrischen Merkmalen untersuchen. In Stata können wir eine Regression mit dem <code>reg</code> Befehl berechnen:</p>
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
+-------------+------------------------------           F(  1,     2) =   11.07
+       Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
+    Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
+-------------+------------------------------           Adj R-squared =  0.7705
+       Total |       14.75     3  4.91666667           Root MSE      =  1.0623
+
+------------------------------------------------------------------------------
+        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------</code></pre>
+<p>Hier steht jetzt eine ganze Menge an Informationen, die wir uns im Folgenden genauer ansehen werden.</p>
+<div id="beispieldatensatz" class="section level2">
+<h2><span class="header-section-number">6.1</span> Beispieldatensatz</h2>
+<p>Zum Einstieg betrachten wir zunächst einen (fiktiven) Datensatz mit lediglich 4 Fällen und lediglich zwei Variablen: <code>var1</code> und <code>var2</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="lin-reg.html#cb2-1"></a><span class="kw">use</span> <span class="st">&quot;https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb2-2"><a href="lin-reg.html#cb2-2"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>  var1 var2
+1    1    2
+2    2    4
+3    7    7
+4    8    6</code></pre>
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-5-1.png" width="336" style="display: block; margin: auto;" /></p>
+</div>
+<div id="idee-einer-regression" class="section level2">
+<h2><span class="header-section-number">6.2</span> Idee einer Regression</h2>
+<p>Ziel der Regression ist es, den Zusammenhang zwischen diesen beiden Variablen zu bestimmen. Gibt es einen Trend, in dem Sinn, dass ein höherer Wert von <code>var1</code> mit einem höheren oder niedrigeren Wert von <code>var2</code> einhergeht?</p>
+<p>Etwas anders gesagt könnte man auch fragen, welchen Wert für <code>var2</code> wir vorhersagen würden, wenn wir <code>var1</code> kennen. Ein Ausgangspunkt ist das arithmetische Mittel. Dieses können wir mit <code>mean</code> zB für <code>var2</code> berechnen.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Diesen Wert fügen wir als neue Spalte <code>mean_var2</code> in den Datensatz ein:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="lin-reg.html#cb4-1"></a><span class="kw">egen</span> mean_var2 = <span class="kw">mean</span>(var2)</span>
+<span id="cb4-2"><a href="lin-reg.html#cb4-2"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>  var1 var2 mean_var2
+1    1    2      4.75
+2    2    4      4.75
+3    7    7      4.75
+4    8    6      4.75</code></pre>
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-8-1.png" width="288" style="display: block; margin: auto;" />
 Müssten wir eine Prognose für die Werte von <code>var2</code> abgeben, wäre das arith. Mittel eine gute Wahl. Die <strong>vorhergesagten Werte</strong> werden jeweils auf der Linie für das arith. Mittel liegen.</p>
-<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-5-1.png" width="288" style="display: block; margin: auto;" />
-Allerdings liegen wir mit dem arith. Mittel dann immer auch Stück daneben. Diese Abweichung zwischen dem tatsächlichen und dem vorhergesagten Wert wird als <strong>Residuum</strong> bezeichnet, in unserem Beispiel ist das jeweils die Differenz zwischen <code>var2</code> und <code>mean</code>:
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-9-1.png" width="288" style="display: block; margin: auto;" /></p>
+</div>
+<div id="residuen" class="section level2">
+<h2><span class="header-section-number">6.3</span> Residuen</h2>
+<p>Allerdings liegen wir mit dem arith. Mittel dann immer auch Stück daneben. Diese Abweichung zwischen dem tatsächlichen und dem vorhergesagten Wert wird als <strong>Residuum</strong> bezeichnet, in unserem Beispiel ist das jeweils die Differenz zwischen <code>var2</code> und <code>mean</code>:
 <span class="math display">\[Residuum = beobachteter\, Wert \; - \; vorhergesagter\,Wert\]</span>
 Als Formel wird das in der Regel wie folgt dargestellt:
 <span class="math display">\[\epsilon_{\text{i}} = \text{y}_{i} - \hat{\text{y}}_{i}\]</span></p>
-<p>Wir können also die Residuem als Differenz zwischen <code>var2</code> und <code>mean</code> berechnen und in <code>df</code> ablegen:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="lin-reg.html#cb5-1"></a>df<span class="op">$</span>m_residuen &lt;-<span class="st"> </span>df<span class="op">$</span>var2 <span class="op">-</span><span class="st"> </span>df<span class="op">$</span>mean</span>
-<span id="cb5-2"><a href="lin-reg.html#cb5-2"></a>df</span></code></pre></div>
-<pre><code>##   var1 var2 mean m_residuen
-## 1    1    2 4.75      -2.75
-## 2    2    4 4.75      -0.75
-## 3    7    7 4.75       2.25
-## 4    8    6 4.75       1.25</code></pre>
-<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-7-1.png" width="288" style="display: block; margin: auto;" /></p>
+<p>Wir können also die Residuen als Differenz zwischen <code>var2</code> und <code>mean</code> berechnen und in <code>df</code> ablegen:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="lin-reg.html#cb6-1"></a><span class="kw">gen</span> m_abw = var2 - mean_var2</span>
+<span id="cb6-2"><a href="lin-reg.html#cb6-2"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>  var1 var2 mean_var2 m_abw
+1    1    2      4.75 -2.75
+2    2    4      4.75 -0.75
+3    7    7      4.75  2.25
+4    8    6      4.75  1.25</code></pre>
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-12-1.png" width="288" style="display: block; margin: auto;" /></p>
 <p><em>Was bedeutet also ein negativer oder ein positiver Wert für das Residuum?</em></p>
 <p>Die horizontale Linie für das arithm. Mittel ist aber sehr deutlich nicht die beste Methode, um die Werte für <code>var2</code> vorherzusagen. In der Graphik können wir deutlich sehen, dass die Werte “weiter links”, also mit geringeren Werten für <code>var1</code>, auch geringere Werte für <code>var2</code> aufweisen. Wir könnten also unseren Vorhersagefehler bzw. das <em>Residuum</em> minimieren indem wir die Linie drehen. Die Idee der Regressionsanalyse ist es dabei, die Residuuen zu minimieren. Was würde aber passieren wenn wir die Residuen aus der Mittelwertsvorhersage aufsummieren, um Sie dann zu minimieren?</p>
-<p>Mit <code>sum</code> können wir die Summe für eine Variable bilden:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="lin-reg.html#cb7-1"></a>df</span></code></pre></div>
-<pre><code>##   var1 var2 mean m_residuen
-## 1    1    2 4.75      -2.75
-## 2    2    4 4.75      -0.75
-## 3    7    7 4.75       2.25
-## 4    8    6 4.75       1.25</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="lin-reg.html#cb9-1"></a><span class="kw">sum</span>(df<span class="op">$</span>m_residuen)</span></code></pre></div>
-<pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="lin-reg.html#cb11-1"></a><span class="kw">sum</span>(df<span class="op">$</span>m_residuen[df<span class="op">$</span>m_residuen<span class="op">&lt;</span><span class="dv">0</span>])</span></code></pre></div>
-<pre><code>## [1] -3.5</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="lin-reg.html#cb13-1"></a><span class="kw">sum</span>(df<span class="op">$</span>m_residuen[df<span class="op">$</span>m_residuen<span class="op">&gt;</span><span class="dv">0</span>])</span></code></pre></div>
-<pre><code>## [1] 3.5</code></pre>
+<div id="quadrierte-residuen" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Quadrierte Residuen</h3>
+<p>Mit <code>total</code> können wir die Summe für eine Variable bilden:</p>
+<pre><code>  var1 var2 mean_var2 m_abw
+1    1    2      4.75 -2.75
+2    2    4      4.75 -0.75
+3    7    7      4.75  2.25
+4    8    6      4.75  1.25</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="lin-reg.html#cb9-1"></a><span class="kw">total</span> m_abw</span></code></pre></div>
+<pre><code>Total estimation                    Number of obs    =       4
+
+--------------------------------------------------------------
+             |      Total   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+       m_abw |          0   4.434712     -14.11323    14.11323
+--------------------------------------------------------------</code></pre>
 <p><strong>Die Summe der Resiuden auf Basis des arith. Mittels ist immer Null!</strong><br />
 Anders formuliert: die gestrichelten Linien nach oben sind in Summe genauso lang wie gestrichelten Linien nach unten.
-
 Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wir minimieren können:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="lin-reg.html#cb15-1"></a>df</span></code></pre></div>
-<pre><code>##   var1 var2 mean m_residuen
-## 1    1    2 4.75      -2.75
-## 2    2    4 4.75      -0.75
-## 3    7    7 4.75       2.25
-## 4    8    6 4.75       1.25</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="lin-reg.html#cb17-1"></a>df<span class="op">$</span>m_residuen2 &lt;-<span class="st"> </span>df<span class="op">$</span>m_residuen<span class="op">^</span><span class="dv">2</span> </span>
-<span id="cb17-2"><a href="lin-reg.html#cb17-2"></a>df</span></code></pre></div>
-<pre><code>##   var1 var2 mean m_residuen m_residuen2
-## 1    1    2 4.75      -2.75      7.5625
-## 2    2    4 4.75      -0.75      0.5625
-## 3    7    7 4.75       2.25      5.0625
-## 4    8    6 4.75       1.25      1.5625</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="lin-reg.html#cb19-1"></a><span class="kw">sum</span>(df<span class="op">$</span>m_residuen2)</span></code></pre></div>
-<pre><code>## [1] 14.75</code></pre>
-<p>Die Minimierung erledigt <code>lm()</code> für uns. Hier geben wir das Merkmal an, das auf der y-Achse liegt (die <em>abhängige</em> Variable) und nach einer <code>~</code> das Merkmal für die x-Achse (<em>unabhängige</em> Variable). Die Interpretation des Ergebnisses wird uns die kommenden Wochen beschäftigen. Für heute ist wichtig, dass ein positiver Wert unter <code>var1</code> bedeutet, dass unsere Gerade von links nach rechts ansteigt und ein negativer eine fallende Linie bedeuten würde. Der Wert unter <code>var1</code> gibt an, um <em>wieviel sich die Gerade pro “Schritt nach rechts” nach oben/unten verändert</em>. Die Gerade steigt also pro Einheit von <code>var1</code> um 0.5810811. Die Ergebnisse können wir unter <code>m1</code> ablegen.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="lin-reg.html#cb21-1"></a><span class="kw">lm</span>(var2<span class="op">~</span><span class="st"> </span>var1, <span class="dt">data =</span> df)  </span>
-<span id="cb21-2"><a href="lin-reg.html#cb21-2"></a><span class="co">## </span></span>
-<span id="cb21-3"><a href="lin-reg.html#cb21-3"></a><span class="co">## Call:</span></span>
-<span id="cb21-4"><a href="lin-reg.html#cb21-4"></a><span class="co">## lm(formula = var2 ~ var1, data = df)</span></span>
-<span id="cb21-5"><a href="lin-reg.html#cb21-5"></a><span class="co">## </span></span>
-<span id="cb21-6"><a href="lin-reg.html#cb21-6"></a><span class="co">## Coefficients:</span></span>
-<span id="cb21-7"><a href="lin-reg.html#cb21-7"></a><span class="co">## (Intercept)         var1  </span></span>
-<span id="cb21-8"><a href="lin-reg.html#cb21-8"></a><span class="co">##      2.1351       0.5811</span></span>
-<span id="cb21-9"><a href="lin-reg.html#cb21-9"></a>m1 &lt;-<span class="st"> </span><span class="kw">lm</span>(var2<span class="op">~</span><span class="st"> </span>var1, <span class="dt">data =</span> df)  </span></code></pre></div>
-<p>In unserer Grafik sieht diese Gerade so aus:
-<img src="Stata_Skript_files/figure-html/unnamed-chunk-12-1.png" width="240" style="display: block; margin: auto;" /></p>
-<p>In welcher Hinsicht ist die Gerade nun eine Verbesserung gegenüber dem <code>mean</code>? Wir können uns für eine Einschätzung die Residuen ansehen. Für den Punkt ganz links hatte wir vorhin berechnet, dass das Residuum auf Basis des arithm. Mittels (also die Distanz zum orangen Punkt auf der gestrichelten Linie) <code>2-4.75 = -2.75</code> beträgt:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="lin-reg.html#cb22-1"></a>df</span></code></pre></div>
-<pre><code>##   var1 var2 mean m_residuen m_residuen2
-## 1    1    2 4.75      -2.75      7.5625
-## 2    2    4 4.75      -0.75      0.5625
-## 3    7    7 4.75       2.25      5.0625
-## 4    8    6 4.75       1.25      1.5625</code></pre>
-<p>Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade? Sehen wir uns der Ergebnis aus <code>lm(var2~ var1, data = df)</code>, das wir unter <code>m1</code> nochmal an, hier finden sich unter <code>$fitted.values</code> die vorhergesagten Werte von <code>lm()</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="lin-reg.html#cb24-1"></a>m1<span class="op">$</span>fitted.values</span></code></pre></div>
-<pre><code>##        1        2        3        4 
-## 2.716216 3.297297 6.202703 6.783784</code></pre>
-<p>Diese vohergesagten Werte entsprechen einfach der Summe aus dem Wert unter <code>Intercept</code> und dem Wert unter <code>var1</code> multipliziert mit dem jeweiligen Wert für <code>var1</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="lin-reg.html#cb26-1"></a>m1</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = var2 ~ var1, data = df)
-## 
-## Coefficients:
-## (Intercept)         var1  
-##      2.1351       0.5811</code></pre>
-<p>Für die erste Zeile aus <code>df</code> ergibt sich also <code>m1</code> folgender vorhergesagter Wert: <code>2.1351+0.5811*1=</code>2.7162</p>
-<p>Die Werte unter <code>fitted.values</code> folgen der Reihenfolge im Datensatz, sodass wir sie einfach als neue Spalte in <code>df</code> ablegen können:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="lin-reg.html#cb28-1"></a>df<span class="op">$</span>lm_vorhersagen &lt;-<span class="st"> </span>m1<span class="op">$</span>fitted.values</span>
-<span id="cb28-2"><a href="lin-reg.html#cb28-2"></a>df</span></code></pre></div>
-<pre><code>##   var1 var2 mean m_residuen m_residuen2 lm_vorhersagen
-## 1    1    2 4.75      -2.75      7.5625       2.716216
-## 2    2    4 4.75      -0.75      0.5625       3.297297
-## 3    7    7 4.75       2.25      5.0625       6.202703
-## 4    8    6 4.75       1.25      1.5625       6.783784</code></pre>
-<p>Die Grafik zeigt wie Vorhersagen auf Basis von <code>m1</code> aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für <code>var1</code>.
-<img src="Stata_Skript_files/figure-html/unnamed-chunk-17-1.png" width="288" style="display: block; margin: auto;" />
-Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen von <code>m1</code>) deutlich näher an den tatsächlichen Punkten liegen als die orangen Vorhersagen auf Basis des <code>mean</code>. Trotzdem sind auch die hellblauen Punkte nicht deckungsgleich mit den tatsächlchen Werten. Es gibt also auch hier wieder Residuen. Wir können diese per Hand berechnen als Differenz zwischen dem tatsächlichen und dem vorhergesagten Wert:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="lin-reg.html#cb30-1"></a>df<span class="op">$</span>var2 <span class="op">-</span><span class="st"> </span>df<span class="op">$</span>lm_vorhersagen</span></code></pre></div>
-<pre><code>## [1] -0.7162162  0.7027027  0.7972973 -0.7837838</code></pre>
-<p>Oder wir können Sie unter <code>m1$residuals</code> aufrufen:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="lin-reg.html#cb32-1"></a>m1<span class="op">$</span>residuals</span></code></pre></div>
-<pre><code>##          1          2          3          4 
-## -0.7162162  0.7027027  0.7972973 -0.7837838</code></pre>
-<p>Auch die Residuen für <code>lm</code> können wir in <code>df</code> ablegen:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="lin-reg.html#cb34-1"></a>df<span class="op">$</span>lm_residuen &lt;-<span class="st"> </span>m1<span class="op">$</span>residuals</span>
-<span id="cb34-2"><a href="lin-reg.html#cb34-2"></a>df</span></code></pre></div>
-<pre><code>##   var1 var2 mean m_residuen m_residuen2 lm_vorhersagen lm_residuen
-## 1    1    2 4.75      -2.75      7.5625       2.716216  -0.7162162
-## 2    2    4 4.75      -0.75      0.5625       3.297297   0.7027027
-## 3    7    7 4.75       2.25      5.0625       6.202703   0.7972973
-## 4    8    6 4.75       1.25      1.5625       6.783784  -0.7837838</code></pre>
-<p>Hier sind die Residuen für <code>lm</code> hellblau eingezeichnet:
-<img src="Stata_Skript_files/figure-html/unnamed-chunk-21-1.png" width="264" style="display: block; margin: auto;" />
-<em>Wie groß ist die Summe der Residuen für <code>lm</code>?</em></p>
-<p>Um zu beurteilen, um wieviel besser unsere Gerade aus <code>lm()</code> die Werte vorhersagen kann als der <code>mean</code> können wir die Summe der quadrierten Residuen vergleichen:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="lin-reg.html#cb36-1"></a>df<span class="op">$</span>lm_residuen2 &lt;-<span class="st"> </span>df<span class="op">$</span>lm_residuen<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb36-2"><a href="lin-reg.html#cb36-2"></a>df</span></code></pre></div>
-<pre><code>##   var1 var2 mean m_residuen m_residuen2 lm_vorhersagen lm_residuen lm_residuen2
-## 1    1    2 4.75      -2.75      7.5625       2.716216  -0.7162162    0.5129657
-## 2    2    4 4.75      -0.75      0.5625       3.297297   0.7027027    0.4937911
-## 3    7    7 4.75       2.25      5.0625       6.202703   0.7972973    0.6356830
-## 4    8    6 4.75       1.25      1.5625       6.783784  -0.7837838    0.6143170</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="lin-reg.html#cb38-1"></a><span class="kw">sum</span>(df<span class="op">$</span>m_residuen2)</span></code></pre></div>
-<pre><code>## [1] 14.75</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="lin-reg.html#cb40-1"></a><span class="kw">sum</span>(df<span class="op">$</span>lm_residuen2)</span></code></pre></div>
-<pre><code>## [1] 2.256757</code></pre>
-<p>Zum Beispiel können wir uns fragen, um wieviel sich die Summe der quadrierten Residuen verringert wenn wir statt des <code>mean</code> unser <code>lm</code>-Modell verwenden:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="lin-reg.html#cb42-1"></a><span class="kw">sum</span>(df<span class="op">$</span>m_residuen2)<span class="op">-</span><span class="kw">sum</span>(df<span class="op">$</span>lm_residuen2)</span></code></pre></div>
-<pre><code>## [1] 12.49324</code></pre>
-<p>Wenn wir diese Veränderung ins Verhältnis mit dem “Ausgangswert”, also den Residuen aus der Mittelwertregel setzen, dann erhalten wir das <span class="math inline">\(R^{2}\)</span> für unser <code>lm()</code>-Modell. Dieses gibt die prozentuale Verringerung der Residuen durch das <code>lm()</code>-Modell im Vergleich zur Mittelwertregel an:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="lin-reg.html#cb44-1"></a>( <span class="kw">sum</span>(df<span class="op">$</span>m_residuen2)<span class="op">-</span><span class="kw">sum</span>(df<span class="op">$</span>lm_residuen2) )<span class="op">/</span><span class="kw">sum</span>(df<span class="op">$</span>m_residuen2)</span></code></pre></div>
-<pre><code>## [1] 0.8469995</code></pre>
-<p>Unser <code>lm</code>-Modell kann also 84,7% der Streuung um den Mittelwert erklären.</p>
-<div id="aufgaben" class="section level2">
-<h2><span class="header-section-number">6.1</span> Aufgaben</h2>
-<div id="aufgabe-1" class="section level3">
-<h3><span class="header-section-number">6.1.1</span> Aufgabe 1</h3>
-<p>Erstellen Sie wie folgt einen Beispieldatensatz (Sie können aber gerne auch eigene, andere Werte verwenden)</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="lin-reg.html#cb46-1"></a>df2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">var1 =</span> <span class="kw">c</span>(<span class="dv">12</span>,<span class="dv">10</span>,<span class="dv">24</span>,<span class="dv">28</span>,<span class="dv">23</span>) ,</span>
-<span id="cb46-2"><a href="lin-reg.html#cb46-2"></a>                  <span class="dt">var2 =</span> <span class="kw">c</span>(<span class="dv">17</span>,<span class="dv">16</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">8</span>))</span></code></pre></div>
-<ul>
-<li>Berechnen Sie das arithm. Mittel für <code>var2</code>!</li>
-<li>Legen Sie das arithm. Mittel als neue Variable im Datensatz <code>df2</code> ab (siehe S.1)</li>
-<li>Berechnen Sie die Residuen für die Mittelwertsregel - wie groß ist die Abweichung vom arith. Mittel für die einzelnen Beobachtungen für <code>var2</code>?</li>
-<li>Legen Sie die Residuen der Mittelwertsregel in <code>df2</code> ab</li>
-<li>Wie groß ist die Summe der Resiuden, wenn Sie alle Werte zusammen zählen?</li>
-<li>Erstellen Sie ein Objekt <code>m2</code> mit einem linearen Regressionsmodell (<code>lm</code>) mit <code>var2</code> als abhängiger und <code>var1</code> als unabhängiger Variable!</li>
-<li>Betrachten Sie Ergebnisse <code>m2</code> - was können Sie erkennen? Besteht ein positiver oder negativer Zusammenhang zwischen <code>var1</code> und <code>var2</code>?</li>
-<li>Erstellen Sie neue Variablen in <code>df2</code> für die vorhergesagten Werte und die Residuen aus dem Regressionsmodell <code>m2</code></li>
-<li>Wie hoch ist die Summe der Residuen aus <code>m2</code>? Wie hoch ist die Summe der quadrierten Residuen für <code>m2</code>?</li>
-<li>Berechnen Sie die Differenz zwischen den quadrierten Residuen der Mittelwertregel und den quadrierten Residuen für <code>m2</code>. Berechnen Sie das <span class="math inline">\(R^2\)</span> für <code>m2</code>!</li>
-</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="lin-reg.html#cb11-1"></a><span class="kw">gen</span> m_abw2 = m_abw^2 </span>
+<span id="cb11-2"><a href="lin-reg.html#cb11-2"></a><span class="kw">total</span> m_abw2</span></code></pre></div>
+<pre><code>Total estimation                    Number of obs    =       4
+
+--------------------------------------------------------------
+             |      Total   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+      m_abw2 |      14.75   6.448514      -5.77205    35.27205
+--------------------------------------------------------------</code></pre>
+<pre><code>  var1 var2 mean_var2 m_abw m_abw2
+1    1    2      4.75 -2.75 7.5625
+2    2    4      4.75 -0.75 0.5625
+3    7    7      4.75  2.25 5.0625
+4    8    6      4.75  1.25 1.5625</code></pre>
+<div id="vergleich-zur-varianz" class="section level4">
+<h4><span class="header-section-number">6.3.1.1</span> Vergleich zur Varianz</h4>
+<p>Wir hatten gestern die Varianz kennen gelernt. Diese ist sehr ähnlich zu <code>m_abw2</code>: wenn wir die Summe von <code>m_abw2</code> durch (<span class="math inline">\(n\)</span>) die Zahl der Beobachtungen teilen, dann erhalten wir die Varianz:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb14-1"><a href="lin-reg.html#cb14-1"></a>dis 14.75/4</span></code></pre></div>
+<pre><code>3.6875</code></pre>
 </div>
-<div id="aufgabe-2" class="section level3">
-<h3><span class="header-section-number">6.1.2</span> Aufgabe 2</h3>
-<p>Dieses Prinzip funktioniert natürlich genauso für größere Datensätze, zum Beispiel den Allbus 2016. Untersuchen Sie den Zusammenhang zwischen Alter (<code>age</code>) und dem Einkommen (<code>inc</code>) der weiblichen, in Vollzeit erwerbstätigen Befragten!</p>
-<ul>
-<li>Lesen Sie den Allbus-Datensatz wie bekannt ein. Hier nochmal zu Erinnerung das Vorgehen:</li>
-</ul>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="lin-reg.html#cb47-1"></a><span class="co"># Arbeitsverzeichnis in den Ordner mit dem Datensatz setzen:</span></span>
-<span id="cb47-2"><a href="lin-reg.html#cb47-2"></a><span class="kw">setwd</span>(<span class="st">&quot;C:/Lehre&quot;</span>) </span>
-<span id="cb47-3"><a href="lin-reg.html#cb47-3"></a>a16 &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;allbus2016.csv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;;&quot;</span>, <span class="dt">header =</span> T) <span class="co"># einlesen</span></span></code></pre></div>
-<p>Zunächst müssen wir dann die Missings mit <code>NA</code> überschreiben:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="lin-reg.html#cb48-1"></a>a16<span class="op">$</span>age[a16<span class="op">$</span>age<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb48-2"><a href="lin-reg.html#cb48-2"></a>a16<span class="op">$</span>inc[a16<span class="op">$</span>inc<span class="op">&lt;</span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span></code></pre></div>
-<p>Mit <code>na.omit</code> können wir dann all die Beobachtungen auswählen, für <code>age</code> und <code>inc</code> nicht Missing sind:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="lin-reg.html#cb49-1"></a>a16 &lt;-<span class="st"> </span><span class="kw">na.omit</span>(a16)</span></code></pre></div>
-<ul>
-<li>Mit folgendem Befehl können Sie ein Teildatenset <code>a16f</code> erstellen, das nur in Vollzeit erwerbstätige Frauen enthält:</li>
-</ul>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="lin-reg.html#cb50-1"></a>a16f &lt;-<span class="st"> </span>a16[a16<span class="op">$</span>sex <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>a16<span class="op">$</span>work <span class="op">==</span><span class="st"> </span><span class="dv">1</span>,] <span class="co"># base R</span></span>
-<span id="cb50-2"><a href="lin-reg.html#cb50-2"></a>a16f &lt;-<span class="st"> </span><span class="kw">filter</span>(a16, sex <span class="op">==</span><span class="st"> </span><span class="dv">2</span>, work <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="co"># dplyr</span></span></code></pre></div>
-<p>Für die Analyse sind nur die Variablen <code>age</code> und <code>inc</code> wichtig, also können wir den Datensatz auf diese beiden Variablen reduzieren:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="lin-reg.html#cb51-1"></a>a16f &lt;-<span class="st"> </span>a16f[,<span class="kw">c</span>(<span class="st">&quot;age&quot;</span>,<span class="st">&quot;inc&quot;</span>)] <span class="co"># base R</span></span>
-<span id="cb51-2"><a href="lin-reg.html#cb51-2"></a>a16f &lt;-<span class="st"> </span><span class="kw">select</span>(a16f, age, inc) <span class="co"># dplyr</span></span></code></pre></div>
-<p>Mit <code>head</code> können wir uns die ersten Zeilen des Datensatzes anzeigen lassen oder mit <code>View()</code> den gesamten Datensatz ansehen:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="lin-reg.html#cb52-1"></a><span class="kw">head</span>(a16f)</span>
-<span id="cb52-2"><a href="lin-reg.html#cb52-2"></a><span class="kw">View</span>(a16f)</span></code></pre></div>
-<ul>
-<li>Berechnen Sie das arithm. Mittel für das Einkommen</li>
-<li>Legen Sie das arithm. Mittel als neue Variable im Datensatz ab (siehe S.1)</li>
-<li>Berechnen Sie die Residuen für die Mittelwertregel!</li>
-<li>Wie groß ist die Summe der Residuen, wenn Sie alle Werte zusammen zählen?</li>
-<li>Erstellen Sie ein Objekt <code>m3</code> mit einem linearen Regressionsmodell (<code>lm</code>) mit dem Einkommen (<code>inc</code>) als abhängiger und dem Alter (<code>age</code>) der Frauen als unabhängiger Variable!</li>
-<li>Welche Richtung für die Regressionsgerade können Sie erkennen?</li>
-<li>Erstellen Sie neue Variablen in <code>a16f</code> für die vorhergesagten Werte und die Residuen aus dem Regressionsmodell <code>m3</code></li>
-<li>Wie hoch ist die Summe der quadrierten Residuen aus <code>m3</code>?</li>
-<li>Berechnen Sie das <span class="math inline">\(R^2\)</span> für <code>m3</code>!</li>
-</ul>
+</div>
+</div>
+<div id="interpretation-der-regression" class="section level2">
+<h2><span class="header-section-number">6.4</span> Interpretation der Regression</h2>
+<p>Die Minimierung erledigt <code>reg</code> für uns. Hier geben wir zuerst das Merkmal an, das auf der y-Achse liegt (die <em>abhängige</em> Variable) und dann das Merkmal für die x-Achse (<em>unabhängige</em> Variable) an. Ein positiver Wert unter <code>var1</code> bedeutet, dass unsere Gerade von links nach rechts ansteigt und ein negativer eine fallende Linie bedeuten würde. Der Wert unter <code>var1</code> gibt an, um <em>wieviel sich die Gerade pro “Schritt nach rechts” nach oben/unten verändert</em>. Die Gerade steigt also pro Einheit von <code>var1</code> um 0.5810811:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="lin-reg.html#cb16-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
+-------------+------------------------------           F(  1,     2) =   11.07
+       Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
+    Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
+-------------+------------------------------           Adj R-squared =  0.7705
+       Total |       14.75     3  4.91666667           Root MSE      =  1.0623
+
+------------------------------------------------------------------------------
+        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------</code></pre>
+<p>In unserer Grafik sieht diese Gerade so aus:
+<img src="Stata_Skript_files/figure-html/unnamed-chunk-20-1.png" width="240" style="display: block; margin: auto;" />
+### Vorhergesagte Werte</p>
+<p>Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade?
+Die vohergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der Summe aus dem Wert unter <code>Intercept</code> und dem Koeffizienten neben <code>var1</code> multipliziert mit dem jeweiligen Wert für <code>var1</code>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="lin-reg.html#cb18-1"></a><span class="kw">reg</span> var2 var1, <span class="kw">noheader</span></span></code></pre></div>
+<pre><code>        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------</code></pre>
+<p><span class="math display">\[\texttt{Intercept} + 0.5811 \times \texttt{var1}\]</span><br />
+Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: 2.1351+0.5811*1= 2.7162</p>
+<p>Also könnten wir mit <code>gen</code> die vorhergesagten Werte berechnen:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="lin-reg.html#cb20-1"></a><span class="kw">gen</span> reg_vohers = 2.1351 + 0.5811 * var1</span></code></pre></div>
+<p>Die vorhergesagten Werte können wir auch mit <code>predict</code> berechnen und in einer neuen Variable <code>reg_vorhersagen</code> ablegen:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="lin-reg.html#cb21-1"></a><span class="kw">predict</span> reg_vorhersagen, <span class="kw">xb</span></span></code></pre></div>
+<pre><code>  var1 var2 mean_var2 m_abw m_abw2 reg_vorhersagen
+1    1    2      4.75 -2.75 7.5625        2.716216
+2    2    4      4.75 -0.75 0.5625        3.297297
+3    7    7      4.75  2.25 5.0625        6.202703
+4    8    6      4.75  1.25 1.5625        6.783784</code></pre>
+<p>Die Grafik zeigt wie Vorhersagen auf Basis des Regressionsmodells aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für <code>var1</code>.
+<img src="Stata_Skript_files/figure-html/unnamed-chunk-25-1.png" width="288" style="display: block; margin: auto;" />
+Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regressionsmodells) deutlich näher an den tatsächlichen Punkten liegen als die orangen Vorhersagen auf Basis des <code>mean</code>.</p>
+<div id="residuen-1" class="section level3">
+<h3><span class="header-section-number">6.4.1</span> Residuen</h3>
+<p>Trotzdem sind auch die hellblauen Punkte nicht deckungsgleich mit den tatsächlchen Werten. Es gibt also auch hier wieder Residuen, also Abweichungen des beobachteten vom vorhergesagten Wert. Wir können diese per Hand berechnen als Differenz zwischen dem tatsächlichen und dem vorhergesagten Wert:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="lin-reg.html#cb23-1"></a><span class="kw">gen</span> res = var2 - reg_vorhersagen </span></code></pre></div>
+<p>Oder wir können Sie mit <code>predict neue_variable , residuals</code> erstellen:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="lin-reg.html#cb24-1"></a><span class="kw">reg</span> var2 var1 <span class="co">// zunächst nochmal die regression laufen lassen</span></span>
+<span id="cb24-2"><a href="lin-reg.html#cb24-2"></a><span class="kw">predict</span> p_res , residuals</span>
+<span id="cb24-3"><a href="lin-reg.html#cb24-3"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>  var1 var2 mean_var2 m_abw m_abw2 reg_vorhersagen        res      p_res
+1    1    2      4.75 -2.75 7.5625        2.716216 -0.7162162 -0.7162162
+2    2    4      4.75 -0.75 0.5625        3.297297  0.7027027  0.7027027
+3    7    7      4.75  2.25 5.0625        6.202703  0.7972973  0.7972973
+4    8    6      4.75  1.25 1.5625        6.783784 -0.7837838 -0.7837838</code></pre>
+<p>Hier sind die Residuen für <code>p_res</code> als hellblaue Linien eingezeichnet:
+<img src="Stata_Skript_files/figure-html/unnamed-chunk-29-1.png" width="264" style="display: block; margin: auto;" />
+<em>Wie groß ist die Summe der Residuen für <code>lm</code>?</em></p>
+</div>
+<div id="modellgüte" class="section level3">
+<h3><span class="header-section-number">6.4.2</span> Modellgüte</h3>
+<p>Um zu beurteilen, um wieviel besser unsere Gerade aus <code>reg</code> die Werte vorhersagt kann als der <code>mean</code> können wir die Summe der quadrierten Residuen vergleichen. Dazu quadrieren wir also die Residuen:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="lin-reg.html#cb26-1"></a><span class="kw">gen</span> res2 = res^2</span>
+<span id="cb26-2"><a href="lin-reg.html#cb26-2"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>  var1 var2 mean_var2 m_abw m_abw2 reg_vorhersagen        res      res2
+1    1    2      4.75 -2.75 7.5625        2.716216 -0.7162162 0.5129657
+2    2    4      4.75 -0.75 0.5625        3.297297  0.7027027 0.4937911
+3    7    7      4.75  2.25 5.0625        6.202703  0.7972973 0.6356830
+4    8    6      4.75  1.25 1.5625        6.783784 -0.7837838 0.6143170</code></pre>
+<p>Dann können wir die Summen der quadierten Abweichungen aus der Mittelwertregel und dem Regressionsmodell vergleichen:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb28-1"><a href="lin-reg.html#cb28-1"></a>dis 7.5625+0.5625+5.0625+1.5625 <span class="co">// abw2 aus Mittelwertsregel</span></span>
+<span id="cb28-2"><a href="lin-reg.html#cb28-2"></a>14.75</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="lin-reg.html#cb29-1"></a>dis 0.5129657+0.4937911+0.6356830+0.6143170 <span class="co">// res2 aus regressionsmodell</span></span>
+<span id="cb29-2"><a href="lin-reg.html#cb29-2"></a>2.2567568</span></code></pre></div>
+<p>Zum Beispiel können wir uns fragen, um wieviel sich die Summe der quadrierten Residuen verringert wenn wir statt des <code>mean</code> unser <code>reg</code>-Modell verwenden:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb30-1"><a href="lin-reg.html#cb30-1"></a>dis 14.75 -  2.256757</span>
+<span id="cb30-2"><a href="lin-reg.html#cb30-2"></a>12.493243</span></code></pre></div>
+<p>Wenn wir diese Veränderung ins Verhältnis mit dem “Ausgangswert”, also den Residuen aus der Mittelwertregel setzen, dann erhalten wir das <span class="math inline">\(R^{2}\)</span> für unser <code>reg</code>-Modell. Dieses gibt die prozentuale Verringerung der Residuen durch das <code>reg</code>-Modell im Vergleich zur Mittelwertregel an:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb31-1"><a href="lin-reg.html#cb31-1"></a>dis (14.75 -  2.256757) / 14.75</span></code></pre></div>
+<pre><code>.84699953</code></pre>
+<p>Unser Regressionsmodell kann also 84,7% der Streuung um den Mittelwert erklären. Dieser Wert wird auch als <span class="math inline">\(R^2\)</span> bezeichnet. Im Regressionsoutput können wir das <span class="math inline">\(R^2\)</span> oben rechts unter <code>R-squared</code> ablesen.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="lin-reg.html#cb33-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
+-------------+------------------------------           F(  1,     2) =   11.07
+       Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
+    Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
+-------------+------------------------------           Adj R-squared =  0.7705
+       Total |       14.75     3  4.91666667           Root MSE      =  1.0623
+
+------------------------------------------------------------------------------
+        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------</code></pre>
+<p>Außerdem sehen wir oben links in der Spalte <code>SS</code> die “Sum of Squares”. Hier finden wir auch die Werte von oben wieder: unter Total ist die Summe der quadrierten Abweichungen der beobachteten Werte vom arith. Mittel angegeben (<code>14.75</code>, sozusagen die Summe der <code>m_abw2</code> von oben). Residual gibt die Summe der Abweichungsquadrate zwischen den beobachteten Werten und den vorhergesagten Werten der Regression (<code>2.256..</code>, Die Summe von <code>res2</code>).</p>
+</div>
+</div>
+<div id="übungen" class="section level2">
+<h2><span class="header-section-number">6.5</span> Übungen</h2>
 
 </div>
 </div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Mehr zu <code>egen</code> in Kapitel <a href="Stata2.html#egen">2.11.5</a><a href="lin-reg.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Die Option <code>noheader</code> macht den Output von <code>reg</code> etwas übersichtlicher.<a href="lin-reg.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
