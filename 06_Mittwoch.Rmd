@@ -1,1 +1,257 @@
 # Regression {#lin_reg}
+```{r setup061, echo = F, include=FALSE}
+library(patchwork)
+library(tidyverse)
+pfad <- ("D:/Studium/01_Oldenburg/Lehre/Datensaetze/") # wo liegt der Datensatz?
+a16 <- read.csv(paste0(pfad,"ZA5250_v2-0-0.csv"), sep = ";", header = T) # einlesen
+```
+
+
+Zum Einstieg betrachten wir zunächst einen (fiktiven) Datensatz mit lediglich 4 Fällen. Mit dem `data.frame` Befehl können wir einen Datensatz erstellen. Unserer hat zunächst lediglich zwei Variablen: var1 und var2 
+```{r}
+df <- data.frame(var1 = c(1,2,7,8),
+                 var2 = c(2,4,7,6))
+df
+```
+```{r, fig.align="center", fig.height=2.5, fig.width=2.5, eval=T, echo=F}
+library(ggplot2)
+ggplot(df, aes(x = var1, y = var2)) + 
+  geom_point(size = 2) + 
+  ggthemes::theme_stata() +
+  scale_y_continuous(breaks = seq(0,8,2)) +
+  scale_x_continuous(breaks = seq(0,8,2)) 
+```
+
+Wie lassen sich diese Daten beschreiben? Wie können wir einen (möglichen) Zusammenhang zwischen `var1` und `var2` beschreiben?    
+
+Eine Möglichkeit, die wir Sie in Statistik1 kennen gelernt haben, war das arithmetische Mittel. Dieses können wir mit `mean` zB für `var2` berechnen. Diesen Wert fürgen wir als neue Spalte "mean" in den Datensatz df ein. Anschließend können wir das artih. Mittel einzeichnen.   
+
+```{r, fig.height=2.5, fig.width=2.5, echo=T, fig.align="center"}
+df$mean <- mean(df$var2)
+df
+```
+
+```{r, fig.height=3, fig.width=3, echo=F, fig.align="center"}
+ggplot(df, aes(x = var1, y = var2)) + 
+  geom_point(size = 3) + 
+  ggthemes::theme_stata() +
+  scale_y_continuous(breaks = seq(0,8,2)) +
+  scale_x_continuous(breaks = seq(0,8,2)) +
+  geom_hline(aes(yintercept = mean), color = "grey50", size = .75, linetype = "dashed") +
+  geom_label(aes(y = 4, x = 5), label = "mean = 4.75", color = "grey30")
+```
+Müssten wir eine Prognose für die Werte von `var2` abgeben, wäre das arith. Mittel eine gute Wahl. Die **vorhergesagten Werte** werden jeweils auf der Linie für das arith. Mittel liegen.   
+
+```{r, fig.height=3, fig.width=3, echo=F, fig.align="center"}
+# vohergesagte Werte einzeichnen
+ggplot(df, aes(x = var1, y = var2)) + 
+  geom_point(size = 3) + 
+  ggthemes::theme_stata() +
+  scale_y_continuous(breaks = seq(0,8,2)) +
+  scale_x_continuous(breaks = seq(0,8,2)) +
+  geom_hline(aes(yintercept = mean), color = "grey50", size = .75, linetype = "dashed") +
+  geom_point(aes(x = var1, y = mean), color = "darkorange", size = 3) 
+```
+Allerdings liegen wir mit dem arith. Mittel dann immer auch Stück daneben. Diese Abweichung zwischen dem tatsächlichen und dem vorhergesagten Wert wird als **Residuum** bezeichnet, in unserem Beispiel ist das jeweils die Differenz zwischen `var2` und `mean`:
+$$Residuum = beobachteter\, Wert \; - \; vorhergesagter\,Wert$$
+Als Formel wird das in der Regel wie folgt dargestellt:
+$$\epsilon_{\text{i}} = \text{y}_{i} - \hat{\text{y}}_{i}$$
+
+Wir können also die Residuem als Differenz zwischen `var2` und `mean` berechnen und in `df` ablegen:
+```{r}
+df$m_residuen <- df$var2 - df$mean
+df
+```
+```{r, fig.height=3, fig.width=3, echo=F, fig.align="center" }
+ggplot(df, aes(x = var1, y = var2)) + 
+  geom_point(size = 3) + 
+  ggthemes::theme_stata() +
+  scale_y_continuous(breaks = seq(0,8,2)) +
+  scale_x_continuous(breaks = seq(0,8,2)) +
+  geom_hline(aes(yintercept = mean), color = "grey50", size = .75, linetype = "dashed") +
+  geom_point(aes(x = var1, y = mean), color = "darkorange", size = 3) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean), 
+               color = "red", size = .65, linetype = "dotted") 
+```
+
+*Was bedeutet also ein negativer oder ein positiver Wert für das Residuum?*
+
+Die horizontale Linie für das arithm. Mittel ist aber sehr deutlich nicht die beste Methode, um die Werte für `var2` vorherzusagen. In der Graphik können wir deutlich sehen, dass die Werte "weiter links", also mit geringeren Werten für `var1`, auch geringere Werte für `var2` aufweisen. Wir könnten also unseren Vorhersagefehler bzw. das *Residuum* minimieren indem wir die Linie drehen. Die Idee der Regressionsanalyse ist es dabei, die Residuuen zu minimieren. Was würde aber passieren wenn wir die Residuen aus der Mittelwertsvorhersage aufsummieren, um Sie dann zu minimieren?
+
+Mit `sum` können wir die Summe für eine Variable bilden:
+```{r}
+df
+sum(df$m_residuen)
+sum(df$m_residuen[df$m_residuen<0])
+sum(df$m_residuen[df$m_residuen>0])
+```
+**Die Summe der Resiuden auf Basis des arith. Mittels ist immer Null!**    
+Anders formuliert: die gestrichelten Linien nach oben sind in Summe genauso lang wie gestrichelten Linien nach unten.
+\newpage
+Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wir minimieren können:
+```{r}
+df
+df$m_residuen2 <- df$m_residuen^2 
+df
+sum(df$m_residuen2)
+```
+
+```{r, echo = F}
+m1 <- lm(var2~ var1, data = df)  
+```
+
+Die Minimierung erledigt `lm()` für uns. Hier geben wir das Merkmal an, das auf der y-Achse liegt (die *abhängige* Variable) und nach einer `~`  das Merkmal für die x-Achse (*unabhängige* Variable). Die Interpretation des Ergebnisses wird uns die kommenden Wochen beschäftigen. Für heute ist wichtig, dass ein positiver Wert unter `var1` bedeutet, dass unsere Gerade von links nach rechts ansteigt und ein negativer eine fallende Linie bedeuten würde. Der Wert unter `var1` gibt an, um *wieviel sich die Gerade pro "Schritt nach rechts" nach oben/unten verändert*. Die Gerade steigt also pro Einheit von `var1` um `r m1$coefficients[2]`. Die Ergebnisse können wir unter `m1` ablegen.   
+
+```{r, fig.height=3, fig.width=3, echo=T, fig.align="center" , eval = T,warning=F,message=F, collapse=T}
+lm(var2~ var1, data = df)  
+m1 <- lm(var2~ var1, data = df)  
+```  
+In unserer Grafik sieht diese Gerade so aus:
+```{r, fig.height=2.5, fig.width=2.5, echo=T, fig.align="center" , echo = F,warning=F,message=F}
+ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 2) + 
+  ggthemes::theme_stata() +
+  geom_hline(aes(yintercept = mean), color = "grey50", size = .75, linetype = "dashed") +
+  scale_y_continuous(breaks = seq(0,8,2)) +
+  scale_x_continuous(breaks = seq(0,8,2)) +
+  geom_point(aes(x = var1, y = mean), col = "darkorange", size = 2) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean), 
+               color = "red", size = .65, linetype = "dotted")  +
+  geom_smooth(method = "lm", color = "darkblue" , se = FALSE) 
+```
+
+In welcher Hinsicht ist die Gerade nun eine Verbesserung gegenüber dem `mean`? Wir können uns für eine Einschätzung die Residuen ansehen. Für den Punkt ganz links hatte wir vorhin berechnet, dass das Residuum auf Basis des arithm. Mittels (also die Distanz zum orangen Punkt auf der gestrichelten Linie) `2-4.75 = -2.75` beträgt:
+```{r}
+df
+```
+Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade? Sehen wir uns der Ergebnis aus `lm(var2~ var1, data = df)`, das wir unter `m1` nochmal an, hier finden sich unter `$fitted.values` die vorhergesagten Werte von `lm()`.
+```{r}
+m1$fitted.values
+```
+Diese vohergesagten Werte entsprechen einfach der Summe aus dem Wert unter `Intercept` und dem Wert unter `var1` multipliziert mit dem jeweiligen Wert für `var1`. 
+```{r}
+m1
+```
+Für die erste Zeile aus `df` ergibt sich also `m1` folgender vorhergesagter Wert: `2.1351+0.5811*1=``r 2.1351+0.5811*1`
+
+Die Werte unter `fitted.values` folgen der Reihenfolge im Datensatz, sodass wir sie einfach als neue Spalte in `df` ablegen können:
+```{r}
+df$lm_vorhersagen <- m1$fitted.values
+df
+```
+Die Grafik zeigt wie Vorhersagen auf Basis von `m1` aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für `var1`. 
+```{r, fig.height=3, fig.width=3, echo=T, fig.align="center" , echo = F,warning=F,message=F}
+ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_stata() +
+  scale_y_continuous(breaks = seq(0,8,2)) +
+  scale_x_continuous(breaks = seq(0,8,2)) +
+  geom_hline(aes(yintercept = mean), color = "grey50", size = .75, linetype = "dashed") +
+  geom_point(aes(x = var1, y = mean), col = "darkorange", size = 3) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean), color = "red", size = .65, linetype = "dotted")  +
+  geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
+  geom_point(aes(x = var1, y = lm_vorhersagen), color = "dodgerblue3", size = 3)
+```
+Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen von `m1`) deutlich näher an den tatsächlichen Punkten liegen als die orangen Vorhersagen auf Basis des `mean`. Trotzdem sind auch die hellblauen Punkte nicht deckungsgleich mit den tatsächlchen Werten. Es gibt also auch hier wieder Residuen. Wir können diese per Hand berechnen als Differenz zwischen dem tatsächlichen und dem vorhergesagten Wert:
+```{r}
+df$var2 - df$lm_vorhersagen
+```
+Oder wir können Sie unter `m1$residuals` aufrufen:
+```{r}
+m1$residuals
+```
+Auch die Residuen für `lm` können wir in `df` ablegen: 
+```{r}
+df$lm_residuen <- m1$residuals
+df
+```
+
+Hier sind die Residuen für `lm` hellblau eingezeichnet:
+```{r, fig.height=2.75, fig.width=2.75, echo=F, fig.align="center" , eval = T, message=F}
+ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + theme_minimal() +
+  geom_hline(aes(yintercept = mean), color = "grey50", size = .75, linetype = "dashed") +
+  geom_point(aes(x = var1, y = mean), col = "darkorange", size = 3) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean), color = "red", size = .65, linetype = "dotted")  +
+  geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
+  geom_point(aes(x = var1, y = lm_vorhersagen), color = "dodgerblue3", size = 3) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = lm_vorhersagen), color = "dodgerblue3", size = .65, linetype = 1) 
+```
+*Wie groß ist die Summe der Residuen für `lm`?*       
+
+Um zu beurteilen, um wieviel besser unsere Gerade aus `lm()` die Werte vorhersagen kann als der `mean` können wir die Summe der quadrierten Residuen vergleichen:
+```{r}
+df$lm_residuen2 <- df$lm_residuen^2
+df
+sum(df$m_residuen2)
+sum(df$lm_residuen2)
+```
+Zum Beispiel können wir uns fragen, um wieviel sich die Summe der quadrierten Residuen verringert wenn wir statt des `mean` unser `lm`-Modell verwenden:
+```{r}
+sum(df$m_residuen2)-sum(df$lm_residuen2)
+```
+Wenn wir diese Veränderung ins Verhältnis mit dem "Ausgangswert", also den Residuen aus der Mittelwertregel setzen, dann erhalten wir das $R^{2}$ für unser `lm()`-Modell. Dieses gibt die prozentuale Verringerung der Residuen durch das `lm()`-Modell im Vergleich zur Mittelwertregel an: 
+```{r}
+( sum(df$m_residuen2)-sum(df$lm_residuen2) )/sum(df$m_residuen2)
+```
+Unser `lm`-Modell kann also 84,7\% der Streuung um den Mittelwert erklären.
+
+
+## Aufgaben
+### Aufgabe 1 
+Erstellen Sie wie folgt einen Beispieldatensatz (Sie können aber gerne auch eigene, andere Werte verwenden)
+```{r, eval = F, echo = T}
+df2 <- data.frame(var1 = c(12,10,24,28,23) ,
+                  var2 = c(17,16, 3, 5, 8))
+```
++ Berechnen Sie das arithm. Mittel für `var2`!
++ Legen Sie das arithm. Mittel als neue Variable im Datensatz `df2` ab (siehe S.1)
++ Berechnen Sie die Residuen für die Mittelwertsregel - wie groß ist die Abweichung vom arith. Mittel für die einzelnen Beobachtungen für `var2`?
++ Legen Sie die Residuen der Mittelwertsregel in `df2` ab
++ Wie groß ist die Summe der Resiuden, wenn Sie alle Werte zusammen zählen?
++ Erstellen Sie ein Objekt `m2` mit einem linearen Regressionsmodell (`lm`) mit `var2` als abhängiger und `var1` als unabhängiger Variable! 
++ Betrachten Sie Ergebnisse `m2` - was können Sie erkennen? Besteht ein positiver oder negativer Zusammenhang zwischen `var1` und `var2`?
++ Erstellen Sie neue Variablen in `df2` für die vorhergesagten Werte und die Residuen aus dem Regressionsmodell `m2`
++ Wie hoch ist die Summe der Residuen aus `m2`? Wie hoch ist die Summe der quadrierten Residuen für `m2`?
++ Berechnen Sie die Differenz zwischen den quadrierten Residuen der Mittelwertregel und den quadrierten Residuen für `m2`. Berechnen Sie das $R^2$ für `m2`! 
+
+### Aufgabe 2
+Dieses Prinzip funktioniert natürlich genauso für größere Datensätze, zum Beispiel den Allbus 2016. Untersuchen Sie den Zusammenhang zwischen Alter (`age`) und dem Einkommen (`inc`) der weiblichen, in Vollzeit erwerbstätigen Befragten!
+
++ Lesen Sie den Allbus-Datensatz wie bekannt ein. Hier nochmal zu Erinnerung das Vorgehen:
+```{r, eval = F, echo = T}
+# Arbeitsverzeichnis in den Ordner mit dem Datensatz setzen:
+setwd("C:/Lehre") 
+a16 <- read.csv("allbus2016.csv", sep = ";", header = T) # einlesen
+```
+Zunächst müssen wir dann die Missings mit `NA` überschreiben:
+```{r}
+a16$age[a16$age<0] <- NA
+a16$inc[a16$inc<0] <- NA
+```
+Mit `na.omit` können wir dann all die Beobachtungen auswählen, für `age` und `inc` nicht Missing sind:
+```{r, message = F}
+a16 <- na.omit(a16)
+```
++ Mit folgendem Befehl können Sie ein Teildatenset `a16f` erstellen, das nur in Vollzeit erwerbstätige Frauen enthält:
+```{r, eval = T, echo = T, message = F}
+a16f <- a16[a16$sex == 2 & a16$work == 1,] # base R
+a16f <- filter(a16, sex == 2, work == 1) # dplyr
+```
+Für die Analyse sind nur die Variablen `age` und `inc` wichtig, also können wir den Datensatz auf diese beiden Variablen reduzieren:
+```{r}
+a16f <- a16f[,c("age","inc")] # base R
+a16f <- select(a16f, age, inc) # dplyr
+```
+Mit `head` können wir uns die ersten Zeilen des Datensatzes anzeigen lassen oder mit `View()` den gesamten Datensatz ansehen: 
+```{r,eval= F}
+head(a16f)
+View(a16f)
+```
+
+
++ Berechnen Sie das arithm. Mittel für das Einkommen 
++ Legen Sie das arithm. Mittel als neue Variable im Datensatz ab (siehe S.1)
++ Berechnen Sie die Residuen für die Mittelwertregel!
++ Wie groß ist die Summe der Residuen, wenn Sie alle Werte zusammen zählen?
++ Erstellen Sie ein Objekt `m3` mit einem linearen Regressionsmodell (`lm`) mit dem Einkommen (`inc`) als abhängiger und dem Alter (`age`) der Frauen als unabhängiger Variable! 
++ Welche Richtung für die Regressionsgerade können Sie erkennen?
++ Erstellen Sie neue Variablen in `a16f` für die vorhergesagten Werte und die Residuen aus dem Regressionsmodell `m3`
++ Wie hoch ist die Summe der quadrierten Residuen aus `m3`?
++ Berechnen Sie das $R^2$ für `m3`! 

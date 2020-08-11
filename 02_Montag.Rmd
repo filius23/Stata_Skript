@@ -234,6 +234,15 @@ save "ZA5270_v2-0-0.dta", replace
 
 ### sortieren
 
+### Indikatoren umdrehen
+
+### Informationen aus mehreren Variablen
+
+
+### Informationen aus mehreren Datensätzen
+
+
+
 ### egen
 
 `egen` ist die Erweiterung von `gen` und gibt uns die Möglichkeit, eine ganze Reihe von 
