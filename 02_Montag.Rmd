@@ -29,7 +29,7 @@ set linesize 100
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
 describe sex
 ```
-Diese können wir mit der Option `short` abändern. Optionen werden nach einem `,` angegeben:
+Diese können wir mit der Option `simple` abändern. Optionen werden nach einem `,` angegeben:
 
 ```{stata commands1s, eval = F}
 describe sex, simple
@@ -161,20 +161,53 @@ knitr::include_graphics("02_stata_browse_kontrolle.png")
 ```
 
 
-## if Bedingungen
-
-+ `>, <, ==, >=, <=`
-
-```{stata browse_if, eval = F}
-browse sex land if age <= 20
-```
-
-+ `inrange`, `inlist`
 
 ## Bestehende Variablen verändern
 ```{stata rep, eval = F, echo = T}
 replace age = . if age < 0
 ```
+
+## if Bedingungen und fehlende Werte
+
+Fehlende Werte werden von Stata als "unendlich groß" gewertet!
+
+`>`, `<`, `==`, `>=`, `<=`, `!=` oder `~=` (ungleich)
+
+
+```{stata list_if, eval = F}
+list sex land age if age > 90
+```
+```{r, eval = F}
+      +---------------------------+
+      |  sex           land   age |
+      |---------------------------|
+ 126. | MANN        SACHSEN    94 |
+ 150. | FRAU        SACHSEN    92 |
+ 322. | FRAU   RHEINLAND-PF     . |
+ 353. | MANN   NORDRHEIN-WE    94 |
+ 556. | FRAU   NORDRHEIN-WE     . |
+      |---------------------------|
+1061. | FRAU   RHEINLAND-PF    92 |
+1342. | FRAU   NORDRHEIN-WE     . |
+1923. | MANN   NIEDERSACHSE    91 |
+2120. | FRAU   BADEN-WUERTT    92 |
+2135. | FRAU    BRANDENBURG     . |
+      |---------------------------|
+2299. | MANN        HAMBURG    92 |
+2336. | FRAU         HESSEN    92 |
+2730. | MANN   NIEDERSACHSE    92 |
+2978. | MANN   BADEN-WUERTT    92 |
+3130. | MANN         HESSEN     . |
+      |---------------------------|
+3299. | MANN   RHEINLAND-PF    95 |
+      +---------------------------+
+
+```
+
+
++ `inrange`
+
+
 
 ## keep & drop
 
@@ -250,24 +283,13 @@ save "ZA5270_v2-0-0.dta", replace
 
 `egen` ist die Erweiterung von `gen` und gibt uns die Möglichkeit, eine ganze Reihe von 
 
+### gruppierte Berechnungen
+
 ```{stata, cleanlog = F, eval = F}
 bys agec: egen mean_inc = mean(inc)
-bys agec: keep if _n == 1
-list agec mean_inc
+list agec mean_inc in 1
 ```
-```{r, eval = F}
-     +-------------------------+
-     |         agec   mean_inc |
-     |-------------------------|
-  1. |  18-29 JAHRE   1026.236 |
-  2. |  30-44 JAHRE   1729.861 |
-  3. |  45-59 JAHRE   1915.664 |
-  4. |  60-74 JAHRE   1567.953 |
-  5. |  75-89 JAHRE   1454.949 |
-     |-------------------------|
-  6. | UEBER 89 JAH   1942.133 |
-     +-------------------------+
-```
+
 
 
 ### collapse

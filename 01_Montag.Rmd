@@ -208,10 +208,22 @@ Wenn wir einen Datensatz aus dem Speicher löschen wollen, dann können wir dies
 list inc eastwest  mstat in 1/10
 ```
 
-```{stata listb, echo = F, collectcode=F}
-set linesize 90
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-list inc eastwest  mstat in 1/10
+```{r, eval = F}
+     +--------------------------------------------+
+     |          inc       eastwest          mstat |
+     |--------------------------------------------|
+  1. |         2200   ALTE BUNDESL   VERHEIRAT.ZU |
+  2. |         1500   NEUE BUNDESL   VERHEIRAT.ZU |
+  3. |         1400   ALTE BUNDESL          LEDIG |
+  4. |         3600   NEUE BUNDESL   VERHEIRAT.ZU |
+  5. |         1700   NEUE BUNDESL          LEDIG |
+     |--------------------------------------------|
+  6. |         3450   ALTE BUNDESL   VERH.GETRENN |
+  7. |          854   ALTE BUNDESL   VERHEIRAT.ZU |
+  8. |         1500   ALTE BUNDESL   VERHEIRAT.ZU |
+  9. | KEINE ANGABE   ALTE BUNDESL   VERHEIRAT.ZU |
+ 10. |          978   NEUE BUNDESL   VERHEIRAT.ZU |
+     +--------------------------------------------+
 ```
  
 
