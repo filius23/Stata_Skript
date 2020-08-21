@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="6.4 Interpretation der Regression | GESIS Methodenseminar 2020" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
+
+
+<meta name="author" content="Andreas Filser" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020">
+
+<title>6.4 Interpretation der Regression | GESIS Methodenseminar 2020</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#herzlich-willkommen">Herzlich Willkommen!</a></li>
+<li class="has-sub"><a href="1-Stata1.html#Stata1"><span class="toc-section-number">1</span> Einstieg in Stata</a><ul>
+<li><a href="1-1-taschenrechner.html#taschenrechner"><span class="toc-section-number">1.1</span> Taschenrechner</a></li>
+<li><a href="1-2-darstellung-in-diesem-skript.html#darstellung-in-diesem-skript"><span class="toc-section-number">1.2</span> Darstellung in diesem Skript</a></li>
+<li><a href="1-3-dofile-editor.html#dofile-editor"><span class="toc-section-number">1.3</span> DoFile Editor</a></li>
+<li><a href="1-4-datensätze-laden.html#datensätze-laden"><span class="toc-section-number">1.4</span> Datensätze laden</a></li>
+<li><a href="1-5-daten-codebücher-fragebogen.html#daten-codebücher-fragebogen"><span class="toc-section-number">1.5</span> Daten, Codebücher, Fragebogen</a></li>
+<li class="has-sub"><a href="1-6-überblicksbefehle.html#überblicksbefehle"><span class="toc-section-number">1.6</span> Überblicksbefehle</a><ul>
+<li><a href="1-6-überblicksbefehle.html#describe"><span class="toc-section-number">1.6.1</span> <code>describe</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#browse"><span class="toc-section-number">1.6.2</span> <code>browse</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#list"><span class="toc-section-number">1.6.3</span> list</a></li>
+</ul></li>
+<li><a href="1-7-if-bedingung-nur-manche-zeilen-ansehen.html#if-bedingung---nur-manche-zeilen-ansehen"><span class="toc-section-number">1.7</span> if Bedingung - nur manche Zeilen ansehen</a></li>
+<li><a href="1-8-U1.html#U1"><span class="toc-section-number">1.8</span> Übungen</a></li>
+<li class="has-sub"><a href="1-9-weitere-anmerkungen.html#weitere-anmerkungen"><span class="toc-section-number">1.9</span> Weitere Anmerkungen</a><ul>
+<li><a href="1-9-weitere-anmerkungen.html#var_types"><span class="toc-section-number">1.9.1</span> Variablentypen</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="2-Stata2.html#Stata2"><span class="toc-section-number">2</span> Arbeiten mit Datensätzen in Stata</a><ul>
+<li><a href="2-1-vorab-befehlsstruktur-hilfe.html#vorab-befehlsstruktur-hilfe"><span class="toc-section-number">2.1</span> Vorab: Befehlsstruktur &amp; Hilfe</a></li>
+<li><a href="2-2-auszählen-überblick-erhalten.html#auszählen-überblick-erhalten"><span class="toc-section-number">2.2</span> Auszählen &amp; Überblick erhalten</a></li>
+<li><a href="2-3-neue-variablen-erstellen.html#neue-variablen-erstellen"><span class="toc-section-number">2.3</span> Neue Variablen erstellen</a></li>
+<li><a href="2-4-gen-ist-gut-kontrolle-ist-besser.html#gen-ist-gut-kontrolle-ist-besser"><span class="toc-section-number">2.4</span> gen ist gut, Kontrolle ist besser</a></li>
+<li><a href="2-5-bestehende-variablen-verändern.html#bestehende-variablen-verändern"><span class="toc-section-number">2.5</span> Bestehende Variablen verändern</a></li>
+<li><a href="2-6-if-bedingungen-und-fehlende-werte.html#if-bedingungen-und-fehlende-werte"><span class="toc-section-number">2.6</span> if Bedingungen und fehlende Werte</a></li>
+<li><a href="2-7-keep-drop.html#keep-drop"><span class="toc-section-number">2.7</span> keep &amp; drop</a></li>
+<li><a href="2-8-nochmal-von-vorne-daten-neu-laden.html#nochmal-von-vorne-daten-neu-laden"><span class="toc-section-number">2.8</span> Nochmal von vorne: Daten neu laden</a></li>
+<li><a href="2-9-speichern.html#speichern"><span class="toc-section-number">2.9</span> Speichern</a></li>
+<li><a href="2-10-übungen.html#übungen"><span class="toc-section-number">2.10</span> Übungen</a></li>
+<li class="has-sub"><a href="2-11-fortgeschrittene-themen.html#fortgeschrittene-themen"><span class="toc-section-number">2.11</span> Fortgeschrittene Themen</a><ul>
+<li><a href="2-11-fortgeschrittene-themen.html#sortieren"><span class="toc-section-number">2.11.1</span> sortieren</a></li>
+<li><a href="2-11-fortgeschrittene-themen.html#indikatoren-umdrehen"><span class="toc-section-number">2.11.2</span> Indikatoren umdrehen</a></li>
+<li><a href="2-11-fortgeschrittene-themen.html#informationen-aus-mehreren-variablen"><span class="toc-section-number">2.11.3</span> Informationen aus mehreren Variablen</a></li>
+<li><a href="2-11-fortgeschrittene-themen.html#informationen-aus-mehreren-datensätzen"><span class="toc-section-number">2.11.4</span> Informationen aus mehreren Datensätzen</a></li>
+<li><a href="2-11-fortgeschrittene-themen.html#egen"><span class="toc-section-number">2.11.5</span> egen</a></li>
+<li><a href="2-11-fortgeschrittene-themen.html#gruppierte-berechnungen"><span class="toc-section-number">2.11.6</span> gruppierte Berechnungen</a></li>
+<li><a href="2-11-fortgeschrittene-themen.html#collapse"><span class="toc-section-number">2.11.7</span> collapse</a></li>
+</ul></li>
+</ul></li>
+<li><a href="3-desc1.html#desc1"><span class="toc-section-number">3</span> Deskriptive Statistik</a></li>
+<li><a href="4-desc2.html#desc2"><span class="toc-section-number">4</span> Mehr deskriptive Statistik</a></li>
+<li class="has-sub"><a href="5-dataviz.html#dataviz"><span class="toc-section-number">5</span> Datenvisualisierung in Stata</a><ul>
+<li class="has-sub"><a href="5-1-grafik-syntax-in-stata.html#grafik-syntax-in-stata"><span class="toc-section-number">5.1</span> Grafik-Syntax in Stata</a><ul>
+<li><a href="5-1-grafik-syntax-in-stata.html#aufbau"><span class="toc-section-number">5.1.1</span> Aufbau</a></li>
+<li><a href="5-1-grafik-syntax-in-stata.html#twoway"><span class="toc-section-number">5.1.2</span> twoway</a></li>
+<li><a href="5-1-grafik-syntax-in-stata.html#kombinieren-von-zwei-twoway-grafiken"><span class="toc-section-number">5.1.3</span> Kombinieren von zwei twoway-Grafiken</a></li>
+<li><a href="5-1-grafik-syntax-in-stata.html#vorlagen"><span class="toc-section-number">5.1.4</span> Vorlagen</a></li>
+<li><a href="5-1-grafik-syntax-in-stata.html#optionen"><span class="toc-section-number">5.1.5</span> Optionen</a></li>
+<li><a href="5-1-grafik-syntax-in-stata.html#farben"><span class="toc-section-number">5.1.6</span> Farben</a></li>
+<li><a href="5-1-grafik-syntax-in-stata.html#subgruppen"><span class="toc-section-number">5.1.7</span> Subgruppen</a></li>
+</ul></li>
+<li><a href="5-2-abschließende-beispiele.html#abschließende-beispiele"><span class="toc-section-number">5.2</span> Abschließende Beispiele</a></li>
+<li><a href="5-3-bevölkerungspyramide.html#bevölkerungspyramide"><span class="toc-section-number">5.3</span> Bevölkerungspyramide</a></li>
+<li><a href="5-4-abschließende-bemerkungen.html#abschließende-bemerkungen"><span class="toc-section-number">5.4</span> Abschließende Bemerkungen</a></li>
+</ul></li>
+<li class="has-sub"><a href="6-lin-reg.html#lin_reg"><span class="toc-section-number">6</span> Regression</a><ul>
+<li><a href="6-1-beispieldatensatz.html#beispieldatensatz"><span class="toc-section-number">6.1</span> Beispieldatensatz</a></li>
+<li><a href="6-2-idee-einer-regression.html#idee-einer-regression"><span class="toc-section-number">6.2</span> Idee einer Regression</a></li>
+<li class="has-sub"><a href="6-3-residuen.html#residuen"><span class="toc-section-number">6.3</span> Residuen</a><ul>
+<li><a href="6-3-residuen.html#quadrierte-residuen"><span class="toc-section-number">6.3.1</span> Quadrierte Residuen</a></li>
+</ul></li>
+<li class="has-sub"><a href="6-4-interpretation-der-regression.html#interpretation-der-regression"><span class="toc-section-number">6.4</span> Interpretation der Regression</a><ul>
+<li><a href="6-4-interpretation-der-regression.html#residuen-1"><span class="toc-section-number">6.4.1</span> Residuen</a></li>
+<li><a href="6-4-interpretation-der-regression.html#modellgüte"><span class="toc-section-number">6.4.2</span> Modellgüte</a></li>
+</ul></li>
+<li><a href="2-10-übungen.html#übungen"><span class="toc-section-number">6.5</span> Übungen</a></li>
+</ul></li>
+<li><a href="7-inf1.html#inf1"><span class="toc-section-number">7</span> Inferenzstatistik I</a></li>
+<li><a href="8-inf2.html#inf2"><span class="toc-section-number">8</span> Inferenzstatistik II</a></li>
+<li><a href="9-hypo.html#hypo"><span class="toc-section-number">9</span> Hypothesentests</a></li>
+<li><a href="10-export1.html#export1"><span class="toc-section-number">10</span> Ergebnisexport &amp; weitere Tipps</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="interpretation-der-regression" class="section level2">
+<h2><span class="header-section-number">6.4</span> Interpretation der Regression</h2>
+<p>Die Minimierung erledigt <code>reg</code> für uns. Hier geben wir zuerst das Merkmal an, das auf der y-Achse liegt (die <em>abhängige</em> Variable) und dann das Merkmal für die x-Achse (<em>unabhängige</em> Variable) an. Ein positiver Wert unter <code>var1</code> bedeutet, dass unsere Gerade von links nach rechts ansteigt und ein negativer eine fallende Linie bedeuten würde. Der Wert unter <code>var1</code> gibt an, um <em>wieviel sich die Gerade pro “Schritt nach rechts” nach oben/unten verändert</em>. Die Gerade steigt also pro Einheit von <code>var1</code> um 0.5810811:</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb82-1"><a href="6-4-interpretation-der-regression.html#cb82-1"></a><span class="kw">reg</span> var2 var1</span>
+<span id="cb82-2"><a href="6-4-interpretation-der-regression.html#cb82-2"></a>## </span>
+<span id="cb82-3"><a href="6-4-interpretation-der-regression.html#cb82-3"></a>## </span>
+<span id="cb82-4"><a href="6-4-interpretation-der-regression.html#cb82-4"></a>## . <span class="kw">reg</span> var2 vno variables defined</span>
+<span id="cb82-5"><a href="6-4-interpretation-der-regression.html#cb82-5"></a>## <span class="fu">r</span>(111);</span>
+<span id="cb82-6"><a href="6-4-interpretation-der-regression.html#cb82-6"></a>## </span>
+<span id="cb82-7"><a href="6-4-interpretation-der-regression.html#cb82-7"></a>## <span class="kw">end</span> <span class="kw">of</span> <span class="kw">do</span>-file</span>
+<span id="cb82-8"><a href="6-4-interpretation-der-regression.html#cb82-8"></a>## <span class="fu">r</span>(111);</span></code></pre></div>
+<p>In unserer Grafik sieht diese Gerade so aus:
+<img src="Stata_Skript_files/figure-html/unnamed-chunk-31-1.png" width="2000" style="display: block; margin: auto;" />
+### Vorhergesagte Werte</p>
+<p>Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade?
+Die vohergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der Summe aus dem Wert unter <code>Intercept</code> und dem Koeffizienten neben <code>var1</code> multipliziert mit dem jeweiligen Wert für <code>var1</code>.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb83-1"><a href="6-4-interpretation-der-regression.html#cb83-1"></a><span class="kw">reg</span> var2 var1, <span class="kw">noheader</span></span>
+<span id="cb83-2"><a href="6-4-interpretation-der-regression.html#cb83-2"></a>## </span>
+<span id="cb83-3"><a href="6-4-interpretation-der-regression.html#cb83-3"></a>## </span>
+<span id="cb83-4"><a href="6-4-interpretation-der-regression.html#cb83-4"></a>## . <span class="kw">reg</span> var2 var1, noheano variables defined</span>
+<span id="cb83-5"><a href="6-4-interpretation-der-regression.html#cb83-5"></a>## <span class="fu">r</span>(111);</span>
+<span id="cb83-6"><a href="6-4-interpretation-der-regression.html#cb83-6"></a>## </span>
+<span id="cb83-7"><a href="6-4-interpretation-der-regression.html#cb83-7"></a>## <span class="kw">end</span> <span class="kw">of</span> <span class="kw">do</span>-file</span>
+<span id="cb83-8"><a href="6-4-interpretation-der-regression.html#cb83-8"></a>## <span class="fu">r</span>(111);</span></code></pre></div>
+<p><span class="math display">\[\texttt{Intercept} + 0.5811 \times \texttt{var1}\]</span><br />
+Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: 2.1351+0.5811*1= 2.7162</p>
+<p>Also könnten wir mit <code>gen</code> die vorhergesagten Werte berechnen:</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb84-1"><a href="6-4-interpretation-der-regression.html#cb84-1"></a><span class="kw">gen</span> reg_vohers = 2.1351 + 0.5811 * var1</span></code></pre></div>
+<p>Die vorhergesagten Werte können wir auch mit <code>predict</code> berechnen und in einer neuen Variable <code>reg_vorhersagen</code> ablegen:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb85-1"><a href="6-4-interpretation-der-regression.html#cb85-1"></a><span class="kw">predict</span> reg_vorhersagen, <span class="kw">xb</span></span></code></pre></div>
+<pre><code>##   var1 var2 mean_var2 m_abw m_abw2 reg_vorhersagen
+## 1    1    2      4.75 -2.75 7.5625        2.716216
+## 2    2    4      4.75 -0.75 0.5625        3.297297
+## 3    7    7      4.75  2.25 5.0625        6.202703
+## 4    8    6      4.75  1.25 1.5625        6.783784</code></pre>
+<p>Die Grafik zeigt wie Vorhersagen auf Basis des Regressionsmodells aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für <code>var1</code>.
+<img src="Stata_Skript_files/figure-html/unnamed-chunk-36-1.png" width="2400" style="display: block; margin: auto;" />
+Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regressionsmodells) deutlich näher an den tatsächlichen Punkten liegen als die orangen Vorhersagen auf Basis des <code>mean</code>.</p>
+<div id="residuen-1" class="section level3">
+<h3><span class="header-section-number">6.4.1</span> Residuen</h3>
+<p>Trotzdem sind auch die hellblauen Punkte nicht deckungsgleich mit den tatsächlchen Werten. Es gibt also auch hier wieder Residuen, also Abweichungen des beobachteten vom vorhergesagten Wert. Wir können diese per Hand berechnen als Differenz zwischen dem tatsächlichen und dem vorhergesagten Wert:</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb87-1"><a href="6-4-interpretation-der-regression.html#cb87-1"></a><span class="kw">gen</span> res = var2 - reg_vorhersagen </span></code></pre></div>
+<p>Oder wir können Sie mit <code>predict neue_variable , residuals</code> erstellen:</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb88-1"><a href="6-4-interpretation-der-regression.html#cb88-1"></a><span class="kw">reg</span> var2 var1 <span class="co">// zunächst nochmal die regression laufen lassen</span></span>
+<span id="cb88-2"><a href="6-4-interpretation-der-regression.html#cb88-2"></a><span class="kw">predict</span> p_res , residuals</span>
+<span id="cb88-3"><a href="6-4-interpretation-der-regression.html#cb88-3"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>##   var1 var2 mean_var2 m_abw m_abw2 reg_vorhersagen        res      p_res
+## 1    1    2      4.75 -2.75 7.5625        2.716216 -0.7162162 -0.7162162
+## 2    2    4      4.75 -0.75 0.5625        3.297297  0.7027027  0.7027027
+## 3    7    7      4.75  2.25 5.0625        6.202703  0.7972973  0.7972973
+## 4    8    6      4.75  1.25 1.5625        6.783784 -0.7837838 -0.7837838</code></pre>
+<p>Hier sind die Residuen für <code>p_res</code> als hellblaue Linien eingezeichnet:
+<img src="Stata_Skript_files/figure-html/unnamed-chunk-40-1.png" width="2200" style="display: block; margin: auto;" />
+<em>Wie groß ist die Summe der Residuen für <code>lm</code>?</em></p>
+</div>
+<div id="modellgüte" class="section level3">
+<h3><span class="header-section-number">6.4.2</span> Modellgüte</h3>
+<p>Um zu beurteilen, um wieviel besser unsere Gerade aus <code>reg</code> die Werte vorhersagt kann als der <code>mean</code> können wir die Summe der quadrierten Residuen vergleichen. Dazu quadrieren wir also die Residuen:</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb90-1"><a href="6-4-interpretation-der-regression.html#cb90-1"></a><span class="kw">gen</span> res2 = res^2</span>
+<span id="cb90-2"><a href="6-4-interpretation-der-regression.html#cb90-2"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>##   var1 var2 mean_var2 m_abw m_abw2 reg_vorhersagen        res      res2
+## 1    1    2      4.75 -2.75 7.5625        2.716216 -0.7162162 0.5129657
+## 2    2    4      4.75 -0.75 0.5625        3.297297  0.7027027 0.4937911
+## 3    7    7      4.75  2.25 5.0625        6.202703  0.7972973 0.6356830
+## 4    8    6      4.75  1.25 1.5625        6.783784 -0.7837838 0.6143170</code></pre>
+<p>Dann können wir die Summen der quadierten Abweichungen aus der Mittelwertregel und dem Regressionsmodell vergleichen:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb92-1"><a href="6-4-interpretation-der-regression.html#cb92-1"></a>dis 7.5625+0.5625+5.0625+1.5625 <span class="co">// abw2 aus Mittelwertsregel</span></span>
+<span id="cb92-2"><a href="6-4-interpretation-der-regression.html#cb92-2"></a>## </span>
+<span id="cb92-3"><a href="6-4-interpretation-der-regression.html#cb92-3"></a>## </span>
+<span id="cb92-4"><a href="6-4-interpretation-der-regression.html#cb92-4"></a>## . dis 7.5625+0.5625+5.0625+1.5625 <span class="co">// abw2 aus Mit&gt; wertsregel</span></span>
+<span id="cb92-5"><a href="6-4-interpretation-der-regression.html#cb92-5"></a>## 14.75</span></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb93-1"><a href="6-4-interpretation-der-regression.html#cb93-1"></a>dis 0.5129657+0.4937911+0.6356830+0.6143170 <span class="co">// res2 aus regressionsmodell</span></span>
+<span id="cb93-2"><a href="6-4-interpretation-der-regression.html#cb93-2"></a>## </span>
+<span id="cb93-3"><a href="6-4-interpretation-der-regression.html#cb93-3"></a>## </span>
+<span id="cb93-4"><a href="6-4-interpretation-der-regression.html#cb93-4"></a>## . dis 0.5129657+0.4937911+0.6356830+0.6143170 <span class="co">// &gt; 2 aus regressionsmodell</span></span>
+<span id="cb93-5"><a href="6-4-interpretation-der-regression.html#cb93-5"></a>## 2.2567568</span></code></pre></div>
+<p>Zum Beispiel können wir uns fragen, um wieviel sich die Summe der quadrierten Residuen verringert wenn wir statt des <code>mean</code> unser <code>reg</code>-Modell verwenden:</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb94-1"><a href="6-4-interpretation-der-regression.html#cb94-1"></a>dis 14.75 -  2.256757</span>
+<span id="cb94-2"><a href="6-4-interpretation-der-regression.html#cb94-2"></a>## </span>
+<span id="cb94-3"><a href="6-4-interpretation-der-regression.html#cb94-3"></a>## </span>
+<span id="cb94-4"><a href="6-4-interpretation-der-regression.html#cb94-4"></a>## . dis 14.75 -  2.25612.493243</span></code></pre></div>
+<p>Wenn wir diese Veränderung ins Verhältnis mit dem “Ausgangswert”, also den Residuen aus der Mittelwertregel setzen, dann erhalten wir das <span class="math inline">\(R^{2}\)</span> für unser <code>reg</code>-Modell. Dieses gibt die prozentuale Verringerung der Residuen durch das <code>reg</code>-Modell im Vergleich zur Mittelwertregel an:</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb95-1"><a href="6-4-interpretation-der-regression.html#cb95-1"></a>dis (14.75 -  2.256757) / 14.75</span>
+<span id="cb95-2"><a href="6-4-interpretation-der-regression.html#cb95-2"></a>## </span>
+<span id="cb95-3"><a href="6-4-interpretation-der-regression.html#cb95-3"></a>## </span>
+<span id="cb95-4"><a href="6-4-interpretation-der-regression.html#cb95-4"></a>## . dis (14.75 -  2.256757) / 14.84699953</span></code></pre></div>
+<p>Unser Regressionsmodell kann also 84,7% der Streuung um den Mittelwert erklären. Dieser Wert wird auch als <span class="math inline">\(R^2\)</span> bezeichnet. Im Regressionsoutput können wir das <span class="math inline">\(R^2\)</span> oben rechts unter <code>R-squared</code> ablesen.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb96-1"><a href="6-4-interpretation-der-regression.html#cb96-1"></a><span class="kw">reg</span> var2 var1</span>
+<span id="cb96-2"><a href="6-4-interpretation-der-regression.html#cb96-2"></a>## </span>
+<span id="cb96-3"><a href="6-4-interpretation-der-regression.html#cb96-3"></a>## </span>
+<span id="cb96-4"><a href="6-4-interpretation-der-regression.html#cb96-4"></a>## . <span class="kw">reg</span> var2 vno variables defined</span>
+<span id="cb96-5"><a href="6-4-interpretation-der-regression.html#cb96-5"></a>## <span class="fu">r</span>(111);</span>
+<span id="cb96-6"><a href="6-4-interpretation-der-regression.html#cb96-6"></a>## </span>
+<span id="cb96-7"><a href="6-4-interpretation-der-regression.html#cb96-7"></a>## <span class="kw">end</span> <span class="kw">of</span> <span class="kw">do</span>-file</span>
+<span id="cb96-8"><a href="6-4-interpretation-der-regression.html#cb96-8"></a>## <span class="fu">r</span>(111);</span></code></pre></div>
+<p>Außerdem sehen wir oben links in der Spalte <code>SS</code> die “Sum of Squares”. Hier finden wir auch die Werte von oben wieder: unter Total ist die Summe der quadrierten Abweichungen der beobachteten Werte vom arith. Mittel angegeben (<code>14.75</code>, sozusagen die Summe der <code>m_abw2</code> von oben). Residual gibt die Summe der Abweichungsquadrate zwischen den beobachteten Werten und den vorhergesagten Werten der Regression (<code>2.256..</code>, Die Summe von <code>res2</code>).</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="4">
+<li id="fn4"><p>Die Option <code>noheader</code> macht den Output von <code>reg</code> etwas übersichtlicher.<a href="6-4-interpretation-der-regression.html#fnref4" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<p style="text-align: center;">
+<a href="6-3-residuen.html"><button class="btn btn-default">Previous</button></a>
+<a href="6-5-übungen.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>
