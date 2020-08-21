@@ -1,9 +1,6 @@
-library(patchwork)
-library(tidyverse)
-pfad <- ("D:/Studium/01_Oldenburg/Lehre/Datensaetze/") # wo liegt der Datensatz?
-a16 <- read.csv(paste0(pfad,"ZA5250_v2-0-0.csv"), sep = ";", header = T) # einlesen
+*use "D:/Studium/01_Oldenburg/Lehre/Datensaetze/ZA5250_v2-0-0.dta"
 
-df <- data.frame(var1 = c(1,2,7,8),
+df <- data.frame(var1 = ,
                  var2 = c(2,4,7,6))
 df
 library(ggplot2)

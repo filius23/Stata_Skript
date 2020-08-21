@@ -105,7 +105,7 @@ knitr::include_graphics("01_Stata_directory.png")
 
 Wir können diese beiden Schritte natürlich auch einfach kombinieren und den gesamten Pfad nach `use` angeben:
 ```{stata readin2, eval = F}
-use "C:/Users/Andreas/Dokumente/Statistik/ZA5250_v2-0-0.dta"
+use "C:/Users/Andreas/Dokumente/Statistik/Allbus2018.dta"
 ```
 
 Wenn das funktioniert hat, dann sehen wir im Fenster rechts eine Variablenübersicht:
@@ -117,15 +117,40 @@ In dieser Variablenübersicht können mit Hilfe des Suchfelds (oranger Kreis) au
 knitr::include_graphics("01_Stata8_Datensatz_suche.PNG")
 ```
 
+## Daten, Codebücher, Fragebogen
+
+Die Daten des hier geladenen Datensatzes enthalten die Angaben von 3477 Befragten des Allbus 2018. Die *Allgemeine Bevölkerungsumfrage der Sozialwissenschaften* (ALLBUS) ist ein Vorhaben von GESIS, das in Zusammenarbeit mit der Studien-Koordinationsgruppe ALLBUS (KG ALLBUS) als wissenschaftlichem Beratungsgremium realisiert wird (https://www.gesis.org/allbus/allbus). Die Daten werden dabei mit Hilfe von Interviews werden persönlich-mündlich durchgeführt. Im Jahr 2000 erfolgte der Umstieg von traditionellen Papierfragebögen (paper and pencil interviewing - PAPI) zur computerunterstützten Befragung mit Laptop (computer assisted interviewing – CAPI).
+
+Das heißt, die hier geladenen Daten beruhen auf standardisierten Interviews. Derartige Datensätze werden in der Regel zusammen mit einem Codebuch und dem Fragenkatalog veröffentlicht. Sie finden das Codebuch und den Fragenkatalog für den Allbus 2018 auf ILIAS - ebenso für alle weiteren Datensätze, die wir im Lauf dieser Woche verwenden werden. Im Fragenkatalog finden wir den exakten Wortlaut der Fragen:
+
+```{r Fragenb, echo = F,out.width = "90%",fig.height= 3, fig.align="center",dpi = 600}
+knitr::include_graphics("01_Fragebogen.PNG")
+```
+
+Im Fragenkatalog finden wir den exakten Wortlaut der Fragen:
+
+```{r codeb, echo = F,out.width = "90%",fig.height= 3, fig.align="center",dpi = 600}
+knitr::include_graphics("01_Codebuch.PNG")
+```
+
+Die Antworten der Befragten werden dann im Datensatz gesammelt. Dazu werden den Antworten in der Regel Zahlencodes zugewiesen (siehe die ganz linke Spalte im Codebuch) und so abgelegt. Stata erlaubt dann in einem zweiten Schritt, dass diese Zahlen wieder mit Wertelabeln versehen werden (siehe untere Darstellung) - dazu kommen wir später. In diesem Datensatz entspricht dann jede Zeile einer befragten Person:
+```{r codierung, echo = F,out.width = "100%",fig.height= 3, fig.align="center",dpi = 600}
+knitr::include_graphics("01_Codierung.PNG")
+```
+Sowohl im Codebuch als auch in der Fragebogendokumentation finden wir Kürzel links bzw. rechts oben, welche die Variablennamen für den Datensatz angeben.
+
 ## Überblicksbefehle
 
+Für eine erste Annäherung an die Daten helfen uns drei Überblicksbefehle: `descrive`, `browse` und `list`.
+
+### `describe`
 Mit `describe, short` bekommen wir einen Überblick zu den eingelesenen Daten:
 ```{stata desc1,eval = F}
 describe, short
 ```
 ```{stata desc_actual, echo = F, collectcode=F}
 set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 describe, short
 ```
 Hier wurde also ein Datensatz geladen, welcher 3477 Fälle/Zeilen (`obs`) und 708 Variablen/Spalten (`vars`) enthält. 
@@ -138,20 +163,25 @@ describe pv01
 
 ```{stata des_var1, echo = F, collectcode=F}
 set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 describe pv01
 ```
-Wir können dabei `describe` mit `d` abkürzen:
-```{stata des_var3, eval=FALSE}
-d pv01 age sex
+
+Hier sehen wir also in der ersten Spalte nochmal den vollständigen Variablennamen, den Variablentypen (`storage type` - mehr dazu [hier](#var_types)) sowie - falls vorhanden - eine Beschreibung der Variable (`variable label`) sowie der Ausprägungen der Variable (`value label`)
+
+
+Wir können auch alle Variablen aufrufen, die mit pa beginnen, indem wir einen `*` einsetzen:
+```{stata des_var5, eval=FALSE}
+d pv*
 ```
 
-```{stata des_var4, echo = F, collectcode=F}
-set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
-describe pv01 age sex
+```{stata des_var5b, echo = F, collectcode=F}
+set linesize 90
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+describe pv*
 ```
 
+### `browse`
 Mit `browse` bekommen wir eine Ansicht des Datensatzes:
 ```{stata browse1, eval = F}
 browse
@@ -170,16 +200,53 @@ knitr::include_graphics("01_Stata9_bro_Datensatz2.png")
 
 Wenn wir einen Datensatz aus dem Speicher löschen wollen, dann können wir dies mit `clear`.
 
-## if Bedingung - nur manche Zeilen ansehen
+### list
 
-Mit durch Anhängen einer if-Bedingung können wir nur bestimmte Zeilen anzeigen lassen. Zum Beispiel nur die 20-jährigen Befragten
-```{stata browse3, eval = F}
-browse eastwest german sex age mstat if age == 20
+`browse` eignet sich vor allem für größere Übersichten. Wenn wir nur einige wenige Fälle betrachten möchten, dann ist `list` eine gute Alternative, da der Output hier gleich im Ergebnisfenster (2) angezeigt wird. Die Funktionsweise von `list` ähnelt sich im Prinzip der von `browse`. Mit dem Zusatz `in 1/10` können wir die ersten 10 Zeilen anzeigen lassen (ansonsten würden alle 3477 Fälle angezeigt!):
+
+```{stata list, eval=FALSE}
+list inc eastwest  mstat in 1/10
 ```
 
-Oder Befragte mit einem Einkommen unter 1000 Euro:
-```{stata browse4, eval = F}
-browse eastwest german sex age mstat if inc < 1000
+```{stata listb, echo = F, collectcode=F}
+set linesize 90
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+list inc eastwest  mstat in 1/10
+```
+ 
+
+## if Bedingung - nur manche Zeilen ansehen
+
+
+Mit durch Anhängen einer `if`-Bedingung können wir nur bestimmte Zeilen anzeigen lassen. Zum Beispiel können wir uns mit Hilfe einer `if`-Bedingung nur die 20-jährigen Befragten anzeigen lassen:
+```{stata if1, eval = F}
+list eastwest german sex age mstat if age == 20
+```
+
+...oder Befragte mit einem Einkommen unter 1000 Euro:
+```{stata if2, eval = F}
+list eastwest german sex age mstat if inc < 1000
+```
+
+Wir können auch mehrere Bedingungen setzen. Sollen beide/alle zutreffen, verbinden wir die Bedingungen mit `&` - zB. wenn wir weibliche Befragte mit einem Einkommen unter 1000 Euro auswählen möchten:
+```{stata if3, eval = F}
+list eastwest german sex age mstat if sex == 2 & inc < 1000
+```
+Für "ist gleich" sind immer zwei `==` zu verwenden.
+
+Mit `|` können wir hingegen Fälle auswählen, für welche die ein *oder* die andere Bedingung zutrifft:
+```{stata if4, eval = F}
+browse eastwest german sex age mstat if sex == 2 | inc < 1000
+```
+
+Für `if`-Bedingungen stehen uns die üblichen Operatoren zur Verfügung:
+
+`>`, `<`, `==`, `>=`, `<=`, `!=` oder `~=` (ungleich)
+
+Mit `inrange` können wir Auswahlen bequem auf einen Wertebereich eingrenzen - d.h. diese beiden Auswahlen führen zum gleichen Ergebnis:
+```{stata browse_if, eval = F}
+list sex land if age >= 20 & age <= 30
+list sex land if inrange(age,20,30)
 ```
 
 
@@ -193,7 +260,7 @@ browse eastwest german sex age mstat if inc < 1000
 
 + Laden Sie die Datensätze aus ILIAS herunter!
 
-+ Wechseln Sie mit Hilfe des cd Befehls das Arbeitsverzeichnis!
++ Wechseln Sie mit `cd` das Arbeitsverzeichnis!
   + In welchem Arbeitsverzeichnis befinden Sie sich aktuell?
   + In welchem Ordner haben Sie die Datensätze aus ILIAS abgelegt?
   + Navigieren Sie Stata mit `cd` in eben diesen Ordner, in dem die Datensätze abgelegt sind!
@@ -201,18 +268,38 @@ browse eastwest german sex age mstat if inc < 1000
 + Lesen Sie den Allbus 2018 in Stata ein.
   + Sie finden den Allbus 2018 in ILIAS.
   + Nutzen Sie `d` und `browse`, um sich einen Überblick über den Datensatz zu verschaffen.
-  + Öffnen Sie das Überblicksfenster!
-  + Wie viele Fälle hat der Datensatz?
   + Wie viele Variablen und wie viele Fälle enthält der Datensatz?
   + Unter welchem Variablennamen ist die Selbsteinschätzung des Gesundheitszustands der Befragten ablegt?
   + Unter welchem Variablennamen ist die Information abgelegt, in welchem Bundesland die Befragten wohnen?
-  + Die Variable `sex` gibt das Geschlecht der Befragten an. Welches Skalenniveau hat die Variable? [^4] 
-
-
+  + Welches Skalenniveau haben die beiden erwähnten Variablen? [^14] 
   + Welche Information ist in der Variable `respid` abgelegt? 
   + Wie können Sie sich die Zeile anzeigen lassen, welche den/die Befragte*n mit der `respid` 3469 enthält?
-  + Wie alt ist der/die Befragte mit der `respid` 3469? Welches Geschlecht hat die Person?
+  + Wie alt ist der/die Befragte mit der `respid` 3469? Welches Geschlecht und welche Wahlabsicht hat die Person angegeben?
   
   
 
-[^4]: Diese Frage ist eine inhaltliche, Stata hilft Ihnen hier nicht weiter.  
+[^14]: Diese Frage ist eine inhaltliche, Stata hilft Ihnen hier nicht weiter.  
+
+
+
+## Weitere Anmerkungen
+
+
+### Variablentypen {#var_types}
+
+In Stata gibt es zwei Variablentypen:
+
++ Zahlenvariablentypen: `byte`,`int`,`long`,`float`,`double` - der Unterschiede zwischen diesen Variablentypen besteht vor allem in der Spannbreite der möglichen Werte: während `byte` Werte zwischen -127 und 100 annehmen kann, können in `long`  zwischen -2,147,483,647 2,147,483,620 (Stata verwaltet diese Typen in der Regel automatisch - für weitere Hinweise `help data_types`)
+ 
++ Textvariablen, sog. strings `strXX` - wobei `XX` die Zahl der (maximal) verwendeten Zeichen angibt
+  
+Hier einige Beispiele aus dem Allbus 2018:
+```{stata des_var3, eval=FALSE}
+d pv01 version wghtpew xs11 age sex
+```
+
+```{stata des_var4, echo = F, collectcode=F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+d pv01 version wghtpew xs11 age sex
+```

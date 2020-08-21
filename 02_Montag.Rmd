@@ -169,7 +169,7 @@ knitr::include_graphics("02_stata_browse_kontrolle.png")
 browse sex land if age <= 20
 ```
 
-+ inrange, inlist
++ `inrange`, `inlist`
 
 ## Bestehende Variablen verändern
 ```{stata rep, eval = F, echo = T}
@@ -177,6 +177,9 @@ replace age = . if age < 0
 ```
 
 ## keep & drop
+
+Manchmal möchten wir 
+
 
 ## Nochmal von vorne: Daten neu laden
 

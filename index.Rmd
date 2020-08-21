@@ -13,10 +13,10 @@ description: "Dies ist das Begleitskript für die Stata-Übungen zum GESIS Metho
 ---
 
 ```{r setup, echo = F, message=F, warning = F}
+if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
 list.of.packages <- c("tidyr","dplyr","readr","haven","rmarkdown","bookdown","devtools","tidyverse","knitr") # Pakete eintragen
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
-# if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library")  # set library
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(echo = T)
 # knitr::opts_chunk$set(dpi=400)
