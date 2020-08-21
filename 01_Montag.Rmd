@@ -135,7 +135,7 @@ knitr::include_graphics("01_Codebuch.PNG")
 
 Die Antworten der Befragten werden dann im Datensatz gesammelt. Dazu werden den Antworten in der Regel Zahlencodes zugewiesen (siehe die ganz linke Spalte im Codebuch) und so abgelegt. Stata erlaubt dann in einem zweiten Schritt, dass diese Zahlen wieder mit Wertelabeln versehen werden (siehe untere Darstellung) - dazu kommen wir später. In diesem Datensatz entspricht dann jede Zeile einer befragten Person:
 ```{r codierung, echo = F,out.width = "100%",fig.height= 3, fig.align="center",dpi = 600}
-knitr::include_graphics("01_Codierung.PNG")
+knitr::include_graphics("01_Codierung_label.PNG")
 ```
 Sowohl im Codebuch als auch in der Fragebogendokumentation finden wir Kürzel links bzw. rechts oben, welche die Variablennamen für den Datensatz angeben.
 
