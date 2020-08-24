@@ -127,7 +127,7 @@ Das heißt, die hier geladenen Daten beruhen auf standardisierten Interviews. De
 knitr::include_graphics("01_Fragebogen.PNG")
 ```
 
-Im Fragenkatalog finden wir den exakten Wortlaut der Fragen:
+Im Codebuch ("Variable Report") finden wir eine Beschreibung der Variablen in unserem Datensatz:
 
 ```{r codeb, echo = F,out.width = "90%",fig.height= 3, fig.align="center",dpi = 600}
 knitr::include_graphics("01_Codebuch.PNG")
