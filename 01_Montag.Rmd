@@ -1,7 +1,7 @@
 # Einstieg in Stata {#Stata1}
 
 ```{r setup1, echo = F, message=F, warning = F}
-# .libPaths("D:/R-library")
+.libPaths("D:/R-library4")
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(dpi=800)
 library(Statamarkdown)

@@ -1,8 +1,48 @@
-*use "D:/Studium/01_Oldenburg/Lehre/Datensaetze/ZA5250_v2-0-0.dta"
-
-df <- data.frame(var1 = ,
+## ----setup061, echo = F, include=FALSE------------------------------------------------------------------------------------------------------------
+library(patchwork)
+library(tidyverse)
+df <- data.frame(var1 = c(1,2,7,8),
                  var2 = c(2,4,7,6))
+library(Statamarkdown)
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+# stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+
+
+## ---- fig.height=3.5, fig.width=3.5, echo=F, fig.align="center" , eval = T, message=F-------------------------------------------------------------
+ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) +  ggthemes::theme_stata() +
+  geom_smooth(method = "lm", color = "darkblue" , se = FALSE) 
+
+
+## use "regression_bsp.dta", clear
+
+## egen mean_var2 = mean(var2)
+
+## gen m_abw = var2 - mean_var2
+
+## qui reg var2 var1
+
+## predict reg_vorhersagen, xb
+
+## gen res = var2 - reg_vorhersagen
+
+## gen res2 = res^2
+
+## set linesize 90
+
+## reg var2 var1
+
+
+## use "https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta", clear
+
+## list
+
+
+## ---- echo = F------------------------------------------------------------------------------------------------------------------------------------
 df
+
+
+## ---- fig.align="center", fig.height=3.5, fig.width=3.5, eval=T, echo=F---------------------------------------------------------------------------
 library(ggplot2)
 ggplot(df, aes(x = var1, y = var2)) + 
   geom_point(size = 2) + 
@@ -10,122 +50,174 @@ ggplot(df, aes(x = var1, y = var2)) +
   scale_y_continuous(breaks = seq(0,8,2)) +
   scale_x_continuous(breaks = seq(0,8,2)) 
 
-df$mean <- mean(df$var2)
+
+## egen mean_var2 = mean(var2)
+
+## list
+
+
+## ----echo=F---------------------------------------------------------------------------------------------------------------------------------------
+df$mean_var2 <- mean(df$var2)
 df
 
+
+## ---- out.width = "80%",fig.height= 4.5, echo=F, fig.align="center"-------------------------------------------------------------------------------
 ggplot(df, aes(x = var1, y = var2)) + 
   geom_point(size = 3) + 
   ggthemes::theme_stata() +
   scale_y_continuous(breaks = seq(0,8,2)) +
   scale_x_continuous(breaks = seq(0,8,2)) +
-  geom_hline(aes(yintercept = mean), color = "grey50", size = .75, linetype = "dashed") +
+  geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
   geom_label(aes(y = 4, x = 5), label = "mean = 4.75", color = "grey30")
 
-# vohergesagte Werte einzeichnen
-ggplot(df, aes(x = var1, y = var2)) + 
-  geom_point(size = 3) + 
-  ggthemes::theme_stata() +
-  scale_y_continuous(breaks = seq(0,8,2)) +
-  scale_x_continuous(breaks = seq(0,8,2)) +
-  geom_hline(aes(yintercept = mean), color = "grey50", size = .75, linetype = "dashed") +
-  geom_point(aes(x = var1, y = mean), color = "darkorange", size = 3) 
 
-df$m_residuen <- df$var2 - df$mean
-df
+## ---- out.width = "80%",fig.height= 4.5, echo=F, fig.align="center"-------------------------------------------------------------------------------
 ggplot(df, aes(x = var1, y = var2)) + 
   geom_point(size = 3) + 
   ggthemes::theme_stata() +
   scale_y_continuous(breaks = seq(0,8,2)) +
   scale_x_continuous(breaks = seq(0,8,2)) +
-  geom_hline(aes(yintercept = mean), color = "grey50", size = .75, linetype = "dashed") +
-  geom_point(aes(x = var1, y = mean), color = "darkorange", size = 3) +
-  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean), 
+  geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
+  geom_point(aes(x = var1, y = mean_var2), color = "darkorange", size = 3) 
+
+
+## gen m_abw = var2 - mean_var2
+
+## list
+
+
+## ---- echo = F------------------------------------------------------------------------------------------------------------------------------------
+df$m_abw <- df$var2 - df$mean
+df
+
+
+## ---- out.width = "80%",fig.height= 4.5, echo=F, fig.align="center"-------------------------------------------------------------------------------
+ggplot(df, aes(x = var1, y = var2)) + 
+  geom_point(size = 3) + 
+  ggthemes::theme_stata() +
+  scale_y_continuous(breaks = seq(0,8,2)) +
+  scale_x_continuous(breaks = seq(0,8,2)) +
+  geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
+  geom_point(aes(x = var1, y = mean_var2), color = "darkorange", size = 3) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean_var2), 
                color = "red", size = .65, linetype = "dotted") 
 
-df
-sum(df$m_residuen)
-sum(df$m_residuen[df$m_residuen<0])
-sum(df$m_residuen[df$m_residuen>0])
 
+## ---- echo =F-------------------------------------------------------------------------------------------------------------------------------------
 df
-df$m_residuen2 <- df$m_residuen^2 
-df
-sum(df$m_residuen2)
 
+
+## tabstat m_abw, s(sum)
+
+
+## gen m_abw2 = m_abw^2
+
+## tabstat m_abw2, s(sum)
+
+## ---- echo = F------------------------------------------------------------------------------------------------------------------------------------
+df$m_abw2 <- df$m_abw^2 
+df
+
+
+## dis 14.75/4
+
+
+## ---- echo = F------------------------------------------------------------------------------------------------------------------------------------
 m1 <- lm(var2~ var1, data = df)  
 
-lm(var2~ var1, data = df)  
-m1 <- lm(var2~ var1, data = df)  
 
-ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 2) + 
+## reg var2 var1
+
+
+## ---- out.width = "80%",fig.height= 4.5, echo=T, fig.align="center" , echo = F,warning=F,message=F------------------------------------------------
+ggplot(df, aes(x = var1, y = var2)) + 
+  geom_point(size = 2) + 
   ggthemes::theme_stata() +
-  geom_hline(aes(yintercept = mean), color = "grey50", size = .75, linetype = "dashed") +
+  geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
   scale_y_continuous(breaks = seq(0,8,2)) +
   scale_x_continuous(breaks = seq(0,8,2)) +
-  geom_point(aes(x = var1, y = mean), col = "darkorange", size = 2) +
-  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean), 
-               color = "red", size = .65, linetype = "dotted")  +
+  geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
+  geom_point(aes(x = var1, y = mean_var2), color = "darkorange", size = 3) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean_var2), 
+               color = "red", size = .65, linetype = "dotted") +
   geom_smooth(method = "lm", color = "darkblue" , se = FALSE) 
 
+
+## reg var2 var1, noheader
+
+
+## gen reg_vohers = 2.1351 + 0.5811 * var1
+
+
+## predict reg_vorhersagen, xb
+
+
+## ---- echo=F--------------------------------------------------------------------------------------------------------------------------------------
+df$reg_vorhersagen <- m1$fitted.values
 df
 
-m1$fitted.values
 
-m1
-
-df$lm_vorhersagen <- m1$fitted.values
-df
-
+## ---- fig.height=3, fig.width=3, echo=T, fig.align="center" , echo = F,warning=F,message=F--------------------------------------------------------
 ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_stata() +
   scale_y_continuous(breaks = seq(0,8,2)) +
   scale_x_continuous(breaks = seq(0,8,2)) +
-  geom_hline(aes(yintercept = mean), color = "grey50", size = .75, linetype = "dashed") +
-  geom_point(aes(x = var1, y = mean), col = "darkorange", size = 3) +
-  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean), color = "red", size = .65, linetype = "dotted")  +
+  geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
+  geom_point(aes(x = var1, y = mean_var2), col = "darkorange", size = 3) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean_var2), color = "red", size = .65, linetype = "dotted")  +
   geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
-  geom_point(aes(x = var1, y = lm_vorhersagen), color = "dodgerblue3", size = 3)
+  geom_point(aes(x = var1, y = reg_vorhersagen), color = "dodgerblue3", size = 3)
 
-df$var2 - df$lm_vorhersagen
 
-m1$residuals
+## gen res = var2 - reg_vorhersagen
 
-df$lm_residuen <- m1$residuals
+
+## reg var2 var1 // zunächst nochmal die regression laufen lassen
+
+## predict p_res , residuals
+
+## list
+
+## ---- echo=F--------------------------------------------------------------------------------------------------------------------------------------
+df$res <- m1$residuals
+df$p_res <- m1$residuals
+df
+df$p_res <- NULL
+
+
+## ---- fig.height=2.75, fig.width=2.75, echo=F, fig.align="center" , eval = T, message=F-----------------------------------------------------------
+ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_stata() +
+  geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
+  geom_point(aes(x = var1, y = mean_var2), col = "darkorange", size = 3) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean_var2), color = "red", size = .65, linetype = "dotted")  +
+  geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
+  geom_point(aes(x = var1, y = reg_vorhersagen), color = "dodgerblue3", size = 3) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = reg_vorhersagen), color = "dodgerblue3", size = .65, linetype = 1) 
+
+
+## gen res2 = res^2
+
+## list
+
+
+## ---- echo = F------------------------------------------------------------------------------------------------------------------------------------
+df$res2 <- df$res^2
+
+
+## ---- echo = F------------------------------------------------------------------------------------------------------------------------------------
 df
 
-ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + theme_minimal() +
-  geom_hline(aes(yintercept = mean), color = "grey50", size = .75, linetype = "dashed") +
-  geom_point(aes(x = var1, y = mean), col = "darkorange", size = 3) +
-  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean), color = "red", size = .65, linetype = "dotted")  +
-  geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
-  geom_point(aes(x = var1, y = lm_vorhersagen), color = "dodgerblue3", size = 3) +
-  geom_segment(aes(x = var1, xend = var1, y = var2, yend = lm_vorhersagen), color = "dodgerblue3", size = .65, linetype = 1) 
 
-df$lm_residuen2 <- df$lm_residuen^2
-df
-sum(df$m_residuen2)
-sum(df$lm_residuen2)
+## dis 7.5625+0.5625+5.0625+1.5625 // abw2 aus Mittelwertsregel
 
-sum(df$m_residuen2)-sum(df$lm_residuen2)
 
-( sum(df$m_residuen2)-sum(df$lm_residuen2) )/sum(df$m_residuen2)
+## dis 0.5129657+0.4937911+0.6356830+0.6143170 // res2 aus regressionsmodell
 
-## df2 <- data.frame(var1 = c(12,10,24,28,23) ,
-##                   var2 = c(17,16, 3, 5, 8))
 
-## # Arbeitsverzeichnis in den Ordner mit dem Datensatz setzen:
-## setwd("C:/Lehre")
-## a16 <- read.csv("allbus2016.csv", sep = ";", header = T) # einlesen
+## dis 14.75 -  2.256757
 
-a16$age[a16$age<0] <- NA
-a16$inc[a16$inc<0] <- NA
 
-a16 <- na.omit(a16)
+## dis (14.75 -  2.256757) / 14.75
 
-a16f <- a16[a16$sex == 2 & a16$work == 1,] # base R
-a16f <- filter(a16, sex == 2, work == 1) # dplyr
 
-a16f <- a16f[,c("age","inc")] # base R
-a16f <- select(a16f, age, inc) # dplyr
+## reg var2 var1
 
-## head(a16f)
-## View(a16f)

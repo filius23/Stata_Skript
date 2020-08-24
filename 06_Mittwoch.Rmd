@@ -21,8 +21,8 @@ use "regression_bsp.dta", clear
 egen mean_var2 = mean(var2)
 gen m_abw = var2 - mean_var2
 qui reg var2 var1
-predict reg_vorhersagen, xb
-gen res = var2 - reg_vorhersagen 
+predict pred_vorher, xb
+gen res = var2 - pred_vorher 
 gen res2 = res^2
 set linesize 90
 reg var2 var1
@@ -69,7 +69,7 @@ df$mean_var2 <- mean(df$var2)
 df
 ```
 
-```{r, fig.height=3, fig.width=3, echo=F, fig.align="center"}
+```{r, fig.height=3.5, fig.width=3.5, echo=F, fig.align="center"}
 ggplot(df, aes(x = var1, y = var2)) + 
   geom_point(size = 3) + 
   ggthemes::theme_stata() +
@@ -80,7 +80,7 @@ ggplot(df, aes(x = var1, y = var2)) +
 ```
 Müssten wir eine Prognose für die Werte von `var2` abgeben, wäre das arith. Mittel eine gute Wahl. Die **vorhergesagten Werte** werden jeweils auf der Linie für das arith. Mittel liegen.   
 
-```{r, fig.height=3, fig.width=3, echo=F, fig.align="center"}
+```{r, fig.height=3.5, fig.width=3.5, echo=F, fig.align="center"}
 ggplot(df, aes(x = var1, y = var2)) + 
   geom_point(size = 3) + 
   ggthemes::theme_stata() +
@@ -109,7 +109,7 @@ df$m_abw <- df$var2 - df$mean
 df
 ```
 
-```{r, fig.height=3, fig.width=3, echo=F, fig.align="center" }
+```{r, fig.height=3.5, fig.width=3.5, echo=F, fig.align="center" }
 ggplot(df, aes(x = var1, y = var2)) + 
   geom_point(size = 3) + 
   ggthemes::theme_stata() +
@@ -133,27 +133,19 @@ df
 ```
 
 ```{stata, collectcode=F}
-total m_abw
+tabstat m_abw, s(sum)
 ```
 **Die Summe der Resiuden auf Basis des arith. Mittels ist immer Null!**    
 Anders formuliert: die gestrichelten Linien nach oben sind in Summe genauso lang wie gestrichelten Linien nach unten.
 Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wir minimieren können:
 ```{stata, collectcode = T}
 gen m_abw2 = m_abw^2 
-total m_abw2
+tabstat m_abw2, s(sum)
 ```
 ```{r, echo = F}
 df$m_abw2 <- df$m_abw^2 
 df
 ```
-
-#### Vergleich zur Varianz
-
-Wir hatten gestern die Varianz kennen gelernt. Diese ist sehr ähnlich zu `m_abw2`: wenn wir die Summe von `m_abw2` durch ($n$) die Zahl der Beobachtungen teilen, dann erhalten wir die Varianz:
-```{stata}
-dis 14.75/4
-```
-
 
 ```{r, echo = F}
 m1 <- lm(var2~ var1, data = df)  
@@ -168,7 +160,7 @@ reg var2 var1
 ```  
 
 In unserer Grafik sieht diese Gerade so aus:
-```{r, fig.height=2.5, fig.width=2.5, echo=T, fig.align="center" , echo = F,warning=F,message=F}
+```{r, fig.height=3.5, fig.width=3.5, echo=T, fig.align="center" , echo = F,warning=F,message=F}
 ggplot(df, aes(x = var1, y = var2)) + 
   geom_point(size = 2) + 
   ggthemes::theme_stata() +
@@ -194,23 +186,24 @@ Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: 2.1351+0.58
 
 [^62]: Die Option `noheader` macht den Output von `reg` etwas übersichtlicher.
 
-Also könnten wir mit `gen` die vorhergesagten Werte berechnen:
+Also könnten wir mit `gen` die vorhergesagten Werte "manuell" berechnen:
 ```{stata, eval = F}
-gen reg_vohers = 2.1351 + 0.5811 * var1
+gen man_vorhers = 2.1351 + 0.5811 * var1
 ```
 
 
-Die vorhergesagten Werte können wir auch mit `predict` berechnen und in einer neuen Variable `reg_vorhersagen` ablegen:
+Die vorhergesagten Werte können wir auch mit `predict` berechnen und in einer neuen Variable `pred_vorher` ablegen:
 ```{stata, eval = F}
-predict reg_vorhersagen, xb
+predict pred1, xb
 ```
 
 ```{r, echo=F}
-df$reg_vorhersagen <- m1$fitted.values
+df$man_vorhers = 2.1351 + 0.5811 * df$var1
+df$pred_vorher <- m1$fitted.values
 df
 ```
 Die Grafik zeigt wie Vorhersagen auf Basis des Regressionsmodells aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für `var1`. 
-```{r, fig.height=3, fig.width=3, echo=T, fig.align="center" , echo = F,warning=F,message=F}
+```{r, fig.height=3.5, fig.width=3.5, echo=T, fig.align="center" , echo = F,warning=F,message=F}
 ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_stata() +
   scale_y_continuous(breaks = seq(0,8,2)) +
   scale_x_continuous(breaks = seq(0,8,2)) +
@@ -218,14 +211,14 @@ ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_sta
   geom_point(aes(x = var1, y = mean_var2), col = "darkorange", size = 3) +
   geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean_var2), color = "red", size = .65, linetype = "dotted")  +
   geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
-  geom_point(aes(x = var1, y = reg_vorhersagen), color = "dodgerblue3", size = 3)
+  geom_point(aes(x = var1, y = pred_vorher), color = "dodgerblue3", size = 3)
 ```
 Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regressionsmodells) deutlich näher an den tatsächlichen Punkten liegen als die orangen Vorhersagen auf Basis des `mean`. 
 
 ### Residuen
 Trotzdem sind auch die hellblauen Punkte nicht deckungsgleich mit den tatsächlchen Werten. Es gibt also auch hier wieder Residuen, also Abweichungen des beobachteten vom vorhergesagten Wert. Wir können diese per Hand berechnen als Differenz zwischen dem tatsächlichen und dem vorhergesagten Wert:
 ```{stata, eval = F}
-gen res = var2 - reg_vorhersagen 
+gen res = var2 - pred_vorher 
 ```
 Oder wir können Sie mit `predict neue_variable , residuals` erstellen:
 ```{stata, eval = F}
@@ -241,14 +234,14 @@ df$p_res <- NULL
 ```
 
 Hier sind die Residuen für `p_res` als hellblaue Linien eingezeichnet:
-```{r, fig.height=2.75, fig.width=2.75, echo=F, fig.align="center" , eval = T, message=F}
+```{r, fig.height=3.5, fig.width=3.5, echo=F, fig.align="center" , eval = T, message=F}
 ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_stata() +
   geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
   geom_point(aes(x = var1, y = mean_var2), col = "darkorange", size = 3) +
   geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean_var2), color = "red", size = .65, linetype = "dotted")  +
   geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
-  geom_point(aes(x = var1, y = reg_vorhersagen), color = "dodgerblue3", size = 3) +
-  geom_segment(aes(x = var1, xend = var1, y = var2, yend = reg_vorhersagen), color = "dodgerblue3", size = .65, linetype = 1) 
+  geom_point(aes(x = var1, y = pred_vorher), color = "dodgerblue3", size = 3) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = pred_vorher), color = "dodgerblue3", size = .65, linetype = 1) 
 ```
 *Wie groß ist die Summe der Residuen für `lm`?*       
 

@@ -1,1 +1,23 @@
 # Deskriptive Statistik {#desc1} 
+
+`tabstat`
+
+table	tabstat	graph bar	Notes	
+freq				not followed by the name of a variable	
+mean		mean			
+sd		sd			standard deviation	
+	var			variance	
+	cv			coefficient of variation = variance/mean	
+	semean			standard error of mean = sd/sqrt(n)	
+	skewness		
+	kurtosis		
+sum		sum		sum		
+rawsum				sum without optionally specified weights	
+count or n		count or n		count		number of nonmissing observations	
+max		max		max		
+min		min		min		
+	range			max - min	
+median				same as p50	
+pn		pn		pn		table and graph pie allow any n, tabstat only 1, 5, 10, 25, 50, 75, 90, 95 and 99	
+iqr		iqr			p75 - p25	
+	q			equivalent to p25 p50 p75
