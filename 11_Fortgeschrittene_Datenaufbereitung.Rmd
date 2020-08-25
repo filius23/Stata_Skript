@@ -73,6 +73,8 @@ lookfor "Alters"
 set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+qui label define age_cat_lab 18 "18-34 Jahre" 35 "35-29 Jahre" 60 "über 60 Jahre" 
+qui label values age_cat age_cat_lab
 qui label variable age_cat "3er Alterseinteilung"
 lookfor "Alters"
 ```
