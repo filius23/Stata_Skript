@@ -1,6 +1,16 @@
 # Fortgeschrittene Themen {#adva}
 
-### Wertelabels 
+```{r setup11, echo = F, message=F, warning = F}
+.libPaths("D:/R-library4")
+knitr::opts_chunk$set(collapse = F)
+library(Statamarkdown)
+# # options(width = 200) # 157
+# # "C:/Program Files/Stata16/StataSE-64.exe"
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+```
+
+## Wertelabels 
 Wertelabels helfen, Informationen aus dem Codebuch direkt im Datensatz abzulegen und so das arbeiten zu erleichtern. Während Stata-Datensätze häufig mit Labels geliefert werden, müssen wir bei neu erstellten Variablen diese Labels selbst erstellen.
 
 Bspw. wenn wir aus der Altersvariable des Allbus 2018 eine neue Altersgruppen-Variable erstellen:
@@ -67,21 +77,21 @@ qui label variable age_cat "3er Alterseinteilung"
 lookfor "Alters"
 ```
 
-### sortieren
+## sortieren
 
 `sort`
 
-### Indikatoren umdrehen
+## Indikatoren umdrehen
 
-### Informationen aus mehreren Variablen
+## Informationen aus mehreren Variablen
 
 ``
 
-### Informationen aus mehreren Datensätzen
+## Informationen aus mehreren Datensätzen
 
 `merge`
 
-### Arbeiten mit Textvariablen
+## Arbeiten mit Textvariablen
 
 `substr`
 
@@ -90,11 +100,11 @@ lookfor "Alters"
 `regexm`
 
 
-### egen {#egen}
+## egen {#egen}
 
 `egen` ist die Erweiterung von `gen` und gibt uns die Möglichkeit, eine ganze Reihe von Berechnungen durchzuführen.
 
-### gruppierte Berechnungen
+## gruppierte Berechnungen
 
 ```{stata, cleanlog = F, eval = F}
 bys agec: egen mean_inc = mean(inc)
@@ -103,6 +113,6 @@ list agec mean_inc in 1/10
 
 
 
-### collapse
+## collapse
 
 Manchmal möchten wir vielleicht nur einen Mittelwert pro Gruppe und die einzelnen Werte interessieren uns gar nicht. Wir möchten unseren Datensatz also verkürzen, sodass er lediglich einen Wert pro Gruppe enthält. Dazu
