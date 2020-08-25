@@ -13,9 +13,11 @@ knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 ```
 
 ## `tabstat` 
-`tabstat varx vary, s(mean median)`
 
-```{r, ft.align = "center",message=F,warning=F}
+Mit `tabstat` können wir eine ganze Reihe statistischer Kennzahlen für metrische/kontinuierliche Merkmale berechnen. Die Syntax hat dabei immer das folgende Format: `tabstat age, s(mean median)`
+
+Hier eine Übersicht der Kennzahlen:
+```{r, ft.align = "center",message=F,warning=F, echo = F}
 readxl::read_xlsx("03_tabstat.xlsx",sheet = 1) %>% 
   mutate(Option = paste0("`",Option,"`")) %>% 
   gt() %>% 
