@@ -10,15 +10,15 @@ stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 ```
 
-Nachdem wir uns in Stata etwas umgesehen haben, können wir uns jetzt 
+Nachdem wir uns in Stata etwas umgesehen haben, können wir uns jetzt dem eigentlichen Arbeiten mit Datensätzen zuwenden.
 ```{stata tab_su1, eval = F}
 cd ....
-use "ZA5270_v2-0-0.dta"
+use "Allbus2018.dta"
 ```
 
 ## Vorab: Befehlsstruktur & Hilfe
 
-Ganz nebenbei haben wir im Kapitel 1 bereits die ersten Stata-Befehle verwendet. Bevor wir jetzt aber tiefer einsteigen nochmal einmal ganz allgemein:
+Ganz nebenbei haben wir in Kapitel 1 bereits die ersten Stata-Befehle verwendet. Bevor wir jetzt aber tiefer einsteigen nochmal einmal allgemein:
 
 Die grundsätzliche Struktur von Stata-Kommandos ist immer `befehl variable, optionen`. Zunächst geben wir also immer an, was passieren soll - bisher war das eben zum Beispiel eine Beschreibung (`describe`) einer Variable: 
 ```{stata commands1, eval = F}
@@ -26,7 +26,7 @@ describe sex
 ```
 ```{stata commands2, echo = F}
 set linesize 100
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 describe sex
 ```
 Diese können wir mit der Option `simple` abändern. Optionen werden nach einem `,` angegeben:
@@ -37,7 +37,7 @@ describe sex, simple
 
 ```{stata commands2s, echo = F}
 set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 describe sex, simple
 ```
 
@@ -48,7 +48,7 @@ describe, short
 
 ```{stata commands3show, echo = F}
 set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 describe, short
 ```
 
@@ -68,7 +68,7 @@ describe pv01 age sex, short
 
 ```{stata rowbased1, echo = F}
 set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 describe pv01 age sex, short
 ```
 
@@ -79,7 +79,7 @@ sex
 ```
 ```{stata rowbased2b, echo = F}
 set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 d pv01 age 
 sex
 ```
@@ -91,7 +91,7 @@ sex
 ```
 ```{stata rowbased3b, echo = F}
 set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 d pv01 age ///
 sex
 ```
@@ -102,57 +102,113 @@ d pv01 age sex // dies ist ein kommentar
 ```
 ```{stata comment2, echo = F}
 set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 d pv01 age sex
 ```
 
 
 ## Auszählen & Überblick erhalten
 
-Mit `summarize`  und `tabulate` bekommen wir eine Übersicht zu den Kennzahlen bzw. eine Auszählung der Häufigkeiten einer Variable. Dies sind wohl die beiden wichtigsten Befehle in Stata:
-
-```{stata su1, eval = F}
-summarize age
-```
-
-```{stata su1b, echo = F, collectcode=TRUE}
-set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ZA5270_v2-0-0.dta", clear
-su age
-```
-
-```{stata su2, eval = F}
-summarize age inc // klappt auch mit mehreren Variablen
-```
-```{stata su2b, echo = F, collectcode=TRUE}
-summarize age inc // klappt auch mit mehreren Variablen
-```
-
-
+Mit `tabulate` bekommen wir eine Auszählung der Ausprägungen einer Variable. Dies ist wohl der wichtigste Befehl in Stata:
 ```{stata tab, eval = F}
 tabulate sex
 ```
 
-```{stata tabb, echo = F, collectcode=TRUE}
+```{stata tabb, echo = F}
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 tab sex
 ```
+Wir sehen hier also, dass `sex` zwei Ausprägungen hat und 1773 Männer und 1704 Frauen enthält.
+
+Für metrisch skalierte Variablen mit deutlich mehr Ausprägungen können wir `tabulate` zwar theoretisch auch verwenden, allerdings wird eine Tabelle hier sehr schnell sehr unübersichtlich:
+
+```{stata tab1, eval = F}
+tabulate age
+```
+
+```{stata tab1b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+tab age
+```
+
+Für metrische Variablen empfiehlt sich daher `summarize` als Überblicksbefehl:
+```{stata su1, eval = F}
+summarize age
+```
+
+Hier bekommen wir die Anzahl der Beobachtungen (`Obs.`),       das arithmetische Mittel (`Mean`), sowie die Minimal- und Maximalwerte ausgegeben (`Min`&`Max`). (zur Standardabweichung `Std. Dev.` kommen wir noch).
+```{stata su1b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+su age
+```
+`summarize` klappt auch mit mehreren Variablen auf einmal:
+```{stata su2, eval = F}
+summarize age inc // klappt auch mit mehreren Variablen
+```
+```{stata su2b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+summarize age inc // klappt auch mit mehreren Variablen
+```
+
 
 ## Neue Variablen erstellen
 
+Natürlich sind wir nicht nur darauf beschränkt, bestehende Variablen anzusehen, sondern wir können auch neue Variablen erstellen. Das geht mit `gen`. Dazu geben wir erst den neuen Variablennamen an und nach `=`, wie die neue Variable bestimmt werden soll:
 ```{stata gen, echo = T, eval = F }
 gen age_mon = age * 12
 su age_mon
 ```
 
-```{stata gen2, echo = F,collectcode=TRUE}
+```{stata gen_b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 gen age_mon = age * 12
 su age_mon
 ```
 
+Wenn wir eine Variable überschreiben möchten, dann müssen wir diese erst mit `drop` löschen, bevor wir sie überschreiben. Würden wir den `gen` Befehl von gerade nochmal verwenden, dann bekommen wir eine Fehlermeldung:
+```{stata gen2, eval = F}
+gen age_mon = age * 12
+```
+```{stata gen2_b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+gen age_mon = age * 12
+gen age_mon = age * 12
+```
+Wir müssen den Namen `age_mon` also erst wieder frei machen, dann funktioniert der Befehl auch:
+```{stata, eval = F}
+drop age_mon
+gen age_mon = age * 12
+```
+
+## Bestehende Variablen verändern
+Alternativ können wir auch mit `replace` explizit eine bestehende Variable überschreiben:
+```{stata rep, eval = F, echo = T}
+replace age_mon = age * 12
+```
+
+Hier können wir aber nur bestehende Variablen ansprechen, sonst bekommen wir auch hier eine Fehlermeldung:
+```{stata replace2, eval = F}
+replace age_mon12 = age * 12
+```
+
+```{stata replace2b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+replace age_mon12 = age * 12
+```
+
+
 ## gen ist gut, Kontrolle ist besser
 
+Wie gerade gesehen gibt uns Stata aber keinerlei Erfolgsmeldungen. Nach der Bearbeitung oder Neuurstellung von Variablen sollte ein Blick in die Daten folgen. Dazu empfiehlt es sich, wieder auf den `browse` Befehl zurückzugreifen:
+
 ```{stata bro_ansicht_cmd, eval = F}
-bro respid age age_mon
+browse respid age age_mon
 ```
 
 
@@ -160,66 +216,202 @@ bro respid age age_mon
 knitr::include_graphics("02_stata_browse_kontrolle.png")
 ```
 
+## Fehlende Werte
 
+Wenn wir uns nochmal die Variable `age` ansehen, dann fallen die negativen Altersangaben ins Auge:
 
-## Bestehende Variablen verändern
-```{stata rep, eval = F, echo = T}
-replace age = . if age < 0
+```{stata miss1, eval = F}
+summarize age
+```
+```{stata miss1b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+su age
+```
+
+Ein Blick ins Codebuch zeigt, dass es sich hier natürlich nicht um Befragte mit einem negativen Alter handelt. Sondern aufgrund der fehlenden Angaben zum Geburtsdatum lässt sich für manche Befragte das Alter nicht generieren. Für diese Fälle wurde dann -32 als Wert in `age` abgelegt:
+```{r age_cdb, echo = F,out.width = "60%",fig.height= 3.25, fig.align="center"}
+knitr::include_graphics("02_age_codebuch.PNG")
+```
+
+Diese Information müssen wir Stata mitteilen, indem wir -32 als *missing value* überschreiben. Diese *missing value*s werden in Stata mit `.` abgelegt und werden dann für die Berechnung von Mittelwerten usw. ausgeschlossen. Um also -32 als `.` zu überschreiben, können wir zB auf den `recode` Befehl zurückgreifen:
+
+```{stata miss2, eval = F}
+summarize age
+replace age = . if age == 32
+summarize age
+```
+```{stata miss2b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+su age
+replace age = . if age == 32
+su age
+```
+
+Wir bekommen von Stata mitgeteilt, dass wir 5 Beobachtungen verändert und auf missing gesetzt haben. Im folgenden `summarize` werden diese fehlden Werte dann ignoriert.
+
+Ein Spezialbefehl für die Überschreibung von bestimmten Werten ist `mvdecode`. Mit `mvdecode` können wir `-32` in mehreren Variablen gleichzeitig überschreiben. Zum Beispiel in `dm03`, `dg03` und `isced97`:
+```{stata miss3, eval = F}
+mvdecode dm03 dg03 isced97, mv(-32)
+```
+```{stata miss3b, echo = F}
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+mvdecode dm03 dg03 isced97, mv(-32)
+```
+
+Mit `mdesc` bekommen wir eine Auszählung zu fehlenden Werten. `mdesc` ist allerdings kein Standard-Stata-Befehl, sondern muss extra installiert werden. Das ist allerdings kein größerer Aufwand:
+```{stata miss4, eval = F}
+ssc install mdesc
+```
+Anschließend können wir mit `mdesc` die Zahl der missings in `age`, `dm03`, `dg03` und `isced97` ausgeben lassen:
+```{stata miss5, eval = F}
+mdesc age dm03 dg03 isced97
+```
+```{stata miss5b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode dm03 dg03 isced97, mv(-32)
+mdesc age dm03 dg03 isced97
 ```
 
 ## if Bedingungen und fehlende Werte
 
-Fehlende Werte werden von Stata als "unendlich groß" gewertet!
-
-`>`, `<`, `==`, `>=`, `<=`, `!=` oder `~=` (ungleich)
-
+Eine häufige Fehlerquelle bei fehlende Werten in Stata ist deren Verhältnis zu `>`. Fehlende Werte werden nämlich von Stata als "unendlich groß" gewertet! Wenn wir uns Befragte mit einem Alter über 92 ausgeben lassen, dann bekommen wir auch diejenigen ohne Altersangabe ausgegegeben:
 
 ```{stata list_if, eval = F}
-list sex land age if age > 90
+list sex land age if age > 92
 ```
 ```{r, eval = F}
       +---------------------------+
       |  sex           land   age |
       |---------------------------|
  126. | MANN        SACHSEN    94 |
- 150. | FRAU        SACHSEN    92 |
  322. | FRAU   RHEINLAND-PF     . |
  353. | MANN   NORDRHEIN-WE    94 |
  556. | FRAU   NORDRHEIN-WE     . |
-      |---------------------------|
-1061. | FRAU   RHEINLAND-PF    92 |
 1342. | FRAU   NORDRHEIN-WE     . |
-1923. | MANN   NIEDERSACHSE    91 |
-2120. | FRAU   BADEN-WUERTT    92 |
+      |---------------------------|
 2135. | FRAU    BRANDENBURG     . |
-      |---------------------------|
-2299. | MANN        HAMBURG    92 |
-2336. | FRAU         HESSEN    92 |
-2730. | MANN   NIEDERSACHSE    92 |
-2978. | MANN   BADEN-WUERTT    92 |
 3130. | MANN         HESSEN     . |
-      |---------------------------|
 3299. | MANN   RHEINLAND-PF    95 |
       +---------------------------+
-
 ```
 
+Es gibt zwei Möglichkeiten, dies zu umgehen: 
 
-+ `inrange`
++ entweder wir verwenden `inrange` - wobei wir hier eine Obergrenze angeben müssen und außerdem die Untergrenze immer mit eingeschlossen wird. Wenn wir also nur Fälle sehen wollen, die *älter* als 92 sind, dann müssen wir einen Wert über 92 angeben:
+```{stata list_if2, eval = F}
+list sex land age if inrange(age,92.1,100)
+```
+```{r, eval = F}
+      +---------------------------+
+      |  sex           land   age |
+      |---------------------------|
+ 126. | MANN        SACHSEN    94 |
+ 353. | MANN   NORDRHEIN-WE    94 |
+3299. | MANN   RHEINLAND-PF    95 |
+      +---------------------------+
+```
 
-
++ oder wir hängen den `missing()`-Operator an die Bedingung an. Wenn wir diesen mit Hilfe eines `!` verneinen, bekommen wir nicht-fehlende Fälle ausgegeben:
+```{stata list_if3, eval = F}
+list sex land age if age > 92 & !missing(age)
+```
+```{r, eval = F}
+      +---------------------------+
+      |  sex           land   age |
+      |---------------------------|
+ 126. | MANN        SACHSEN    94 |
+ 353. | MANN   NORDRHEIN-WE    94 |
+3299. | MANN   RHEINLAND-PF    95 |
+      +---------------------------+
+```
 
 ## keep & drop
 
-Manchmal möchten wir 
+Manchmal möchten wir nur bestimmte Beobachtungen im Datensatz behalten. Beispielsweise möchten wir für eine Analyse nur Befragte mit einem Einkommen über 1500 EUR im Datensatz behalten. Dazu können wir `keep` oder `drop` die gewünschten Fälle behalten bzw. die ungewünschten ausschließen:
+```{stata keep, eval = F}
+use Allbus2018.dta
+keep if inc >= 1500
+d,s
+```
 
+```{stata keepb, echo = F}
+set linesize 90
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+keep if inc >= 1500
+d,s
+```
+
+```{stata drop, eval = F}
+use Allbus2018.dta
+drop if inc < 1500
+d,s
+```
+
+```{stata dropb, echo =F}
+set linesize 90
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+drop if inc < 1500
+d,s
+```
+
+Hinweis: wenn die negativen Werte für `inc` bereits als Missing überschrieben sind, verbleiben diese Fälle im Datensatz! (Sie werden als unendlich groß erkannt!) 
+
+## Labels und if-Bedingungen
+
+Genauso könnten wir auch vorgehen wenn wir nur männliche oder weibliche Befragte im Datensatz behalten möchten. Hier nochmal die Auszählung der Variable `sex`:
+```{stata tab3, eval = F}
+tabulate sex
+```
+
+```{stata tab3b, echo = F}
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+tab sex
+```
+
+Allerdings sind `MANN` und `FRAU` lediglich *Variablenlabels*. D.h. hier wurden Zahlencodes wieder mit Beschreibungen assoziiert. Wir können diese Labels nicht für `if`-Bedingungen verwenden:
+```{stata if_lab, eval = F}
+keep if sex == "FRAU"
+```
+`type mismatch
+r(109);
+`
+
+Im Hintergrund ist `sex` nämlich eine numerische Variable
+```{stata if_lab2, eval = F}
+describe sex
+```
+```{stata if_lab2b, echo = F}
+set linesize 90
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+describe sex
+```
+Unter `value label` sehen wir, dass hier das Label `sex` angefügt wurde.
+
+Wir können die eigentlichen Werte in `tabulate` mit der Option `,nol` ausblenden: 
+```{stata if_lab3, eval = F}
+tabulate sex, nol
+```
+```{stata if_lab3b, echo = F}
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+tabulate sex
+```
+Wenn wir also nach Frauen filtern möchten, müssen wir den entsprechenden Zahlencode angeben:
+
+```{stata keep_l3, eval = F}
+keep if sex == 2
+```
+
+Mehr zu labels [hier](#adva)
 
 ## Nochmal von vorne: Daten neu laden
 
 Variable gelöscht, die doch nötig ist? Falsch recodiert? Das ist zwar ärgerlich, aber ein riesen Vorteil der DoFile-basierten Datenarbeit mit Stata ist die Reproduzierbarkeit. Wir können einfach nochmal von vorne anfangen. Dazu lesen wir die Original-Daten einfach erneut mit `use` ein. Allerdings ist dann eine Besonderheit zu beachten:
 
 ```{stata re_use, eval = F}
-use "ZA5270_v2-0-0.dta"
+use "Allbus2018.dta"
 ```
 
 `no; dataset in memory has changed since last saved`
@@ -227,11 +419,11 @@ use "ZA5270_v2-0-0.dta"
 Wir müssen erst den existierenden Datensatz mit `clear` löschen 
 ```{stata, eval = F, echo =T }
 clear
-use "ZA5270_v2-0-0.dta"
+use "Allbus2018.dta"
 ```
 oder die `clear` Option für `use` verwenden:
 ```{stata, eval = F, echo =T }
-use "ZA5270_v2-0-0.dta", clear
+use "Allbus2018.dta", clear
 ```
 
 ## Speichern
@@ -240,58 +432,35 @@ Natürlich können wir unsere Daten auch abspeichern, wenn alles wie gewünscht 
 
 ```{stata, eval = F}
 cd ... 
-save "ZA5270_v2-0-0.dta"
+save "Allbus2018.dta"
 ```
-`file auto.dta already exists`   
+`file Allbus2018.dta already exists`   
 `r(602);`
 
 Wir geben also entweder einen anderen Dateinamen an:
 ```{stata, eval = F}
-save "ZA5270_v2-0-0_neu.dta"
+save "Allbus2018_neu.dta"
 ```
-Oder wir teilen Stata mit der Option `replace` explizit mit, dass die Datei überschrieben werden soll:
+Wir können aber auch mit der Option `replace` explizit mitteilen, dass die Datei überschrieben werden soll:
 ```{stata, eval = F}
-save "ZA5270_v2-0-0.dta", replace
+save "Allbus2018.dta", replace
 ```
+Damit sind die Originaldaten aber natürlich weg.
 
 ## Übungen
 
 + Laden Sie den Datensatz `Allbus2018` in Stata. 
 
-+ Erstellen Sie eine neue Variable mit dem Alter der Befragten im Jahr 2020!   
-
++ In welcher Variable ist das Geburtsjahr der Befragten abgelegt?
++ Erstellen Sie eine neue Variable mit dem Alter der Befragten im Jahr 2020! 
++ Lassen Sie sich das Geburtsjahr und die neu erstellte Variable für die ersten 20 Beobachtungen anzeigen - hat alles geklappt wie es soll?
 + Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Datensatz. 
-+ Wie viele Spalten hat `nach_1960`? Wie viele Zeilen? Nutzen Sie für Ihre Antwort die Befehle die wir kennen gelernt haben.
++ Wie viele Spalten hat `nach_1960`? Wie viele Zeilen? 
+
+## Profi-Übungen
+
+Für alle, die noch etwas mehr machen möchten: 
 
 
 
 
-## Fortgeschrittene Themen
-
-### sortieren
-
-### Indikatoren umdrehen
-
-### Informationen aus mehreren Variablen
-
-
-### Informationen aus mehreren Datensätzen
-
-
-
-### egen {#egen}
-
-`egen` ist die Erweiterung von `gen` und gibt uns die Möglichkeit, eine ganze Reihe von 
-
-### gruppierte Berechnungen
-
-```{stata, cleanlog = F, eval = F}
-bys agec: egen mean_inc = mean(inc)
-list agec mean_inc in 1
-```
-
-
-
-### collapse
-
-Manchmal möchten wir vielleicht nur einen Mittelwert pro Gruppe und die einzelnen Werte interessieren uns gar nicht. Wir möchten unseren Datensatz also verkürzen, sodass er lediglich einen Wert pro Gruppe enthält. Dazu

@@ -1,0 +1,43 @@
+# Fortgeschrittene Themen {#adva}
+
+### Wertelabels 
+
+### sortieren
+
+`sort`
+
+### Indikatoren umdrehen
+
+### Informationen aus mehreren Variablen
+
+``
+
+### Informationen aus mehreren Datensätzen
+
+`merge`
+
+### Arbeiten mit Textvariablen
+
+`substr`
+
+`regexr`
+
+`regexm`
+
+
+### egen {#egen}
+
+`egen` ist die Erweiterung von `gen` und gibt uns die Möglichkeit, eine ganze Reihe von Berechnungen durchzuführen.
+
+### gruppierte Berechnungen
+
+```{stata, cleanlog = F, eval = F}
+bys agec: egen mean_inc = mean(inc)
+list agec mean_inc in 1/10
+```
+
+
+
+### collapse
+
+Manchmal möchten wir vielleicht nur einen Mittelwert pro Gruppe und die einzelnen Werte interessieren uns gar nicht. Wir möchten unseren Datensatz also verkürzen, sodass er lediglich einen Wert pro Gruppe enthält. Dazu

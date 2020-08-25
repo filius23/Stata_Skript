@@ -200,7 +200,7 @@ knitr::include_graphics("01_Stata9_bro_Datensatz2.png")
 
 Wenn wir einen Datensatz aus dem Speicher löschen wollen, dann können wir dies mit `clear`.
 
-### list
+### `list`
 
 `browse` eignet sich vor allem für größere Übersichten. Wenn wir nur einige wenige Fälle betrachten möchten, dann ist `list` eine gute Alternative, da der Output hier gleich im Ergebnisfenster (2) angezeigt wird. Die Funktionsweise von `list` ähnelt sich im Prinzip der von `browse`. Mit dem Zusatz `in 1/10` können wir die ersten 10 Zeilen anzeigen lassen (ansonsten würden alle 3477 Fälle angezeigt!):
 
@@ -226,6 +226,17 @@ list inc eastwest  mstat in 1/10
      +--------------------------------------------+
 ```
  
+### `lookfor`
+
+All diese Befehle setzen aber voraus, dass wir wissen, unter welchem Variablennamen die interessierende Information abgelegt wurde. Mit `lookfor "stichwort"` können wir den Datensatz nach einem Stichwort durchsuchen:
+```{stata lookf, eval = F}
+lookfor "alter"
+```
+```{stata lookfb, echo = F}
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+lookfor "alter"
+```
+
 
 ## if Bedingung - nur manche Zeilen ansehen
 
@@ -289,9 +300,17 @@ list sex land if inrange(age,20,30)
   + Wie alt ist der/die Befragte mit der `respid` 3469? Welches Geschlecht und welche Wahlabsicht hat die Person angegeben?
   
   
-
 [^14]: Diese Frage ist eine inhaltliche, Stata hilft Ihnen hier nicht weiter.  
 
+## Profi-Übungen
+
+Für alle, die noch etwas mehr machen möchten: 
+
++ Auf ILIAS finden Sie auch eine csv-Datei mit aktuellen Daten zu Testzahlen, Fallzahlen und regionalen Gegebenheiten rund um COVID19 aus dem [tidycovid19](https://joachim-gassen.github.io/2020/05/tidycovid19-new-data-and-doc/)-Projekt. Importieren Sie diesen Datensatz per csv-Import! (Siehe [weitere Anmerkungen](#otherfmts))
+
++ Wie viele Zeilen und Spalten hat dieser Datensatz?
++ Welcher Variablentyp ist für die Variable `country` hinterlegt?
++ Löschen Sie alle Beobachtungen für die USA! Wie viele Fälle bleiben übrig?
 
 
 ## Weitere Anmerkungen
@@ -315,3 +334,28 @@ set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 d pv01 version wghtpew xs11 age sex
 ```
+
+
+### import anderer Dateiformate {#otherfmts}
+
+Häufig liegen Datensätze nicht im `.dta`-Format vor, sondern beispielsweise als Excel-Tabelle (.xslx oder .xls), SPSS-Datei (.sav) oder als .csv-Datei.
+
+Hierfür stehen alternative Importbefehle zur Verfügung:
+
++ `import excel` für Excel Tabellen
++ `import spss` für SPSS-Dateien
++ `import delimited` für csv-Dateien
+
+Hier empfiehlt sich ein Blick in das Auswahlmenü unter File > Import:
+
+```{r import_other, echo = F,out.width = "60%",fig.height= 3.5, fig.align="center"}
+knitr::include_graphics("01_import_other.png")
+```
+Nach Klick auf das entsprechende Dateiformat öffnet sich ein Dialogfenster, in das die gewünschten Optionen eingetragen werden können. Sind alle Optionen wie gewünscht gesetzt, gibt es unten gibt es die Möglichkeit, den so zusammengestellten Befehl nicht nur durchzuführen, sondern auch zu kopieren (um ihn beispielsweise in ein DoFile einzufügen):
+```{r import_other2, echo = F,out.width = "40%",fig.height= 3.5, fig.align="center"}
+knitr::include_graphics("01_import_other_copy.png")
+```
+
+
+Eine zentrale Frage ist u.a., ob die erste Zeile des Datensatzes als Variablennamen übernommen werden soll oder in der ersten Zeile bereits Daten enthalten sind. In diesem Fall vergibt Stata dann Variablennamen (`v1`-`vXX`). Dies wird mit der Option `varnames` angegeben: bei `varnames(1)` wird die erste Zeile als Spaltenname verwendet, `varnames(nonames)` hingegen verwendet alle Zeilen aus dem Datensatz als Fälle und vergibt selbst Variablennamen. So sieht bspw. ein `csv`-Import aus:
+`import delimited "eigene_Datei.csv", varnames(1) clear`

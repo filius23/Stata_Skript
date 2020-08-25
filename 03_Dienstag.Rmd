@@ -1,23 +1,304 @@
 # Deskriptive Statistik {#desc1} 
 
-`tabstat`
+```{r setup3, echo = F, message=F, warning = F}
+.libPaths("D:/R-library4")
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(dpi=800)
+library(Statamarkdown)
+library(tidyverse)
+library(kableExtra)
+library(gt)
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+a18 <- readstata13::read.dta13("../Allbus2018.dta",convert.factors = F)
+t1 <- table(a18$german) # ablegen wie oben
+```
 
-table	tabstat	graph bar	Notes	
-freq				not followed by the name of a variable	
-mean		mean			
-sd		sd			standard deviation	
-	var			variance	
-	cv			coefficient of variation = variance/mean	
-	semean			standard error of mean = sd/sqrt(n)	
-	skewness		
-	kurtosis		
-sum		sum		sum		
-rawsum				sum without optionally specified weights	
-count or n		count or n		count		number of nonmissing observations	
-max		max		max		
-min		min		min		
-	range			max - min	
-median				same as p50	
-pn		pn		pn		table and graph pie allow any n, tabstat only 1, 5, 10, 25, 50, 75, 90, 95 and 99	
-iqr		iqr			p75 - p25	
-	q			equivalent to p25 p50 p75
+
+In der vorherigen Sitzungen hatten wir gesehen, wie wir Datensätze importieren und damit arbeiten. In dieser Session werden wir sehen, wie wir uns mit Tabellen einen Überblick über die Informationen in einem Datensatz verschaffen können. Wir werden auch in dieser Session mit dem Allbus 2018 arbeiten. Zunächst müssen wir dazu die Daten wieder einlesen:
+```{r W04_1, eval=F, echo = T}
+cd ("...") # wo liegt der Datensatz?
+use "Allbus2018.dta"
+```
+
+## Kategoriale Merkmale
+### Absolute Häufigkeiten
+Ganz nebenbei haben wir in Kapitel 2 bereits die Häufigkeitstabellen kennengelernt, beispielsweise können wir mit `tabulate` die Ausprägungen der Variable `german` auszählen (Details im Codebuch):
+
+```{stata tab03, eval = F}
+tab german
+```
+```{stata tab03b, echo = F}
+set linesize 100
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+tab german
+```
+
+
+Wir bekommen hier also die absoluten Häufigkeiten angezeigt. In der ersten Spalte werden die verschiedenen Ausprägungen aufgelistet, in der zweiten Spalte stehen dann die Häufigkeiten. Da auch für diese Variable Labels vergeben wurden, sehen wir sofort, für welche inhaltlichen Kategorien die Zahlencodes jeweils stehen. Bspw. steht `1` dafür, dass der*die Befragte die deutsche Staatsbürgerschaft besitzt. Möchten wir die dahinterstehenden Zahlencodes sehen, müssen wir die Option `,nol` verwenden:
+```{stata tab031, eval = F}
+tab german,nol
+```
+```{stata tab031b, echo = F}
+set linesize 100
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+tab german,nol
+```
+
+`r as.numeric(table(a18$german)[2])` Befragte haben also nur die deutsche Staatsbürgerschaft, `r as.numeric(table(a18$german)[3])` Befragte haben die deutsche und noch eine weitere Staatsbürgerschaft. Außerdem enthält der Datensatz `r as.numeric(table(a18$german)[4])` Befragte ohne deutsche Staatsbürgerschaft.   
+
+Etwas störend ist aber noch die `-50`. Aus dem Codebuch erfahren wir, dass `-50` für "staatenlos" steht. Wie in Session 2 gezeigt, können wir mit `mvdecode` diese Ausprägung auf `.` setzen und Stata so mitteilen, dass es sich um fehlende Werte handelt:
+```{stata 03_miss, eval = F}
+mvdecode german, mv(-50)
+```
+```{stata 03_missb, echo = F}
+set linesize 100
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+mvdecode german, mv(-50)
+```
+Wenn wir jetzt `tabulate` aufrufen, dann bekommen wir nur noch die gültigen Fälle angezeigt:
+```{stata 03_miss1, eval = F}
+tabulate german
+```
+```{stata 03_miss1b, echo = F}
+set linesize 100
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode german, mv(-50)
+tabulate german
+```
+```{r, echo=F}
+a18$german[a18$german<0] <- NA
+t1 <- table(a18$german) # ablegen wie oben
+```
+Neben den absoluten Häufigkeiten werden uns auch relative Häufigkeitstabellen angezeigt.
+Bspw. haben `r sprintf("%2.3f",prop.table(t1)[1]*100)`% aller Befragten ausschließlich die deutsche Staatsbürgerschaft.
+Bspw. `r sprintf("%2.3f",cumsum(prop.table(t1))[2]*100)`% aller Befragten die deutsche und evtl. eine weitere Staatsbürgerschaft.
+
+
+Wir können aber mit der Option `m` die Auszählung von `.` explizit anfordern:
+```{stata 03_miss2, eval = F}
+tabulate german,m
+```
+```{stata 03_miss2b, echo = F}
+set linesize 100
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode german, mv(-50)
+tabulate german, m
+```
+
+
+## Metrische Variablen
+
+Das bisherige Beispiel Staatsbürgerschaft (`german`) bezog sich auf ein kategoriales Merkmal. Für ein metrisches Merkmal, wie zum Beispiel das Geburtsjahr macht eine Häufigkeitstabelle wenig Sinn, da das Geburtsjahr sehr viele Ausprägungen hat und eine Tabelle unübersichtlich wäre - hier nur als Beispiel die ersten 25 Ausprägungen (es gibt insgesamt 77!):
+
+```{stata tab_desc1, eval = F}
+tab age if age < 43
+```
+
+```{stata tab_desc1b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+tab age if age < 43
+```
+
+Um eine Häufigkeitstabelle zu erstellen, müssen wir bei metrischen Merkmalen Klassen bilden. So könnten wir das Alter in Lebensjahrzehnte unterteilen. Zuvor müssen wir wieder die fehlenden Angaben[^1] überschreiben:
+```{stata age_miss, eval = F}
+mvdecode age, mv(-32)
+```
+```{stata age_missb, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+mvdecode age, mv(-32)
+```
+
+Um die Klassen zu bilden, nutzen wir `egen` zusammen mit der Funktion `cut()`. In `cut` geben wir die zu unterteilende Variable an, außerdem legen wir in `at()` die Klassengrenzen fest.[^031] Die so genere Werte legen wir in einer neuen Variable `age_cat` ab: 
+```{stata age_cut, eval = F}
+egen age_cat = cut(age), at( 18 35 60 100 )
+```
+Auch hier gilt wieder: anschließend sollten wir mit `browse age age_cat` kontrollieren, ob das (richtig) funktioniert hat. 
+Für die neue, klassierte Variable können wir dann wieder mit `tabulate` eine Häufigkeitstabelle anfordern:
+```{stata, eval = F}
+tabulate age_cat
+```
+```{stata age_cut_tab, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+tabulate age_cat
+```
+
+Stata verwendet für die Klassen jeweils die untere Klassengrenze. Wir haben also 718 18-34-jährige und 1527 35-59-jährige Befragte in unserem Datensatz.
+
+[^031]: Für die Grenzen können wir auch eine sog. numlist `wert1(schrittbreite)wert2` verwenden. Darin geben wir zunächst die untere Grenze, dann die Schrittbreite und abschließend die obere Grenze an. Zb könnten wir so 10er-Schritte festlegen: `egen age_cat = cut(age), at( 10(10)100 ) `
+
+```{r,echo=F}
+a18$age_cat <- cut(a18$age, breaks = c( 18, 35, 60, 100 ) ,include.lowest = T,right = FALSE ) # kürzer mit seq()
+age_tab <- table(a18$age_cat) # abs Häufigkeiten
+age_tab2 <- prop.table(age_tab) # rel Häufigkeiten
+```
+Außerdem geben uns die kumulierten Häufigkeiten (`Cum.`) an, dass `r sprintf("%2.2f",cumsum(age_tab2)[2]*100)`% aller Befragten jünger als 60 Jahre sind.
+
+[^1]: Die Werte für fehlende Angaben finden wir Codebuch: auch hier ist `-32` wieder ein Code für fehlende Werte.
+
+## Exkurs: labels vergeben
+
+Natürlich können wir die Werte in `age_cat` auch besser beschriften. Dazu definieren wir ein Wertelabel an. Dazu verwenden wir `label define`, gefolgt von einem Objektnamen für dieses Label (hier `age_cat_lab`) und dann jeweils die Ausprägungen zusammen mit dem entsprechenden label in `""`. Dieses Label-Objekt wenden wir dann mit `label values` auf die Variable `age_cat` an:
+```{stata lab1, eval = F}
+label define age_cat_lab 18 "18-34 Jahre" 35 "35-29 Jahre" 60 "über 60 Jahre" 
+label values age_cat age_cat_lab
+tab age_cat
+```
+
+```{stata lab1b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+label define age_cat_lab 18 "18-34 Jahre" 35 "35-29 Jahre" 60 "über 60 Jahre" 
+label values age_cat age_cat_lab
+tab age_cat
+```
+
+## Kontingenztabellen
+
+Aus Kontingenztabellen erfahren wir, wie häufig Merkmalskombinationen auftreten. Auch für Kontingenztabellen können wir `tabulate` verwenden. Zum Beispiel können wir uns eine Tabelle anzeigen lassen, die uns die Häufigkeiten des Familienstatus getrennt nach Altersgruppen zeigt. Auch hier schließen wir zunächst die fehlenden Werte mit `mvdecode` aus:
+```{stata cross_tab, echo = T, eval = F}
+mvdecode mstat, mv(-41 -9)
+```
+Für die Kontingenztabelle geben wir dann nach `tabulate` die beiden Variablen an, welche die Zeilen und Spalten definieren:
+```{stata cross_tabx, echo = T, eval = F}
+tabulate age_cat mstat
+```
+```{stata cross_tabb, echo = F}
+set linesize 120
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+qui mvdecode mstat, mv(-41 -9)
+tabulate age_cat mstat
+```
+
+
+Wir erkennen aus dieser Tabelle beispielsweise, dass 200 Befragte aus der Altersgruppe der 35-59-Jährigen (`age_cat=35`) geschieden sind.
+
+## Relative Häufigkeiten
+
+Auch hier können wir uns die relativen Häufigkeiten anzeigen lassen, indem wir die Option `,cell` anwenden:
+```{stata cell_pct, echo = T, eval = F}
+tabulate age_cat mstat, cell
+```
+```{stata cell_pctb, echo = F}
+set linesize 120
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+qui mvdecode mstat, mv(-41 -9)
+tabulate age_cat mstat, cell
+```
+
+Die hier dargestellten relativen Häufigkeiten beziehen sich jeweils auf die Gesamtzahl der Befragten. Formal dargestellt wird also für die Kombination 35-59 Jahre alt (`age_cat=35`) und ledig (`mstat = 5`) die Anzahl der 35-59 Jahre alten Befragten durch die Anzahl **aller Befragten** geteilt: $\frac{\text{Anzahl geschiedener}\,35-59\,\text{Jähriger}}{\text{Gesamtzahl der Befragten}}$ - Wir können also aus dieser Tabelle ablesen dass `9,10%` der Befragten *35-59 Jahre alt und ledig* sind. 
+
+Um die Tabelle übersichtlich zu halten, können wir mit `nofreq` die absoluten Häufigkeiten ausblenden:
+
+```{stata cell_pct2, echo = T, eval = F}
+tabulate age_cat mstat, cell nofreq
+```
+```{stata cell_pct2b, echo = F}
+set linesize 120
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+qui mvdecode mstat, mv(-41 -9)
+tabulate age_cat mstat, cell nofreq
+```
+
+## Zeilenprozente
+Wir können diese Tabelle auch mit *Zeilenprozenten* anzeigen lassen, indem wir die Option `row` verwenden:
+
+```{stata row_pct, echo = T, eval = F}
+tabulate age_cat mstat, row nofreq
+```
+```{stata row_pctb, echo = F}
+set linesize 120
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+qui mvdecode mstat, mv(-41 -9)
+tabulate age_cat mstat, row nofreq
+```
+*Achtung!* Damit ändert sich jeweils die Interpretation der Tabelle! Wir ändern durch `row` die Bezugsgröße oder formal ausgedrückt den Nenner:  
+
+Für die **Zeilenprozente** werden die Werte in Bezug zu den Zeilensummen gesetzt. Also wird die Anzahl der ledigen 35-59 Jährigen ins Verhältnis zur Gesamtzahl der 35-59 Jährigen gesetzt: $\frac{\text{Anzahl geschiedener}\,35-59\,\text{Jähriger}}{\text{Anzahl aller}\,35-59\,\text{Jährigen}}$
+
+Interpretation: `20,67%` der 35-59 Jahre alten Befragten sind ledig.
+  
+## Spaltenprozente
+Wir können diese Tabelle auch mit *Spaltenprozenten* anzeigen lassen, indem wir die Option `col` verwenden:
+
+```{stata col_pct, echo = T, eval = F}
+tabulate age_cat mstat, col nofreq
+```
+```{stata col_pctb, echo = F}
+set linesize 120
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+qui mvdecode mstat, mv(-41 -9)
+tabulate age_cat mstat, col nofreq
+```
+
+Für die **Spaltenprozente** werden die Werte in Bezug zu den Spaltensummen gesetzt. Also wird die Anzahl der ledigen 35-59 Jährigen ins Verhältnis zur Zahl der ledigen Befragten gesetzt: $\frac{\text{Anzahl geschiedener}\,35-59\,\text{Jähriger}}{\text{Gesamtzahl der *ledigen* Befragten}}$ - Interpretation: "`13,97%` der ledigen Befragten sind 35-59 Jahre alt" 
+
+
+
+
+## Übungen
+
+Laden Sie den Allbusdatensatz für 2018 `Allbus2018.dta` in Stata:
+```{r einls, eval=F, echo = T}
+cd("...") # wo liegt der Datensatz?
+use " Allbus2018.dta"
+```
+
+(@) Wir interessieren uns für die Variable `gkpol`. 
+
+  + Lassen Sie sich eine Tabelle für `gkpol` anzeigen. Welche ist die häufigste Ausprägung?
+  + Hat die Variable fehlende Werte, die Sie ausschließen sollten? Falls ja, ersetzen Sie diese Werte mit `mvdecode` und lassen Sie sich die Tabelle erneut ausgeben.
+  + Wie viele Befragte leben in einem Ort mit höchstens 49.999 Einwohnern?
+  + Wie groß ist der Anteil der Befragten, die in einem Ort mit höchstens 99.999 Einwohnern leben?
+  + Wie groß ist der Anteil der Befragten, die in einem Ort mit *mindestens* 100.000 Einwohnern leben?
+  
+(@) Erstellen Sie eine Häufigkeitstabelle für das Geburtsjahr der Befragten (`yborn`)!
+  + Müssen Sie die Variable erst klassieren um eine sinnvoll interpretierbare Tabelle zu erhalten? 
+  + Gibt es fehlende Werte, die Sie mit `mvdecode` überschreiben sollten?
+  + Verwenden Sie die Jahrzehntgrenzen ab 1910.
+  + Erstellen Sie eine Tabelle für die neu erstellte, kategorisierte Variable.
+  + Wie groß ist der Anteil der Befragten, die bis 1970 geboren wurden?
+  + Wie groß ist der Anteil der Befragten, die nach 1980 geboren wurden?
+  
+(@) Erstellen Sie eine Kontingenztabelle für `sex` und `educ`. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte auszuschließen.
++ Erstellen Sie für die folgenden Fragen jeweils die passende Variante der Kontingenztabelle mit relativen Häufigkeiten als Zeilen- oder Spaltenprozenten. 
++ Welcher Anteil der Befragten mit Fachhochschulreife ist männlich?
++ Wie hoch ist der Anteil der Frauen an Befragten mit Hauptschulabschluss?
++ Welcher Anteil der Frauen hat Abitur?
++ Wie hoch ist der Anteil der Realschulabsolventen an allen befragten Männern?
+
+
+
+## Profi-Übungen
+
+Für alle, die noch etwas mehr machen möchten: 
+
+Nutzen Sie den Allbus2018 und erstellen Sie eine Kontingenztabelle für `sex` und `gkpol`. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte mit  `mvdecode` auszuschließen.
+
++ Erstellen Sie die Kontingenztabelle der beiden Variablen.
++ Welcher Anteil der Befragten aus Städten mit über 500.000 Einwohnern ist weiblich?
++ Wie hoch ist der Anteil der Männer an Befragten, die in Orten mit unter 2.000 Einwohnern leben?
++ Welcher Anteil der Frauen lebt in Städten mit 50.000 bis 99.999 Einwohnern?
++ Wie hoch ist der Anteil der Bewohner von Städten mit 20.000 bis 49.999 Einwohnern an allen befragten Männern?
+
+Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und analysieren Sie, wie sich die Anteile der geschiedenen Befragten über die Befragungsjahre verändert haben!
+
++ Das Befragungsjahr finden Sie in der Variable `year`, `mstat` ist auch hier die Variable für den Familienstand.
++ In welchem Jahr gab es den höchsten Anteil an geschiedenen Befragten?
++ Aus welchem Jahr stammen die Angaben der meisten geschiedenen Befragten?
+
+
+
+
+
+
