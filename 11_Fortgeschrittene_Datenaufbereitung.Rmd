@@ -1,6 +1,71 @@
 # Fortgeschrittene Themen {#adva}
 
 ### Wertelabels 
+Wertelabels helfen, Informationen aus dem Codebuch direkt im Datensatz abzulegen und so das arbeiten zu erleichtern. Während Stata-Datensätze häufig mit Labels geliefert werden, müssen wir bei neu erstellten Variablen diese Labels selbst erstellen.
+
+Bspw. wenn wir aus der Altersvariable des Allbus 2018 eine neue Altersgruppen-Variable erstellen:
+```{stata age_cut11, eval = F}
+egen age_cat = cut(age), at( 18 35 60 100 )
+```
+```{stata, eval = F}
+tabulate age_cat
+```
+```{stata age_cut_tab11, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+tabulate age_cat
+```
+
+Um `age_cat` besser zu beschriften definieren wir ein Wertelabel. Dazu verwenden wir `label define`, gefolgt von einem Objektnamen für dieses Label (hier `age_cat_lab`) und dann jeweils die Ausprägungen zusammen mit dem entsprechenden label in `""`. Dieses Label-Objekt wenden wir dann mit `label values` auf die Variable `age_cat` an:
+```{stata lab11, eval = F}
+label define age_cat_lab 18 "18-34 Jahre" 35 "35-29 Jahre" 60 "über 60 Jahre" 
+label values age_cat age_cat_lab
+tab age_cat
+```
+
+```{stata lab11b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+label define age_cat_lab 18 "18-34 Jahre" 35 "35-29 Jahre" 60 "über 60 Jahre" 
+label values age_cat age_cat_lab
+tab age_cat
+```
+
+Wir können außerdem mit `label variable "Beschreibung"` die Variable selbst beschriften, um sie so leichter auffindbar zu machen 
+```{stata lab111, eval = F}
+describe age_cat
+```
+
+```{stata lab111b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+d age_cat
+```
+
+```{stata lab112, eval = F}
+label variable age_cat "3er Alterseinteilung"
+```
+
+```{stata lab112b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+label variable age_cat "3er Alterseinteilung"
+```
+zB. wird dieses Label mit `lookfor` gefunden:
+```{stata lab113, eval = F}
+lookfor "Alters"
+```
+```{stata lab113b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+qui label variable age_cat "3er Alterseinteilung"
+lookfor "Alters"
+```
 
 ### sortieren
 

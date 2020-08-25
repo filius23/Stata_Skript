@@ -1,7 +1,7 @@
 # Arbeiten mit Datensätzen in Stata {#Stata2} 
 
 ```{r setup2, echo = F, message=F, warning = F}
-# .libPaths("D:/R-library")
+.libPaths("D:/R-library4")
 knitr::opts_chunk$set(collapse = F)
 library(Statamarkdown)
 # # options(width = 200) # 157
@@ -234,30 +234,30 @@ Ein Blick ins Codebuch zeigt, dass es sich hier natürlich nicht um Befragte mit
 knitr::include_graphics("02_age_codebuch.PNG")
 ```
 
-Diese Information müssen wir Stata mitteilen, indem wir -32 als *missing value* überschreiben. Diese *missing value*s werden in Stata mit `.` abgelegt und werden dann für die Berechnung von Mittelwerten usw. ausgeschlossen. Um also -32 als `.` zu überschreiben, können wir zB auf den `recode` Befehl zurückgreifen:
+Diese Information müssen wir Stata mitteilen, indem wir -32 als *missing value* überschreiben. Diese *missing value*s werden in Stata mit `.` abgelegt und werden dann für die Berechnung von Mittelwerten usw. ausgeschlossen. Um also -32 als `.` zu überschreiben, können wir zB auf den `replace` Befehl zurückgreifen:
 
 ```{stata miss2, eval = F}
 summarize age
-replace age = . if age == 32
+replace age = . if age == -32
 summarize age
 ```
 ```{stata miss2b, echo = F}
 set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 su age
-replace age = . if age == 32
+replace age = . if age == -32
 su age
 ```
 
 Wir bekommen von Stata mitgeteilt, dass wir 5 Beobachtungen verändert und auf missing gesetzt haben. Im folgenden `summarize` werden diese fehlden Werte dann ignoriert.
 
-Ein Spezialbefehl für die Überschreibung von bestimmten Werten ist `mvdecode`. Mit `mvdecode` können wir `-32` in mehreren Variablen gleichzeitig überschreiben. Zum Beispiel in `dm03`, `dg03` und `isced97`:
+Ein Spezialbefehl für die Überschreibung von bestimmten Werten ist `mvdecode`. Mit `mvdecode` können wir `-32` und `-10` in mehreren Variablen gleichzeitig als missing überschreiben. Zum Beispiel in `dm03`, `dg03` und `isced97`:
 ```{stata miss3, eval = F}
-mvdecode dm03 dg03 isced97, mv(-32)
+mvdecode dm03 dg03 isced97, mv(-32 -10)
 ```
 ```{stata miss3b, echo = F}
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-mvdecode dm03 dg03 isced97, mv(-32)
+mvdecode dm03 dg03 isced97, mv(-32 -10)
 ```
 
 Mit `mdesc` bekommen wir eine Auszählung zu fehlenden Werten. `mdesc` ist allerdings kein Standard-Stata-Befehl, sondern muss extra installiert werden. Das ist allerdings kein größerer Aufwand:
@@ -271,6 +271,7 @@ mdesc age dm03 dg03 isced97
 ```{stata miss5b, echo = F}
 set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui replace age = . if age == -32
 qui mvdecode dm03 dg03 isced97, mv(-32)
 mdesc age dm03 dg03 isced97
 ```
@@ -314,7 +315,7 @@ list sex land age if inrange(age,92.1,100)
       +---------------------------+
 ```
 
-+ oder wir hängen den `missing()`-Operator an die Bedingung an. Wenn wir diesen mit Hilfe eines `!` verneinen, bekommen wir nicht-fehlende Fälle ausgegeben:
++ oder wir hängen den `missing()`-Operator an die Bedingung an. Wenn wir diesen mit Hilfe eines `!` verneinen, bekommen wir nur nicht-fehlende Fälle ausgegeben:
 ```{stata list_if3, eval = F}
 list sex land age if age > 92 & !missing(age)
 ```
@@ -456,6 +457,8 @@ Damit sind die Originaldaten aber natürlich weg.
 + Lassen Sie sich das Geburtsjahr und die neu erstellte Variable für die ersten 20 Beobachtungen anzeigen - hat alles geklappt wie es soll?
 + Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Datensatz. 
 + Wie viele Spalten hat `nach_1960`? Wie viele Zeilen? 
+
+<!-- Filter für fehlende Werte -> yborn Missings? -->
 
 ## Profi-Übungen
 
