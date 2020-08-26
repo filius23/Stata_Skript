@@ -297,7 +297,8 @@ Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und 
 + In welchem Jahr gab es den höchsten Anteil an geschiedenen Befragten?
 + Aus welchem Jahr stammen die Angaben der meisten geschiedenen Befragten?
 
-
+<!-- Vereinfachen: tab , gen -->
+<!-- evtl. sogar Vorgriff auf collapse? -->
 
 
 

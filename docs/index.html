@@ -52,70 +52,6 @@
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
-<style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -198,6 +134,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.2" data-path="dataviz.html"><a href="dataviz.html#abschließende-beispiele"><i class="fa fa-check"></i><b>5.2</b> Abschließende Beispiele</a></li>
 <li class="chapter" data-level="5.3" data-path="dataviz.html"><a href="dataviz.html#bevölkerungspyramide"><i class="fa fa-check"></i><b>5.3</b> Bevölkerungspyramide</a></li>
 <li class="chapter" data-level="5.4" data-path="dataviz.html"><a href="dataviz.html#abschließende-bemerkungen"><i class="fa fa-check"></i><b>5.4</b> Abschließende Bemerkungen</a></li>
+<li class="chapter" data-level="5.5" data-path="dataviz.html"><a href="dataviz.html#anhang"><i class="fa fa-check"></i><b>5.5</b> Anhang</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="dataviz.html"><a href="dataviz.html#aufb1"><i class="fa fa-check"></i><b>5.5.1</b> Aufbereitung für Boxplot</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="lin-reg.html"><a href="lin-reg.html"><i class="fa fa-check"></i><b>6</b> Regression</a><ul>
 <li class="chapter" data-level="6.1" data-path="lin-reg.html"><a href="lin-reg.html#beispieldatensatz"><i class="fa fa-check"></i><b>6.1</b> Beispieldatensatz</a></li>
@@ -217,15 +156,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Hypothesentests</a></li>
 <li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a></li>
 <li class="chapter" data-level="11" data-path="adva.html"><a href="adva.html"><i class="fa fa-check"></i><b>11</b> Fortgeschrittene Themen</a><ul>
-<li class="chapter" data-level="11.0.1" data-path="adva.html"><a href="adva.html#wertelabels"><i class="fa fa-check"></i><b>11.0.1</b> Wertelabels</a></li>
-<li class="chapter" data-level="11.0.2" data-path="adva.html"><a href="adva.html#sortieren"><i class="fa fa-check"></i><b>11.0.2</b> sortieren</a></li>
-<li class="chapter" data-level="11.0.3" data-path="adva.html"><a href="adva.html#indikatoren-umdrehen"><i class="fa fa-check"></i><b>11.0.3</b> Indikatoren umdrehen</a></li>
-<li class="chapter" data-level="11.0.4" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-variablen"><i class="fa fa-check"></i><b>11.0.4</b> Informationen aus mehreren Variablen</a></li>
-<li class="chapter" data-level="11.0.5" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-datensätzen"><i class="fa fa-check"></i><b>11.0.5</b> Informationen aus mehreren Datensätzen</a></li>
-<li class="chapter" data-level="11.0.6" data-path="adva.html"><a href="adva.html#arbeiten-mit-textvariablen"><i class="fa fa-check"></i><b>11.0.6</b> Arbeiten mit Textvariablen</a></li>
-<li class="chapter" data-level="11.0.7" data-path="adva.html"><a href="adva.html#egen"><i class="fa fa-check"></i><b>11.0.7</b> egen</a></li>
-<li class="chapter" data-level="11.0.8" data-path="adva.html"><a href="adva.html#gruppierte-berechnungen"><i class="fa fa-check"></i><b>11.0.8</b> gruppierte Berechnungen</a></li>
-<li class="chapter" data-level="11.0.9" data-path="adva.html"><a href="adva.html#collapse"><i class="fa fa-check"></i><b>11.0.9</b> collapse</a></li>
+<li class="chapter" data-level="11.1" data-path="adva.html"><a href="adva.html#wertelabels"><i class="fa fa-check"></i><b>11.1</b> Wertelabels</a></li>
+<li class="chapter" data-level="11.2" data-path="adva.html"><a href="adva.html#sortieren"><i class="fa fa-check"></i><b>11.2</b> sortieren</a></li>
+<li class="chapter" data-level="11.3" data-path="adva.html"><a href="adva.html#indikatoren-umdrehen"><i class="fa fa-check"></i><b>11.3</b> Indikatoren umdrehen</a></li>
+<li class="chapter" data-level="11.4" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-variablen"><i class="fa fa-check"></i><b>11.4</b> Informationen aus mehreren Variablen</a></li>
+<li class="chapter" data-level="11.5" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-datensätzen"><i class="fa fa-check"></i><b>11.5</b> Informationen aus mehreren Datensätzen</a></li>
+<li class="chapter" data-level="11.6" data-path="adva.html"><a href="adva.html#arbeiten-mit-textvariablen"><i class="fa fa-check"></i><b>11.6</b> Arbeiten mit Textvariablen</a></li>
+<li class="chapter" data-level="11.7" data-path="adva.html"><a href="adva.html#egen"><i class="fa fa-check"></i><b>11.7</b> egen</a></li>
+<li class="chapter" data-level="11.8" data-path="adva.html"><a href="adva.html#gruppierte-berechnungen"><i class="fa fa-check"></i><b>11.8</b> gruppierte Berechnungen</a></li>
+<li class="chapter" data-level="11.9" data-path="adva.html"><a href="adva.html#collapse"><i class="fa fa-check"></i><b>11.9</b> collapse</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -251,15 +190,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 class="title">GESIS Methodenseminar 2020</h1>
 <h2 class="subtitle"><em>Skript zur Stata-Übung</em></h2>
 <p class="author"><em>Andreas Filser</em></p>
-<p class="date"><em>Stand: 25.08.2020</em></p>
+<p class="date"><em>Stand: 26.08.2020</em></p>
 </div>
 <div id="herzlich-willkommen" class="section level1 unnumbered">
 <h1>Herzlich Willkommen!</h1>
+<p><img src="00_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
 <hr />
 <p>Hier entsteht das Begleitskript zum GESIS Methodenseminar “Uni- und bivariate Statistik mit Stata” von und mit Sebastian Schnettler und Andreas Filser vom 14.09 bis zum 18.09.2020.</p>
 <p>Weitere Informationen zum Methodenseminar, den Link zur Anmeldung und alles weitere finden Sie <a href="https://training.gesis.org/?site=pDetails&amp;child=full&amp;pID=0x387DA6358EF341928F67355388570B76&amp;subID=0x0BFDFA4D3CA1443E9E87F9FFDF305FB3">hier</a></p>
 <p>Los geht’s mit dem <a href="Stata1.html#Stata1">Einstieg</a></p>
-<p><img src="00_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
 
 </div>
             </section>

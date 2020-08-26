@@ -25,8 +25,12 @@ stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 library(Statamarkdown)
 ```
-
 # Herzlich Willkommen! {-}
+
+```{r index_illustration, echo = F,out.width = "80%",fig.height= 3.5, fig.align="center"}
+knitr::include_graphics("00_scatter.png")
+```
+
 
 -----
 
@@ -35,8 +39,4 @@ Hier entsteht das Begleitskript zum GESIS Methodenseminar "Uni- und bivariate St
 Weitere Informationen zum Methodenseminar, den Link zur Anmeldung und alles weitere finden Sie [hier](https://training.gesis.org/?site=pDetails&child=full&pID=0x387DA6358EF341928F67355388570B76&subID=0x0BFDFA4D3CA1443E9E87F9FFDF305FB3)
 
 Los geht's mit dem [Einstieg](#Stata1)
-
-```{r index_illustration, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("00_scatter.png")
-```
 

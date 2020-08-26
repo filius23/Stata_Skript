@@ -8,7 +8,8 @@ library(Statamarkdown)
 
 Wir starten wie immer mit dem Einlesen eines Datensatzes:
 ```{stata load, echo = T, eval = F}
-use "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_2018.dta", clear
+cd "..."
+use "Allbus_2018.dta", clear
 replace inc = . if inc < 0
 replace age = . if age < 0
 sample 25 //25% Stichprobe aus den Daten -> läuft schneller
@@ -90,8 +91,7 @@ Weitere Optionen bieten zB die [blindschemes](https://www.stata-journal.com/arti
 
 Hier noch ein Beispiel mit `plotplain` aus `blindschemes`:
 ```{stata theme2, echo = 1,results="hide", eval = F}
-graph twoway (scatter inc age) (lfit inc age), scheme(plotplain) ///
-  legend(cols(2) pos(6))
+graph twoway (scatter inc age) (lfit inc age), scheme(plotplain) legend(cols(2) pos(6))
 graph export "05_line_scatter_theme2.png", replace
 ```
 
@@ -171,17 +171,14 @@ knitr::include_graphics("05_bunter_line_scatter.png")
 ```
 
 ## Abschließende Beispiele
-```{stata loadbp, echo=T, results="hide",collectcode=TRUE}
-webuse bpwide, clear
+
+
+
+Hier noch ein Beispiel mit (sehr) vielen Optionen als Vorlage für eigene Anpassungen ([DoFile](#aufb1)):
+```{stata fancy_bpplot, eval=F, results="hide",collectcode=F, eval = F}
+graph box inc_m inc_f, over(age_c) scheme(lean1) box(1, color("0 41 93")) marker(1, mcolor("0 41 93")  msymbol("o") ) medline(lcolor("204 175 105")) box(2, color("146 143 107")) marker(2, mcolor("146 143 107")  msymbol("o") ) legend(cols(2) pos(12) region(fcolor("249 247 241") lcolor("16 74 138"))) ytitle("{stSerif:Einkommen}{superscript:2018}") b1title("Alter") title("Einkommen") caption("{bf:Quelle}: Allbus 2018 {it:eigene Berechnungen}",position(5)) plotregion(fcolor("252 251 248")) graphregion(fcolor("249 247 241")) 
 ```
 
-```{stata fancy_bpplot, eval=F, results="hide",collectcode=TRUE, eval = F}
-graph box bp_before bp_after, over(agegrp) box(1, color("0 0 128"))  scheme(lean2) ytitle("{stSerif:Blutdruck}{superscript:XX}") title("Blutdruckdaten ({it:fiktiv})") caption("{bf:Quelle}: Stata-Daten {it:bpwide}, ein fiktives Beispiel") 
-```
-```{stata fancy_bpplot_export, echo=F, results="hide",collectcode=TRUE, eval = F}
-graph box bp_before bp_after, over(agegrp) box(1, color("0 0 128"))  scheme(lean2) ytitle("{stSerif:Blutdruck}{superscript:XX}") title("Blutdruckdaten ({it:fiktiv})") caption("{bf:Quelle}: Stata-Daten {it:bpwide}, ein fiktives Beispiel") 
-graph export "05_boxplot.png", replace
-```
 
 ```{r boxplot, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
 knitr::include_graphics("05_boxplot.png")
@@ -189,6 +186,9 @@ knitr::include_graphics("05_boxplot.png")
 
 Auch die Darstellung auf der Startseite dieses Skripts wurde mit als Stata-Grafik erstellt:
 
+```{stata loadbp, echo=T, results="hide",collectcode=F}
+webuse bpwide, clear
+```
 ```{stata titelbild, eval = F}
 graph twoway  (lfit bp_before bp_after) ( scatter bp_before bp_after if agegrp == 1, mc("0 62 81") msymbol(o) ) ( scatter bp_before bp_after if agegrp == 2, mc("0 125 186") msymbol(o)  ) ( scatter bp_before bp_after if agegrp == 3, mc("214 210 196") msymbol(o)  ), scheme(lean2) legend(off) xtitle("")
 ```
@@ -199,6 +199,27 @@ knitr::include_graphics("00_scatter.png")
 
 ## Bevölkerungspyramide
 
+Auch eine Bevölkerungspyramide lässt sich als Stata-Grafik erstellen. 
+
 ## Abschließende Bemerkungen
 
 Häufig ist die größte Herausforderung, die Daten so umzustellen, dass sie zum gewünschten `graph`-Befehl passen.
+
+
+## Anhang
+
+
+### Aufbereitung für Boxplot {#aufb1}
+```{stata, eval = F, echo = T}
+use "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_2018.dta", clear
+replace inc = . if inc < 0
+replace age = . if age < 0
+
+egen age_c = cut(age), at(20,35,50,65)
+lab def agec1 20 "20-34" 35 "35-49" 50 "50-64"
+lab val age_c agec1
+gen inc_m = inc if sex == 1
+gen inc_f = inc if sex == 2
+lab var inc_m "Männer"
+lab var inc_f "Frauen"
+```
