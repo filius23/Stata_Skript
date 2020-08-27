@@ -87,7 +87,38 @@ lookfor "Alters"
 
 ## Informationen aus mehreren Variablen
 
-``
+Manchmal liegt die gewünschte Information nur aufgeteilt auf mehrere Variablen vor. Ein Beispiel hierfür ist die Alterskonstellation von (Ehe-)Paaren. Im Allbus werden sowohl das Alter der Befragten (`age`) als auch (ggf.) das Alter der\*des Partner\*in abgefragt. Zudem unterscheidet der Allbus zwischen Lebens- (`page`) und Ehepartner\*innen (`scage`). Möchten wir jetzt die jeweils den Altersabstand zwischen dem Alter der männlichen und weiblichen (Ehe-)Partner berechnen[^0111], so müssen wir durch eine Kombination aus `gen` und `replace` in mehreren Schritten vorgehen. 
+
+
+```{stata, eval = F}
+set linesize 120
+cd ""
+use "Allbus_1980-2018.dta", clear
+// missings ausschließen:
+replace mstat = . if mstat < 0
+mvdecode *yborn, mv( -41 -32 -10 -9 -7 -8 -6 -5 -4 -3 -1 )
+mvdecode *age,   mv( -41 -32 -10 -9 -7 -8 -6 -5 -4 -3 -1 )
+mvdecode *educ,   mv( -41 -32 -10 -9 -7 -8 -6 -5 -4 -3 -1 )
+
+// Alter von ihr: entweder Befragtenalter wenn sie befragt wurde oder 
+gen her_age =  age if sex == 2
+// scage wenn *er* befragt wurde und verheiratet ist -> ihr Alter ist in scage
+replace her_age = scage if sex == 1 & mstat == 1
+// üage *er* befragt wurde und unverheiratet ist -> ihr Alter ist in page
+replace her_age = page if sex == 1 & mstat != 1
+
+// Alter von ihm: entweder Befragtenalter wenn er befragt wurde oder 
+gen his_age =  age if sex == 1
+// scage wenn *sie* befragt wurde und verheiratet ist -> ihr Alter ist in scage
+replace his_age = scage if sex == 2 & mstat == 1
+// page wenn *sie* befragt wurde und verheiratet ist -> ihre Alter ist in scage
+replace his_age = page if sex == 2 & mstat != 1
+
+gen age_diff = his_age - her_age if !missing(his_age) & !missing(her_age)
+su age_diff
+```
+
+[^0111]: Diese Beispiel bezieht sich also nur auf heterosexuelle Paare.
 
 ## Informationen aus mehreren Datensätzen
 

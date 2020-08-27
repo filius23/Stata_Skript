@@ -14,7 +14,7 @@ ak <- readr::read_delim(paste0(path,"allbus_kumuliert_1980-2018.csv"), delim = "
 ```
 
 
-## Zusammenhangsstärke für metrische Variablen
+## Metrisch skalierte Variablen
 
 Wir sehen uns den (möglichen) Zusammenhang zwischen dem Alter und dem BMI der Befragten an. Dazu schließen wir zunächst die Missings aus:
 ```{stata readin1, eval = F}
@@ -135,7 +135,7 @@ ggplot(df, aes(x = var1, y = var2)) +
   theme(aspect.ratio = 1)
 ```
 
-## Idee einer Regression
+### Idee einer Regression
 
 Ziel der Regression ist es, den Zusammenhang zwischen diesen beiden Variablen zu bestimmen. Gibt es einen Trend, in dem Sinn, dass ein höherer Wert von `var1` mit einem höheren oder niedrigeren Wert von `var2` einhergeht?
 
@@ -176,7 +176,7 @@ ggplot(df, aes(x = var1, y = var2)) +
   theme(aspect.ratio = 1)
 ```
 
-## Residuen
+### Residuen
 
 Allerdings liegen wir mit dem arith. Mittel dann immer auch Stück daneben. Diese Abweichung zwischen dem tatsächlichen und dem vorhergesagten Wert wird als **Residuum** bezeichnet, in unserem Beispiel ist das jeweils die Differenz zwischen `var2` und `mean`:
 $$Residuum = beobachteter\, Wert \; - \; vorhergesagter\,Wert$$
@@ -265,7 +265,7 @@ df
 m1 <- lm(var2~ var1, data = df)  
 ```
 
-## Interpretation der Regression
+### Interpretation der Regression
   
 Die Minimierung erledigt `reg` für uns. Hier geben wir zuerst das Merkmal an, das auf der y-Achse liegt (die *abhängige* Variable) und dann das Merkmal für die x-Achse (*unabhängige* Variable) an. Ein positiver Wert unter `var1` bedeutet, dass unsere Gerade von links nach rechts ansteigt und ein negativer eine fallende Linie bedeuten würde. Der Wert unter `var1` gibt an, um *wieviel sich die Gerade pro "Schritt nach rechts" nach oben/unten verändert*. Die Gerade steigt also pro Einheit von `var1` um `r m1$coefficients[2]`:
 
@@ -363,7 +363,7 @@ ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_sta
 ```
 Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regressionsmodells) deutlich näher an den tatsächlichen Punkten liegen als die orangen Vorhersagen auf Basis des `mean`. 
 
-### Residuen
+### Residuen Teil 2
 Trotzdem sind auch die hellblauen Punkte nicht deckungsgleich mit den tatsächlichen Werten. Es gibt also auch hier wieder Residuen, also Abweichungen des beobachteten vom vorhergesagten Wert. Wir können diese per Hand berechnen als Differenz zwischen dem tatsächlichen und dem vorhergesagten Wert:
 ```{stata, eval = F}
 gen res = var2 - pred_vorher 
@@ -434,13 +434,7 @@ reg var2 var1
 Außerdem sehen wir oben links in der Spalte `SS` die "Sum of Squares". Hier finden wir auch die Werte von oben wieder: unter Total ist die Summe der quadrierten Abweichungen der beobachteten Werte vom arith. Mittel angegeben (`14.75`, sozusagen die Summe der `m_abw2` von oben). Residual gibt die Summe der Abweichungsquadrate zwischen den beobachteten Werten und den vorhergesagten Werten der Regression (`2.256..`, Die Summe von `res2`). 
 
 
-
-## Übungen
-
-
-
-
-## Ordinale Merkmale
+## Ordinal skalierte Merkmale
 
 Ein klassisches ordinales Merkmal ist die Bildung (`educ`):
  
@@ -520,10 +514,6 @@ Der Wert ist deutlich niedriger als von Kendall's $\tau_b$, da hier der Nenner d
 
 Insgesamt ist also von einem substantiellen Zusammenhang zwischen `educ` und `mi02` auszugehen. 
 
-
-## Übungen
-
-
 ## Nominal skalierte Variablen
 
 Uns Beispiel für nominal skalierte Variablen dreht sich um die Frage: *Haben allein lebende Befragte eher ein Haustier als Befragte, die mit weiteren Personen zusammenleben?*
@@ -589,7 +579,7 @@ tab aq03b dh01
 $\rightarrow$ Wie viele Personen leben also allein und haben kein Haustier?   
   
   
-## Odds Ratio
+### Odds Ratio
 
 Die Odds Ratio geben das Verhältnis der bedingten Häufigkeiten an. Wir berechnen in beiden Spalten (also getrennt nach Haushaltsgröße) jeweils die Odds, dass ein\*e Befragte\*r ein Haustier besitzt (also `aq03b = 1`). Odds sind dabei immer das Verhältnis $\frac{interessierende\;Ausprägung}{alle\;anderen\;Ausprägungen}$. Dann setzen wir die Chancen ins Verhältnis zueinander:
   
@@ -645,7 +635,7 @@ $\rightarrow$ Haben allein lebende Befragte eher Katzen als Befragte in einem Ha
 
 
 
-## Chi²-basierte Maße
+### Chi²-basierte Maße
 
 $\chi^2$  basiert auf dem Vergleich der beobachteten Häufigkeit mit einer (theoretischen) Verteilung, welche statistische Unabhängigkeit abbildet (Indifferenztabelle). Wir bleiben bei `aq03` und `dh01`. Den $\chi^2$-Wert für diese Häufigkeitstabelle bekommen wir mit `, chi2`:
   
@@ -720,6 +710,8 @@ Wären beide Merkmale unabhängig voneinander, würden wir erwarten, dass die Wa
 + für Zelle  `C`: `0.0364` $\times$ `0.7994` $\times$ `r sum(tab1)` = `r round(addmargins(rel_tab1)[5]*addmargins(rel_tab1)[13]*sum(tab1),4)`.
 
 + für Zelle  `H`: `0.6855` $\times$ `0.2006` $\times$ `r sum(tab1)` = `r round(addmargins(rel_tab1)[10]*addmargins(rel_tab1)[14]*sum(tab1),4)`.
+
+Dies sind auch die Werte, die Stata uns oben mit `tab  aq03  dh01, expected nofreq` ausgegeben hatte.
 
 $\chi^2$ ist dann die summierte Differenz zwischen dieser Indifferenztabelle (also der erwarteten Verteilung bei Unabhängigkeit beider Merkmale) und den beobachteten Häufigkeiten: je größer die Differenz, desto unwahrscheinlicher ist es, dass beide Merkmale unabhängig sind.   
 
