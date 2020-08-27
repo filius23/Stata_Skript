@@ -1,4 +1,4 @@
-# Regression {#lin_reg}
+# Zusammenhangsmaße {#lin_reg}
 ```{r setup061, echo = F, include=FALSE}
 library(patchwork)
 library(tidyverse)
@@ -9,7 +9,93 @@ library(Statamarkdown)
 stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
 # stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+path <- "D:/oCloud/RFS/"
+ak <- readr::read_delim(paste0(path,"allbus_kumuliert_1980-2018.csv"), delim = ";", col_types = cols(.default = col_double())) %>%   mutate_all(~ifelse(.<0,NA,.))
 ```
+
+
+## Zusammenhangsstärke für metrische Variablen
+
+Wir sehen uns den (möglichen) Zusammenhang zwischen dem Alter und dem BMI der Befragten an. Dazu schließen wir zunächst die Missings aus:
+```{stata readin1, eval = F}
+cd ""
+use  Allbus_1980-2018.dta   
+keep if year == 2012
+mvdecode age bmi, mv(-32 -13)
+```
+```{stata readin1b, echo= F}
+use  "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_1980-2018.dta",clear
+keep if year == 2012
+mvdecode age hs18, mv(-32 -13)
+rename hs18 bmi
+```
+
+
+```{r s07_12, echo = F}
+a12 <- ak[ak$year == 2012,] 
+a12$hs18[a12$hs18<0] <- NA
+a12$age[a12$age<0] <- NA
+```
+
+
+Zur grafischen Analyse möglicher Zusammenhänge bei metrischen Variablen empfiehlt sich ein Scatterplot:
+```{r s07_15, message=F, warning=F,out.height="80%", out.width="80%", echo=F,fig.align='center'}
+ggplot(a12, aes(x = age, y = hs18)) + 
+  geom_point(color ="#29304E") +  
+  ggthemes::theme_stata() +
+  labs(title = "Alter & BMI der Befragten",
+       caption = "Quelle: Allbus 2012",
+       y = "BMI",
+       x = "Alter")+
+  theme(aspect.ratio = 1
+        # , plot.background = element_rect(fill = "#f1f1ef", color = NA)
+        )
+```
+
+Zur Bestimmung eines Zusammenhangs zwischen zwei metrischen Variablen empfiehlt sich der Korrelationskoeffizient nach Pearson. Dieser ist definiert als die Kovarianz dividiert durch die jeweiligen Standardabweichungen der beiden Variablen und liegt im Intervall [-1,1]. Die Standardabweichung hatten wir in Woche 5 kennengelernt, die Kovarianz erfasst die Lage der Datenpunkte relativ zu den Mittelwerten der beiden interessierenden Variablen (liegen Punkte > $\bar{x}$ auch $>\bar{y}$?):
+
+```{r s07_15b, message=F, warning=F, out.height="80%", out.width="80%", echo=F,fig.align='center'}
+# "#19D4EE"
+# "#29304E"
+# "#2473D5"
+# "#F7F6EE"
+
+
+eq1 <-  substitute(italic(bar(x))) # formel erstellen
+eq2 <-  substitute(italic(bar(y))) # formel erstellen
+
+ggplot(a12, aes(x = age, y = hs18)) + 
+  geom_point(color ="#29304E") + 
+  geom_vline(aes(xintercept = mean(age,na.rm = T)), color = "#19D4EE", size = .75) +
+  geom_hline(aes(yintercept = mean(hs18,na.rm = T)),color = "#2473D5", size = .75) +
+  geom_text(data = data.frame(age = 53, hs18 = 51), aes(label = as.character(as.expression(eq1)) ),
+            label.size = .01, hjust = 0.5, color = prismatic::clr_darken("#19D4EE"), parse = T, size = 4.5) +
+  geom_text(data = data.frame(age = 97, hs18 = 28), aes(label = as.character(as.expression(eq2)) ),
+             label.size = .01, hjust = 0.5, 
+             color = prismatic::clr_darken("#2473D5"), parse = T, size = 4.5) +
+  ggthemes::theme_stata() +
+  labs(title = "Alter & BMI der Befragten",
+       caption = "Quelle: Allbus 2012",
+       y = "BMI",
+       x = "Alter")+
+  theme(aspect.ratio = 1)
+```
+In Stata können wir den Korrelationskoeffizienten mit `corr` berechnen:
+```{stata corr1,eval=F}
+corr age bmi
+```
+```{stata corr1b, echo =F}
+qui use  "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_1980-2018.dta",clear
+qui keep if year == 2012
+qui mvdecode age hs18, mv(-32 -13)
+qui rename hs18 bmi
+corr age bmi
+```
+
+Es handelt sich also um einen schwachen Zusammenhang.
+
+
+## Regression 
 
 ```{r, out.width = "80%",fig.height= 3.5, echo=F, fig.align="center" , eval = T, message=F}
 ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) +  ggthemes::theme_stata() +
@@ -34,7 +120,7 @@ reg var2 var1
 Hier steht jetzt eine ganze Menge an Informationen, die wir uns im Folgenden genauer ansehen werden.
 
 
-## Beispieldatensatz
+### Beispieldatensatz
 Zum Einstieg betrachten wir zunächst einen (fiktiven) Datensatz mit lediglich 4 Fällen und lediglich zwei Variablen: `var1` und `var2`: 
 ```{stata, eval = F}
 use "https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta", clear
@@ -162,7 +248,7 @@ Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wi
 gen m_abw2 = m_abw^2 
 tabstat m_abw2, s(sum)
 ```
-```{stata, eval=F}
+```{stata, echo=F}
 use "regression_bsp.dta", clear
 egen mean_var2 = mean(var2)
 gen m_abw = var2 - mean_var2
@@ -222,6 +308,8 @@ ggplot(df, aes(x = var1, y = var2)) +
   geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
   theme(aspect.ratio = 1)
 ```
+
+
 ### Vorhergesagte Werte
 
 Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade? 
@@ -244,7 +332,9 @@ qui set linesize 90
 reg var2 var1, noheader
 ```
 
-$$\texttt{Intercept} + 0.5811 \times \texttt{var1}$$  
+Vorhergesagte Werte werden mit $\widehat{var2}$  bezeichnet - der ^ steht dabei für "vorhergesagt":
+
+$$\widehat{var2}=\texttt{Intercept} + 0.5811 \times \texttt{var1}$$  
 Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: 2.1351+0.5811\*1= `r 2.1351+0.5811*1`
 
 [^62]: Die Option `noheader` macht den Output von `reg` etwas übersichtlicher.
@@ -280,7 +370,7 @@ ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_sta
 Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regressionsmodells) deutlich näher an den tatsächlichen Punkten liegen als die orangen Vorhersagen auf Basis des `mean`. 
 
 ### Residuen
-Trotzdem sind auch die hellblauen Punkte nicht deckungsgleich mit den tatsächlchen Werten. Es gibt also auch hier wieder Residuen, also Abweichungen des beobachteten vom vorhergesagten Wert. Wir können diese per Hand berechnen als Differenz zwischen dem tatsächlichen und dem vorhergesagten Wert:
+Trotzdem sind auch die hellblauen Punkte nicht deckungsgleich mit den tatsächlichen Werten. Es gibt also auch hier wieder Residuen, also Abweichungen des beobachteten vom vorhergesagten Wert. Wir können diese per Hand berechnen als Differenz zwischen dem tatsächlichen und dem vorhergesagten Wert:
 ```{stata, eval = F}
 gen res = var2 - pred_vorher 
 ```
