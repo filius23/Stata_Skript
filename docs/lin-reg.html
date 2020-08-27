@@ -50,6 +50,7 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -217,6 +218,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5.3" data-path="lin-reg.html"><a href="lin-reg.html#modellgüte"><i class="fa fa-check"></i><b>6.5.3</b> Modellgüte</a></li>
 </ul></li>
 <li class="chapter" data-level="6.6" data-path="Stata2.html"><a href="Stata2.html#übungen"><i class="fa fa-check"></i><b>6.6</b> Übungen</a></li>
+<li class="chapter" data-level="6.7" data-path="lin-reg.html"><a href="lin-reg.html#ordinale-merkmale"><i class="fa fa-check"></i><b>6.7</b> Ordinale Merkmale</a></li>
+<li class="chapter" data-level="6.8" data-path="lin-reg.html"><a href="lin-reg.html#übungen-1"><i class="fa fa-check"></i><b>6.8</b> Übungen</a></li>
+<li class="chapter" data-level="6.9" data-path="lin-reg.html"><a href="lin-reg.html#nominal-skalierte-variablen"><i class="fa fa-check"></i><b>6.9</b> Nominal skalierte Variablen</a></li>
+<li class="chapter" data-level="6.10" data-path="lin-reg.html"><a href="lin-reg.html#odds-ratio"><i class="fa fa-check"></i><b>6.10</b> Odds Ratio</a></li>
+<li class="chapter" data-level="6.11" data-path="lin-reg.html"><a href="lin-reg.html#chi²-basierte-maße"><i class="fa fa-check"></i><b>6.11</b> Chi²-basierte Maße</a><ul>
+<li class="chapter" data-level="6.11.1" data-path="lin-reg.html"><a href="lin-reg.html#cramers-upsilon"><i class="fa fa-check"></i><b>6.11.1</b> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+<li class="chapter" data-level="6.11.2" data-path="lin-reg.html"><a href="lin-reg.html#indifferenztabelle"><i class="fa fa-check"></i><b>6.11.2</b> Indifferenztabelle</a></li>
+<li class="chapter" data-level="6.11.3" data-path="lin-reg.html"><a href="lin-reg.html#phi"><i class="fa fa-check"></i><b>6.11.3</b> <span class="math inline">\(\phi\)</span></a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a></li>
 <li class="chapter" data-level="8" data-path="inf2.html"><a href="inf2.html"><i class="fa fa-check"></i><b>8</b> Inferenzstatistik II</a></li>
@@ -492,7 +502,352 @@ Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regre
 </div>
 <div id="übungen" class="section level2">
 <h2><span class="header-section-number">6.6</span> Übungen</h2>
+</div>
+<div id="ordinale-merkmale" class="section level2">
+<h2><span class="header-section-number">6.7</span> Ordinale Merkmale</h2>
+<p>Ein klassisches ordinales Merkmal ist die Bildung (<code>educ</code>):</p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"><code>educ</code></th>
+<th align="left">Schulabschluss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>1</code></td>
+<td align="left">Schule beendet ohne Abschluss</td>
+</tr>
+<tr class="even">
+<td align="left"><code>2</code></td>
+<td align="left">Volks-/Hauptschulabschluss bzw. Polytechnische Oberschule (8. oder 9. Klasse)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>3</code></td>
+<td align="left">Mittlere Reife, Realschulabschluss bzw. Polytechnische Oberschule (10. Klasse)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>4</code></td>
+<td align="left">Fachhochschulreife (Abschluss einer Fachoberschule etc.)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>5</code></td>
+<td align="left">Abitur bzw. Erweiterte Oberschule mit Abschluss 12. Klasse (Hochschulreife)</td>
+</tr>
+</tbody>
+</table>
+<p>Wir sehen uns den Zusammenhang der Bildung der Befragten mit der Einstellung zum Zuzug von Asylsuchenden (<code>mi02</code>) an:</p>
+<p><img src="06_codebuch_mi02.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Wir sehen uns den (möglichen) Zusammenhang zwischen diesen beiden Merkmalen an. Dazu schließen wir zunächst die Missings aus. Außerdem überschreiben die wie Kategorien “noch Schüler” und “anderer Schulabschluss” mit <code>NA</code> um eine klare ordinale Rangfolge für <code>educ</code> zu erhalten (je höher,desto höher der Bildungsabschluss):</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="lin-reg.html#cb36-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb36-2"><a href="lin-reg.html#cb36-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_1980-2018.dta&quot;</span>,<span class="kw">clear</span></span>
+<span id="cb36-3"><a href="lin-reg.html#cb36-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 1990</span>
+<span id="cb36-4"><a href="lin-reg.html#cb36-4"></a><span class="kw">mvdecode</span> educ, mv(-9 6 7)</span>
+<span id="cb36-5"><a href="lin-reg.html#cb36-5"></a><span class="kw">mvdecode</span> mi02, mv(-9 -8 -8)</span></code></pre></div>
+<pre><code>        educ: 65 missing values generated
 
+        mi02: 96 missing values generated</code></pre>
+<p>So sieht die Verteilung zunächst in einer Kreuztabelle aus:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb38-1"><a href="lin-reg.html#cb38-1"></a><span class="kw">tab</span> educ mi02</span></code></pre></div>
+<pre><code>       ALLGEMEINER |          ZUZUG VON: ASYLSUCHENDEN
+    SCHULABSCHLUSS | VERWEIGER  UNEINGESC  ZUZUG BEG  GANZ UNTE |     Total
+-------------------+--------------------------------------------+----------
+    OHNE ABSCHLUSS |         0          7         18         36 |        61 
+VOLKS-,HAUPTSCHULE |         0        123        659        600 |     1,382 
+    MITTLERE REIFE |         0        137        390        177 |       704 
+FACHHOCHSCHULREIFE |         0         48        101         21 |       170 
+    HOCHSCHULREIFE |         1        232        287         53 |       573 
+-------------------+--------------------------------------------+----------
+             Total |         1        547      1,455        887 |     2,890 </code></pre>
+<p>Zur Bestimmung eines Zusammenhangs zwischen zwei <em>ordinal</em> skalierten Variablen empfiehlt sich der Spearman-Rangkorrelationskoeffizient (<span class="math inline">\(\rho\)</span>). Für den Rangkorrelationskoeffizienten werden die Werte der Variablen in Ränge überführt und dann mit diesen Rängen den Korrelationskoeffizient berechnet. Wir können den Rangkorrelationskoeffizienten mit <code>spearman</code> berechnen:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="lin-reg.html#cb40-1"></a><span class="kw">spearman</span> educ mi02</span></code></pre></div>
+<pre><code> Number of obs =    2890
+Spearman&#39;s rho =      -0.3756
+
+Test of Ho: educ and mi02 are independent
+    Prob &gt; |t| =       0.0000</code></pre>
+<p>Es zeigt sich also mit einem Korrelationskoeffizienten von 0.37 ein negativer Zusammenhang, der jedoch noch als schwach einzustufen ist. Das negative Vorzeichen des Zusammenhangs deutet darauf hin, dass mit einer höheren Ausprägung von <code>educ</code> tendenziell niedrigere Werte für <code>mi02</code> einher gehen: eine höhere Schulbildung geht mit einer positiveren Haltung gegenüber dem Zuzug von Asylsuchenden einher.</p>
+<p>Ein weiteres Zusammenhangsmaß für ordinale Variablen sind Konkordanzmaße wie Kendall’s <span class="math inline">\(\tau\)</span>. Hierfür die Werteverhältnisse gezählt, zur Berechnung in Stata können wir wieder <code>ktau</code> verwenden:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb42-1"><a href="lin-reg.html#cb42-1"></a><span class="kw">ktau</span> educ mi02</span></code></pre></div>
+<pre><code>  Number of obs =    2890
+Kendall&#39;s tau-a =      -0.2155
+Kendall&#39;s tau-b =      -0.3355
+Kendall&#39;s score = -899642
+    SE of score =   44146.125   (corrected for ties)
+
+Test of Ho: educ and mi02 are independent
+     Prob &gt; |z| =       0.0000  (continuity corrected)</code></pre>
+<p>Auch hier zeigt sich eine Zusammenhangsstärke in der gleichen Größenordnung wie beim Rangkorrelationskoeffizienten. Zudem ist auch hier das Vorzeichen negativ: <code>educ</code> korreliert negativ mit <code>mi02</code>. Der etwas geringere Wert ist auf die unterschiedliche Behandlung der Bindungen bei Kendall’s <span class="math inline">\(\tau_b\)</span> im Vergleich zum Rangkorrelationskoeffizienten zurückzuführen. Für Kendall’s <span class="math inline">\(\tau_b\)</span> werden die Paarvergleiche im Nenner ausgeschlossen, die auf beiden Variablen eine Bindung haben.
+Der Wert ist deutlich niedriger als von Kendall’s <span class="math inline">\(\tau_b\)</span>, da hier der Nenner durch die Berücksichtigung <em>aller</em> möglichen Paarvergleiche größer wird, der Zähler aber für beide Varianten von Kendall’s <span class="math inline">\(\tau\)</span> gleich definiert ist.</p>
+<p>Insgesamt ist also von einem substantiellen Zusammenhang zwischen <code>educ</code> und <code>mi02</code> auszugehen.</p>
+</div>
+<div id="übungen-1" class="section level2">
+<h2><span class="header-section-number">6.8</span> Übungen</h2>
+</div>
+<div id="nominal-skalierte-variablen" class="section level2">
+<h2><span class="header-section-number">6.9</span> Nominal skalierte Variablen</h2>
+<p>Uns Beispiel für nominal skalierte Variablen dreht sich um die Frage: <em>Haben allein lebende Befragte eher ein Haustier als Befragte, die mit weiteren Personen zusammenleben?</em></p>
+<p>Dazu betrachten wir die Variablen <code>aq03</code> und <code>dh01</code>, später auch noch <code>dh04</code>:</p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="88%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><code>aq03</code></td>
+<td align="left">Haben Sie einen Hund oder eine Katze in Ihrem Haushalt? <code>1</code> Ja, Hund <code>2</code> Ja, Katze <code>3</code> Ja, beides <code>4</code> Nein, keines von beiden</td>
+</tr>
+<tr class="even">
+<td align="left"><code>dh01</code></td>
+<td align="left">Wohnen außer ihnen noch weitere Personen in diesem Haushalt? <code>1</code> Ja <code>2</code> Nein, ich lebe allein</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>dh04</code></td>
+<td align="left">Gesamtzahl der Personen im Haushalt</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb44"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb44-1"><a href="lin-reg.html#cb44-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb44-2"><a href="lin-reg.html#cb44-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_1980-2018.dta&quot;</span>,<span class="kw">clear</span></span>
+<span id="cb44-3"><a href="lin-reg.html#cb44-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2014</span>
+<span id="cb44-4"><a href="lin-reg.html#cb44-4"></a><span class="kw">mvdecode</span> aq03 dh01 dh04, mv(-32 -9)</span></code></pre></div>
+<pre><code>(64690 observations deleted)
+
+        aq03: 4 missing values generated
+        dh01: 11 missing values generated
+        dh04: 24 missing values generated</code></pre>
+<p>Ausgangspunkt der Zusammenhangsmaße für nominale Merkmale ist die Kontingenztabelle der beiden Variablen:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb46-1"><a href="lin-reg.html#cb46-1"></a><span class="kw">tab</span> aq03 dh01</span></code></pre></div>
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+    IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
+-----------------+----------------------+----------
+            HUND |       353         41 |       394 
+           KATZE |       503         65 |       568 
+          BEIDES |       117          9 |       126 
+KEINS VON BEIDEN |     1,792        579 |     2,371 
+-----------------+----------------------+----------
+           Total |     2,765        694 |     3,459 </code></pre>
+<p>Um diese Tabelle für den Einstieg noch etwas übersichtlicher zu halten, fassen wir die Hunde- und Katzenbesitzer*innen zusammen. Das geht mit <code>gen</code>: wir formulieren darin eine Bedingung und wenn diese zutrifft wird der erste Wert eingesetzt, wenn nicht wird der zweite Wert eingesetzt. Hier fragen wir also ab, ob <code>aq03</code> gleich <code>4</code> ist - dann wird eine <code>0</code> eingesetzt, ansonsten eine <code>1</code>:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb48-1"><a href="lin-reg.html#cb48-1"></a><span class="kw">gen</span> aq03b = (aq03 == 4)</span>
+<span id="cb48-2"><a href="lin-reg.html#cb48-2"></a><span class="ot">list</span> aq03 aq03b <span class="kw">in</span> 1/10, nol</span></code></pre></div>
+<pre><code>   aq03 aq03b
+1     4     0
+2     2     1
+3     3     1
+4     4     0
+5     4     0
+6     4     0
+7     2     1
+8     4     0
+9     4     0
+10    1     1</code></pre>
+<p>Die daraus resultierende Kontingenztabelle ist schön übersichtlich:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb50-1"><a href="lin-reg.html#cb50-1"></a><span class="kw">tab</span> aq03b dh01</span></code></pre></div>
+<pre><code>           | MEHRPERSONENHAUSHALT?
+     aq03b | MEHRPERSO  EINPERSON |     Total
+-----------+----------------------+----------
+         0 |       973        116 |     1,089 
+         1 |     1,792        579 |     2,371 
+-----------+----------------------+----------
+     Total |     2,765        695 |     3,460 </code></pre>
+<p><span class="math inline">\(\rightarrow\)</span> Wie viele Personen leben also allein und haben kein Haustier?</p>
+</div>
+<div id="odds-ratio" class="section level2">
+<h2><span class="header-section-number">6.10</span> Odds Ratio</h2>
+<p>Die Odds Ratio geben das Verhältnis der bedingten Häufigkeiten an. Wir berechnen in beiden Spalten (also getrennt nach Haushaltsgröße) jeweils die Odds, dass ein*e Befragte*r ein Haustier besitzt (also <code>aq03b = 1</code>). Odds sind dabei immer das Verhältnis <span class="math inline">\(\frac{interessierende\;Ausprägung}{alle\;anderen\;Ausprägungen}\)</span>. Dann setzen wir die Chancen ins Verhältnis zueinander:</p>
+<p><span class="math display">\[\text{Odds Haustier in MP-HH} = \frac{973}{1792} = 0.5429688\]</span>
+<span class="math display">\[\text{Odds Haustier allein} = \frac{115}{579} = 0.1986183\]</span>
+<span class="math display">\[\text{Odds Ratio Haustier MP vs. allein} = \frac{0.5429688}{0.1986183} = 2.73373\]</span>
+<span class="math display">\[\text{Odds Ratio Haustier allein vs. MP HH} = \frac{0.1986183}{0.5429688}=0.3658006\]</span>
+<strong>Interpretation:</strong></p>
+<ul>
+<li>Alleinlebende Befragte haben im Vergleich zu Befragten, die mit anderen Personen zusammen wohnen, die 0.366-fache Chance Haustiere zu haben.</li>
+<li>Befragte, die mit anderen Personen zusammen wohnen, haben im Vergleich zu alleinlebenden Befragten die 2.734-fache Chance Haustiere zu haben.</li>
+</ul>
+<p>Odds Ratios sind aber auch aus “größeren” Tabellen berechenbar - zB können wir auch die exakte Haushaltsgröße <code>dh04</code> sowie die detaillierten Kategorien zum Haustierbesitz (<code>aq03</code>) verwenden:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb52-1"><a href="lin-reg.html#cb52-1"></a><span class="kw">tab</span> aq03 dh04</span></code></pre></div>
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+    IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
+-----------------+----------------------+----------
+            HUND |       353         41 |       394 
+           KATZE |       503         65 |       568 
+          BEIDES |       117          9 |       126 
+KEINS VON BEIDEN |     1,792        579 |     2,371 
+-----------------+----------------------+----------
+           Total |     2,765        694 |     3,459 </code></pre>
+<p>Jetzt könnten wir den Odds Ratio für Haustierbesitz von allein Lebenden im Vergleich zu Befragten mit einer HH-Größe von <code>2</code> berechnen. Dazu setzen wir für die jeweiligen Spalten (weil die HH-Größe <code>dh04</code> in den Spalten steht) die Häufigkeiten ins Verhältnis. Der Hauptunterschied ist aber, dass wir die Haustierkategorien (<code>aq03 = 1-3</code>) addieren müssen:</p>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li>Allein lebende Befragte haben im Vergleich zu zweit lebenden Befragten die 0.418-fache Chance ein Haustier im Haushalt zu haben.</li>
+<li>Zu zweit lebende Befragte haben im Vergleich zu allein lebenden Befragten die 2.394-fache Chance ein Haustier im Haushalt zu haben.</li>
+</ul>
+<p><span class="math inline">\(\rightarrow\)</span> Haben allein lebende Befragte eher Katzen als Befragte in einem Haushalt mit 4 Personen? (<code>aq03</code> = 2 &amp; 3 sind Katzenbesitzer*innen)</p>
+</div>
+<div id="chi²-basierte-maße" class="section level2">
+<h2><span class="header-section-number">6.11</span> Chi²-basierte Maße</h2>
+<p><span class="math inline">\(\chi^2\)</span> basiert auf dem Vergleich der beobachteten Häufigkeit mit einer (theoretischen) Verteilung, welche statistische Unabhängigkeit abbildet (Indifferenztabelle). Wir bleiben bei <code>aq03</code> und <code>dh01</code>. Den <span class="math inline">\(\chi^2\)</span>-Wert für diese Häufigkeitstabelle bekommen wir mit <code>, chi2</code>:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb54-1"><a href="lin-reg.html#cb54-1"></a><span class="kw">tab</span> aq03 dh01, chi</span></code></pre></div>
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+    IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
+-----------------+----------------------+----------
+            HUND |       353         41 |       394 
+           KATZE |       503         65 |       568 
+          BEIDES |       117          9 |       126 
+KEINS VON BEIDEN |     1,792        579 |     2,371 
+-----------------+----------------------+----------
+           Total |     2,765        694 |     3,459 
+
+          Pearson chi2(3) =  90.4007   Pr = 0.000</code></pre>
+<div id="cramers-upsilon" class="section level3">
+<h3><span class="header-section-number">6.11.1</span> Cramer’s <span class="math inline">\(\upsilon\)</span></h3>
+<p>Auf Basis dieses <span class="math inline">\(\chi^2\)</span>-Werts von 90.401 können wir Cramer’s <span class="math inline">\(\upsilon\)</span> berechnen. Dieses ist definiert als der Quotient aus dem <span class="math inline">\(\chi^2\)</span>-Wert und der Fallzahl multipliziert mit dem Minimum der Zeilen- und Spaltenzahl. <code>n</code>, erkennen wir aus dem <code>Total</code> rechts unten in der Tabelle</p>
+<p><span class="math display">\[ Cramer&#39;s\,\,\upsilon = \sqrt{\frac{\chi^2}{n*\,min(k-1,m-1)}}=\sqrt{\frac{90.401}{3459*1}} = 0.162\]</span></p>
+<p>Dieser Wert für Cramer’s <span class="math inline">\(\upsilon\)</span> legt einen geringen Zusammenhang nahe (vgl. S.25 Vorlesung 6b).</p>
+</div>
+<div id="indifferenztabelle" class="section level3">
+<h3><span class="header-section-number">6.11.2</span> Indifferenztabelle</h3>
+<p><span class="math inline">\(\chi^2\)</span> ergibt sich wie gesagt aus der Differenz zwischen der Indifferenztabelle und den beobachteten Häufigkeiten. Die Indifferenztabelle können wir mit <code>,expected</code> aufrufen (mit <code>nofreq</code> blenden wir die tatsächlichen Häufigkeiten aus):</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb56-1"><a href="lin-reg.html#cb56-1"></a><span class="kw">tab</span>  aq03  dh01, expected nofreq</span></code></pre></div>
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+    IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
+-----------------+----------------------+----------
+            HUND |     314.9       79.1 |     394.0 
+           KATZE |     454.0      114.0 |     568.0 
+          BEIDES |     100.7       25.3 |     126.0 
+KEINS VON BEIDEN |   1,895.3      475.7 |   2,371.0 
+-----------------+----------------------+----------
+           Total |   2,765.0      694.0 |   3,459.0 </code></pre>
+<p>Ausgangspunkt für diese Indifferenztabelle sind die relativen Häufigkeiten der tatsächlich beoachteten Werte:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb58-1"><a href="lin-reg.html#cb58-1"></a><span class="kw">tab</span>  aq03  dh01, cell nofreq</span></code></pre></div>
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+    IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
+-----------------+----------------------+----------
+            HUND |     10.21       1.19 |     11.39 
+           KATZE |     14.54       1.88 |     16.42 
+          BEIDES |      3.38       0.26 |      3.64 
+KEINS VON BEIDEN |     51.81      16.74 |     68.55 
+-----------------+----------------------+----------
+           Total |     79.94      20.06 |    100.00 </code></pre>
+<p>0.26 % der Befragten wohnen alleine (<code>dh01</code> = 2) und haben einen Hund und eine Katze (<code>aq03</code>=3).<br />
+Uns interessieren hier nur die Randverteilungen aus <code>Sum</code>: 3.64 % der Befragten haben einen Hund und eine Katze (<code>aq03</code>=3). 20.06 % der Befragten wohnen alleine (<code>dh01</code> = 2).</p>
+<table class="table table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+MEHRPERSO
+</th>
+<th style="text-align:left;">
+EINPERSON
+</th>
+<th style="text-align:left;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+HUND
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+0.1139
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KATZE
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+0.1642
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BEIDES
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+0.0364
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KEINES VON BEIDEM
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+0.6855
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+0.7994
+</td>
+<td style="text-align:left;">
+0.2006
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Wären beide Merkmale unabhängig voneinander, würden wir erwarten, dass die Wahrscheinlichkeit für das Auftreten einer Merkmalskombination dem Produkt der Einzelwahrscheinlichkeiten entspricht (das ist die “Indifferenz”): <span class="math inline">\(P(A\cup B) = P(A) \times P(B)\)</span>. Bspw. ergibt sich der erwartete Wert für die Zellen dann aus der relativen Randverteilung multipliziert mit der Gesamtfallzahl:</p>
+<ul>
+<li><p>für Zelle <code>B</code>: <code>0.1642</code> <span class="math inline">\(\times\)</span> <code>0.7994</code> <span class="math inline">\(\times\)</span> 3459 = 454.0387.</p></li>
+<li><p>für Zelle <code>C</code>: <code>0.0364</code> <span class="math inline">\(\times\)</span> <code>0.7994</code> <span class="math inline">\(\times\)</span> 3459 = 100.7199.</p></li>
+<li><p>für Zelle <code>H</code>: <code>0.6855</code> <span class="math inline">\(\times\)</span> <code>0.2006</code> <span class="math inline">\(\times\)</span> 3459 = 475.708.</p></li>
+</ul>
+<p><span class="math inline">\(\chi^2\)</span> ist dann die summierte Differenz zwischen dieser Indifferenztabelle (also der erwarteten Verteilung bei Unabhängigkeit beider Merkmale) und den beobachteten Häufigkeiten: je größer die Differenz, desto unwahrscheinlicher ist es, dass beide Merkmale unabhängig sind.</p>
+</div>
+<div id="phi" class="section level3">
+<h3><span class="header-section-number">6.11.3</span> <span class="math inline">\(\phi\)</span></h3>
+<p>Eine Variante von Cramer’s <span class="math inline">\(\upsilon\)</span> für 2x2-Tabellen ist <span class="math inline">\(\phi\)</span>. Dies wäre das passende Maß für die zusammengefasste Variable aller Haustierbesitzer*innen <code>aq03b</code> von oben und <code>dh01</code>:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb60-1"><a href="lin-reg.html#cb60-1"></a><span class="kw">tab</span> aq03b dh01, chi</span></code></pre></div>
+<pre><code>           | MEHRPERSONENHAUSHALT?
+     aq03b | MEHRPERSO  EINPERSON |     Total
+-----------+----------------------+----------
+         0 |       973        116 |     1,089 
+         1 |     1,792        579 |     2,371 
+-----------+----------------------+----------
+     Total |     2,765        695 |     3,460 
+
+          Pearson chi2(1) =  88.1259   Pr = 0.000</code></pre>
+<p><span class="math display">\[\phi= \sqrt{\frac{\chi^2}{n}}=\sqrt{\frac{88.34}{3459}} = 0.1598\]</span></p>
+
+</div>
 </div>
 </div>
 <div class="footnotes">

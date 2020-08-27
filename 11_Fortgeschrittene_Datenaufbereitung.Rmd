@@ -17,7 +17,7 @@ Bspw. wenn wir aus der Altersvariable des Allbus 2018 eine neue Altersgruppen-Va
 ```{stata age_cut11, eval = F}
 egen age_cat = cut(age), at( 18 35 60 100 )
 ```
-```{stata, eval = F}
+```{stata age_cut_tab11F, eval = F}
 tabulate age_cat
 ```
 ```{stata age_cut_tab11, echo = F}
