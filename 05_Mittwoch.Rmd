@@ -68,6 +68,19 @@ knitr::include_graphics("05_line_scatter.png")
  
 [^51]: Was das genau ist, werden wir am Donnerstag besprechen. Für den Moment nur so viel: die Gerade gibt den Zusammenhangstrend beider Variablen wieder.
 
+### twoway Varianten
+
+`graph twoway scatter` hatten wir jetzt schon kennen gelernt. Natürlich gibt es aber auch noch weitere Darstellungsformen.
+
+`graph twoway bar` liefert uns ein Säulendiagramm:
+
+
+Mit der Option `,horizontal` können wir dieses Säulendiagramm in ein Balkendiagramm mit horizontalen Balken verwandeln:
+
+Mit `graph twoway connected` bekommen wir ein Punktdiagramm mit verbundenen Punkten
+
+
+
 
 ### Vorlagen
 Das Aussehen von Grafiken wird durch sog. Grafik-Schemata beeinflusst. Beispielsweise wird mit `, scheme(sj)`  die Grafik nach den Vorlage des Stata Journals erstellt:
@@ -195,13 +208,78 @@ graph twoway  (lfit bp_before bp_after) ( scatter bp_before bp_after if agegrp =
 knitr::include_graphics("00_scatter.png")
 ```
 
-## Bevölkerungspyramide
-
-Auch eine Bevölkerungspyramide lässt sich als Stata-Grafik erstellen. 
-
 ## Abschließende Bemerkungen
+Häufig ist die größte Herausforderung, die Daten so umzustellen, dass sie zum gewünschten `graph`-Befehl passen. Ein Beispiel ist die Erstellung einer Bevölkerungspyramide aus den Allbusdaten:
 
-Häufig ist die größte Herausforderung, die Daten so umzustellen, dass sie zum gewünschten `graph`-Befehl passen.
+
+## Bevölkerungspyramide
+```{r pyra1, echo = F,out.width = "60%",out.height= "60%", fig.align="center"}
+knitr::include_graphics("05_pyramid.png")
+```
+
+Auch eine Bevölkerungspyramide lässt sich als Stata-Grafik erstellen. Allerdings müssen dazu einige Zwischenschritte durchlaufen, die fortgeschrittene Datenaufbereitung mit `collapse` und `reshape` voraussetzen. Mehr Informationen dazu finden sich am Ende dieses Skripts in Kapitel [11](#adva).
+
+Die grundsätzliche Funktion für die Bevölkerungspyramide ist ein Balkendiagramm mit `graph twoway bar , horizontal`. Die Länge der Balken soll jeweils durch die Anzahl der Fälle in jeder Altersstufe, getrennt nach Geschlecht, bestimmt werden. Dazu müssen wir also zunächst die Anzahl der Befragten pro Alterstufe und Geschlecht bestimmen. Wenn wir den Allbus 2018 laden, haben wir ja einen Datensatz mit einer Zeile pro Person. Was wir jetzt aber benötigen ist eine Variante, in der wir den Datensatz sozusagen "zusammenschieben": wir brauchen jeweils eine Zeile pro Altersstufe und Geschlecht und eine Variable mit der Zahl der Befragten.
+
+```{r, echo =F}
+a18 <- haven::read_dta("../Allbus2018.dta")
+a18 %>% filter(age>0,sex>0) %>%  group_by(age,sex) %>% count(name = "Anzahl_Befragte") %>% ungroup() %>% slice(1:6) %>% data.frame(.)
+```
+Um dorthin zu kommen, steht uns der `collapse`-Befehl zur Verfügung:
+
+```{stata pyr1, eval = F}
+cd ""
+use "Allbus_2018.dta", clear
+tab agec
+keep if sex > 0
+keep if agec > 0
+collapse (count) respid , by(sex age)
+list in 1/8
+```
+Unter respid ist jetzt die Zahl der Befragten in der jeweiligen Kombination aus `age` und `sex` abgelegt:
+```{r, echo =F}
+a18 %>% filter(age>0,sex>0) %>%  group_by(age,sex) %>% count(name = "respid") %>% ungroup()  %>% slice(1:8) %>% data.frame(.)
+```
+Um verwirrung zu vermeiden, benennen wir `respid` in `total ` um:
+```{stata, eval = F}
+rename respid total
+```
+Allerdings möchten wir jetzt die Angaben für Frauen und Männer in getrennte Variablen ablegen:
+```{stata, eval = F}
+gen total_m = total if sex == 1
+gen total_f = total if sex == 2
+list in 1/10
+```
+```{r, echo =F}
+a18 %>% filter(age>0,sex>0) %>%  group_by(age,sex) %>% count(name = "total") %>% ungroup() %>% mutate(total_m = ifelse(sex == 1, total,"."),total_f = ifelse(sex == 2, total,".")) %>% slice(1:10) %>% data.frame(.)
+```
+
+Jetzt können wir daraus ein Balkendiagramm erstellen:
+```{stata, eval = F}
+twoway( bar neg_total_m age, horizontal )(bar total_f age, horizontal)
+```
+
+```{r pyra2, echo = F,out.width = "60%",out.height= "60%", fig.align="center"}
+knitr::include_graphics("05_pyramid001.png")
+```
+Was hier noch fehlt ist, die Umorientierung der Zahlen für die Männer "nach links". Dazu multiplizieren wir `total_m` mit `-1`:
+```{stata, eval = F}
+gen neg_total_m = -total_m
+```
+Damit dann verwenden wir `neg_total_m` für die Balken der Männer:
+```{stata, eval = F}
+twoway( bar neg_total_m age, horizontal )(bar total_f age, horizontal)
+```
+```{r pyra3, echo = F,out.width = "60%",out.height= "60%", fig.align="center"}
+knitr::include_graphics("05_pyramid002.png")
+```
+Mit `xlabel` und `legend`noch einige Anpassungen, außerdem können wir mit `text` noch Beschriftungen hinzufügen:
+```{stata, eval = F}
+twoway( bar neg_total_m age, horizontal )(bar total_f age, horizontal) ,xlabel( -40 "40" -30 "30" -20 "20" -10 "10" 0 10(10)40 ) legend(off) text(100 -8 "Männer") text(100 8 "Frauen")
+```
+```{r pyra_final, echo = F,out.width = "60%",out.height= "60%", fig.align="center"}
+knitr::include_graphics("05_pyramid.png")
+```
 
 
 ## Anhang
