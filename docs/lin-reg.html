@@ -633,7 +633,7 @@ KEINS VON BEIDEN |     1,792        579 |     2,371
 -----------------+----------------------+----------
            Total |     2,765        694 |     3,459 </code></pre>
 <p>Um diese Tabelle für den Einstieg noch etwas übersichtlicher zu halten, fassen wir die Hunde- und Katzenbesitzer*innen zusammen. Das geht mit <code>gen</code>: wir formulieren darin eine Bedingung und wenn diese zutrifft wird der erste Wert eingesetzt, wenn nicht wird der zweite Wert eingesetzt. Hier fragen wir also ab, ob <code>aq03</code> gleich <code>4</code> ist - dann wird eine <code>0</code> eingesetzt, ansonsten eine <code>1</code>:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb48-1"><a href="lin-reg.html#cb48-1"></a><span class="kw">gen</span> aq03b = (aq03 == 4)</span>
+<div class="sourceCode" id="cb48"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb48-1"><a href="lin-reg.html#cb48-1"></a><span class="kw">gen</span> aq03b = (aq03 == 4) <span class="kw">if</span> !<span class="fu">missing</span>(aq03)</span>
 <span id="cb48-2"><a href="lin-reg.html#cb48-2"></a><span class="ot">list</span> aq03 aq03b <span class="kw">in</span> 1/10, nol</span></code></pre></div>
 <pre><code>   aq03 aq03b
 1     4     0
@@ -671,16 +671,20 @@ KEINS VON BEIDEN |     1,792        579 |     2,371
 </ul>
 <p>Odds Ratios sind aber auch aus “größeren” Tabellen berechenbar - zB können wir auch die exakte Haushaltsgröße <code>dh04</code> sowie die detaillierten Kategorien zum Haustierbesitz (<code>aq03</code>) verwenden:</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb52-1"><a href="lin-reg.html#cb52-1"></a><span class="kw">tab</span> aq03 dh04</span></code></pre></div>
-<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
-    IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
------------------+----------------------+----------
-            HUND |       353         41 |       394 
-           KATZE |       503         65 |       568 
-          BEIDES |       117          9 |       126 
-KEINS VON BEIDEN |     1,792        579 |     2,371 
------------------+----------------------+----------
-           Total |     2,765        694 |     3,459 </code></pre>
+<pre><code> HUND ODER KATZE |                                    ANZAHL DER HAUSHALTSPERSONEN
+    IM HAUSHALT? |         1          2          3          4          5          6          7          8         10 |     Total
+-----------------+---------------------------------------------------------------------------------------------------+----------
+            HUND |        41        153         86         73         32          4          2          0          0 |       391 
+           KATZE |        65        250        120         91         31          6          4          0          0 |       567 
+          BEIDES |         9         43         29         26         11          5          1          0          1 |       125 
+KEINS VON BEIDEN |       579        938        388        342         91         16          7          2          0 |     2,363 
+-----------------+---------------------------------------------------------------------------------------------------+----------
+           Total |       694      1,384        623        532        165         31         14          2          1 |     3,446 </code></pre>
 <p>Jetzt könnten wir den Odds Ratio für Haustierbesitz von allein Lebenden im Vergleich zu Befragten mit einer HH-Größe von <code>2</code> berechnen. Dazu setzen wir für die jeweiligen Spalten (weil die HH-Größe <code>dh04</code> in den Spalten steht) die Häufigkeiten ins Verhältnis. Der Hauptunterschied ist aber, dass wir die Haustierkategorien (<code>aq03 = 1-3</code>) addieren müssen:</p>
+<p><span class="math display">\[\text{Odds Haustier in 2P-HH} = \frac{153+250+43}{938} = 0.4754797\]</span>
+<span class="math display">\[\text{Odds Haustier allein} = \frac{41 +65 +9 }{579} = 0.1986183\]</span>
+<span class="math display">\[\text{Odds Ratio Haustier 2P-HH vs. allein} = \frac{0.4754797}{0.1986183} = 2.393937\]</span>
+<span class="math display">\[\text{Odds Ratio Haustier allein vs. 2P HH} = \frac{0.1986183}{0.4754797}=0.4177219\]</span></p>
 <p><strong>Interpretation:</strong></p>
 <ul>
 <li>Allein lebende Befragte haben im Vergleich zu zweit lebenden Befragten die 0.418-fache Chance ein Haustier im Haushalt zu haben.</li>

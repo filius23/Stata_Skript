@@ -545,7 +545,6 @@ cd ""
 use  "Allbus_1980-2018.dta",clear
 keep if year == 2014
 mvdecode aq03 dh01 dh04, mv(-32 -9)
-
 ```
 ```{stata nomT, echo =F}
 qui use  "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_1980-2018.dta",clear
@@ -567,7 +566,7 @@ tab aq03 dh01
 
 Um diese Tabelle für den Einstieg noch etwas übersichtlicher zu halten, fassen wir die Hunde- und Katzenbesitzer\*innen zusammen. Das geht mit `gen`: wir formulieren darin eine Bedingung und wenn diese zutrifft wird der erste Wert eingesetzt, wenn nicht wird der zweite Wert eingesetzt. Hier fragen wir also ab, ob `aq03` gleich `4` ist - dann wird eine `0` eingesetzt, ansonsten eine `1`:
 ```{stata gen_nomF, eval = F}
-gen aq03b = (aq03 == 4)
+gen aq03b = (aq03 == 4) if !missing(aq03)
 list aq03 aq03b in 1/10, nol
 ```
 ```{r, echo = F}
@@ -617,10 +616,11 @@ Odds Ratios sind aber auch aus "größeren" Tabellen berechenbar - zB können wi
 tab aq03 dh04
 ```
 ```{stata, gtabtabT, echo =F}
+set linesize 200
 qui use  "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_1980-2018.dta",clear
 qui keep if year == 2014
 qui mvdecode aq03 dh01 dh04, mv(-32 -9)
-tab aq03 dh01
+tab aq03 dh04, wrap
 ```
 Jetzt könnten wir den Odds Ratio für Haustierbesitz von allein Lebenden im Vergleich zu Befragten mit einer HH-Größe von `2` berechnen. Dazu setzen wir für die jeweiligen Spalten (weil die HH-Größe `dh04` in den Spalten steht) die Häufigkeiten ins Verhältnis. Der Hauptunterschied ist aber, dass wir die Haustierkategorien (`aq03 = 1-3`) addieren müssen:
 ```{r, echo =F}
@@ -629,6 +629,13 @@ odds_ht_HH2 <- (153+250+43)/938 # zu zweit
 # odds_ht_HH1/odds_ht_HH2
 # odds_ht_HH2/odds_ht_HH1
 ```
+
+$$\text{Odds Haustier in 2P-HH} = \frac{153+250+43}{938} = 0.4754797$$
+$$\text{Odds Haustier allein} = \frac{41 +65 +9 }{579} = 0.1986183$$
+$$\text{Odds Ratio Haustier 2P-HH vs. allein} = \frac{0.4754797}{0.1986183} = 2.393937$$
+$$\text{Odds Ratio Haustier allein vs. 2P HH} = \frac{0.1986183}{0.4754797}=0.4177219$$
+
+
 **Interpretation:**   
   
 + Allein lebende Befragte haben im Vergleich zu zweit lebenden Befragten die `r round(odds_ht_HH1/odds_ht_HH2,3)`-fache Chance ein Haustier im Haushalt zu haben. 
