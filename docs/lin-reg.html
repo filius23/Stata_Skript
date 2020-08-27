@@ -547,37 +547,37 @@ Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regre
 <span id="cb36-2"><a href="lin-reg.html#cb36-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_1980-2018.dta&quot;</span>,<span class="kw">clear</span></span>
 <span id="cb36-3"><a href="lin-reg.html#cb36-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 1990</span>
 <span id="cb36-4"><a href="lin-reg.html#cb36-4"></a><span class="kw">mvdecode</span> educ, mv(-9 6 7)</span>
-<span id="cb36-5"><a href="lin-reg.html#cb36-5"></a><span class="kw">mvdecode</span> mi02, mv(-9 -8 -8)</span></code></pre></div>
+<span id="cb36-5"><a href="lin-reg.html#cb36-5"></a><span class="kw">mvdecode</span> mi02, mv(-9 -8 -7)</span></code></pre></div>
 <pre><code>        educ: 65 missing values generated
 
-        mi02: 96 missing values generated</code></pre>
+        mi02: 97 missing values generated</code></pre>
 <p>So sieht die Verteilung zunächst in einer Kreuztabelle aus:</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb38-1"><a href="lin-reg.html#cb38-1"></a><span class="kw">tab</span> educ mi02</span></code></pre></div>
-<pre><code>       ALLGEMEINER |          ZUZUG VON: ASYLSUCHENDEN
-    SCHULABSCHLUSS | VERWEIGER  UNEINGESC  ZUZUG BEG  GANZ UNTE |     Total
--------------------+--------------------------------------------+----------
-    OHNE ABSCHLUSS |         0          7         18         36 |        61 
-VOLKS-,HAUPTSCHULE |         0        123        659        600 |     1,382 
-    MITTLERE REIFE |         0        137        390        177 |       704 
-FACHHOCHSCHULREIFE |         0         48        101         21 |       170 
-    HOCHSCHULREIFE |         1        232        287         53 |       573 
--------------------+--------------------------------------------+----------
-             Total |         1        547      1,455        887 |     2,890 </code></pre>
+<pre><code>       ALLGEMEINER |     ZUZUG VON: ASYLSUCHENDEN
+    SCHULABSCHLUSS | UNEINGESC  ZUZUG BEG  GANZ UNTE |     Total
+-------------------+---------------------------------+----------
+    OHNE ABSCHLUSS |         7         18         36 |        61 
+VOLKS-,HAUPTSCHULE |       123        659        600 |     1,382 
+    MITTLERE REIFE |       137        390        177 |       704 
+FACHHOCHSCHULREIFE |        48        101         21 |       170 
+    HOCHSCHULREIFE |       232        287         53 |       572 
+-------------------+---------------------------------+----------
+             Total |       547      1,455        887 |     2,889 </code></pre>
 <p>Zur Bestimmung eines Zusammenhangs zwischen zwei <em>ordinal</em> skalierten Variablen empfiehlt sich der Spearman-Rangkorrelationskoeffizient (<span class="math inline">\(\rho\)</span>). Für den Rangkorrelationskoeffizienten werden die Werte der Variablen in Ränge überführt und dann mit diesen Rängen den Korrelationskoeffizient berechnet. Wir können den Rangkorrelationskoeffizienten mit <code>spearman</code> berechnen:</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="lin-reg.html#cb40-1"></a><span class="kw">spearman</span> educ mi02</span></code></pre></div>
-<pre><code> Number of obs =    2890
-Spearman&#39;s rho =      -0.3756
+<pre><code> Number of obs =    2889
+Spearman&#39;s rho =      -0.3749
 
 Test of Ho: educ and mi02 are independent
     Prob &gt; |t| =       0.0000</code></pre>
 <p>Es zeigt sich also mit einem Korrelationskoeffizienten von 0.37 ein negativer Zusammenhang, der jedoch noch als schwach einzustufen ist. Das negative Vorzeichen des Zusammenhangs deutet darauf hin, dass mit einer höheren Ausprägung von <code>educ</code> tendenziell niedrigere Werte für <code>mi02</code> einher gehen: eine höhere Schulbildung geht mit einer positiveren Haltung gegenüber dem Zuzug von Asylsuchenden einher.</p>
 <p>Ein weiteres Zusammenhangsmaß für ordinale Variablen sind Konkordanzmaße wie Kendall’s <span class="math inline">\(\tau\)</span>. Hierfür die Werteverhältnisse gezählt, zur Berechnung in Stata können wir wieder <code>ktau</code> verwenden:</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb42-1"><a href="lin-reg.html#cb42-1"></a><span class="kw">ktau</span> educ mi02</span></code></pre></div>
-<pre><code>  Number of obs =    2890
-Kendall&#39;s tau-a =      -0.2155
-Kendall&#39;s tau-b =      -0.3355
-Kendall&#39;s score = -899642
-    SE of score =   44146.125   (corrected for ties)
+<pre><code>  Number of obs =    2889
+Kendall&#39;s tau-a =      -0.2151
+Kendall&#39;s tau-b =      -0.3350
+Kendall&#39;s score = -897325
+    SE of score =   44116.299   (corrected for ties)
 
 Test of Ho: educ and mi02 are independent
      Prob &gt; |z| =       0.0000  (continuity corrected)</code></pre>

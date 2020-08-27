@@ -465,13 +465,13 @@ cd ""
 use  "Allbus_1980-2018.dta",clear
 keep if year == 1990
 mvdecode educ, mv(-9 6 7)
-mvdecode mi02, mv(-9 -8 -8)
+mvdecode mi02, mv(-9 -8 -7)
 ```
 ```{stata educT, echo =F}
 qui use  "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_1980-2018.dta",clear
 qui keep if year == 1990
 mvdecode educ, mv(-9 6 7)
-mvdecode mi02, mv(-9 -8 -8)
+mvdecode mi02, mv(-9 -8 -7)
 ```
 
 So sieht die Verteilung zunächst in einer Kreuztabelle aus:
@@ -484,7 +484,7 @@ set linesize 120
 qui use  "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_1980-2018.dta",clear
 qui keep if year == 1990
 qui mvdecode educ, mv(-9 6 7)
-qui mvdecode mi02, mv(-9 -8 -8)
+qui mvdecode mi02, mv(-9 -8 -7)
 tab educ mi02
 ```
 
@@ -497,7 +497,7 @@ spearman educ mi02
 qui use  "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_1980-2018.dta",clear
 qui keep if year == 1990
 qui mvdecode educ, mv(-9 6 7)
-qui mvdecode mi02, mv(-9 -8 -8)
+qui mvdecode mi02, mv(-9 -8 -7)
 spearman educ mi02
 ```
 
@@ -511,7 +511,7 @@ ktau educ mi02
 qui use  "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_1980-2018.dta",clear
 qui keep if year == 1990
 qui mvdecode educ, mv(-9 6 7)
-qui mvdecode mi02, mv(-9 -8 -8)
+qui mvdecode mi02, mv(-9 -8 -7)
 ktau educ mi02
 ```
 Auch hier zeigt sich eine Zusammenhangsstärke in der gleichen Größenordnung wie beim Rangkorrelationskoeffizienten. Zudem ist auch hier das Vorzeichen negativ: `educ` korreliert negativ mit  `mi02`. Der etwas geringere Wert ist auf die unterschiedliche Behandlung der Bindungen bei Kendall's $\tau_b$ im Vergleich zum Rangkorrelationskoeffizienten zurückzuführen. Für Kendall's $\tau_b$ werden die Paarvergleiche im Nenner ausgeschlossen, die auf beiden Variablen eine Bindung haben. 
