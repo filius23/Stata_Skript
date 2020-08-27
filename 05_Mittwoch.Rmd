@@ -1,7 +1,7 @@
 # Datenvisualisierung in Stata {#dataviz} 
 
 ```{r setup5, echo = F, message=F, warning = F}
-# .libPaths("D:/R-library")
+.libPaths("D:/R-library4")
 knitr::opts_chunk$set(collapse = TRUE)
 library(Statamarkdown)
 ```
@@ -15,14 +15,12 @@ replace age = . if age < 0
 sample 25 //25% Stichprobe aus den Daten -> läuft schneller
 ```
 
-Für Grafiken gilt noch mehr als für alle anderen Aspekte in Stata: ausprobieren und sehen, was passiert! Nachdem in der Regel ja zumindest eine ungefähre Vorstellung existiert, wie die zu erstellende Grafik aussehen soll, sind Grafik-Gallerieren ein guter Startpunkt das eigene Trial & Error.
+Für Grafiken gilt noch mehr als für alle anderen Aspekte in Stata: ausprobieren und sehen, was passiert! Nachdem in der Regel ja zumindest eine ungefähre Vorstellung existiert, wie die zu erstellende Grafik aussehen soll, sind Grafik-Gallerieren ein guter Startpunkt das eigene Trial & Error. Die größte Herausforderung ist häufig, eine Vorstellung zu entwickeln, wie die Darstellung aussehen soll.
 
 Eine Übersicht zu allen verfügbaren Visualierungen inklusive Beispielbefehlen findet sich beispielsweise [hier](https://www.stata.com/support/faqs/graphics/gph/stata-graphs/) oder [hier](https://www.stata.com/features/example-graphs/).
 
 
 ## Grafik-Syntax in Stata
-
-In Anlehung an die 
 
 Die Syntax für Graphiken in Stata unterscheidet sich vom dem bisher Kennengelernten. 
 
@@ -170,7 +168,7 @@ graph export "05_bunter_line_scatter.png", replace
 knitr::include_graphics("05_bunter_line_scatter.png")
 ```
 
-## Abschließende Beispiele
+## Beispiele zum selbst anpassen
 
 
 
@@ -184,7 +182,7 @@ graph box inc_m inc_f, over(age_c) scheme(lean1) box(1, color("0 41 93")) marker
 knitr::include_graphics("05_boxplot.png")
 ```
 
-Auch die Darstellung auf der Startseite dieses Skripts wurde mit als Stata-Grafik erstellt:
+Auch die Darstellung auf der Startseite dieses Skripts wurde als Stata-Grafik erstellt:
 
 ```{stata loadbp, echo=T, results="hide",collectcode=F}
 webuse bpwide, clear

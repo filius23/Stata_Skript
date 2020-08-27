@@ -2,6 +2,7 @@
 ```{r setup061, echo = F, include=FALSE}
 library(patchwork)
 library(tidyverse)
+options(width = 200)
 df <- data.frame(var1 = c(1,2,7,8),
                  var2 = c(2,4,7,6))
 library(Statamarkdown)
@@ -10,13 +11,15 @@ stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 ```
 
-```{r, fig.height=3.5, fig.width=3.5, echo=F, fig.align="center" , eval = T, message=F}
+```{r, out.width = "80%",fig.height= 3.5, echo=F, fig.align="center" , eval = T, message=F}
 ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) +  ggthemes::theme_stata() +
-  geom_smooth(method = "lm", color = "darkblue" , se = FALSE) 
+  geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
+  expand_limits(y=c(0,8),x=c(0,8)) +
+  theme(aspect.ratio = 1)
 ```
 
 Mit Regressionsmodellen können wir Zusammenhänge zwischen zwei metrischen Merkmalen untersuchen. In Stata können wir eine Regression mit dem `reg` Befehl berechnen:
-```{stata, collectcode=T, echo = F}
+```{stata, collectcode=F, echo = F}
 use "regression_bsp.dta", clear
 egen mean_var2 = mean(var2)
 gen m_abw = var2 - mean_var2
@@ -42,13 +45,14 @@ list
 df
 ```
 
-```{r, fig.align="center", fig.height=3.5, fig.width=3.5, eval=T, echo=F}
+```{r, fig.align="center",out.width = "80%",fig.height= 3.5, eval=T, echo=F}
 library(ggplot2)
 ggplot(df, aes(x = var1, y = var2)) + 
   geom_point(size = 2) + 
   ggthemes::theme_stata() +
   scale_y_continuous(breaks = seq(0,8,2)) +
-  scale_x_continuous(breaks = seq(0,8,2)) 
+  scale_x_continuous(breaks = seq(0,8,2)) +
+  theme(aspect.ratio = 1)
 ```
 
 ## Idee einer Regression
@@ -69,25 +73,27 @@ df$mean_var2 <- mean(df$var2)
 df
 ```
 
-```{r, fig.height=3.5, fig.width=3.5, echo=F, fig.align="center"}
+```{r,out.width = "80%",fig.height= 3.5, echo=F, fig.align="center"}
 ggplot(df, aes(x = var1, y = var2)) + 
   geom_point(size = 3) + 
   ggthemes::theme_stata() +
   scale_y_continuous(breaks = seq(0,8,2)) +
   scale_x_continuous(breaks = seq(0,8,2)) +
   geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
-  geom_label(aes(y = 4, x = 5), label = "mean = 4.75", color = "grey30")
+  geom_label(aes(y = 4, x = 5), label = "mean = 4.75", color = "grey30")+
+  theme(aspect.ratio = 1)
 ```
 Müssten wir eine Prognose für die Werte von `var2` abgeben, wäre das arith. Mittel eine gute Wahl. Die **vorhergesagten Werte** werden jeweils auf der Linie für das arith. Mittel liegen.   
 
-```{r, fig.height=3.5, fig.width=3.5, echo=F, fig.align="center"}
+```{r,out.width = "80%",fig.height= 3.5, echo=F, fig.align="center"}
 ggplot(df, aes(x = var1, y = var2)) + 
   geom_point(size = 3) + 
   ggthemes::theme_stata() +
   scale_y_continuous(breaks = seq(0,8,2)) +
   scale_x_continuous(breaks = seq(0,8,2)) +
   geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
-  geom_point(aes(x = var1, y = mean_var2), color = "darkorange", size = 3) 
+  geom_point(aes(x = var1, y = mean_var2), color = "darkorange", size = 3) +
+  theme(aspect.ratio = 1)
 ```
 
 ## Residuen
@@ -109,7 +115,7 @@ df$m_abw <- df$var2 - df$mean
 df
 ```
 
-```{r, fig.height=3.5, fig.width=3.5, echo=F, fig.align="center" }
+```{r,out.width = "80%",fig.height= 3.5, echo=F, fig.align="center" }
 ggplot(df, aes(x = var1, y = var2)) + 
   geom_point(size = 3) + 
   ggthemes::theme_stata() +
@@ -118,7 +124,8 @@ ggplot(df, aes(x = var1, y = var2)) +
   geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
   geom_point(aes(x = var1, y = mean_var2), color = "darkorange", size = 3) +
   geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean_var2), 
-               color = "red", size = .65, linetype = "dotted") 
+               color = "red", size = .65, linetype = "dotted") +
+  theme(aspect.ratio = 1)
 ```
 
 *Was bedeutet also ein negativer oder ein positiver Wert für das Residuum?*
@@ -127,21 +134,48 @@ Die horizontale Linie für das arithm. Mittel ist aber sehr deutlich nicht die b
 
 ### Quadrierte Residuen
 
-Mit `total` können wir die Summe für eine Variable bilden:
+Mit `tabstat ..., s(sum)` können wir die Summe für eine Variable bilden:
+```{stata, eval = F}
+list
+```
+
 ```{r, echo =F}
 df
 ```
 
-```{stata, collectcode=F}
+```{stata, eval=F}
 tabstat m_abw, s(sum)
 ```
+
+```{stata, echo=F}
+use "regression_bsp.dta", clear
+egen mean_var2 = mean(var2)
+gen m_abw = var2 - mean_var2
+tabstat m_abw, s(sum)
+```
+
+
 **Die Summe der Resiuden auf Basis des arith. Mittels ist immer Null!**    
 Anders formuliert: die gestrichelten Linien nach oben sind in Summe genauso lang wie gestrichelten Linien nach unten.
 Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wir minimieren können:
-```{stata, collectcode = T}
+```{stata, eval=F}
 gen m_abw2 = m_abw^2 
 tabstat m_abw2, s(sum)
 ```
+```{stata, eval=F}
+use "regression_bsp.dta", clear
+egen mean_var2 = mean(var2)
+gen m_abw = var2 - mean_var2
+qui reg var2 var1
+predict pred_vorher, xb
+gen res = var2 - pred_vorher 
+gen res2 = res^2
+set linesize 90
+reg var2 var1
+gen m_abw2 = m_abw^2 
+tabstat m_abw2, s(sum)
+```
+
 ```{r, echo = F}
 df$m_abw2 <- df$m_abw^2 
 df
@@ -155,12 +189,26 @@ m1 <- lm(var2~ var1, data = df)
   
 Die Minimierung erledigt `reg` für uns. Hier geben wir zuerst das Merkmal an, das auf der y-Achse liegt (die *abhängige* Variable) und dann das Merkmal für die x-Achse (*unabhängige* Variable) an. Ein positiver Wert unter `var1` bedeutet, dass unsere Gerade von links nach rechts ansteigt und ein negativer eine fallende Linie bedeuten würde. Der Wert unter `var1` gibt an, um *wieviel sich die Gerade pro "Schritt nach rechts" nach oben/unten verändert*. Die Gerade steigt also pro Einheit von `var1` um `r m1$coefficients[2]`:
 
-```{stata, collectcode=T}
+```{stata, eval=F}
 reg var2 var1
-```  
+```
+
+
+```{stata, echo=F}
+use "regression_bsp.dta", clear
+qui egen mean_var2 = mean(var2)
+qui gen m_abw = var2 - mean_var2
+qui reg var2 var1
+qui predict pred_vorher, xb
+qui gen res = var2 - pred_vorher 
+qui gen res2 = res^2
+qui set linesize 90
+reg var2 var1
+```
+
 
 In unserer Grafik sieht diese Gerade so aus:
-```{r, fig.height=3.5, fig.width=3.5, echo=T, fig.align="center" , echo = F,warning=F,message=F}
+```{r,out.width = "80%",fig.height= 3.5, echo=T, fig.align="center" , echo = F,warning=F,message=F}
 ggplot(df, aes(x = var1, y = var2)) + 
   geom_point(size = 2) + 
   ggthemes::theme_stata() +
@@ -171,16 +219,31 @@ ggplot(df, aes(x = var1, y = var2)) +
   geom_point(aes(x = var1, y = mean_var2), color = "darkorange", size = 3) +
   geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean_var2), 
                color = "red", size = .65, linetype = "dotted") +
-  geom_smooth(method = "lm", color = "darkblue" , se = FALSE) 
+  geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
+  theme(aspect.ratio = 1)
 ```
 ### Vorhergesagte Werte
 
 Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade? 
 Die vohergesagten Werte aus `reg var2 var1` entsprechen einfach der Summe aus dem Wert unter `Intercept` und dem Koeffizienten neben `var1` multipliziert mit dem jeweiligen Wert für `var1`.[^62]
 
-```{stata, collectcode = F}
+```{stata, eval=F}
 reg var2 var1, noheader
 ```
+
+
+```{stata, echo=F}
+use "regression_bsp.dta", clear
+qui egen mean_var2 = mean(var2)
+qui gen m_abw = var2 - mean_var2
+qui reg var2 var1
+qui predict pred_vorher, xb
+qui gen res = var2 - pred_vorher 
+qui gen res2 = res^2
+qui set linesize 90
+reg var2 var1, noheader
+```
+
 $$\texttt{Intercept} + 0.5811 \times \texttt{var1}$$  
 Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: 2.1351+0.5811\*1= `r 2.1351+0.5811*1`
 
@@ -203,7 +266,7 @@ df$pred_vorher <- m1$fitted.values
 df
 ```
 Die Grafik zeigt wie Vorhersagen auf Basis des Regressionsmodells aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für `var1`. 
-```{r, fig.height=3.5, fig.width=3.5, echo=T, fig.align="center" , echo = F,warning=F,message=F}
+```{r,out.width = "80%",fig.height= 3.5, echo=T, fig.align="center" , echo = F,warning=F,message=F}
 ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_stata() +
   scale_y_continuous(breaks = seq(0,8,2)) +
   scale_x_continuous(breaks = seq(0,8,2)) +
@@ -211,7 +274,8 @@ ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_sta
   geom_point(aes(x = var1, y = mean_var2), col = "darkorange", size = 3) +
   geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean_var2), color = "red", size = .65, linetype = "dotted")  +
   geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
-  geom_point(aes(x = var1, y = pred_vorher), color = "dodgerblue3", size = 3)
+  geom_point(aes(x = var1, y = pred_vorher), color = "dodgerblue3", size = 3) +
+  theme(aspect.ratio = 1)
 ```
 Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regressionsmodells) deutlich näher an den tatsächlichen Punkten liegen als die orangen Vorhersagen auf Basis des `mean`. 
 
@@ -234,14 +298,15 @@ df$p_res <- NULL
 ```
 
 Hier sind die Residuen für `p_res` als hellblaue Linien eingezeichnet:
-```{r, fig.height=3.5, fig.width=3.5, echo=F, fig.align="center" , eval = T, message=F}
+```{r,out.width = "80%",fig.height= 3.5, echo=F, fig.align="center" , eval = T, message=F}
 ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_stata() +
   geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
   geom_point(aes(x = var1, y = mean_var2), col = "darkorange", size = 3) +
   geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean_var2), color = "red", size = .65, linetype = "dotted")  +
   geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
   geom_point(aes(x = var1, y = pred_vorher), color = "dodgerblue3", size = 3) +
-  geom_segment(aes(x = var1, xend = var1, y = var2, yend = pred_vorher), color = "dodgerblue3", size = .65, linetype = 1) 
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = pred_vorher), color = "dodgerblue3", size = .65, linetype = 1) +
+  theme(aspect.ratio = 1)
 ```
 *Wie groß ist die Summe der Residuen für `lm`?*       
 
