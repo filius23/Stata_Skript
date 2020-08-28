@@ -7,7 +7,6 @@ knitr::opts_chunk$set(dpi=800)
 library(Statamarkdown)
 library(tidyverse)
 library(kableExtra)
-library(gt)
 stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 a18 <- readstata13::read.dta13("../Allbus2018.dta",convert.factors = F)
@@ -21,75 +20,156 @@ cd ("...") # wo liegt der Datensatz?
 use "Allbus2018.dta"
 ```
 
-## Kategoriale Merkmale
-### Absolute Häufigkeiten
-Ganz nebenbei haben wir in Kapitel 2 bereits die Häufigkeitstabellen kennengelernt, beispielsweise können wir mit `tabulate` die Ausprägungen der Variable `german` auszählen (Details im Codebuch):
+## Kategoriale Merkmale mit `tabulate` beschreiben
+
+Ganz nebenbei haben wir in Kapitel 2 bereits die Häufigkeitstabellen kennengelernt, beispielsweise können wir mit `tabulate` die Ausprägungen der Variable `xr20` zur Internetnutzung auszählen:
 
 ```{stata tab03, eval = F}
-tab german
+tabulate xr20
 ```
 ```{stata tab03b, echo = F}
 set linesize 100
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-tab german
+tab xr20
 ```
 
-
-Wir bekommen hier also die absoluten Häufigkeiten angezeigt. In der ersten Spalte werden die verschiedenen Ausprägungen aufgelistet, in der zweiten Spalte stehen dann die Häufigkeiten. Da auch für diese Variable Labels vergeben wurden, sehen wir sofort, für welche inhaltlichen Kategorien die Zahlencodes jeweils stehen. Bspw. steht `1` dafür, dass der*die Befragte die deutsche Staatsbürgerschaft besitzt. Möchten wir die dahinterstehenden Zahlencodes sehen, müssen wir die Option `,nol` verwenden:
+Wir bekommen hier die absoluten sowie relativen Häufigkeiten angezeigt. In der ersten Spalte werden die verschiedenen Ausprägungen aufgelistet, in der zweiten Spalte stehen dann die Häufigkeit der jeweiligen Ausprägung, in der dritten Spalte finden wir die relativen Häufigkeiten und in der vierten Spalte finden wir die kumulierten relativen Häufigkeiten. Da auch für diese Variable Labels (mehr dazu [hier](#vlabel)) vergeben wurden, sehen wir sofort, für welche inhaltlichen Kategorien die Zahlencodes jeweils stehen. Bspw. steht `1` dafür, dass der*die Befragte mehrmals täglich das Internet nutzt. Möchten wir die dahinterstehenden Zahlencodes sehen, müssen wir die Option `,nol` verwenden:
 ```{stata tab031, eval = F}
-tab german,nol
+tabulate xr20,nol
 ```
 ```{stata tab031b, echo = F}
 set linesize 100
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-tab german,nol
+tab xr20,nol
 ```
 
-`r as.numeric(table(a18$german)[2])` Befragte haben also nur die deutsche Staatsbürgerschaft, `r as.numeric(table(a18$german)[3])` Befragte haben die deutsche und noch eine weitere Staatsbürgerschaft. Außerdem enthält der Datensatz `r as.numeric(table(a18$german)[4])` Befragte ohne deutsche Staatsbürgerschaft.   
+`r as.numeric(table(a18$xr20)[4])` Befragte nutzen das Internet also mehrmals täglich, `r as.numeric(table(a18$xr20)[5])` Befragte einmal am Tag. Außerdem enthält der Datensatz `r as.numeric(table(a18$xr20)[9])` Befragte, die das Internet nicht nutzen. 
 
-Etwas störend ist aber noch die `-50`. Aus dem Codebuch erfahren wir, dass `-50` für "staatenlos" steht. Wie in Session 2 gezeigt, können wir mit `mvdecode` diese Ausprägung auf `.` setzen und Stata so mitteilen, dass es sich um fehlende Werte handelt:
+Aus dem Codebuch (oder mit `labelbook`) erfahren wir, dass `-10`,`-9`,`-8` für `TNZ: FILTER`,`KEINE ANGABE`,`WEISS NICHT`. Wie in Session 2 gezeigt, können wir mit `mvdecode` diese Ausprägungen auf `.` setzen und Stata so mitteilen, dass es sich um fehlende Werte handelt. Dazu müssen wir in `,mv()` die entsprechenden Zahlencodes angeben:Details im Codebuch):
 ```{stata 03_miss, eval = F}
-mvdecode german, mv(-50)
+mvdecode xr20, mv(-10 -9 -8)
 ```
 ```{stata 03_missb, echo = F}
 set linesize 100
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-mvdecode german, mv(-50)
+mvdecode xr20, mv(-10 -9 -8)
 ```
 Wenn wir jetzt `tabulate` aufrufen, dann bekommen wir nur noch die gültigen Fälle angezeigt:
 ```{stata 03_miss1, eval = F}
-tabulate german
+tabulate xr20
 ```
 ```{stata 03_miss1b, echo = F}
 set linesize 100
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-qui mvdecode german, mv(-50)
-tabulate german
+qui mvdecode xr20, mv(-10 -9 -8)
+tabulate xr20
 ```
 ```{r, echo=F}
-a18$german[a18$german<0] <- NA
-t1 <- table(a18$german) # ablegen wie oben
+a18$xr20[a18$xr20<0] <- NA
+t1 <- table(a18$xr20) # ablegen wie oben
 ```
-Neben den absoluten Häufigkeiten werden uns auch relative Häufigkeitstabellen angezeigt.
-Bspw. haben `r sprintf("%2.3f",prop.table(t1)[1]*100)`% aller Befragten ausschließlich die deutsche Staatsbürgerschaft.
-Bspw. `r sprintf("%2.3f",cumsum(prop.table(t1))[2]*100)`% aller Befragten die deutsche und evtl. eine weitere Staatsbürgerschaft.
-
+Jetzt macht aus die Interpretation der kumulierten relativen Häufigkeiten inhaltlich Sinn. So erfahren wir aus der vierten Spalte, dass bspw. `r sprintf("%2.2f",cumsum(prop.table(t1))[4]*100)`% aller Befragten mind. einmal pro Woche das Internet nutzen.
+Außerdem erfahren wir aus der dritten Spalte erfahren, dass der Anteil der Nicht-Nutzer\*innen `r sprintf("%2.2f",prop.table(t1)[6]*100)`% der Befragten (mit einer gültigen Angabe) beträgt.
 
 Wir können aber mit der Option `m` die Auszählung von `.` explizit anfordern:
 ```{stata 03_miss2, eval = F}
-tabulate german,m
+tabulate xr20,m
 ```
 ```{stata 03_miss2b, echo = F}
 set linesize 100
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-qui mvdecode german, mv(-50)
-tabulate german, m
+qui mvdecode xr20, mv(-10 -9 -8)
+tabulate xr20, m
+```
+
+### Zwei Variablen, eine Tabelle: Kontingenztabellen
+
+Aus Kontingenztabellen erfahren wir, wie häufig Merkmalskombinationen auftreten. Auch für Kontingenztabellen können wir ebenfalls `tabulate` verwenden. Zum Beispiel können wir uns eine Tabelle anzeigen lassen, die uns die Internetnutzung getrennt nach Geschlechtern zeigt. Da die Variable `sex` keine Missings hat, können wir direkt loslegen.
+
+Für die Kontingenztabelle geben wir dann nach `tabulate` die beiden Variablen an, welche die Zeilen und Spalten definieren:
+```{stata cross_tabx, echo = T, eval = F}
+tabulate xr20 sex
+```
+```{stata cross_tabb, echo = F}
+set linesize 120
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+qui mvdecode xr20, mv(-10 -9 -8)
+tabulate xr20 sex
+```
+
+Wir erkennen aus dieser Tabelle beispielsweise, dass 251 Männer und 248 Frauen einmal täglich das Internet nutzen. 
+
+### In Prozent: Relative Häufigkeiten
+
+Auch hier können wir uns die relativen Häufigkeiten anzeigen lassen, indem wir die Option `,cell` anwenden:
+```{stata cell_pct, echo = T, eval = F}
+tabulate xr20 sex, cell
+```
+```{stata cell_pctb, echo = F}
+set linesize 120
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+qui mvdecode xr20, mv(-10 -9 -8)
+tabulate xr20 sex, cell
+```
+
+Um die Tabelle übersichtlich zu halten, können wir mit `nofreq` die absoluten Häufigkeiten ausblenden:
+
+```{stata cell_pct2, echo = T, eval = F}
+tabulate xr20 sex, cell nofreq
+```
+```{stata cell_pct2b, echo = F}
+set linesize 120
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+qui mvdecode xr20, mv(-10 -9 -8)
+tabulate xr20 sex, cell nofreq
 ```
 
 
-## Metrische Variablen
+Die hier dargestellten relativen Häufigkeiten beziehen sich jeweils auf die Gesamtzahl der Befragten. Formal dargestellt wird also für die Kombination  (`xr20=4`) und ledig (`sex = 2`) die Anzahl der 35-59 Jahre alten Befragten durch die Anzahl **aller Befragten** geteilt: $\frac{\text{Anzahl 1x/Woche Internet nutzender Frauen}}{\text{Gesamtzahl der Befragten}}$ - Wir können also aus dieser Tabelle ablesen, dass 1,27% der Befragten *weiblich und wöchentliche Internet-Userinnen* sind. 
 
-Das bisherige Beispiel Staatsbürgerschaft (`german`) bezog sich auf ein kategoriales Merkmal. Für ein metrisches Merkmal, wie zum Beispiel das Geburtsjahr macht eine Häufigkeitstabelle wenig Sinn, da das Geburtsjahr sehr viele Ausprägungen hat und eine Tabelle unübersichtlich wäre - hier nur als Beispiel die ersten 25 Ausprägungen (es gibt insgesamt 77!):
+
+### pro Gruppe 1: Zeilenprozente
+Wir können diese Tabelle auch mit Zeilenprozenten anzeigen lassen, indem wir die Option `row` verwenden:
+
+```{stata row_pct, echo = T, eval = F}
+tabulate xr20 sex, row nofreq
+```
+```{stata row_pctb, echo = F}
+set linesize 120
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+qui mvdecode xr20, mv(-10 -9 -8)
+tabulate xr20 sex, row nofreq
+```
+*Achtung!* Damit ändert sich jeweils die Interpretation der Tabelle! Wir ändern durch `row` die Bezugsgröße oder formal ausgedrückt den Nenner:  
+
+Für die **Zeilenprozente** werden die Werte in Bezug zu den Zeilensummen gesetzt. Also wird die Anzahl der ledigen 35-59 Jährigen ins Verhältnis zur Gesamtzahl der 1x/Woche Internet nutzenden Befragten gesetzt: $\frac{\text{Anzahl 1x/Woche Internet nutzender Frauen}}{\text{Anzahl 1x/Woche Internet nutzender Befragter}}$
+
+Interpretation: 50.00% *der 1x/Woche Internet nutzenden Befragten* sind Frauen.
+  
+### pro Gruppe 2: Spaltenprozente
+Wir können diese Tabelle auch mit Spaltenprozenten anzeigen lassen, indem wir die Option `col` verwenden:
+
+```{stata col_pct, echo = T, eval = F}
+tabulate xr20 sex, col nofreq
+```
+```{stata col_pctb, echo = F}
+set linesize 120
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+qui mvdecode xr20, mv(-10 -9 -8)
+tabulate xr20 sex, col nofreq
+```
+
+Für die **Spaltenprozente** werden die Werte in Bezug zu den Spaltensummen gesetzt. Also wird die Anzahl der 1x/Woche Internet nutzenden Frauen ins Verhältnis zur Zahl der befragten Frauen gesetzt: $\frac{\text{Anzahl 1x/Woche Internet nutzender Frauen}}{\text{Gesamtzahl der befragten Frauen}}$ - Interpretation: "2,65% der *befragten Frauen* nutzen einmal pro Woche das Internet" 
+
+
+## Metrische Variablen beschreiben
+
+Das bisherige Beispiel bezog sich auf kategoriale Variablen (mit einer begrenzten Anzahl an Ausprägungen). Für ein metrisches Merkmal, wie zum Beispiel das Alter macht eine Häufigkeitstabelle wenig Sinn, da das Alter sehr viele Ausprägungen hat und eine Tabelle unübersichtlich wäre - hier nur als Beispiel die ersten 25 Ausprägungen (es gibt insgesamt 77!):
 
 ```{stata tab_desc1, eval = F}
 tab age if age < 43
@@ -101,7 +181,7 @@ qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 tab age if age < 43
 ```
 
-Um eine Häufigkeitstabelle zu erstellen, müssen wir bei metrischen Merkmalen Klassen bilden. So könnten wir das Alter in Lebensjahrzehnte unterteilen. Zuvor müssen wir wieder die fehlenden Angaben[^1] überschreiben:
+Um eine Häufigkeitstabelle zu erstellen, müssen wir bei metrischen Merkmalen Klassen bilden. So könnten wir das Alter in Lebensjahrzehnte unterteilen. Zuvor müssen wir wieder die fehlenden Angaben[^031] überschreiben:
 ```{stata age_miss, eval = F}
 mvdecode age, mv(-32)
 ```
@@ -110,8 +190,9 @@ set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 mvdecode age, mv(-32)
 ```
+[^031]: Die Werte für fehlende Angaben finden wir Codebuch: auch hier ist `-32` wieder ein Code für fehlende Werte. 
 
-Um die Klassen zu bilden, nutzen wir `egen` zusammen mit der Funktion `cut()`. In `cut` geben wir die zu unterteilende Variable an, außerdem legen wir in `at()` die Klassengrenzen fest.[^031] Die so genere Werte legen wir in einer neuen Variable `age_cat` ab: 
+Um die Klassen zu bilden, nutzen wir `egen` zusammen mit der Funktion `cut()`. In `cut` geben wir die zu unterteilende Variable an, außerdem legen wir in `at()` die Klassengrenzen fest.[^032] Die so genere Werte legen wir in einer neuen Variable `age_cat` ab: 
 ```{stata age_cut, eval = F}
 egen age_cat = cut(age), at( 18 35 60 100 )
 ```
@@ -129,121 +210,293 @@ tabulate age_cat
 
 Stata verwendet für die Klassen jeweils die untere Klassengrenze. Wir haben also 718 18-34-jährige und 1527 35-59-jährige Befragte in unserem Datensatz.
 
-[^031]: Für die Grenzen können wir auch eine sog. numlist `wert1(schrittbreite)wert2` verwenden. Darin geben wir zunächst die untere Grenze, dann die Schrittbreite und abschließend die obere Grenze an. Zb könnten wir so 10er-Schritte festlegen: `egen age_cat = cut(age), at( 10(10)100 ) `
+[^032]: Für die Grenzen können wir auch eine sog. numlist `wert1(schrittbreite)wert2` verwenden. Darin geben wir zunächst die untere Grenze, dann die Schrittbreite und abschließend die obere Grenze an. Zb könnten wir so 10er-Schritte festlegen: `egen age_cat = cut(age), at( 10(10)100 ) `
 
 ```{r,echo=F}
 a18$age_cat <- cut(a18$age, breaks = c( 18, 35, 60, 100 ) ,include.lowest = T,right = FALSE ) # kürzer mit seq()
 age_tab <- table(a18$age_cat) # abs Häufigkeiten
 age_tab2 <- prop.table(age_tab) # rel Häufigkeiten
 ```
-Außerdem geben uns die kumulierten Häufigkeiten (`Cum.`) an, dass `r sprintf("%2.2f",cumsum(age_tab2)[2]*100)`% aller Befragten jünger als 60 Jahre sind.
+$\Rightarrow$ Wie groß ist der Anteil der Befragten, die jünger als 60 Jahre sind? Wie groß ist der Anteil der Befragten, die 60 Jahre oder älter sind?[^036]
 
-[^1]: Die Werte für fehlende Angaben finden wir Codebuch: auch hier ist `-32` wieder ein Code für fehlende Werte.
+[^036]: Aus der Spalte `Cum.` können wir ablesen, dass 64.66% der Befragten unter 60 Jahre alt sind. Dementsprechend sind 35.34% der Befragten 60 Jahre oder älter.
 
-## Exkurs: labels vergeben
+Natürlich können wir die Werte in `age_cat` auch besser beschriften - mehr dazu im [Anhang](#vlabel) 
 
-Natürlich können wir die Werte in `age_cat` auch besser beschriften. Dazu definieren wir ein Wertelabel an. Dazu verwenden wir `label define`, gefolgt von einem Objektnamen für dieses Label (hier `age_cat_lab`) und dann jeweils die Ausprägungen zusammen mit dem entsprechenden label in `""`. Dieses Label-Objekt wenden wir dann mit `label values` auf die Variable `age_cat` an:
-```{stata lab1, eval = F}
-label define age_cat_lab 18 "18-34 Jahre" 35 "35-29 Jahre" 60 "über 60 Jahre" 
-label values age_cat age_cat_lab
-tab age_cat
+Allerdings können metrische Variablen auch direkt Hilfe von Lage- und Konzentrationsmaßen beschrieben werden.
+
+### `summarize`
+Klassische Lagemaße zur Beschreibung von metrischen Variablen sind bspw. Minimum und Maximum, das arithm. Mittel sowie der Median und Quantile. Auch hier haben wir gestern bereits den wichtigsten Befehl kennen gelernt: `summarize` gibt uns einen ersten Überblick zur Verteilung einer metrischen Variable:
+
+```{stata su1F, eval = F}
+summarize age
 ```
 
-```{stata lab1b, echo = F}
+```{stata su1T, echo = F}
 set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-qui egen age_cat = cut(age), at( 18 35 60 100 ) 
-label define age_cat_lab 18 "18-34 Jahre" 35 "35-29 Jahre" 60 "über 60 Jahre" 
-label values age_cat age_cat_lab
-tab age_cat
+qui mvdecode age, mv(-32)
+summarize age
+```
+Wir erfahren also, dass die Befragten im Mittel 51.5568 Jahre alt sind, die jüngsten Befragten 18 Jahre alt und ältesten Befragten sind 95 Jahre alt.
+
+Mit der Option `,detail` bekommen wir eine deutlich umfangreichere Auskunft:
+```{stata su2F, eval = F}
+summarize age, detail
 ```
 
-## Kontingenztabellen
-
-Aus Kontingenztabellen erfahren wir, wie häufig Merkmalskombinationen auftreten. Auch für Kontingenztabellen können wir `tabulate` verwenden. Zum Beispiel können wir uns eine Tabelle anzeigen lassen, die uns die Häufigkeiten des Familienstatus getrennt nach Altersgruppen zeigt. Auch hier schließen wir zunächst die fehlenden Werte mit `mvdecode` aus:
-```{stata cross_tab, echo = T, eval = F}
-mvdecode mstat, mv(-41 -9)
-```
-Für die Kontingenztabelle geben wir dann nach `tabulate` die beiden Variablen an, welche die Zeilen und Spalten definieren:
-```{stata cross_tabx, echo = T, eval = F}
-tabulate age_cat mstat
-```
-```{stata cross_tabb, echo = F}
-set linesize 120
+```{stata su2T, echo = F}
+set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-qui egen age_cat = cut(age), at( 18 35 60 100 ) 
-qui mvdecode mstat, mv(-41 -9)
-tabulate age_cat mstat
+qui mvdecode age, mv(-32)
+summarize age, detail
 ```
 
+Hier wird eine ganze Menge auf einmal angezeigt - die Kennzahlen sind dabei in drei Spalten organisiert: 
 
-Wir erkennen aus dieser Tabelle beispielsweise, dass 200 Befragte aus der Altersgruppe der 35-59-Jährigen (`age_cat=35`) geschieden sind.
++ Aus der ersten Spalte erfahren wir die Quantile (`Percentiles`). Ein Quantil einer Verteilung trennt die Daten so in zwei Teile, dass `x`\% der Daten darunter und 100-`x`\% darüber liegen. Hier können wir zB ablesen, dass 25% der Befragten 37 Jahre oder jünger sind. 95% der Befragten sind <= 80 Jahre alt. Dementsprechend sind 5% der Befragten 80 Jahre oder älter. Die 50%-Grenze für das Alter (*der Median*) liegt bei 53 Jahren.
 
-## Relative Häufigkeiten
++ die zweite Spalte gibt uns jeweils die 4 kleinsten und größten Werte für das Alter aus: die 4 kleinsten Alterswerte sind jeweils 18, die größten Werte sind 92,94,94 und 95.
 
-Auch hier können wir uns die relativen Häufigkeiten anzeigen lassen, indem wir die Option `,cell` anwenden:
-```{stata cell_pct, echo = T, eval = F}
-tabulate age_cat mstat, cell
++ in der dritten Spalte bekommen wir eine Reihe weiterer Informationen:
+  + die Zahl der Beobachtungen (`Obs`) und das arithmetische Mittel (`Mean`) 
+  + die Streuung anhand der Standardabweichung (`Std. Dev.`) und Varianz (`Variance`) [mehr dazu](#variance)
+  + sowie die Schiefe (`Skewness`) und Wölbung (`Kurtosis`) [mehr dazu](#sk_kur)
+
+
+### `tabstat`
+
+Häufig möchten wir aber vielleicht nur eine bestimmte Information. Dafür ist `tabstat` eine gute Lösung. Mit `tabstat` können wir eine ganze Reihe statistischer Kennzahlen für metrische/kontinuierliche Merkmale berechnen. Die Syntax hat dabei immer das folgende Format: `tabstat age, s(mean median)`
+
+Hier eine Übersicht der Kennzahlen:
+```{r, ft.align = "center",message=F,warning=F, echo = F}
+library(kableExtra)
+readxl::read_xlsx("03_tabstat.xlsx",sheet = 1) %>% 
+  kable() %>% kable_styling(bootstrap_options = "condensed", full_width = F) %>% 
+  column_spec(1,monospace = TRUE)
 ```
-```{stata cell_pctb, echo = F}
-set linesize 120
+
+Allerdings lassen sich mit `tabstat` nicht beliebige Quantil-Grenzen (nur für 5,10,25,50,75,90,95,99) berechnen, dafür können wir `centile` nutzen:
+```{stata centileF, eval = F}
+centile age, centile(35)
+```
+
+```{stata centileT, echo = F}
+set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-qui egen age_cat = cut(age), at( 18 35 60 100 ) 
-qui mvdecode mstat, mv(-41 -9)
-tabulate age_cat mstat, cell
+qui mvdecode age, mv(-32)
+centile age, centile(35)
 ```
+Aus den Angaben unter `Centile` erfahren wir, dass 35% der Befragten im Datensatz sind 44 Jahre alt oder jünger sind. Dementsprechend sind 65% der Befragten 44 Jahre oder älter.
 
-Die hier dargestellten relativen Häufigkeiten beziehen sich jeweils auf die Gesamtzahl der Befragten. Formal dargestellt wird also für die Kombination 35-59 Jahre alt (`age_cat=35`) und ledig (`mstat = 5`) die Anzahl der 35-59 Jahre alten Befragten durch die Anzahl **aller Befragten** geteilt: $\frac{\text{Anzahl geschiedener}\,35-59\,\text{Jähriger}}{\text{Gesamtzahl der Befragten}}$ - Wir können also aus dieser Tabelle ablesen dass `9,10%` der Befragten *35-59 Jahre alt und ledig* sind. 
+### Kennzahlen vergleichen {#bys_vgl}
 
-Um die Tabelle übersichtlich zu halten, können wir mit `nofreq` die absoluten Häufigkeiten ausblenden:
-
-```{stata cell_pct2, echo = T, eval = F}
-tabulate age_cat mstat, cell nofreq
+Richtig spannend sind diese Kennzahlen natürlich erst im Vergleich zwischen Gruppen. Bspw. können wir die Altersangaben aus den alten (`eastwest`=1) und neuen Bundesländern (`eastwest`=2) vergleichen, indem wir das Befehls-Präfix `bys varX:` verwenden. `bys` steht für "by sort" und damit sagen wir Stata, dass die folgende Berechnung getrennt nach den Werten für `varX` ausgeführt werden soll. Wenn wir also `summarize` für beide Ausprägungen von `eastwest` berechnen möchten, gehen wir wir folgt vor:
+```{stata bysuF, eval = F}
+bys eastwest: summarize age 
 ```
-```{stata cell_pct2b, echo = F}
-set linesize 120
+```{stata bysuT, echo = F}
+set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-qui egen age_cat = cut(age), at( 18 35 60 100 ) 
-qui mvdecode mstat, mv(-41 -9)
-tabulate age_cat mstat, cell nofreq
+qui mvdecode age, mv(-32)
+bys eastwest: summarize age 
 ```
+In den neuen Bundesländern sind die Befragten im Schnitt also um 53.90083 - 50.66093 = `r 53.90083 - 50.66093` Jahre älter.
 
-## Zeilenprozente
-Wir können diese Tabelle auch mit *Zeilenprozenten* anzeigen lassen, indem wir die Option `row` verwenden:
+Das funktioniert auch für alle `tabstat`-Befehle:
 
-```{stata row_pct, echo = T, eval = F}
-tabulate age_cat mstat, row nofreq
+```{stata bytabstF, eval = F}
+bys eastwest: tabstat age, s(cv)
 ```
-```{stata row_pctb, echo = F}
-set linesize 120
+```{stata bytabstT, echo = F}
+set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-qui egen age_cat = cut(age), at( 18 35 60 100 ) 
-qui mvdecode mstat, mv(-41 -9)
-tabulate age_cat mstat, row nofreq
+qui mvdecode age, mv(-32)
+bys eastwest: tabstat age, s(cv)
 ```
-*Achtung!* Damit ändert sich jeweils die Interpretation der Tabelle! Wir ändern durch `row` die Bezugsgröße oder formal ausgedrückt den Nenner:  
 
-Für die **Zeilenprozente** werden die Werte in Bezug zu den Zeilensummen gesetzt. Also wird die Anzahl der ledigen 35-59 Jährigen ins Verhältnis zur Gesamtzahl der 35-59 Jährigen gesetzt: $\frac{\text{Anzahl geschiedener}\,35-59\,\text{Jähriger}}{\text{Anzahl aller}\,35-59\,\text{Jährigen}}$
+Eine andere Option ist es, auf den `if`-Befehl zurückzugreifen - siehe [hier](#if_vgl)
 
-Interpretation: `20,67%` der 35-59 Jahre alten Befragten sind ledig.
-  
-## Spaltenprozente
-Wir können diese Tabelle auch mit *Spaltenprozenten* anzeigen lassen, indem wir die Option `col` verwenden:
 
-```{stata col_pct, echo = T, eval = F}
-tabulate age_cat mstat, col nofreq
+### Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient {#variance}
+
+Streuungsmaße helfen uns zu beurteilen, wie groß die Unterschiede in unseren Daten sind. Je größer das Streuungsmaß, desto mehr Unterschiede gibt es zwischen den beobachteten Werten.
+
+Die häufigste Kennzahl zur Beschreibung von Streuung ist aber die **Varianz**. Die Varianz ist definiert als die durchschnittliche quadrierte Abweichung vom arith. Mittel: $$var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}$$    
+Was bedeutet diese Formel?    
+Schauen wir erst in den Zähler des Bruchs: $(x_{i}-\bar{x})^2$
+Es geht also um die Abstände der einzelnen Datenpunkte ($x_{i}$) zum arithmetischen Mittel ($\bar{x}$) - mathematisch die Differenz zwischen den einzelnen Datenpunkten $x_{i}-\bar{x}$ - hier eingezeichnet als gestrichelte Linien:
+```{r dpi = 800, echo = F, out.height="55%", out.width="55%", fig.align="center"}
+eq <-  substitute(italic(bar(x))) # formel erstellen
+
+a18 %>% 
+  select(respid,age) %>% 
+  filter(age > 0) %>% 
+  na.omit() %>%  
+  sample_n(30) %>% 
+  select(respid, age) %>% 
+  mutate(mean = mean(a18$age,na.rm = T), id = 1:n()) %>% 
+  ggplot(.,aes(x = id, y = age)) +
+  geom_segment(aes(yend= mean, xend = id ),
+               size = .45, linetype = 2, color = "#1BB6AF") +
+  geom_point(size = 1.75, color = "#172869") +
+  geom_hline(aes(yintercept = mean), color = "#AF6125", size = .75) +
+  geom_segment(aes(x = min(id)-.75, y = 15, xend = min(id)-.75, yend = mean - 1), arrow = arrow(length = unit(.0275,"npc"), type = "closed"), 
+               color = "#AF6125", size = .5) +
+  geom_label(aes(x = min(id)-.75, y = 15, label = as.character(as.expression(eq))), label.size = .01, hjust = 0.5, color = "#AF6125", fill = "white", parse = T, size = 4.5) +
+  guides(color = F) +
+  labs(y = "Alter (age)", x = "", caption = "Zufällige Auswahl von 30 Fällen des Allbus 2018") +
+  theme_minimal(base_size = 13) +
+  expand_limits(y = 15) +
+  theme(axis.text.x = element_blank(), plot.caption = element_text(size = rel(.75)), plot.caption.position = "plot")
 ```
-```{stata col_pctb, echo = F}
-set linesize 120
+Für Punkte, die über dem arith. Mittel liegen, erhalten wir für die Differenz einen positiven Wert (wir ziehen ja jeweils das arith. Mittel vom Wert für den Datenpunkt ab). Für Punkte mit Werten, die kleiner als das arith. Mittel sind, erhalten wir einen negativen Wert.     
+Würden wir die Abstände (gestrichelten Linien) einfach aufsummieren, erhielten wir als Ergebnis immer Null! Das arithmetische Mittel liegt ja per Definition immer genau "in der Mitte": die Abstände nach oben sind in der Summe genauso groß wie die Abstände nach unten. Daher wird zunächst jeder Abstand quadriert: $(\bar{x} - x_{i})^2$   
+Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert ($\sum_{i=1}^{n}$) und dann durch die Anzahl der Beobachtungen geteilt werden ($\frac{}{n}$)- zusammengefasst hier nochmal die Formel:  $$var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}$$
+
+Wir können die Varianz mit `tabstat , s(var)` berechnen:
+```{stata varF, eval = F}
+tabstat age, s(var)
+```
+```{stata varT, echo = F}
+set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-qui egen age_cat = cut(age), at( 18 35 60 100 ) 
-qui mvdecode mstat, mv(-41 -9)
-tabulate age_cat mstat, col nofreq
+qui mvdecode age, mv(-32)
+tabstat age, s(var)
+```
+```{r, echo = F}
+var <- var(a18$age[a18$age>0])
 ```
 
-Für die **Spaltenprozente** werden die Werte in Bezug zu den Spaltensummen gesetzt. Also wird die Anzahl der ledigen 35-59 Jährigen ins Verhältnis zur Zahl der ledigen Befragten gesetzt: $\frac{\text{Anzahl geschiedener}\,35-59\,\text{Jähriger}}{\text{Gesamtzahl der *ledigen* Befragten}}$ - Interpretation: "`13,97%` der ledigen Befragten sind 35-59 Jahre alt" 
+In unseren Datensatz beträgt der Varianz des Alters also `r format(var,big.mark = ".",decimal.mark = ",")` Jahre². Auf der Varianz beruhen noch zwei weitere Streuungsmaße. Die **Standardabweichung** entspricht der Wurzel der Varianz und hat somit die gleiche Messeinheit wie die Variable (hier als Jahre): 
+```{stata std2, echo=T}
+dis sqrt(311.2478)
+```
+Wir können die Standardabweichung auch mit `tabstat , s(sd)` berechnen:
+```{stata stdF, eval = F}
+tabstat age, s(sd)
+```
+```{stata stdT, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode age, mv(-32)
+tabstat age, s(sd)
+```
+
+Der **Variationskoeffizient**  entspricht `sd`/`mean` und dient dem Vergleich verschiedener Streuungen relativ zum jeweiligen Mittelwert, `tabstat , s(cv)` übernimmt die Berechnung für uns:
+```{stata cvF, eval = F}
+tabstat age, s(cv)
+```
+```{stata cvT, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode age, mv(-32)
+tabstat age, s(cv)
+```
+
+Somit können wir bspw. mit Hilfe von `bys sex:` die Streuung des Alters bei männlichen und weiblichen Befragten vergleichen:
+```{stata cvF2, eval = F}
+bys sex: tabstat age, s(cv)
+```
+
+```{stata cvT2, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode age, mv(-32)
+bys sex: tabstat age, s(cv)
+```
+
+$\Rightarrow$ Für welches Geschlecht ist die Streuung also größer?[^034]
+
+[^034]: Da der Variationskoeffizient für Männer mit `0.3482757` etwas größer ist als für Frauen (`0.3342309`), ist die Streuung bei den Männern etwas größer.
+
+### Schiefe & Wölbung {#sk_kur}
+
+Skewness is a measure of the lack of symmetry of a distribution. If the distribution is symmetric, the coefficient of skewness is 0. If the coefficient is negative, the median is usually greater than the mean and the distribution is said to be skewed left. If the coefficient is positive, the median is usually less than the mean and the distribution is said to be skewed right. Kurtosis (from the Greek kyrtosis, meaning curvature) is a measure of peakedness of a distribution. The smaller the coefficient of kurtosis, the flatter the distribution. The normal distribution has a coefficient of kurtosis of 3 and provides a convenient benchmark.
 
 
+### Gini-Koeffizient
+
+Zur Beschreibung der (Ungleich-)Verteilung von metrischen Variablen, insbesondere bei Einkommens- und Vermögensdaten wird häufig der Gini-Koeffizient verwendet. Der Gini-Koeffizient beruht auf der Fläche zwischen der Lorenzkurve und der Gleichverteilung. Auf der x-Achse werden die kumulierten Perzentile der Befragten abgetragen, auf der y-Achse die Perzentile des HH-Einkommens:
+
+```{r dpi = 900, echo=F, warning=F, message=F, out.height="75%", out.width="75%", fig.align="center"}
+gdf <- a18 %>% mutate(across(di05,~ifelse(.x<0,NA,.x)) ) %>%  na.omit() %>% 
+  select(respid, di05) %>% arrange(di05) %>% 
+  mutate(pct_id = 1:n()/n(),
+         pct_di05 = cumsum(di05/sum(di05)),
+         sampl = runif(n = nrow(.)))
+
+gini_ann_df <- gdf %>% filter(sampl<.0151, between(pct_id,.5,.6 ) ) %>% slice(1) %>%
+  mutate(lab_lo = "Lorenzkurve", 
+         labl = paste0("Lorenzkurve (aus Beobachtungen):\n\"",
+                       round(pct_id*100,0),"% der Befragten verfügen über\n",
+                       round(pct_di05*100,0),"% des gesamten HH-Einkommens\""),
+         labl1 = paste0("(Theoretische) Diagonale:\n\"",
+                       round(pct_id*100,0),"% der Befragten verfügen über\n",
+                       round(pct_id*100,0),"% des gesamten HH-Einkommens\""),
+         labl2 = "Gini Koeffizient:\nFläche zwischen Diagonale und Lorenzkurve\n(0=Gleichverteilung,1=Maximale Konzentration)")
+
+ggplot(gdf, aes(x = pct_id, y = pct_di05)) + 
+  geom_ribbon(aes(ymin = pct_di05, ymax = pct_id, xmin = pct_id, xmax = pct_id), fill = "#1BB6AF" ) +
+  geom_line(aes(y = pct_id), linetype = 2, size = .95, color = "#172869") + # Diagonale
+  geom_line(size = .5, color = "#9ED80B") + # Lorenzkurve
+  geom_segment(data = gini_ann_df, aes(xend = pct_id, x = pct_id , y = 0, yend = pct_id), size = .35, linetype = 2) + # gestrichelte Linie
+  geom_segment(data = gini_ann_df, aes(xend = .5, x = 0 , y = 0.5, yend = .5), size = .35, linetype = 2) + # gestrichelte Linie
+  geom_segment(data = gini_ann_df, aes(xend = pct_id+.0035, x = pct_id+.05 , y = pct_di05- .15, yend = pct_di05-.0075), arrow = arrow(length = unit(.02,"npc"),type = "closed")) + # lorenzkurve pfeil
+  geom_label(data = gini_ann_df, aes(label=labl,x = pct_id+.05, y = pct_di05- .15), hjust = 0, fontface = "italic", size = 3.2, 
+             color = "grey25", fill = alpha("#9ED80B",.75)) + # lorenzkurve label
+  geom_segment(data = gini_ann_df, aes(xend = pct_id, x = pct_id-.05 , y = pct_id + .3, yend = pct_id), arrow = arrow(length = unit(.02,"npc"),type = "closed")) + # diagonale pfeil
+  geom_label(data = gini_ann_df, aes(label=labl1,x = pct_id-.05, y = pct_id + .3), hjust = 1, fontface = "italic", size = 3.2, 
+             color = "grey95", fill = "#172869") + # diagonale label
+  geom_segment(data = gini_ann_df, aes(y = .62, x = .03, xend = .4, yend = .3)) + # Fläche / Gini Linie
+  geom_point(data = gini_ann_df, aes(y = .3, x = .4), shape = 15, size = 2.75) + # Fläche / Gini -> Rechteck statt Pfeil
+  geom_label(data = gini_ann_df, aes(label=labl2,  y = .62, x = .025), hjust = 0, fontface = "italic", size = 3.2, 
+             color = "grey15", fill = "#1BB6AF") + # Gini Label
+  geom_point(data= filter(gdf,sampl<= 0.0151), size = 1.5, color = "#FF5300") +
+  scale_x_continuous("Kumulierter Befragtenanteil", labels = scales::percent_format(accuracy = 1L)) +
+  scale_y_continuous("Kumulierter Einkommensanteil", labels = scales::percent_format(accuracy = 1L)) +
+  theme_minimal(base_size = 11) +
+  coord_cartesian(x =c(0,1),y =c(0,1),expand = F)
+```
+Den Gini-Koeffizienten können wir mit `fastgini` berechnen, allerdings müssen wir diesen Befehl erst (einmalig) installieren:
+```{stata giniF, eval = F}
+ssc install fastgini
+fastgini di05
+```
+```{stata giniT, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode di05, mv(-50 -32 -7)
+fastgini di05
+```
+
+Leider funktioniert `bys eastwest:` bei `fastgini` nicht, wir müssen hier auf die Variante mit [`if`](#if_vgl) zurückgreifen:
+
+```{stata gini2F, eval = F}
+fastgini di05 if eastwest == 1
+```
+```{stata gini2T, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode di05, mv(-50 -32 -7)
+fastgini di05 if eastwest == 1
+```
+
+```{stata gini3F, eval = F}
+fastgini di05 if eastwest == 2
+```
+```{stata gini3T, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode di05, mv(-50 -32 -7)
+fastgini di05 if eastwest == 2
+```
+$\Rightarrow$ *Wo sind die Haushaltseinkommen also ungleicher verteilt?*[^033]
+
+[^033]: Der etwas höhere Wert des Gini-Koeffizienten legt nahe, dass die Haushaltseinkommen in den alten Bundesländern (`eastwest`=1) etwas stärker ungleich verteilt als in den neuen Bundesländern (`eastwest`=2).
+
+
+Anmerkung: hier wurden die Missings in `di05` mit `mvdecode di05, mv(-50 -32 -7)` ausgeschlossen.
 
 
 ## Übungen
@@ -303,3 +556,46 @@ Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und 
 
 
 
+## Exkurs: labels vergeben {#vlabel}
+
+Wir können natürlich auch Werte in selbst erstellten Variablen, wie zB `age_cat`, beschriften. Dazu definieren wir ein Wertelabel an. Dazu verwenden wir `label define`, gefolgt von einem Objektnamen für dieses Label (hier `age_cat_lab`) und dann jeweils die Ausprägungen zusammen mit dem entsprechenden label in `""`. Dieses Label-Objekt wenden wir dann mit `label values` auf die Variable `age_cat` an:
+```{stata lab1, eval = F}
+label define age_cat_lab 18 "18-34 Jahre" 35 "35-29 Jahre" 60 "über 60 Jahre" 
+label values age_cat age_cat_lab
+tab age_cat
+```
+
+```{stata lab1b, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+label define age_cat_lab 18 "18-34 Jahre" 35 "35-29 Jahre" 60 "über 60 Jahre" 
+label values age_cat age_cat_lab
+tab age_cat
+```
+
+## Exkurs: Kennzahlvergleiche mit `if` {#if_vgl}
+
+Neben der Variante [`bys var:`](#bys_vgl) können wir auch mit Hilfe der `if`-Option Kennzahlen miteinander vergleichen:
+
+```{stata ifF, eval = F}
+summarize age if eastwest == 1
+summarize age if eastwest == 2
+```
+```{stata ifT, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode age, mv(-32)
+su age if eastwest == 1
+su age if eastwest == 2
+```
+Das führt natürlich im Kern zum gleichen Ergebnis wie die oben gezeigte Variante:
+```{stata bysu3F, eval = F}
+bys eastwest: summarize age 
+```
+```{stata bysu3T, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode age, mv(-32)
+bys eastwest: summarize age 
+```

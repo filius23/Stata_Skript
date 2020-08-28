@@ -80,8 +80,9 @@ lookfor "Alters"
 ```
 
 ## sortieren
-
 `sort`
+
+## missings unterscheiden
 
 ## Indikatoren umdrehen
 

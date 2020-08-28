@@ -137,7 +137,7 @@ Für metrische Variablen empfiehlt sich daher `summarize` als Überblicksbefehl:
 summarize age
 ```
 
-Hier bekommen wir die Anzahl der Beobachtungen (`Obs.`),       das arithmetische Mittel (`Mean`), sowie die Minimal- und Maximalwerte ausgegeben (`Min`&`Max`). (zur Standardabweichung `Std. Dev.` kommen wir noch).
+Hier bekommen wir die Anzahl der Beobachtungen (`Obs.`), das arithmetische Mittel (`Mean`), sowie die Minimal- und Maximalwerte ausgegeben (`Min`&`Max`). (zur Standardabweichung `Std. Dev.` kommen wir noch).
 ```{stata su1b, echo = F}
 set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
