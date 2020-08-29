@@ -250,6 +250,7 @@ gen total_m = total if sex == 1
 gen total_f = total if sex == 2
 list in 1/10
 ```
+
 ```{r, echo =F}
 a18 %>% filter(age>0,sex>0) %>%  group_by(age,sex) %>% count(name = "total") %>% ungroup() %>% mutate(total_m = ifelse(sex == 1, total,"."),total_f = ifelse(sex == 2, total,".")) %>% slice(1:10) %>% data.frame(.)
 ```
@@ -287,7 +288,8 @@ knitr::include_graphics("05_pyramid.png")
 
 ### Aufbereitung für Boxplot {#aufb1}
 ```{stata, eval = F, echo = T}
-use "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_2018.dta", clear
+cd ""
+use "Allbus_2018.dta", clear
 replace inc = . if inc < 0
 replace age = . if age < 0
 
@@ -298,4 +300,25 @@ gen inc_m = inc if sex == 1
 gen inc_f = inc if sex == 2
 lab var inc_m "Männer"
 lab var inc_f "Frauen"
+```
+
+### `separate` {#sep1}
+
+`separate` ist eine Abkürzung, um Angaben einer Variable entlang der Ausprägungen einer zweiten Variablen aufzuteilen. Das hilft uns bspw. die Aufteilung von `inc` nach dem Geschlecht (`sex`) zu vereinfachen. Wir können dies entweder mit zwei Befehlen mit `gen` und `if` durchführen oder diese zwei Schritte mit einem `separate` Befehl durchführen:
+
+```{stata sepF, eval = F}
+gen inc_m = inc if sex == 1
+gen inc_f = inc if sex == 2
+separate inc, by(sex)
+list inc sex inc_m inc_f inc1 inc2 in 1/10
+```
+
+
+```{stata sepT, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+gen inc_m = inc if sex == 1
+gen inc_f = inc if sex == 2
+separate inc, by(sex)
+list inc sex inc_m inc_f inc1 inc2 in 1/10
 ```

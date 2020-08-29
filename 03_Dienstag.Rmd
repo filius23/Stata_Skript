@@ -432,14 +432,14 @@ tabstat age, s(cv)
 
 Somit können wir bspw. mit Hilfe von `bys sex:` die Streuung des Alters bei männlichen und weiblichen Befragten vergleichen:
 ```{stata cvF2, eval = F}
-bys sex: tabstat age, s(cv)
+tabstat age, s(cv) by(sex)
 ```
 
 ```{stata cvT2, echo = F}
 set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 qui mvdecode age, mv(-32)
-bys sex: tabstat age, s(cv)
+tabstat age, s(cv) by(sex)
 ```
 
 $\Rightarrow$ Für welches Geschlecht ist die Streuung also größer?[^034]

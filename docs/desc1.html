@@ -211,6 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4" data-path="dataviz.html"><a href="dataviz.html#bevölkerungspyramide"><i class="fa fa-check"></i><b>5.4</b> Bevölkerungspyramide</a></li>
 <li class="chapter" data-level="5.5" data-path="dataviz.html"><a href="dataviz.html#anhang"><i class="fa fa-check"></i><b>5.5</b> Anhang</a><ul>
 <li class="chapter" data-level="5.5.1" data-path="dataviz.html"><a href="dataviz.html#aufb1"><i class="fa fa-check"></i><b>5.5.1</b> Aufbereitung für Boxplot</a></li>
+<li class="chapter" data-level="5.5.2" data-path="dataviz.html"><a href="dataviz.html#sep1"><i class="fa fa-check"></i><b>5.5.2</b> <code>separate</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="lin-reg.html"><a href="lin-reg.html"><i class="fa fa-check"></i><b>6</b> Zusammenhangsmaße</a><ul>
@@ -831,21 +832,17 @@ Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert 
          age |  .3413931
 ------------------------</code></pre>
 <p>Somit können wir bspw. mit Hilfe von <code>bys sex:</code> die Streuung des Alters bei männlichen und weiblichen Befragten vergleichen:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb48-1"><a href="desc1.html#cb48-1"></a><span class="kw">bys</span> sex: <span class="kw">tabstat</span> age, <span class="fu">s</span>(cv)</span></code></pre></div>
-<pre><code>-&gt; sex = MANN
+<div class="sourceCode" id="cb48"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb48-1"><a href="desc1.html#cb48-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(cv) <span class="kw">by</span>(sex)</span></code></pre></div>
+<pre><code>Summary for variables: age
+     by categories of: sex (GESCHLECHT, BEFRAGTE(R))
 
-    variable |        cv
--------------+----------
-         age |  .3482757
-------------------------
-
---------------------------------------------------------------------------------
--&gt; sex = FRAU
-
-    variable |        cv
--------------+----------
-         age |  .3342309
-------------------------</code></pre>
+   sex |        cv
+-------+----------
+  MANN |  .3482757
+  FRAU |  .3342309
+-------+----------
+ Total |  .3413931
+------------------</code></pre>
 <p><span class="math inline">\(\Rightarrow\)</span> Für welches Geschlecht ist die Streuung also größer?<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 </div>
 <div id="sk_kur" class="section level3">
