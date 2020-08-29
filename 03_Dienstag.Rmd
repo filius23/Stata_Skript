@@ -377,9 +377,7 @@ a18 %>%
                size = .45, linetype = 2, color = "#1BB6AF") +
   geom_point(size = 1.95, color = "#172869") +
   geom_hline(aes(yintercept = mean), color = "#AF6125", size = .75) +
-  geom_segment(aes(x = min(id)-.75, y = 15, xend = min(id)-.75, yend = mean - 1), arrow = arrow(length = unit(.0275,"npc"), type = "closed"), 
-               color = "#AF6125", size = .5) +
-  geom_label(aes(x = min(id)-.75, y = 15, label = as.character(as.expression(eq))), label.size = .01, hjust = 0.5, color = "#AF6125", fill = "white", parse = T, size = 4.5) +
+  geom_label(aes(x = min(id)-.75, y = mean, label = as.character(as.expression(eq))), label.size = .01, hjust = 0.5, color = "#AF6125", fill = "white", parse = T, size = 4.5) +
   guides(color = F) +
   labs(y = "Alter (age)", x = "", caption = "Zufällige Auswahl von 30 Fällen des Allbus 2018") +
   theme_minimal(base_size = 13) +

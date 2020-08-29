@@ -1,3 +1,99 @@
+--- 
+title: "GESIS Methodenseminar 2020"
+subtitle: "Skript zur Stata-Übung"
+author: "Andreas Filser"
+date: "Stand: `r format(Sys.time(), '%d.%m.%Y')`"
+site: bookdown::bookdown_site
+output: bookdown::html_book
+documentclass: book
+bibliography: [book.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020"
+---
+
+# Herzlich Willkommen! {-}
+
+Placeholder
+
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# Einstieg in Stata {#Stata1}
+
+Placeholder
+
+
+## Taschenrechner
+## Darstellung in diesem Skript
+## DoFile Editor
+## Datensätze laden
+## Daten, Codebücher, Fragebogen
+## Überblicksbefehle
+### `describe`
+### `browse`
+### `list`
+### `lookfor`
+## if Bedingung - nur manche Zeilen ansehen
+## Übungen {#U1}
+## Profi-Übungen
+## Weitere Anmerkungen
+### Variablentypen {#var_types}
+### import anderer Dateiformate {#otherfmts}
+
+<!--chapter:end:01_Montag.Rmd-->
+
+
+# Arbeiten mit Datensätzen in Stata {#Stata2} 
+
+Placeholder
+
+
+## Vorab: Befehlsstruktur & Hilfe
+## Auszählen & Überblick erhalten
+## Neue Variablen erstellen
+## Bestehende Variablen verändern
+## gen ist gut, Kontrolle ist besser
+## Fehlende Werte
+## if Bedingungen und fehlende Werte
+## keep & drop
+## Labels und if-Bedingungen
+## Nochmal von vorne: Daten neu laden
+## Speichern
+## Übungen
+## Profi-Übungen
+
+<!--chapter:end:02_Montag.Rmd-->
+
+
+# Deskriptive Statistik {#desc1} 
+
+Placeholder
+
+
+## Kategoriale Merkmale mit `tabulate` beschreiben
+### Zwei Variablen, eine Tabelle: Kontingenztabellen
+### In Prozent: Relative Häufigkeiten
+### pro Gruppe 1: Zeilenprozente
+### pro Gruppe 2: Spaltenprozente
+## Metrische Variablen beschreiben
+### `summarize`
+### `tabstat`
+### Kennzahlen vergleichen mit `tabstat` {#by_vgl}
+### `tabulate` mit der Option `summarize()` 
+### Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient {#variance}
+### Schiefe & Wölbung {#sk_kur}
+### Gini-Koeffizient
+## Übungen
+## Profi-Übungen
+## Exkurs: labels vergeben {#vlabel}
+## Exkurs: Kombination von `summarize` mit dem `by`-Präfix {#bys_su}
+## Exkurs: Kennzahlvergleiche mit `if` {#if_vgl}
+
+<!--chapter:end:03_Dienstag.Rmd-->
+
 # Datenvisualisierung in Stata {#dataviz} 
 
 ```{r setup4, echo = F, message=F, warning = F}
@@ -328,3 +424,100 @@ gen inc_f = inc if sex == 2
 separate inc, by(sex)
 list inc sex inc_m inc_f inc1 inc2 in 1/10
 ```
+
+<!--chapter:end:04_Dienstag.Rmd-->
+
+
+# Zusammenhangsmaße {#zshg}
+
+Placeholder
+
+
+## Metrisch skalierte Variablen
+## Regression 
+### Beispieldatensatz
+### Idee einer Regression
+### Residuen
+### Quadrierte Residuen
+### Interpretation der Regression
+### Vorhergesagte Werte
+### Residuen Teil 2
+### Modellgüte
+## Ordinal skalierte Merkmale
+## Nominal skalierte Variablen
+### Odds Ratio
+### Chi²-basierte Maße
+### Cramer's $\upsilon$
+### Indifferenztabelle
+### $\phi$
+
+<!--chapter:end:05_Mittwoch.Rmd-->
+
+
+# Zusammenhangsmaße {#lin_reg}
+
+Placeholder
+
+
+## Metrisch skalierte Variablen
+## Regression 
+### Beispieldatensatz
+### Idee einer Regression
+### Residuen
+### Quadrierte Residuen
+### Interpretation der Regression
+### Vorhergesagte Werte
+### Residuen Teil 2
+### Modellgüte
+## Ordinal skalierte Merkmale
+## Nominal skalierte Variablen
+### Odds Ratio
+### Chi²-basierte Maße
+### Cramer's $\upsilon$
+### Indifferenztabelle
+### $\phi$
+
+<!--chapter:end:06_Mittwoch.Rmd-->
+
+# Inferenzstatistik I {#inf1}
+
+```{r setup7, echo = F, message=F, warning = F}
+# .libPaths("D:/R-library")
+knitr::opts_chunk$set(collapse = F)
+library(Statamarkdown)
+```
+
+
+<!--chapter:end:07_Donnerstag.Rmd-->
+
+# Inferenzstatistik II {#inf2}
+
+<!--chapter:end:08_Donnerstag.Rmd-->
+
+# Hypothesentests {#hypo}
+
+<!--chapter:end:09_Freitag.Rmd-->
+
+# Ergebnisexport & weitere Tipps {#export1}
+
+<!--chapter:end:10_Freitag.Rmd-->
+
+
+# Fortgeschrittene Themen {#adva}
+
+Placeholder
+
+
+## Wertelabels 
+## sortieren
+## missings unterscheiden
+## Indikatoren umdrehen
+## Informationen aus mehreren Variablen
+## Informationen aus mehreren Datensätzen
+## Arbeiten mit Textvariablen
+## egen {#egen}
+## gruppierte Berechnungen
+## collapse
+
+<!--chapter:end:11_Fortgeschrittene_Datenaufbereitung.Rmd-->
+

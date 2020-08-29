@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Zusammenhangsmaße | GESIS Methodenseminar 2020</title>
+  <meta name="description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Zusammenhangsmaße | GESIS Methodenseminar 2020" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Zusammenhangsmaße | GESIS Methodenseminar 2020" />
+  
+  <meta name="twitter:description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
+  
+
+<meta name="author" content="Andreas Filser" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="dataviz.html"/>
+<link rel="next" href="lin-reg.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Gesis Methodenseminar</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Herzlich Willkommen!</a></li>
+<li class="chapter" data-level="1" data-path="Stata1.html"><a href="Stata1.html"><i class="fa fa-check"></i><b>1</b> Einstieg in Stata</a><ul>
+<li class="chapter" data-level="1.1" data-path="Stata1.html"><a href="Stata1.html#taschenrechner"><i class="fa fa-check"></i><b>1.1</b> Taschenrechner</a></li>
+<li class="chapter" data-level="1.2" data-path="Stata1.html"><a href="Stata1.html#darstellung-in-diesem-skript"><i class="fa fa-check"></i><b>1.2</b> Darstellung in diesem Skript</a></li>
+<li class="chapter" data-level="1.3" data-path="Stata1.html"><a href="Stata1.html#dofile-editor"><i class="fa fa-check"></i><b>1.3</b> DoFile Editor</a></li>
+<li class="chapter" data-level="1.4" data-path="Stata1.html"><a href="Stata1.html#datensätze-laden"><i class="fa fa-check"></i><b>1.4</b> Datensätze laden</a></li>
+<li class="chapter" data-level="1.5" data-path="Stata1.html"><a href="Stata1.html#daten-codebücher-fragebogen"><i class="fa fa-check"></i><b>1.5</b> Daten, Codebücher, Fragebogen</a></li>
+<li class="chapter" data-level="1.6" data-path="Stata1.html"><a href="Stata1.html#überblicksbefehle"><i class="fa fa-check"></i><b>1.6</b> Überblicksbefehle</a><ul>
+<li class="chapter" data-level="1.6.1" data-path="Stata1.html"><a href="Stata1.html#describe"><i class="fa fa-check"></i><b>1.6.1</b> <code>describe</code></a></li>
+<li class="chapter" data-level="1.6.2" data-path="Stata1.html"><a href="Stata1.html#browse"><i class="fa fa-check"></i><b>1.6.2</b> <code>browse</code></a></li>
+<li class="chapter" data-level="1.6.3" data-path="Stata1.html"><a href="Stata1.html#list"><i class="fa fa-check"></i><b>1.6.3</b> <code>list</code></a></li>
+<li class="chapter" data-level="1.6.4" data-path="Stata1.html"><a href="Stata1.html#lookfor"><i class="fa fa-check"></i><b>1.6.4</b> <code>lookfor</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="Stata1.html"><a href="Stata1.html#if-bedingung---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>1.7</b> if Bedingung - nur manche Zeilen ansehen</a></li>
+<li class="chapter" data-level="1.8" data-path="Stata1.html"><a href="Stata1.html#U1"><i class="fa fa-check"></i><b>1.8</b> Übungen</a></li>
+<li class="chapter" data-level="1.9" data-path="Stata1.html"><a href="Stata1.html#profi-übungen"><i class="fa fa-check"></i><b>1.9</b> Profi-Übungen</a></li>
+<li class="chapter" data-level="1.10" data-path="Stata1.html"><a href="Stata1.html#weitere-anmerkungen"><i class="fa fa-check"></i><b>1.10</b> Weitere Anmerkungen</a><ul>
+<li class="chapter" data-level="1.10.1" data-path="Stata1.html"><a href="Stata1.html#var_types"><i class="fa fa-check"></i><b>1.10.1</b> Variablentypen</a></li>
+<li class="chapter" data-level="1.10.2" data-path="Stata1.html"><a href="Stata1.html#otherfmts"><i class="fa fa-check"></i><b>1.10.2</b> import anderer Dateiformate</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Stata2.html"><a href="Stata2.html"><i class="fa fa-check"></i><b>2</b> Arbeiten mit Datensätzen in Stata</a><ul>
+<li class="chapter" data-level="2.1" data-path="Stata2.html"><a href="Stata2.html#vorab-befehlsstruktur-hilfe"><i class="fa fa-check"></i><b>2.1</b> Vorab: Befehlsstruktur &amp; Hilfe</a></li>
+<li class="chapter" data-level="2.2" data-path="Stata2.html"><a href="Stata2.html#auszählen-überblick-erhalten"><i class="fa fa-check"></i><b>2.2</b> Auszählen &amp; Überblick erhalten</a></li>
+<li class="chapter" data-level="2.3" data-path="Stata2.html"><a href="Stata2.html#neue-variablen-erstellen"><i class="fa fa-check"></i><b>2.3</b> Neue Variablen erstellen</a></li>
+<li class="chapter" data-level="2.4" data-path="Stata2.html"><a href="Stata2.html#bestehende-variablen-verändern"><i class="fa fa-check"></i><b>2.4</b> Bestehende Variablen verändern</a></li>
+<li class="chapter" data-level="2.5" data-path="Stata2.html"><a href="Stata2.html#gen-ist-gut-kontrolle-ist-besser"><i class="fa fa-check"></i><b>2.5</b> gen ist gut, Kontrolle ist besser</a></li>
+<li class="chapter" data-level="2.6" data-path="Stata2.html"><a href="Stata2.html#fehlende-werte"><i class="fa fa-check"></i><b>2.6</b> Fehlende Werte</a></li>
+<li class="chapter" data-level="2.7" data-path="Stata2.html"><a href="Stata2.html#if-bedingungen-und-fehlende-werte"><i class="fa fa-check"></i><b>2.7</b> if Bedingungen und fehlende Werte</a></li>
+<li class="chapter" data-level="2.8" data-path="Stata2.html"><a href="Stata2.html#keep-drop"><i class="fa fa-check"></i><b>2.8</b> keep &amp; drop</a></li>
+<li class="chapter" data-level="2.9" data-path="Stata2.html"><a href="Stata2.html#labels-und-if-bedingungen"><i class="fa fa-check"></i><b>2.9</b> Labels und if-Bedingungen</a></li>
+<li class="chapter" data-level="2.10" data-path="Stata2.html"><a href="Stata2.html#nochmal-von-vorne-daten-neu-laden"><i class="fa fa-check"></i><b>2.10</b> Nochmal von vorne: Daten neu laden</a></li>
+<li class="chapter" data-level="2.11" data-path="Stata2.html"><a href="Stata2.html#speichern"><i class="fa fa-check"></i><b>2.11</b> Speichern</a></li>
+<li class="chapter" data-level="2.12" data-path="Stata2.html"><a href="Stata2.html#übungen"><i class="fa fa-check"></i><b>2.12</b> Übungen</a></li>
+<li class="chapter" data-level="2.13" data-path="Stata1.html"><a href="Stata1.html#profi-übungen"><i class="fa fa-check"></i><b>2.13</b> Profi-Übungen</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="desc1.html"><a href="desc1.html"><i class="fa fa-check"></i><b>3</b> Deskriptive Statistik</a><ul>
+<li class="chapter" data-level="3.1" data-path="desc1.html"><a href="desc1.html#kategoriale-merkmale-mit-tabulate-beschreiben"><i class="fa fa-check"></i><b>3.1</b> Kategoriale Merkmale mit <code>tabulate</code> beschreiben</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="desc1.html"><a href="desc1.html#zwei-variablen-eine-tabelle-kontingenztabellen"><i class="fa fa-check"></i><b>3.1.1</b> Zwei Variablen, eine Tabelle: Kontingenztabellen</a></li>
+<li class="chapter" data-level="3.1.2" data-path="desc1.html"><a href="desc1.html#in-prozent-relative-häufigkeiten"><i class="fa fa-check"></i><b>3.1.2</b> In Prozent: Relative Häufigkeiten</a></li>
+<li class="chapter" data-level="3.1.3" data-path="desc1.html"><a href="desc1.html#pro-gruppe-1-zeilenprozente"><i class="fa fa-check"></i><b>3.1.3</b> pro Gruppe 1: Zeilenprozente</a></li>
+<li class="chapter" data-level="3.1.4" data-path="desc1.html"><a href="desc1.html#pro-gruppe-2-spaltenprozente"><i class="fa fa-check"></i><b>3.1.4</b> pro Gruppe 2: Spaltenprozente</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="desc1.html"><a href="desc1.html#metrische-variablen-beschreiben"><i class="fa fa-check"></i><b>3.2</b> Metrische Variablen beschreiben</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="desc1.html"><a href="desc1.html#summarize"><i class="fa fa-check"></i><b>3.2.1</b> <code>summarize</code></a></li>
+<li class="chapter" data-level="3.2.2" data-path="desc1.html"><a href="desc1.html#tabstat"><i class="fa fa-check"></i><b>3.2.2</b> <code>tabstat</code></a></li>
+<li class="chapter" data-level="3.2.3" data-path="desc1.html"><a href="desc1.html#by_vgl"><i class="fa fa-check"></i><b>3.2.3</b> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
+<li class="chapter" data-level="3.2.4" data-path="desc1.html"><a href="desc1.html#tabulate-mit-der-option-summarize"><i class="fa fa-check"></i><b>3.2.4</b> <code>tabulate</code> mit der Option <code>summarize()</code></a></li>
+<li class="chapter" data-level="3.2.5" data-path="desc1.html"><a href="desc1.html#variance"><i class="fa fa-check"></i><b>3.2.5</b> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
+<li class="chapter" data-level="3.2.6" data-path="desc1.html"><a href="desc1.html#sk_kur"><i class="fa fa-check"></i><b>3.2.6</b> Schiefe &amp; Wölbung</a></li>
+<li class="chapter" data-level="3.2.7" data-path="desc1.html"><a href="desc1.html#gini-koeffizient"><i class="fa fa-check"></i><b>3.2.7</b> Gini-Koeffizient</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Stata2.html"><a href="Stata2.html#übungen"><i class="fa fa-check"></i><b>3.3</b> Übungen</a></li>
+<li class="chapter" data-level="3.4" data-path="Stata1.html"><a href="Stata1.html#profi-übungen"><i class="fa fa-check"></i><b>3.4</b> Profi-Übungen</a></li>
+<li class="chapter" data-level="3.5" data-path="desc1.html"><a href="desc1.html#vlabel"><i class="fa fa-check"></i><b>3.5</b> Exkurs: labels vergeben</a></li>
+<li class="chapter" data-level="3.6" data-path="desc1.html"><a href="desc1.html#bys_su"><i class="fa fa-check"></i><b>3.6</b> Exkurs: Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+<li class="chapter" data-level="3.7" data-path="desc1.html"><a href="desc1.html#if_vgl"><i class="fa fa-check"></i><b>3.7</b> Exkurs: Kennzahlvergleiche mit <code>if</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="dataviz.html"><a href="dataviz.html"><i class="fa fa-check"></i><b>4</b> Datenvisualisierung in Stata</a><ul>
+<li class="chapter" data-level="4.1" data-path="dataviz.html"><a href="dataviz.html#grafik-syntax-in-stata"><i class="fa fa-check"></i><b>4.1</b> Grafik-Syntax in Stata</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="dataviz.html"><a href="dataviz.html#aufbau"><i class="fa fa-check"></i><b>4.1.1</b> Aufbau</a></li>
+<li class="chapter" data-level="4.1.2" data-path="dataviz.html"><a href="dataviz.html#twoway"><i class="fa fa-check"></i><b>4.1.2</b> twoway</a></li>
+<li class="chapter" data-level="4.1.3" data-path="dataviz.html"><a href="dataviz.html#kombinieren-von-zwei-twoway-grafiken"><i class="fa fa-check"></i><b>4.1.3</b> Kombinieren von zwei twoway-Grafiken</a></li>
+<li class="chapter" data-level="4.1.4" data-path="dataviz.html"><a href="dataviz.html#twoway-varianten"><i class="fa fa-check"></i><b>4.1.4</b> twoway Varianten</a></li>
+<li class="chapter" data-level="4.1.5" data-path="dataviz.html"><a href="dataviz.html#vorlagen"><i class="fa fa-check"></i><b>4.1.5</b> Vorlagen</a></li>
+<li class="chapter" data-level="4.1.6" data-path="dataviz.html"><a href="dataviz.html#optionen"><i class="fa fa-check"></i><b>4.1.6</b> Optionen</a></li>
+<li class="chapter" data-level="4.1.7" data-path="dataviz.html"><a href="dataviz.html#farben"><i class="fa fa-check"></i><b>4.1.7</b> Farben</a></li>
+<li class="chapter" data-level="4.1.8" data-path="dataviz.html"><a href="dataviz.html#subgruppen"><i class="fa fa-check"></i><b>4.1.8</b> Subgruppen</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="dataviz.html"><a href="dataviz.html#beispiele-zum-selbst-anpassen"><i class="fa fa-check"></i><b>4.2</b> Beispiele zum selbst anpassen</a></li>
+<li class="chapter" data-level="4.3" data-path="dataviz.html"><a href="dataviz.html#abschließende-bemerkungen"><i class="fa fa-check"></i><b>4.3</b> Abschließende Bemerkungen</a></li>
+<li class="chapter" data-level="4.4" data-path="dataviz.html"><a href="dataviz.html#bevölkerungspyramide"><i class="fa fa-check"></i><b>4.4</b> Bevölkerungspyramide</a></li>
+<li class="chapter" data-level="4.5" data-path="dataviz.html"><a href="dataviz.html#anhang"><i class="fa fa-check"></i><b>4.5</b> Anhang</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="dataviz.html"><a href="dataviz.html#aufb1"><i class="fa fa-check"></i><b>4.5.1</b> Aufbereitung für Boxplot</a></li>
+<li class="chapter" data-level="4.5.2" data-path="dataviz.html"><a href="dataviz.html#sep1"><i class="fa fa-check"></i><b>4.5.2</b> <code>separate</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="zshg.html"><a href="zshg.html"><i class="fa fa-check"></i><b>5</b> Zusammenhangsmaße</a><ul>
+<li class="chapter" data-level="5.1" data-path="zshg.html"><a href="zshg.html#metrisch-skalierte-variablen"><i class="fa fa-check"></i><b>5.1</b> Metrisch skalierte Variablen</a></li>
+<li class="chapter" data-level="5.2" data-path="zshg.html"><a href="zshg.html#regression"><i class="fa fa-check"></i><b>5.2</b> Regression</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="zshg.html"><a href="zshg.html#beispieldatensatz"><i class="fa fa-check"></i><b>5.2.1</b> Beispieldatensatz</a></li>
+<li class="chapter" data-level="5.2.2" data-path="zshg.html"><a href="zshg.html#idee-einer-regression"><i class="fa fa-check"></i><b>5.2.2</b> Idee einer Regression</a></li>
+<li class="chapter" data-level="5.2.3" data-path="zshg.html"><a href="zshg.html#residuen"><i class="fa fa-check"></i><b>5.2.3</b> Residuen</a></li>
+<li class="chapter" data-level="5.2.4" data-path="zshg.html"><a href="zshg.html#quadrierte-residuen"><i class="fa fa-check"></i><b>5.2.4</b> Quadrierte Residuen</a></li>
+<li class="chapter" data-level="5.2.5" data-path="zshg.html"><a href="zshg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>5.2.5</b> Interpretation der Regression</a></li>
+<li class="chapter" data-level="5.2.6" data-path="zshg.html"><a href="zshg.html#vorhergesagte-werte"><i class="fa fa-check"></i><b>5.2.6</b> Vorhergesagte Werte</a></li>
+<li class="chapter" data-level="5.2.7" data-path="zshg.html"><a href="zshg.html#residuen-teil-2"><i class="fa fa-check"></i><b>5.2.7</b> Residuen Teil 2</a></li>
+<li class="chapter" data-level="5.2.8" data-path="zshg.html"><a href="zshg.html#modellgüte"><i class="fa fa-check"></i><b>5.2.8</b> Modellgüte</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="zshg.html"><a href="zshg.html#ordinal-skalierte-merkmale"><i class="fa fa-check"></i><b>5.3</b> Ordinal skalierte Merkmale</a></li>
+<li class="chapter" data-level="5.4" data-path="zshg.html"><a href="zshg.html#nominal-skalierte-variablen"><i class="fa fa-check"></i><b>5.4</b> Nominal skalierte Variablen</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="zshg.html"><a href="zshg.html#odds-ratio"><i class="fa fa-check"></i><b>5.4.1</b> Odds Ratio</a></li>
+<li class="chapter" data-level="5.4.2" data-path="zshg.html"><a href="zshg.html#chi²-basierte-maße"><i class="fa fa-check"></i><b>5.4.2</b> Chi²-basierte Maße</a></li>
+<li class="chapter" data-level="5.4.3" data-path="zshg.html"><a href="zshg.html#cramers-upsilon"><i class="fa fa-check"></i><b>5.4.3</b> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+<li class="chapter" data-level="5.4.4" data-path="zshg.html"><a href="zshg.html#indifferenztabelle"><i class="fa fa-check"></i><b>5.4.4</b> Indifferenztabelle</a></li>
+<li class="chapter" data-level="5.4.5" data-path="zshg.html"><a href="zshg.html#phi"><i class="fa fa-check"></i><b>5.4.5</b> <span class="math inline">\(\phi\)</span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lin-reg.html"><a href="lin-reg.html"><i class="fa fa-check"></i><b>6</b> Zusammenhangsmaße</a><ul>
+<li class="chapter" data-level="6.1" data-path="zshg.html"><a href="zshg.html#metrisch-skalierte-variablen"><i class="fa fa-check"></i><b>6.1</b> Metrisch skalierte Variablen</a></li>
+<li class="chapter" data-level="6.2" data-path="zshg.html"><a href="zshg.html#regression"><i class="fa fa-check"></i><b>6.2</b> Regression</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="zshg.html"><a href="zshg.html#beispieldatensatz"><i class="fa fa-check"></i><b>6.2.1</b> Beispieldatensatz</a></li>
+<li class="chapter" data-level="6.2.2" data-path="zshg.html"><a href="zshg.html#idee-einer-regression"><i class="fa fa-check"></i><b>6.2.2</b> Idee einer Regression</a></li>
+<li class="chapter" data-level="6.2.3" data-path="zshg.html"><a href="zshg.html#residuen"><i class="fa fa-check"></i><b>6.2.3</b> Residuen</a></li>
+<li class="chapter" data-level="6.2.4" data-path="zshg.html"><a href="zshg.html#quadrierte-residuen"><i class="fa fa-check"></i><b>6.2.4</b> Quadrierte Residuen</a></li>
+<li class="chapter" data-level="6.2.5" data-path="zshg.html"><a href="zshg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>6.2.5</b> Interpretation der Regression</a></li>
+<li class="chapter" data-level="6.2.6" data-path="zshg.html"><a href="zshg.html#vorhergesagte-werte"><i class="fa fa-check"></i><b>6.2.6</b> Vorhergesagte Werte</a></li>
+<li class="chapter" data-level="6.2.7" data-path="zshg.html"><a href="zshg.html#residuen-teil-2"><i class="fa fa-check"></i><b>6.2.7</b> Residuen Teil 2</a></li>
+<li class="chapter" data-level="6.2.8" data-path="zshg.html"><a href="zshg.html#modellgüte"><i class="fa fa-check"></i><b>6.2.8</b> Modellgüte</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="zshg.html"><a href="zshg.html#ordinal-skalierte-merkmale"><i class="fa fa-check"></i><b>6.3</b> Ordinal skalierte Merkmale</a></li>
+<li class="chapter" data-level="6.4" data-path="zshg.html"><a href="zshg.html#nominal-skalierte-variablen"><i class="fa fa-check"></i><b>6.4</b> Nominal skalierte Variablen</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="zshg.html"><a href="zshg.html#odds-ratio"><i class="fa fa-check"></i><b>6.4.1</b> Odds Ratio</a></li>
+<li class="chapter" data-level="6.4.2" data-path="zshg.html"><a href="zshg.html#chi²-basierte-maße"><i class="fa fa-check"></i><b>6.4.2</b> Chi²-basierte Maße</a></li>
+<li class="chapter" data-level="6.4.3" data-path="zshg.html"><a href="zshg.html#cramers-upsilon"><i class="fa fa-check"></i><b>6.4.3</b> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+<li class="chapter" data-level="6.4.4" data-path="zshg.html"><a href="zshg.html#indifferenztabelle"><i class="fa fa-check"></i><b>6.4.4</b> Indifferenztabelle</a></li>
+<li class="chapter" data-level="6.4.5" data-path="zshg.html"><a href="zshg.html#phi"><i class="fa fa-check"></i><b>6.4.5</b> <span class="math inline">\(\phi\)</span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a></li>
+<li class="chapter" data-level="8" data-path="inf2.html"><a href="inf2.html"><i class="fa fa-check"></i><b>8</b> Inferenzstatistik II</a></li>
+<li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Hypothesentests</a></li>
+<li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a></li>
+<li class="chapter" data-level="11" data-path="adva.html"><a href="adva.html"><i class="fa fa-check"></i><b>11</b> Fortgeschrittene Themen</a><ul>
+<li class="chapter" data-level="11.1" data-path="adva.html"><a href="adva.html#wertelabels"><i class="fa fa-check"></i><b>11.1</b> Wertelabels</a></li>
+<li class="chapter" data-level="11.2" data-path="adva.html"><a href="adva.html#sortieren"><i class="fa fa-check"></i><b>11.2</b> sortieren</a></li>
+<li class="chapter" data-level="11.3" data-path="adva.html"><a href="adva.html#missings-unterscheiden"><i class="fa fa-check"></i><b>11.3</b> missings unterscheiden</a></li>
+<li class="chapter" data-level="11.4" data-path="adva.html"><a href="adva.html#indikatoren-umdrehen"><i class="fa fa-check"></i><b>11.4</b> Indikatoren umdrehen</a></li>
+<li class="chapter" data-level="11.5" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-variablen"><i class="fa fa-check"></i><b>11.5</b> Informationen aus mehreren Variablen</a></li>
+<li class="chapter" data-level="11.6" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-datensätzen"><i class="fa fa-check"></i><b>11.6</b> Informationen aus mehreren Datensätzen</a></li>
+<li class="chapter" data-level="11.7" data-path="adva.html"><a href="adva.html#arbeiten-mit-textvariablen"><i class="fa fa-check"></i><b>11.7</b> Arbeiten mit Textvariablen</a></li>
+<li class="chapter" data-level="11.8" data-path="adva.html"><a href="adva.html#egen"><i class="fa fa-check"></i><b>11.8</b> egen</a></li>
+<li class="chapter" data-level="11.9" data-path="adva.html"><a href="adva.html#gruppierte-berechnungen"><i class="fa fa-check"></i><b>11.9</b> gruppierte Berechnungen</a></li>
+<li class="chapter" data-level="11.10" data-path="adva.html"><a href="adva.html#collapse"><i class="fa fa-check"></i><b>11.10</b> collapse</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">GESIS Methodenseminar 2020</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="zshg" class="section level1">
+<h1><span class="header-section-number">5</span> Zusammenhangsmaße</h1>
+<div id="metrisch-skalierte-variablen" class="section level2">
+<h2><span class="header-section-number">5.1</span> Metrisch skalierte Variablen</h2>
+<p>Wir sehen uns den (möglichen) Zusammenhang zwischen dem Alter und dem BMI der Befragten an. Dazu schließen wir zunächst die Missings aus:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="zshg.html#cb1-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb1-2"><a href="zshg.html#cb1-2"></a><span class="kw">use</span>  Allbus_1980-2018.dta   </span>
+<span id="cb1-3"><a href="zshg.html#cb1-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2012</span>
+<span id="cb1-4"><a href="zshg.html#cb1-4"></a><span class="kw">mvdecode</span> age bmi, mv(-32 -13)</span></code></pre></div>
+<pre><code>(64681 observations deleted)
+
+         age: 7 missing values generated
+        hs18: 1859 missing values generated</code></pre>
+<p>Zur grafischen Analyse möglicher Zusammenhänge bei metrischen Variablen empfiehlt sich ein Scatterplot:
+<img src="Stata_Skript_files/figure-html/s07_15-1.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Zur Bestimmung eines Zusammenhangs zwischen zwei metrischen Variablen empfiehlt sich der Korrelationskoeffizient nach Pearson. Dieser ist definiert als die Kovarianz dividiert durch die jeweiligen Standardabweichungen der beiden Variablen und liegt im Intervall [-1,1]. Die Standardabweichung hatten wir in Woche 5 kennengelernt, die Kovarianz erfasst die Lage der Datenpunkte relativ zu den Mittelwerten der beiden interessierenden Variablen (liegen Punkte &gt; <span class="math inline">\(\bar{x}\)</span> auch <span class="math inline">\(&gt;\bar{y}\)</span>?):</p>
+<p><img src="Stata_Skript_files/figure-html/s07_15b-1.png" width="80%" height="80%" style="display: block; margin: auto;" />
+In Stata können wir den Korrelationskoeffizienten mit <code>corr</code> berechnen:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="zshg.html#cb3-1"></a><span class="fu">corr</span> age bmi</span></code></pre></div>
+<pre><code>(obs=1620)
+
+             |      age      bmi
+-------------+------------------
+         age |   1.0000
+         bmi |   0.2127   1.0000</code></pre>
+<p>Es handelt sich also um einen schwachen Zusammenhang.</p>
+</div>
+<div id="regression" class="section level2">
+<h2><span class="header-section-number">5.2</span> Regression</h2>
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-1-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Mit Regressionsmodellen können wir Zusammenhänge zwischen zwei metrischen Merkmalen untersuchen. In Stata können wir eine Regression mit dem <code>reg</code> Befehl berechnen:</p>
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
+-------------+------------------------------           F(  1,     2) =   11.07
+       Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
+    Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
+-------------+------------------------------           Adj R-squared =  0.7705
+       Total |       14.75     3  4.91666667           Root MSE      =  1.0623
+
+------------------------------------------------------------------------------
+        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------</code></pre>
+<p>Hier steht jetzt eine ganze Menge an Informationen, die wir uns im Folgenden genauer ansehen werden.</p>
+<div id="beispieldatensatz" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Beispieldatensatz</h3>
+<p>Zum Einstieg betrachten wir zunächst einen (fiktiven) Datensatz mit lediglich 4 Fällen und lediglich zwei Variablen: <code>var1</code> und <code>var2</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="zshg.html#cb6-1"></a><span class="kw">use</span> <span class="st">&quot;https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb6-2"><a href="zshg.html#cb6-2"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>  var1 var2
+1    1    2
+2    2    4
+3    7    7
+4    8    6</code></pre>
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="idee-einer-regression" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Idee einer Regression</h3>
+<p>Ziel der Regression ist es, den Zusammenhang zwischen diesen beiden Variablen zu bestimmen. Gibt es einen Trend, in dem Sinn, dass ein höherer Wert von <code>var1</code> mit einem höheren oder niedrigeren Wert von <code>var2</code> einhergeht?</p>
+<p>Etwas anders gesagt könnte man auch fragen, welchen Wert für <code>var2</code> wir vorhersagen würden, wenn wir <code>var1</code> kennen. Ein Ausgangspunkt ist das arithmetische Mittel. Dieses können wir mit <code>mean</code> zB für <code>var2</code> berechnen.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Diesen Wert fügen wir als neue Spalte <code>mean_var2</code> in den Datensatz ein:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="zshg.html#cb8-1"></a><span class="kw">egen</span> mean_var2 = <span class="kw">mean</span>(var2)</span>
+<span id="cb8-2"><a href="zshg.html#cb8-2"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>  var1 var2 mean_var2
+1    1    2      4.75
+2    2    4      4.75
+3    7    7      4.75
+4    8    6      4.75</code></pre>
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" />
+Müssten wir eine Prognose für die Werte von <code>var2</code> abgeben, wäre das arith. Mittel eine gute Wahl. Die <strong>vorhergesagten Werte</strong> werden jeweils auf der Linie für das arith. Mittel liegen.</p>
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="residuen" class="section level3">
+<h3><span class="header-section-number">5.2.3</span> Residuen</h3>
+<p>Allerdings liegen wir mit dem arith. Mittel dann immer auch Stück daneben. Diese Abweichung zwischen dem tatsächlichen und dem vorhergesagten Wert wird als <strong>Residuum</strong> bezeichnet, in unserem Beispiel ist das jeweils die Differenz zwischen <code>var2</code> und <code>mean</code>:
+<span class="math display">\[Residuum = beobachteter\, Wert \; - \; vorhergesagter\,Wert\]</span>
+Als Formel wird das in der Regel wie folgt dargestellt:
+<span class="math display">\[\epsilon_{\text{i}} = \text{y}_{i} - \hat{\text{y}}_{i}\]</span></p>
+<p>Wir können also die Residuen als Differenz zwischen <code>var2</code> und <code>mean</code> berechnen und in <code>df</code> ablegen:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="zshg.html#cb10-1"></a><span class="kw">gen</span> m_abw = var2 - mean_var2</span>
+<span id="cb10-2"><a href="zshg.html#cb10-2"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>  var1 var2 mean_var2 m_abw
+1    1    2      4.75 -2.75
+2    2    4      4.75 -0.75
+3    7    7      4.75  2.25
+4    8    6      4.75  1.25</code></pre>
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><em>Was bedeutet also ein negativer oder ein positiver Wert für das Residuum?</em></p>
+<p>Die horizontale Linie für das arithm. Mittel ist aber sehr deutlich nicht die beste Methode, um die Werte für <code>var2</code> vorherzusagen. In der Graphik können wir deutlich sehen, dass die Werte “weiter links”, also mit geringeren Werten für <code>var1</code>, auch geringere Werte für <code>var2</code> aufweisen. Wir könnten also unseren Vorhersagefehler bzw. das <em>Residuum</em> minimieren indem wir die Linie drehen. Die Idee der Regressionsanalyse ist es dabei, die Residuuen zu minimieren. Was würde aber passieren wenn wir die Residuen aus der Mittelwertsvorhersage aufsummieren, um Sie dann zu minimieren?</p>
+</div>
+<div id="quadrierte-residuen" class="section level3">
+<h3><span class="header-section-number">5.2.4</span> Quadrierte Residuen</h3>
+<p>Mit <code>tabstat ..., s(sum)</code> können wir die Summe für eine Variable bilden:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb12-1"><a href="zshg.html#cb12-1"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>  var1 var2 mean_var2 m_abw
+1    1    2      4.75 -2.75
+2    2    4      4.75 -0.75
+3    7    7      4.75  2.25
+4    8    6      4.75  1.25</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb14-1"><a href="zshg.html#cb14-1"></a><span class="kw">tabstat</span> m_abw, <span class="fu">s</span>(<span class="kw">sum</span>)</span></code></pre></div>
+<pre><code>    variable |       sum
+-------------+----------
+       m_abw |         0
+------------------------</code></pre>
+<p><strong>Die Summe der Resiuden auf Basis des arith. Mittels ist immer Null!</strong><br />
+Anders formuliert: die gestrichelten Linien nach oben sind in Summe genauso lang wie gestrichelten Linien nach unten.
+Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wir minimieren können:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="zshg.html#cb16-1"></a><span class="kw">gen</span> m_abw2 = m_abw^2 </span>
+<span id="cb16-2"><a href="zshg.html#cb16-2"></a><span class="kw">tabstat</span> m_abw2, <span class="fu">s</span>(<span class="kw">sum</span>)</span></code></pre></div>
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
+-------------+------------------------------           F(  1,     2) =   11.07
+       Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
+    Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
+-------------+------------------------------           Adj R-squared =  0.7705
+       Total |       14.75     3  4.91666667           Root MSE      =  1.0623
+
+------------------------------------------------------------------------------
+        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------
+
+    variable |       sum
+-------------+----------
+      m_abw2 |     14.75
+------------------------</code></pre>
+<pre><code>  var1 var2 mean_var2 m_abw m_abw2
+1    1    2      4.75 -2.75 7.5625
+2    2    4      4.75 -0.75 0.5625
+3    7    7      4.75  2.25 5.0625
+4    8    6      4.75  1.25 1.5625</code></pre>
+</div>
+<div id="interpretation-der-regression" class="section level3">
+<h3><span class="header-section-number">5.2.5</span> Interpretation der Regression</h3>
+<p>Die Minimierung erledigt <code>reg</code> für uns. Hier geben wir zuerst das Merkmal an, das auf der y-Achse liegt (die <em>abhängige</em> Variable) und dann das Merkmal für die x-Achse (<em>unabhängige</em> Variable) an. Ein positiver Wert unter <code>var1</code> bedeutet, dass unsere Gerade von links nach rechts ansteigt und ein negativer eine fallende Linie bedeuten würde. Der Wert unter <code>var1</code> gibt an, um <em>wieviel sich die Gerade pro “Schritt nach rechts” nach oben/unten verändert</em>. Die Gerade steigt also pro Einheit von <code>var1</code> um 0.5810811:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="zshg.html#cb19-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
+-------------+------------------------------           F(  1,     2) =   11.07
+       Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
+    Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
+-------------+------------------------------           Adj R-squared =  0.7705
+       Total |       14.75     3  4.91666667           Root MSE      =  1.0623
+
+------------------------------------------------------------------------------
+        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------</code></pre>
+<p>In unserer Grafik sieht diese Gerade so aus:
+<img src="Stata_Skript_files/figure-html/unnamed-chunk-23-1.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="vorhergesagte-werte" class="section level3">
+<h3><span class="header-section-number">5.2.6</span> Vorhergesagte Werte</h3>
+<p>Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade?
+Die vohergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der Summe aus dem Wert unter <code>Intercept</code> und dem Koeffizienten neben <code>var1</code> multipliziert mit dem jeweiligen Wert für <code>var1</code>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="zshg.html#cb21-1"></a><span class="kw">reg</span> var2 var1, <span class="kw">noheader</span></span></code></pre></div>
+<pre><code>        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------</code></pre>
+<p>Vorhergesagte Werte werden mit <span class="math inline">\(\widehat{var2}\)</span> bezeichnet - der ^ steht dabei für “vorhergesagt”:</p>
+<p><span class="math display">\[\widehat{var2}=\texttt{Intercept} + 0.5811 \times \texttt{var1}\]</span><br />
+Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: 2.1351+0.5811*1= 2.7162</p>
+<p>Also könnten wir mit <code>gen</code> die vorhergesagten Werte “manuell” berechnen:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="zshg.html#cb23-1"></a><span class="kw">gen</span> man_vorhers = 2.1351 + 0.5811 * var1</span></code></pre></div>
+<p>Die vorhergesagten Werte können wir auch mit <code>predict</code> berechnen und in einer neuen Variable <code>pred_vorher</code> ablegen:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="zshg.html#cb24-1"></a><span class="kw">predict</span> pred1, <span class="kw">xb</span></span></code></pre></div>
+<pre><code>  var1 var2 mean_var2 m_abw m_abw2 man_vorhers pred_vorher
+1    1    2      4.75 -2.75 7.5625      2.7162    2.716216
+2    2    4      4.75 -0.75 0.5625      3.2973    3.297297
+3    7    7      4.75  2.25 5.0625      6.2028    6.202703
+4    8    6      4.75  1.25 1.5625      6.7839    6.783784</code></pre>
+<p>Die Grafik zeigt wie Vorhersagen auf Basis des Regressionsmodells aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für <code>var1</code>.
+<img src="Stata_Skript_files/figure-html/unnamed-chunk-29-1.png" width="80%" style="display: block; margin: auto;" />
+Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regressionsmodells) deutlich näher an den tatsächlichen Punkten liegen als die orangen Vorhersagen auf Basis des <code>mean</code>.</p>
+</div>
+<div id="residuen-teil-2" class="section level3">
+<h3><span class="header-section-number">5.2.7</span> Residuen Teil 2</h3>
+<p>Trotzdem sind auch die hellblauen Punkte nicht deckungsgleich mit den tatsächlichen Werten. Es gibt also auch hier wieder Residuen, also Abweichungen des beobachteten vom vorhergesagten Wert. Wir können diese per Hand berechnen als Differenz zwischen dem tatsächlichen und dem vorhergesagten Wert:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="zshg.html#cb26-1"></a><span class="kw">gen</span> res = var2 - pred_vorher </span></code></pre></div>
+<p>Oder wir können Sie mit <code>predict neue_variable , residuals</code> erstellen:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb27-1"><a href="zshg.html#cb27-1"></a><span class="kw">reg</span> var2 var1 <span class="co">// zunächst nochmal die regression laufen lassen</span></span>
+<span id="cb27-2"><a href="zshg.html#cb27-2"></a><span class="kw">predict</span> p_res , residuals</span>
+<span id="cb27-3"><a href="zshg.html#cb27-3"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>  var1 var2 mean_var2 m_abw m_abw2 man_vorhers pred_vorher        res      p_res
+1    1    2      4.75 -2.75 7.5625      2.7162    2.716216 -0.7162162 -0.7162162
+2    2    4      4.75 -0.75 0.5625      3.2973    3.297297  0.7027027  0.7027027
+3    7    7      4.75  2.25 5.0625      6.2028    6.202703  0.7972973  0.7972973
+4    8    6      4.75  1.25 1.5625      6.7839    6.783784 -0.7837838 -0.7837838</code></pre>
+<p>Hier sind die Residuen für <code>p_res</code> als hellblaue Linien eingezeichnet:
+<img src="Stata_Skript_files/figure-html/unnamed-chunk-33-1.png" width="80%" style="display: block; margin: auto;" />
+<em>Wie groß ist die Summe der Residuen für <code>lm</code>?</em></p>
+</div>
+<div id="modellgüte" class="section level3">
+<h3><span class="header-section-number">5.2.8</span> Modellgüte</h3>
+<p>Um zu beurteilen, um wieviel besser unsere Gerade aus <code>reg</code> die Werte vorhersagt kann als der <code>mean</code> können wir die Summe der quadrierten Residuen vergleichen. Dazu quadrieren wir also die Residuen:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="zshg.html#cb29-1"></a><span class="kw">gen</span> res2 = res^2</span>
+<span id="cb29-2"><a href="zshg.html#cb29-2"></a><span class="ot">list</span></span></code></pre></div>
+<pre><code>  var1 var2 mean_var2 m_abw m_abw2 man_vorhers pred_vorher        res      res2
+1    1    2      4.75 -2.75 7.5625      2.7162    2.716216 -0.7162162 0.5129657
+2    2    4      4.75 -0.75 0.5625      3.2973    3.297297  0.7027027 0.4937911
+3    7    7      4.75  2.25 5.0625      6.2028    6.202703  0.7972973 0.6356830
+4    8    6      4.75  1.25 1.5625      6.7839    6.783784 -0.7837838 0.6143170</code></pre>
+<p>Dann können wir die Summen der quadierten Abweichungen aus der Mittelwertregel und dem Regressionsmodell vergleichen:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb31-1"><a href="zshg.html#cb31-1"></a>dis 7.5625+0.5625+5.0625+1.5625 <span class="co">// abw2 aus Mittelwertsregel</span></span>
+<span id="cb31-2"><a href="zshg.html#cb31-2"></a>14.75</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb32-1"><a href="zshg.html#cb32-1"></a>dis 0.5129657+0.4937911+0.6356830+0.6143170 <span class="co">// res2 aus regressionsmodell</span></span>
+<span id="cb32-2"><a href="zshg.html#cb32-2"></a>2.2567568</span></code></pre></div>
+<p>Zum Beispiel können wir uns fragen, um wieviel sich die Summe der quadrierten Residuen verringert wenn wir statt des <code>mean</code> unser <code>reg</code>-Modell verwenden:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="zshg.html#cb33-1"></a>dis 14.75 -  2.256757</span>
+<span id="cb33-2"><a href="zshg.html#cb33-2"></a>12.493243</span></code></pre></div>
+<p>Wenn wir diese Veränderung ins Verhältnis mit dem “Ausgangswert”, also den Residuen aus der Mittelwertregel setzen, dann erhalten wir das <span class="math inline">\(R^{2}\)</span> für unser <code>reg</code>-Modell. Dieses gibt die prozentuale Verringerung der Residuen durch das <code>reg</code>-Modell im Vergleich zur Mittelwertregel an:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb34-1"><a href="zshg.html#cb34-1"></a>dis (14.75 -  2.256757) / 14.75</span></code></pre></div>
+<pre><code>.84699953</code></pre>
+<p>Unser Regressionsmodell kann also 84,7% der Streuung um den Mittelwert erklären. Dieser Wert wird auch als <span class="math inline">\(R^2\)</span> bezeichnet. Im Regressionsoutput können wir das <span class="math inline">\(R^2\)</span> oben rechts unter <code>R-squared</code> ablesen.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="zshg.html#cb36-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
+-------------+------------------------------           F(  1,     2) =   11.07
+       Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
+    Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
+-------------+------------------------------           Adj R-squared =  0.7705
+       Total |       14.75     3  4.91666667           Root MSE      =  1.0623
+
+------------------------------------------------------------------------------
+        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------</code></pre>
+<p>Außerdem sehen wir oben links in der Spalte <code>SS</code> die “Sum of Squares”. Hier finden wir auch die Werte von oben wieder: unter Total ist die Summe der quadrierten Abweichungen der beobachteten Werte vom arith. Mittel angegeben (<code>14.75</code>, sozusagen die Summe der <code>m_abw2</code> von oben). Residual gibt die Summe der Abweichungsquadrate zwischen den beobachteten Werten und den vorhergesagten Werten der Regression (<code>2.256..</code>, Die Summe von <code>res2</code>).</p>
+</div>
+</div>
+<div id="ordinal-skalierte-merkmale" class="section level2">
+<h2><span class="header-section-number">5.3</span> Ordinal skalierte Merkmale</h2>
+<p>Ein klassisches ordinales Merkmal ist die Bildung (<code>educ</code>):</p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"><code>educ</code></th>
+<th align="left">Schulabschluss</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>1</code></td>
+<td align="left">Schule beendet ohne Abschluss</td>
+</tr>
+<tr class="even">
+<td align="left"><code>2</code></td>
+<td align="left">Volks-/Hauptschulabschluss bzw. Polytechnische Oberschule (8. oder 9. Klasse)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>3</code></td>
+<td align="left">Mittlere Reife, Realschulabschluss bzw. Polytechnische Oberschule (10. Klasse)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>4</code></td>
+<td align="left">Fachhochschulreife (Abschluss einer Fachoberschule etc.)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>5</code></td>
+<td align="left">Abitur bzw. Erweiterte Oberschule mit Abschluss 12. Klasse (Hochschulreife)</td>
+</tr>
+</tbody>
+</table>
+<p>Wir sehen uns den Zusammenhang der Bildung der Befragten mit der Einstellung zum Zuzug von Asylsuchenden (<code>mi02</code>) an:</p>
+<p><img src="05_codebuch_mi02.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Wir sehen uns den (möglichen) Zusammenhang zwischen diesen beiden Merkmalen an. Dazu schließen wir zunächst die Missings aus. Außerdem überschreiben die wie Kategorien “noch Schüler” und “anderer Schulabschluss” mit <code>NA</code> um eine klare ordinale Rangfolge für <code>educ</code> zu erhalten (je höher,desto höher der Bildungsabschluss):</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb38-1"><a href="zshg.html#cb38-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb38-2"><a href="zshg.html#cb38-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_1980-2018.dta&quot;</span>,<span class="kw">clear</span></span>
+<span id="cb38-3"><a href="zshg.html#cb38-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 1990</span>
+<span id="cb38-4"><a href="zshg.html#cb38-4"></a><span class="kw">mvdecode</span> educ, mv(-9 6 7)</span>
+<span id="cb38-5"><a href="zshg.html#cb38-5"></a><span class="kw">mvdecode</span> mi02, mv(-9 -8 -7)</span></code></pre></div>
+<pre><code>        educ: 65 missing values generated
+
+        mi02: 97 missing values generated</code></pre>
+<p>So sieht die Verteilung zunächst in einer Kreuztabelle aus:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="zshg.html#cb40-1"></a><span class="kw">tab</span> educ mi02</span></code></pre></div>
+<pre><code>       ALLGEMEINER |     ZUZUG VON: ASYLSUCHENDEN
+    SCHULABSCHLUSS | UNEINGESC  ZUZUG BEG  GANZ UNTE |     Total
+-------------------+---------------------------------+----------
+    OHNE ABSCHLUSS |         7         18         36 |        61 
+VOLKS-,HAUPTSCHULE |       123        659        600 |     1,382 
+    MITTLERE REIFE |       137        390        177 |       704 
+FACHHOCHSCHULREIFE |        48        101         21 |       170 
+    HOCHSCHULREIFE |       232        287         53 |       572 
+-------------------+---------------------------------+----------
+             Total |       547      1,455        887 |     2,889 </code></pre>
+<p>Zur Bestimmung eines Zusammenhangs zwischen zwei <em>ordinal</em> skalierten Variablen empfiehlt sich der Spearman-Rangkorrelationskoeffizient (<span class="math inline">\(\rho\)</span>). Für den Rangkorrelationskoeffizienten werden die Werte der Variablen in Ränge überführt und dann mit diesen Rängen den Korrelationskoeffizient berechnet. Wir können den Rangkorrelationskoeffizienten mit <code>spearman</code> berechnen:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb42-1"><a href="zshg.html#cb42-1"></a><span class="kw">spearman</span> educ mi02</span></code></pre></div>
+<pre><code> Number of obs =    2889
+Spearman&#39;s rho =      -0.3749
+
+Test of Ho: educ and mi02 are independent
+    Prob &gt; |t| =       0.0000</code></pre>
+<p>Es zeigt sich also mit einem Korrelationskoeffizienten von 0.37 ein negativer Zusammenhang, der jedoch noch als schwach einzustufen ist. Das negative Vorzeichen des Zusammenhangs deutet darauf hin, dass mit einer höheren Ausprägung von <code>educ</code> tendenziell niedrigere Werte für <code>mi02</code> einher gehen: eine höhere Schulbildung geht mit einer positiveren Haltung gegenüber dem Zuzug von Asylsuchenden einher.</p>
+<p>Ein weiteres Zusammenhangsmaß für ordinale Variablen sind Konkordanzmaße wie Kendall’s <span class="math inline">\(\tau\)</span>. Hierfür die Werteverhältnisse gezählt, zur Berechnung in Stata können wir wieder <code>ktau</code> verwenden:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb44-1"><a href="zshg.html#cb44-1"></a><span class="kw">ktau</span> educ mi02</span></code></pre></div>
+<pre><code>  Number of obs =    2889
+Kendall&#39;s tau-a =      -0.2151
+Kendall&#39;s tau-b =      -0.3350
+Kendall&#39;s score = -897325
+    SE of score =   44116.299   (corrected for ties)
+
+Test of Ho: educ and mi02 are independent
+     Prob &gt; |z| =       0.0000  (continuity corrected)</code></pre>
+<p>Auch hier zeigt sich eine Zusammenhangsstärke in der gleichen Größenordnung wie beim Rangkorrelationskoeffizienten. Zudem ist auch hier das Vorzeichen negativ: <code>educ</code> korreliert negativ mit <code>mi02</code>. Der etwas geringere Wert ist auf die unterschiedliche Behandlung der Bindungen bei Kendall’s <span class="math inline">\(\tau_b\)</span> im Vergleich zum Rangkorrelationskoeffizienten zurückzuführen. Für Kendall’s <span class="math inline">\(\tau_b\)</span> werden die Paarvergleiche im Nenner ausgeschlossen, die auf beiden Variablen eine Bindung haben.
+Der Wert ist deutlich niedriger als von Kendall’s <span class="math inline">\(\tau_b\)</span>, da hier der Nenner durch die Berücksichtigung <em>aller</em> möglichen Paarvergleiche größer wird, der Zähler aber für beide Varianten von Kendall’s <span class="math inline">\(\tau\)</span> gleich definiert ist.</p>
+<p>Insgesamt ist also von einem substantiellen Zusammenhang zwischen <code>educ</code> und <code>mi02</code> auszugehen.</p>
+</div>
+<div id="nominal-skalierte-variablen" class="section level2">
+<h2><span class="header-section-number">5.4</span> Nominal skalierte Variablen</h2>
+<p>Uns Beispiel für nominal skalierte Variablen dreht sich um die Frage: <em>Haben allein lebende Befragte eher ein Haustier als Befragte, die mit weiteren Personen zusammenleben?</em></p>
+<p>Dazu betrachten wir die Variablen <code>aq03</code> und <code>dh01</code>, später auch noch <code>dh04</code>:</p>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="88%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><code>aq03</code></td>
+<td align="left">Haben Sie einen Hund oder eine Katze in Ihrem Haushalt? <code>1</code> Ja, Hund <code>2</code> Ja, Katze <code>3</code> Ja, beides <code>4</code> Nein, keines von beiden</td>
+</tr>
+<tr class="even">
+<td align="left"><code>dh01</code></td>
+<td align="left">Wohnen außer ihnen noch weitere Personen in diesem Haushalt? <code>1</code> Ja <code>2</code> Nein, ich lebe allein</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>dh04</code></td>
+<td align="left">Gesamtzahl der Personen im Haushalt</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb46"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb46-1"><a href="zshg.html#cb46-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb46-2"><a href="zshg.html#cb46-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_1980-2018.dta&quot;</span>,<span class="kw">clear</span></span>
+<span id="cb46-3"><a href="zshg.html#cb46-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2014</span>
+<span id="cb46-4"><a href="zshg.html#cb46-4"></a><span class="kw">mvdecode</span> aq03 dh01 dh04, mv(-32 -9)</span></code></pre></div>
+<pre><code>(64690 observations deleted)
+
+        aq03: 4 missing values generated
+        dh01: 11 missing values generated
+        dh04: 24 missing values generated</code></pre>
+<p>Ausgangspunkt der Zusammenhangsmaße für nominale Merkmale ist die Kontingenztabelle der beiden Variablen:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb48-1"><a href="zshg.html#cb48-1"></a><span class="kw">tab</span> aq03 dh01</span></code></pre></div>
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+    IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
+-----------------+----------------------+----------
+            HUND |       353         41 |       394 
+           KATZE |       503         65 |       568 
+          BEIDES |       117          9 |       126 
+KEINS VON BEIDEN |     1,792        579 |     2,371 
+-----------------+----------------------+----------
+           Total |     2,765        694 |     3,459 </code></pre>
+<p>Um diese Tabelle für den Einstieg noch etwas übersichtlicher zu halten, fassen wir die Hunde- und Katzenbesitzer*innen zusammen. Das geht mit <code>gen</code>: wir formulieren darin eine Bedingung und wenn diese zutrifft wird der erste Wert eingesetzt, wenn nicht wird der zweite Wert eingesetzt. Hier fragen wir also ab, ob <code>aq03</code> gleich <code>4</code> ist - dann wird eine <code>0</code> eingesetzt, ansonsten eine <code>1</code>:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb50-1"><a href="zshg.html#cb50-1"></a><span class="kw">gen</span> aq03b = (aq03 == 4) <span class="kw">if</span> !<span class="fu">missing</span>(aq03)</span>
+<span id="cb50-2"><a href="zshg.html#cb50-2"></a><span class="ot">list</span> aq03 aq03b <span class="kw">in</span> 1/10, nol</span></code></pre></div>
+<pre><code>   aq03 aq03b
+1     4     0
+2     2     1
+3     3     1
+4     4     0
+5     4     0
+6     4     0
+7     2     1
+8     4     0
+9     4     0
+10    1     1</code></pre>
+<p>Die daraus resultierende Kontingenztabelle ist schön übersichtlich:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb52-1"><a href="zshg.html#cb52-1"></a><span class="kw">tab</span> aq03b dh01</span></code></pre></div>
+<pre><code>           | MEHRPERSONENHAUSHALT?
+     aq03b | MEHRPERSO  EINPERSON |     Total
+-----------+----------------------+----------
+         0 |       973        116 |     1,089 
+         1 |     1,792        579 |     2,371 
+-----------+----------------------+----------
+     Total |     2,765        695 |     3,460 </code></pre>
+<p><span class="math inline">\(\rightarrow\)</span> Wie viele Personen leben also allein und haben kein Haustier?</p>
+<div id="odds-ratio" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Odds Ratio</h3>
+<p>Die Odds Ratio geben das Verhältnis der bedingten Häufigkeiten an. Wir berechnen in beiden Spalten (also getrennt nach Haushaltsgröße) jeweils die Odds, dass ein*e Befragte*r ein Haustier besitzt (also <code>aq03b = 1</code>). Odds sind dabei immer das Verhältnis <span class="math inline">\(\frac{interessierende\;Ausprägung}{alle\;anderen\;Ausprägungen}\)</span>. Dann setzen wir die Chancen ins Verhältnis zueinander:</p>
+<p><span class="math display">\[\text{Odds Haustier in MP-HH} = \frac{973}{1792} = 0.5429688\]</span>
+<span class="math display">\[\text{Odds Haustier allein} = \frac{115}{579} = 0.1986183\]</span>
+<span class="math display">\[\text{Odds Ratio Haustier MP vs. allein} = \frac{0.5429688}{0.1986183} = 2.73373\]</span>
+<span class="math display">\[\text{Odds Ratio Haustier allein vs. MP HH} = \frac{0.1986183}{0.5429688}=0.3658006\]</span>
+<strong>Interpretation:</strong></p>
+<ul>
+<li>Alleinlebende Befragte haben im Vergleich zu Befragten, die mit anderen Personen zusammen wohnen, die 0.366-fache Chance Haustiere zu haben.</li>
+<li>Befragte, die mit anderen Personen zusammen wohnen, haben im Vergleich zu alleinlebenden Befragten die 2.734-fache Chance Haustiere zu haben.</li>
+</ul>
+<p>Odds Ratios sind aber auch aus “größeren” Tabellen berechenbar - zB können wir auch die exakte Haushaltsgröße <code>dh04</code> sowie die detaillierten Kategorien zum Haustierbesitz (<code>aq03</code>) verwenden:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb54-1"><a href="zshg.html#cb54-1"></a><span class="kw">tab</span> aq03 dh04</span></code></pre></div>
+<pre><code> HUND ODER KATZE |                                    ANZAHL DER HAUSHALTSPERSONEN
+    IM HAUSHALT? |         1          2          3          4          5          6          7          8         10 |     Total
+-----------------+---------------------------------------------------------------------------------------------------+----------
+            HUND |        41        153         86         73         32          4          2          0          0 |       391 
+           KATZE |        65        250        120         91         31          6          4          0          0 |       567 
+          BEIDES |         9         43         29         26         11          5          1          0          1 |       125 
+KEINS VON BEIDEN |       579        938        388        342         91         16          7          2          0 |     2,363 
+-----------------+---------------------------------------------------------------------------------------------------+----------
+           Total |       694      1,384        623        532        165         31         14          2          1 |     3,446 </code></pre>
+<p>Jetzt könnten wir den Odds Ratio für Haustierbesitz von allein Lebenden im Vergleich zu Befragten mit einer HH-Größe von <code>2</code> berechnen. Dazu setzen wir für die jeweiligen Spalten (weil die HH-Größe <code>dh04</code> in den Spalten steht) die Häufigkeiten ins Verhältnis. Der Hauptunterschied ist aber, dass wir die Haustierkategorien (<code>aq03 = 1-3</code>) addieren müssen:</p>
+<p><span class="math display">\[\text{Odds Haustier in 2P-HH} = \frac{153+250+43}{938} = 0.4754797\]</span>
+<span class="math display">\[\text{Odds Haustier allein} = \frac{41 +65 +9 }{579} = 0.1986183\]</span>
+<span class="math display">\[\text{Odds Ratio Haustier 2P-HH vs. allein} = \frac{0.4754797}{0.1986183} = 2.393937\]</span>
+<span class="math display">\[\text{Odds Ratio Haustier allein vs. 2P HH} = \frac{0.1986183}{0.4754797}=0.4177219\]</span></p>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li>Allein lebende Befragte haben im Vergleich zu zweit lebenden Befragten die 0.418-fache Chance ein Haustier im Haushalt zu haben.</li>
+<li>Zu zweit lebende Befragte haben im Vergleich zu allein lebenden Befragten die 2.394-fache Chance ein Haustier im Haushalt zu haben.</li>
+</ul>
+<p><span class="math inline">\(\rightarrow\)</span> Haben allein lebende Befragte eher Katzen als Befragte in einem Haushalt mit 4 Personen? (<code>aq03</code> = 2 &amp; 3 sind Katzenbesitzer*innen)</p>
+</div>
+<div id="chi²-basierte-maße" class="section level3">
+<h3><span class="header-section-number">5.4.2</span> Chi²-basierte Maße</h3>
+<p><span class="math inline">\(\chi^2\)</span> basiert auf dem Vergleich der beobachteten Häufigkeit mit einer (theoretischen) Verteilung, welche statistische Unabhängigkeit abbildet (Indifferenztabelle). Wir bleiben bei <code>aq03</code> und <code>dh01</code>. Den <span class="math inline">\(\chi^2\)</span>-Wert für diese Häufigkeitstabelle bekommen wir mit <code>, chi2</code>:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb56-1"><a href="zshg.html#cb56-1"></a><span class="kw">tab</span> aq03 dh01, chi</span></code></pre></div>
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+    IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
+-----------------+----------------------+----------
+            HUND |       353         41 |       394 
+           KATZE |       503         65 |       568 
+          BEIDES |       117          9 |       126 
+KEINS VON BEIDEN |     1,792        579 |     2,371 
+-----------------+----------------------+----------
+           Total |     2,765        694 |     3,459 
+
+          Pearson chi2(3) =  90.4007   Pr = 0.000</code></pre>
+</div>
+<div id="cramers-upsilon" class="section level3">
+<h3><span class="header-section-number">5.4.3</span> Cramer’s <span class="math inline">\(\upsilon\)</span></h3>
+<p>Auf Basis dieses <span class="math inline">\(\chi^2\)</span>-Werts von 90.401 können wir Cramer’s <span class="math inline">\(\upsilon\)</span> berechnen. Dieses ist definiert als der Quotient aus dem <span class="math inline">\(\chi^2\)</span>-Wert und der Fallzahl multipliziert mit dem Minimum der Zeilen- und Spaltenzahl. <code>n</code>, erkennen wir aus dem <code>Total</code> rechts unten in der Tabelle</p>
+<p><span class="math display">\[ Cramer&#39;s\,\,\upsilon = \sqrt{\frac{\chi^2}{n*\,min(k-1,m-1)}}=\sqrt{\frac{90.401}{3459*1}} = 0.162\]</span></p>
+<p>Dieser Wert für Cramer’s <span class="math inline">\(\upsilon\)</span> legt einen geringen Zusammenhang nahe (vgl. S.25 Vorlesung 6b).</p>
+</div>
+<div id="indifferenztabelle" class="section level3">
+<h3><span class="header-section-number">5.4.4</span> Indifferenztabelle</h3>
+<p><span class="math inline">\(\chi^2\)</span> ergibt sich wie gesagt aus der Differenz zwischen der Indifferenztabelle und den beobachteten Häufigkeiten. Die Indifferenztabelle können wir mit <code>,expected</code> aufrufen (mit <code>nofreq</code> blenden wir die tatsächlichen Häufigkeiten aus):</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb58-1"><a href="zshg.html#cb58-1"></a><span class="kw">tab</span>  aq03  dh01, expected nofreq</span></code></pre></div>
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+    IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
+-----------------+----------------------+----------
+            HUND |     314.9       79.1 |     394.0 
+           KATZE |     454.0      114.0 |     568.0 
+          BEIDES |     100.7       25.3 |     126.0 
+KEINS VON BEIDEN |   1,895.3      475.7 |   2,371.0 
+-----------------+----------------------+----------
+           Total |   2,765.0      694.0 |   3,459.0 </code></pre>
+<p>Ausgangspunkt für diese Indifferenztabelle sind die relativen Häufigkeiten der tatsächlich beoachteten Werte:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb60-1"><a href="zshg.html#cb60-1"></a><span class="kw">tab</span>  aq03  dh01, cell nofreq</span></code></pre></div>
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+    IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
+-----------------+----------------------+----------
+            HUND |     10.21       1.19 |     11.39 
+           KATZE |     14.54       1.88 |     16.42 
+          BEIDES |      3.38       0.26 |      3.64 
+KEINS VON BEIDEN |     51.81      16.74 |     68.55 
+-----------------+----------------------+----------
+           Total |     79.94      20.06 |    100.00 </code></pre>
+<p>0.26 % der Befragten wohnen alleine (<code>dh01</code> = 2) und haben einen Hund und eine Katze (<code>aq03</code>=3).<br />
+Uns interessieren hier nur die Randverteilungen aus <code>Sum</code>: 3.64 % der Befragten haben einen Hund und eine Katze (<code>aq03</code>=3). 20.06 % der Befragten wohnen alleine (<code>dh01</code> = 2).</p>
+<table class="table table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+MEHRPERSO
+</th>
+<th style="text-align:left;">
+EINPERSON
+</th>
+<th style="text-align:left;">
+Total
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+HUND
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:left;">
+0.1139
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KATZE
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:left;">
+F
+</td>
+<td style="text-align:left;">
+0.1642
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BEIDES
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+0.0364
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+KEINES VON BEIDEM
+</td>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:left;">
+H
+</td>
+<td style="text-align:left;">
+0.6855
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Total
+</td>
+<td style="text-align:left;">
+0.7994
+</td>
+<td style="text-align:left;">
+0.2006
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Wären beide Merkmale unabhängig voneinander, würden wir erwarten, dass die Wahrscheinlichkeit für das Auftreten einer Merkmalskombination dem Produkt der Einzelwahrscheinlichkeiten entspricht (das ist die “Indifferenz”): <span class="math inline">\(P(A\cup B) = P(A) \times P(B)\)</span>. Bspw. ergibt sich der erwartete Wert für die Zellen dann aus der relativen Randverteilung multipliziert mit der Gesamtfallzahl:</p>
+<ul>
+<li><p>für Zelle <code>B</code>: <code>0.1642</code> <span class="math inline">\(\times\)</span> <code>0.7994</code> <span class="math inline">\(\times\)</span> 3459 = 454.0387.</p></li>
+<li><p>für Zelle <code>C</code>: <code>0.0364</code> <span class="math inline">\(\times\)</span> <code>0.7994</code> <span class="math inline">\(\times\)</span> 3459 = 100.7199.</p></li>
+<li><p>für Zelle <code>H</code>: <code>0.6855</code> <span class="math inline">\(\times\)</span> <code>0.2006</code> <span class="math inline">\(\times\)</span> 3459 = 475.708.</p></li>
+</ul>
+<p>Dies sind auch die Werte, die Stata uns oben mit <code>tab  aq03  dh01, expected nofreq</code> ausgegeben hatte.</p>
+<p><span class="math inline">\(\chi^2\)</span> ist dann die summierte Differenz zwischen dieser Indifferenztabelle (also der erwarteten Verteilung bei Unabhängigkeit beider Merkmale) und den beobachteten Häufigkeiten: je größer die Differenz, desto unwahrscheinlicher ist es, dass beide Merkmale unabhängig sind.</p>
+</div>
+<div id="phi" class="section level3">
+<h3><span class="header-section-number">5.4.5</span> <span class="math inline">\(\phi\)</span></h3>
+<p>Eine Variante von Cramer’s <span class="math inline">\(\upsilon\)</span> für 2x2-Tabellen ist <span class="math inline">\(\phi\)</span>. Dies wäre das passende Maß für die zusammengefasste Variable aller Haustierbesitzer*innen <code>aq03b</code> von oben und <code>dh01</code>:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb62-1"><a href="zshg.html#cb62-1"></a><span class="kw">tab</span> aq03b dh01, chi</span></code></pre></div>
+<pre><code>           | MEHRPERSONENHAUSHALT?
+     aq03b | MEHRPERSO  EINPERSON |     Total
+-----------+----------------------+----------
+         0 |       973        116 |     1,089 
+         1 |     1,792        579 |     2,371 
+-----------+----------------------+----------
+     Total |     2,765        695 |     3,460 
+
+          Pearson chi2(1) =  88.1259   Pr = 0.000</code></pre>
+<p><span class="math display">\[\phi= \sqrt{\frac{\chi^2}{n}}=\sqrt{\frac{88.34}{3459}} = 0.1598\]</span></p>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Mehr zu <code>egen</code> in Kapitel <a href="adva.html#egen">11.8</a><a href="zshg.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Die Option <code>noheader</code> macht den Output von <code>reg</code> etwas übersichtlicher.<a href="zshg.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="dataviz.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lin-reg.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
