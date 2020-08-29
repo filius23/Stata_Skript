@@ -362,7 +362,7 @@ Die häufigste Kennzahl zur Beschreibung von Streuung ist aber die **Varianz**. 
 Was bedeutet diese Formel?    
 Schauen wir erst in den Zähler des Bruchs: $(x_{i}-\bar{x})^2$
 Es geht also um die Abstände der einzelnen Datenpunkte ($x_{i}$) zum arithmetischen Mittel ($\bar{x}$) - mathematisch die Differenz zwischen den einzelnen Datenpunkten $x_{i}-\bar{x}$ - hier eingezeichnet als gestrichelte Linien:
-```{r dpi = 800, echo = F, out.height="55%", out.width="55%", fig.align="center"}
+```{r dpi = 800, echo = F, out.height="70%", out.width="70%", fig.align="center"}
 eq <-  substitute(italic(bar(x))) # formel erstellen
 
 a18 %>% 
@@ -375,7 +375,7 @@ a18 %>%
   ggplot(.,aes(x = id, y = age)) +
   geom_segment(aes(yend= mean, xend = id ),
                size = .45, linetype = 2, color = "#1BB6AF") +
-  geom_point(size = 1.75, color = "#172869") +
+  geom_point(size = 1.95, color = "#172869") +
   geom_hline(aes(yintercept = mean), color = "#AF6125", size = .75) +
   geom_segment(aes(x = min(id)-.75, y = 15, xend = min(id)-.75, yend = mean - 1), arrow = arrow(length = unit(.0275,"npc"), type = "closed"), 
                color = "#AF6125", size = .5) +
