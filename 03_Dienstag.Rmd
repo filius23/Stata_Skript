@@ -308,7 +308,7 @@ centile age, centile(35)
 ```
 Aus den Angaben unter `Centile` erfahren wir, dass 35% der Befragten im Datensatz sind 44 Jahre alt oder jünger sind. Dementsprechend sind 65% der Befragten 44 Jahre oder älter.
 
-### Kennzahlen vergleichen {#by_vgl}
+### Kennzahlen vergleichen mit `tabstat` {#by_vgl}
 
 Richtig spannend sind diese Kennzahlen auch wieder erst im Vergleich zwischen Gruppen. Hierfür steht uns die `by()`-Option von `tabstat` zur Verfügung. Bspw. können wir die Altersangaben aus den alten (`eastwest`=1) und neuen Bundesländern (`eastwest`=2) vergleichen, indem wir in `tabstat` die Option `by(eastwest)` verwenden:
 
@@ -332,7 +332,7 @@ Eine andere Option ist es, auf den `if`-Befehl zurückzugreifen - siehe [hier](#
 Wir können aber auch zwei Variablen für den Kennzahlenvergleich verwenden. Bspw. sind neben Ost-West-Vergleichen auch häufig Geschlechterunterschiede von Interesse. Stata stellt uns damit mit der `summarise`-Option eine einfache Möglichkeit zur Verfügung:
 
 ```{stata tabsuF, eval = F}
-tabstat age, s(mean median var cv) by(eastwest)
+tab sex eastwest, summarize(age)
 ```
 ```{stata tabsuT, echo = F}
 set linesize 80
@@ -345,9 +345,9 @@ Wir sehen hier, dass 1222 Männer aus den alten Bundesländern befragt wurden, d
 
 Je nach Präferenz können wir eine der drei Kennzahlen (Anzahl der Beobachtungen, arith. Mittel und Standardabw.) ausblenden in dem wir die entsprechende Option verwenden:
 
-  + `nofreq`               Häufigkeiten ausblenden
-  + `nomeans`              arith. Mittel ausblenden
-  + `nostandard`           Standardabw. ausblenden
++ `nofreq`               Häufigkeiten ausblenden
++ `nomeans`              arith. Mittel ausblenden
++ `nostandard`           Standardabw. ausblenden
   
 `tab sex eastwest, summarize(age) nofreq` würde uns also nur die arith. Mittel und Standardabweichungen ausgeben.  
 
@@ -430,7 +430,7 @@ qui mvdecode age, mv(-32)
 tabstat age, s(cv)
 ```
 
-Somit können wir bspw. mit Hilfe von `bys sex:` die Streuung des Alters bei männlichen und weiblichen Befragten vergleichen:
+Somit können wir bspw. mit Hilfe von `,by(sex)` die Streuung des Alters bei männlichen und weiblichen Befragten vergleichen:
 ```{stata cvF2, eval = F}
 tabstat age, s(cv) by(sex)
 ```

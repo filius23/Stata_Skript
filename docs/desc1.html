@@ -180,7 +180,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="desc1.html"><a href="desc1.html#metrische-variablen-beschreiben"><i class="fa fa-check"></i><b>3.2</b> Metrische Variablen beschreiben</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="desc1.html"><a href="desc1.html#summarize"><i class="fa fa-check"></i><b>3.2.1</b> <code>summarize</code></a></li>
 <li class="chapter" data-level="3.2.2" data-path="desc1.html"><a href="desc1.html#tabstat"><i class="fa fa-check"></i><b>3.2.2</b> <code>tabstat</code></a></li>
-<li class="chapter" data-level="3.2.3" data-path="desc1.html"><a href="desc1.html#by_vgl"><i class="fa fa-check"></i><b>3.2.3</b> Kennzahlen vergleichen</a></li>
+<li class="chapter" data-level="3.2.3" data-path="desc1.html"><a href="desc1.html#by_vgl"><i class="fa fa-check"></i><b>3.2.3</b> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
 <li class="chapter" data-level="3.2.4" data-path="desc1.html"><a href="desc1.html#tabulate-mit-der-option-summarize"><i class="fa fa-check"></i><b>3.2.4</b> <code>tabulate</code> mit der Option <code>summarize()</code></a></li>
 <li class="chapter" data-level="3.2.5" data-path="desc1.html"><a href="desc1.html#variance"><i class="fa fa-check"></i><b>3.2.5</b> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
 <li class="chapter" data-level="3.2.6" data-path="desc1.html"><a href="desc1.html#sk_kur"><i class="fa fa-check"></i><b>3.2.6</b> Schiefe &amp; Wölbung</a></li>
@@ -709,7 +709,7 @@ pX
 X. Perzentil (5,10,25,50,75,90,95,99)
 </td>
 <td style="text-align:left;">
-zb. p(5) -&gt; wie hoch ist die Grenze, unterhalb welcher 5% der Beobachtungen liegen? (Und: oberhalb welcher 95% der Beobachtungen liegen?)
+zb. p(5) <span class="math inline">\(\rightarrow\)</span> wie hoch ist die Grenze, unterhalb welcher 5% (oberhalb welcher 95%) der Beobachtungen liegen?
 </td>
 </tr>
 <tr>
@@ -750,7 +750,7 @@ Entspricht p25 p50 p75
 <p>Aus den Angaben unter <code>Centile</code> erfahren wir, dass 35% der Befragten im Datensatz sind 44 Jahre alt oder jünger sind. Dementsprechend sind 65% der Befragten 44 Jahre oder älter.</p>
 </div>
 <div id="by_vgl" class="section level3">
-<h3><span class="header-section-number">3.2.3</span> Kennzahlen vergleichen</h3>
+<h3><span class="header-section-number">3.2.3</span> Kennzahlen vergleichen mit <code>tabstat</code></h3>
 <p>Richtig spannend sind diese Kennzahlen auch wieder erst im Vergleich zwischen Gruppen. Hierfür steht uns die <code>by()</code>-Option von <code>tabstat</code> zur Verfügung. Bspw. können wir die Altersangaben aus den alten (<code>eastwest</code>=1) und neuen Bundesländern (<code>eastwest</code>=2) vergleichen, indem wir in <code>tabstat</code> die Option <code>by(eastwest)</code> verwenden:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb37-1"><a href="desc1.html#cb37-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="kw">mean</span> <span class="kw">median</span> <span class="kw">var</span> cv) <span class="kw">by</span>(eastwest)</span></code></pre></div>
 <pre><code>Summary for variables: age
@@ -769,7 +769,7 @@ NEUE BUNDESLAEND |  53.90083        55  287.4093  .3145249
 <div id="tabulate-mit-der-option-summarize" class="section level3">
 <h3><span class="header-section-number">3.2.4</span> <code>tabulate</code> mit der Option <code>summarize()</code></h3>
 <p>Wir können aber auch zwei Variablen für den Kennzahlenvergleich verwenden. Bspw. sind neben Ost-West-Vergleichen auch häufig Geschlechterunterschiede von Interesse. Stata stellt uns damit mit der <code>summarise</code>-Option eine einfache Möglichkeit zur Verfügung:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb39-1"><a href="desc1.html#cb39-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="kw">mean</span> <span class="kw">median</span> <span class="kw">var</span> cv) <span class="kw">by</span>(eastwest)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb39-1"><a href="desc1.html#cb39-1"></a><span class="kw">tab</span> sex eastwest, <span class="kw">summarize</span>(age)</span></code></pre></div>
 <pre><code>     Means, Standard Deviations and Frequencies of ALTER: BEFRAGTE(R)
 
 GESCHLECHT |   ERHEBUNGSGEBIET
@@ -791,11 +791,9 @@ BEFRAGTE(R |        - OST
 <p>Wir sehen hier, dass 1222 Männer aus den alten Bundesländern befragt wurden, die im Durchschnitt 50.5982 alt sind. Die Standardabweichung des Alters in dieser Gruppe beträgt 18.177659 Jahre. Außerdem wurden 539 Frauen aus den neuen Bundesländern befragt, die im arith. Mittel 54.58256 alt sind und deren Altersangaben eine Standardabweichung 16.720148 aufweisen.</p>
 <p>Je nach Präferenz können wir eine der drei Kennzahlen (Anzahl der Beobachtungen, arith. Mittel und Standardabw.) ausblenden in dem wir die entsprechende Option verwenden:</p>
 <ul>
-<li><code>nofreq</code> Häufigkeiten ausblenden
-<ul>
+<li><code>nofreq</code> Häufigkeiten ausblenden</li>
 <li><code>nomeans</code> arith. Mittel ausblenden</li>
 <li><code>nostandard</code> Standardabw. ausblenden</li>
-</ul></li>
 </ul>
 <p><code>tab sex eastwest, summarize(age) nofreq</code> würde uns also nur die arith. Mittel und Standardabweichungen ausgeben.</p>
 </div>
@@ -831,7 +829,7 @@ Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert 
 -------------+----------
          age |  .3413931
 ------------------------</code></pre>
-<p>Somit können wir bspw. mit Hilfe von <code>bys sex:</code> die Streuung des Alters bei männlichen und weiblichen Befragten vergleichen:</p>
+<p>Somit können wir bspw. mit Hilfe von <code>,by(sex)</code> die Streuung des Alters bei männlichen und weiblichen Befragten vergleichen:</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb48-1"><a href="desc1.html#cb48-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(cv) <span class="kw">by</span>(sex)</span></code></pre></div>
 <pre><code>Summary for variables: age
      by categories of: sex (GESCHLECHT, BEFRAGTE(R))
