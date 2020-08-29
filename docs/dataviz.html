@@ -50,6 +50,7 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -235,27 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.5" data-path="zshg.html"><a href="zshg.html#phi"><i class="fa fa-check"></i><b>5.4.5</b> <span class="math inline">\(\phi\)</span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="lin-reg.html"><a href="lin-reg.html"><i class="fa fa-check"></i><b>6</b> Zusammenhangsmaße</a><ul>
-<li class="chapter" data-level="6.1" data-path="zshg.html"><a href="zshg.html#metrisch-skalierte-variablen"><i class="fa fa-check"></i><b>6.1</b> Metrisch skalierte Variablen</a></li>
-<li class="chapter" data-level="6.2" data-path="zshg.html"><a href="zshg.html#regression"><i class="fa fa-check"></i><b>6.2</b> Regression</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="zshg.html"><a href="zshg.html#beispieldatensatz"><i class="fa fa-check"></i><b>6.2.1</b> Beispieldatensatz</a></li>
-<li class="chapter" data-level="6.2.2" data-path="zshg.html"><a href="zshg.html#idee-einer-regression"><i class="fa fa-check"></i><b>6.2.2</b> Idee einer Regression</a></li>
-<li class="chapter" data-level="6.2.3" data-path="zshg.html"><a href="zshg.html#residuen"><i class="fa fa-check"></i><b>6.2.3</b> Residuen</a></li>
-<li class="chapter" data-level="6.2.4" data-path="zshg.html"><a href="zshg.html#quadrierte-residuen"><i class="fa fa-check"></i><b>6.2.4</b> Quadrierte Residuen</a></li>
-<li class="chapter" data-level="6.2.5" data-path="zshg.html"><a href="zshg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>6.2.5</b> Interpretation der Regression</a></li>
-<li class="chapter" data-level="6.2.6" data-path="zshg.html"><a href="zshg.html#vorhergesagte-werte"><i class="fa fa-check"></i><b>6.2.6</b> Vorhergesagte Werte</a></li>
-<li class="chapter" data-level="6.2.7" data-path="zshg.html"><a href="zshg.html#residuen-teil-2"><i class="fa fa-check"></i><b>6.2.7</b> Residuen Teil 2</a></li>
-<li class="chapter" data-level="6.2.8" data-path="zshg.html"><a href="zshg.html#modellgüte"><i class="fa fa-check"></i><b>6.2.8</b> Modellgüte</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="zshg.html"><a href="zshg.html#ordinal-skalierte-merkmale"><i class="fa fa-check"></i><b>6.3</b> Ordinal skalierte Merkmale</a></li>
-<li class="chapter" data-level="6.4" data-path="zshg.html"><a href="zshg.html#nominal-skalierte-variablen"><i class="fa fa-check"></i><b>6.4</b> Nominal skalierte Variablen</a><ul>
-<li class="chapter" data-level="6.4.1" data-path="zshg.html"><a href="zshg.html#odds-ratio"><i class="fa fa-check"></i><b>6.4.1</b> Odds Ratio</a></li>
-<li class="chapter" data-level="6.4.2" data-path="zshg.html"><a href="zshg.html#chi²-basierte-maße"><i class="fa fa-check"></i><b>6.4.2</b> Chi²-basierte Maße</a></li>
-<li class="chapter" data-level="6.4.3" data-path="zshg.html"><a href="zshg.html#cramers-upsilon"><i class="fa fa-check"></i><b>6.4.3</b> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
-<li class="chapter" data-level="6.4.4" data-path="zshg.html"><a href="zshg.html#indifferenztabelle"><i class="fa fa-check"></i><b>6.4.4</b> Indifferenztabelle</a></li>
-<li class="chapter" data-level="6.4.5" data-path="zshg.html"><a href="zshg.html#phi"><i class="fa fa-check"></i><b>6.4.5</b> <span class="math inline">\(\phi\)</span></a></li>
-</ul></li>
-</ul></li>
+<li class="chapter" data-level="6" data-path="zshg2.html"><a href="zshg2.html"><i class="fa fa-check"></i><b>6</b> Zusammenhänge 2</a></li>
 <li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a></li>
 <li class="chapter" data-level="8" data-path="inf2.html"><a href="inf2.html"><i class="fa fa-check"></i><b>8</b> Inferenzstatistik II</a></li>
 <li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Hypothesentests</a></li>
@@ -295,10 +276,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="dataviz" class="section level1">
 <h1><span class="header-section-number">4</span> Datenvisualisierung in Stata</h1>
 <p>Wir starten wie immer mit dem Einlesen eines Datensatzes:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="dataviz.html#cb1-1"></a>cd <span class="st">&quot;...&quot;</span></span>
-<span id="cb1-2"><a href="dataviz.html#cb1-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span>
-<span id="cb1-3"><a href="dataviz.html#cb1-3"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt; 0</span>
-<span id="cb1-4"><a href="dataviz.html#cb1-4"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb156-1"><a href="dataviz.html#cb156-1"></a>cd <span class="st">&quot;...&quot;</span></span>
+<span id="cb156-2"><a href="dataviz.html#cb156-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb156-3"><a href="dataviz.html#cb156-3"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt; 0</span>
+<span id="cb156-4"><a href="dataviz.html#cb156-4"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span></code></pre></div>
 <p>Für Grafiken gilt noch mehr als für alle anderen Aspekte in Stata: ausprobieren und sehen, was passiert! Nachdem in der Regel ja zumindest eine ungefähre Vorstellung existiert, wie die zu erstellende Grafik aussehen soll, sind Grafik-Gallerieren ein guter Startpunkt das eigene Trial &amp; Error. Die größte Herausforderung ist häufig, eine Vorstellung zu entwickeln, wie die Darstellung aussehen soll.</p>
 <p>Eine Übersicht zu allen verfügbaren Visualierungen inklusive Beispielbefehlen findet sich beispielsweise <a href="https://www.stata.com/support/faqs/graphics/gph/stata-graphs/">hier</a> oder <a href="https://www.stata.com/features/example-graphs/">hier</a>.</p>
 <div id="erste-entscheidungen" class="section level2">
@@ -321,18 +302,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="aufbau" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> Aufbau</h3>
 <p>Grafik-Befehle bestehen aus zwei Teilen: dem Befehl <code>graph</code> und der Angabe eines Grafik-Typs. Im folgenden Befehl ist <code>box</code> der Grafik-Typ:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="dataviz.html#cb2-1"></a><span class="kw">graph</span> box inc</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb157-1"><a href="dataviz.html#cb157-1"></a><span class="kw">graph</span> box inc</span></code></pre></div>
 <p><img src="04_box.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="twoway" class="section level3">
 <h3><span class="header-section-number">4.2.2</span> twoway</h3>
 <p>Beim Grafik-Typ <code>twoway</code> muss der sog. Plottyp, spezifiziert werden. Bspw. für ein Streudiagramm mit dem Befehl <code>scatter</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="dataviz.html#cb3-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="kw">scatter</span> inc age</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb158-1"><a href="dataviz.html#cb158-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="kw">scatter</span> inc age</span></code></pre></div>
 <p><img src="04_twoway1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="kombinieren-von-zwei-twoway-grafiken" class="section level3">
 <h3><span class="header-section-number">4.2.3</span> Kombinieren von zwei twoway-Grafiken</h3>
-<p><code>twoway</code>-Grafiken können übereinander gelegt werden. So können wir durch Kombination der Plottypen <code>scatter</code> und <code>lfit</code> ein Streudiagram mit einer Regressionsgerade<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> kombinieren:
+<p><code>twoway</code>-Grafiken können übereinander gelegt werden. So können wir durch Kombination der Plottypen <code>scatter</code> und <code>lfit</code> ein Streudiagram mit einer Regressionsgerade<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> kombinieren:
 <code>graph twoway (scatter inc age) (lfit inc age)</code>
 Eine alternative Schreibweise mit <code>||</code> führt zur gleichen Grafik:
 <code>graph twoway scatter inc age || lfit inc age</code></p>
@@ -348,15 +329,15 @@ Eine alternative Schreibweise mit <code>||</code> führt zur gleichen Grafik:
 <div id="vorlagen" class="section level3">
 <h3><span class="header-section-number">4.2.5</span> Vorlagen</h3>
 <p>Das Aussehen von Grafiken wird durch sog. Grafik-Schemata beeinflusst. Beispielsweise wird mit <code>, scheme(sj)</code> die Grafik nach den Vorlage des Stata Journals erstellt:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="dataviz.html#cb4-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> inc age) (<span class="kw">lfit</span> inc age), <span class="dv">scheme</span>(sj)</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb159-1"><a href="dataviz.html#cb159-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> inc age) (<span class="kw">lfit</span> inc age), <span class="dv">scheme</span>(sj)</span></code></pre></div>
 <p><img src="04_line_scatter_theme.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Mit <code>graph query, schemes</code> wird eine Liste der verfügbaren Schemata angezeigt.</p>
 <p>Weitere Optionen bieten zB die <a href="https://www.stata-journal.com/article.html?article=gr0070">blindschemes</a> von Daniel Bischof oder <a href="https://www.stata-journal.com/sjpdf.html?articlenum=gr0002">lean2</a> von Svend Juul. Beide müssen zunächst mit <code>ssc install blindschemes</code> bzw. <code>net install gr0002_3, from("http://www.stata-journal.com/software/sj4-3")</code> installiert werden und stehen dann zur Verfügung, zB</p>
 <p>Hier noch ein Beispiel mit <code>plotplain</code> aus <code>blindschemes</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="dataviz.html#cb5-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> inc age) (<span class="kw">lfit</span> inc age), <span class="dv">scheme</span>(plotplain) <span class="bn">legend</span>(<span class="bn">cols</span>(2) pos(6))</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb160-1"><a href="dataviz.html#cb160-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> inc age) (<span class="kw">lfit</span> inc age), <span class="dv">scheme</span>(plotplain) <span class="bn">legend</span>(<span class="bn">cols</span>(2) pos(6))</span></code></pre></div>
 <p><img src="04_line_scatter_theme2.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>…und <code>lean2</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="dataviz.html#cb6-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> inc age) (<span class="kw">lfit</span> inc age), <span class="dv">scheme</span>(lean2) <span class="co">///</span></span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb161-1"><a href="dataviz.html#cb161-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> inc age) (<span class="kw">lfit</span> inc age), <span class="dv">scheme</span>(lean2) <span class="co">///</span></span></code></pre></div>
 <p><img src="04_line_scatter_theme3.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -393,9 +374,9 @@ Folgende Überschriften stehen uns dazu zur Verfügung: <code>title("title") sub
 </div>
 <div id="subgruppen" class="section level3">
 <h3><span class="header-section-number">4.3.3</span> Subgruppen</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="dataviz.html#cb7-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 1 , mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 2 , mc(<span class="st">&quot;254 216 128&quot;</span>) <span class="bn">msymbol</span>(o)  ) <span class="co">///</span></span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb162-1"><a href="dataviz.html#cb162-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 1 , mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 2 , mc(<span class="st">&quot;254 216 128&quot;</span>) <span class="bn">msymbol</span>(o)  ) <span class="co">///</span></span></code></pre></div>
 <p><img src="04_bunter_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="dataviz.html#cb8-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 1 , mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 2 , mc(<span class="st">&quot;254 216 128&quot;</span>) <span class="bn">msymbol</span>(o)  ) ( <span class="kw">lfit</span>  inc age <span class="kw">if</span> sex == 1 , lc(<span class="st">&quot;black&quot;</span>) ) ( <span class="kw">lfit</span>  inc age <span class="kw">if</span> sex == 2 , lc(<span class="st">&quot;orange&quot;</span>) <span class="bn">msymbol</span>(o)  ) <span class="co">///</span></span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb163-1"><a href="dataviz.html#cb163-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 1 , mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 2 , mc(<span class="st">&quot;254 216 128&quot;</span>) <span class="bn">msymbol</span>(o)  ) ( <span class="kw">lfit</span>  inc age <span class="kw">if</span> sex == 1 , lc(<span class="st">&quot;black&quot;</span>) ) ( <span class="kw">lfit</span>  inc age <span class="kw">if</span> sex == 2 , lc(<span class="st">&quot;orange&quot;</span>) <span class="bn">msymbol</span>(o)  ) <span class="co">///</span></span></code></pre></div>
 <p><img src="04_bunter_line_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -406,11 +387,11 @@ Folgende Überschriften stehen uns dazu zur Verfügung: <code>title("title") sub
 <div id="boxplot" class="section level3">
 <h3><span class="header-section-number">4.4.1</span> Boxplot</h3>
 <p>Hier noch ein Beispiel mit (sehr) vielen Optionen als Vorlage für eigene Anpassungen (<a href="dataviz.html#aufb1">DoFile</a>):</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="dataviz.html#cb9-1"></a><span class="kw">graph</span> box inc_m inc_f, <span class="bn">over</span>(age_c) <span class="dv">scheme</span>(lean1) box(1, <span class="kw">color</span>(<span class="st">&quot;0 41 93&quot;</span>)) marker(1, mcolor(<span class="st">&quot;0 41 93&quot;</span>)  <span class="bn">msymbol</span>(<span class="st">&quot;o&quot;</span>) ) medline(lcolor(<span class="st">&quot;204 175 105&quot;</span>)) box(2, <span class="kw">color</span>(<span class="st">&quot;146 143 107&quot;</span>)) marker(2, mcolor(<span class="st">&quot;146 143 107&quot;</span>)  <span class="bn">msymbol</span>(<span class="st">&quot;o&quot;</span>) ) <span class="bn">legend</span>(<span class="bn">cols</span>(2) pos(12) region(fcolor(<span class="st">&quot;249 247 241&quot;</span>) lcolor(<span class="st">&quot;16 74 138&quot;</span>))) <span class="bn">ytitle</span>(<span class="st">&quot;{stSerif:Einkommen}{superscript:2018}&quot;</span>) b1title(<span class="st">&quot;Alter&quot;</span>) <span class="bn">title</span>(<span class="st">&quot;Einkommen&quot;</span>) <span class="bn">caption</span>(<span class="st">&quot;{bf:Quelle}: Allbus 2018 {it:eigene Berechnungen}&quot;</span>,<span class="bn">position</span>(5)) <span class="bn">plotregion</span>(fcolor(<span class="st">&quot;252 251 248&quot;</span>)) graphregion(fcolor(<span class="st">&quot;249 247 241&quot;</span>)) </span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb164-1"><a href="dataviz.html#cb164-1"></a><span class="kw">graph</span> box inc_m inc_f, <span class="bn">over</span>(age_c) <span class="dv">scheme</span>(lean1) box(1, <span class="kw">color</span>(<span class="st">&quot;0 41 93&quot;</span>)) marker(1, mcolor(<span class="st">&quot;0 41 93&quot;</span>)  <span class="bn">msymbol</span>(<span class="st">&quot;o&quot;</span>) ) medline(lcolor(<span class="st">&quot;204 175 105&quot;</span>)) box(2, <span class="kw">color</span>(<span class="st">&quot;146 143 107&quot;</span>)) marker(2, mcolor(<span class="st">&quot;146 143 107&quot;</span>)  <span class="bn">msymbol</span>(<span class="st">&quot;o&quot;</span>) ) <span class="bn">legend</span>(<span class="bn">cols</span>(2) pos(12) region(fcolor(<span class="st">&quot;249 247 241&quot;</span>) lcolor(<span class="st">&quot;16 74 138&quot;</span>))) <span class="bn">ytitle</span>(<span class="st">&quot;{stSerif:Einkommen}{superscript:2018}&quot;</span>) b1title(<span class="st">&quot;Alter&quot;</span>) <span class="bn">title</span>(<span class="st">&quot;Einkommen&quot;</span>) <span class="bn">caption</span>(<span class="st">&quot;{bf:Quelle}: Allbus 2018 {it:eigene Berechnungen}&quot;</span>,<span class="bn">position</span>(5)) <span class="bn">plotregion</span>(fcolor(<span class="st">&quot;252 251 248&quot;</span>)) graphregion(fcolor(<span class="st">&quot;249 247 241&quot;</span>)) </span></code></pre></div>
 <p><img src="04_boxplot.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Auch die Darstellung auf der Startseite dieses Skripts wurde als Stata-Grafik erstellt:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="dataviz.html#cb10-1"></a><span class="kw">webuse</span> bpwide, <span class="kw">clear</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="dataviz.html#cb11-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  (<span class="kw">lfit</span> bp_before bp_after) ( <span class="kw">scatter</span> bp_before bp_after <span class="kw">if</span> agegrp == 1, mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) ( <span class="kw">scatter</span> bp_before bp_after <span class="kw">if</span> agegrp == 2, mc(<span class="st">&quot;0 125 186&quot;</span>) <span class="bn">msymbol</span>(o)  ) ( <span class="kw">scatter</span> bp_before bp_after <span class="kw">if</span> agegrp == 3, mc(<span class="st">&quot;214 210 196&quot;</span>) <span class="bn">msymbol</span>(o)  ), <span class="dv">scheme</span>(lean2) <span class="bn">legend</span>(<span class="kw">off</span>) <span class="bn">xtitle</span>(<span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb165-1"><a href="dataviz.html#cb165-1"></a><span class="kw">webuse</span> bpwide, <span class="kw">clear</span></span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb166-1"><a href="dataviz.html#cb166-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  (<span class="kw">lfit</span> bp_before bp_after) ( <span class="kw">scatter</span> bp_before bp_after <span class="kw">if</span> agegrp == 1, mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) ( <span class="kw">scatter</span> bp_before bp_after <span class="kw">if</span> agegrp == 2, mc(<span class="st">&quot;0 125 186&quot;</span>) <span class="bn">msymbol</span>(o)  ) ( <span class="kw">scatter</span> bp_before bp_after <span class="kw">if</span> agegrp == 3, mc(<span class="st">&quot;214 210 196&quot;</span>) <span class="bn">msymbol</span>(o)  ), <span class="dv">scheme</span>(lean2) <span class="bn">legend</span>(<span class="kw">off</span>) <span class="bn">xtitle</span>(<span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="00_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Häufig ist die größte Herausforderung, die Daten so umzustellen, dass sie zum gewünschten <code>graph</code>-Befehl passen. Ein Beispiel ist die Erstellung einer Bevölkerungspyramide aus den Allbusdaten:</p>
 </div>
@@ -420,69 +401,93 @@ Folgende Überschriften stehen uns dazu zur Verfügung: <code>title("title") sub
 <p><img src="04_pyramid.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
 <p>Auch eine Bevölkerungspyramide lässt sich als Stata-Grafik erstellen. Allerdings müssen dazu einige Zwischenschritte durchlaufen, die fortgeschrittene Datenaufbereitung mit <code>collapse</code> voraussetzen. Außerdem könnte ein Teil der Aufbereitung mit <code>reshape</code> abgekürzt werden. Mehr Informationen dazu finden sich am Ende dieses Skripts in Kapitel <a href="adva.html#adva">11</a>.</p>
 <p>Die grundsätzliche Funktion für die Bevölkerungspyramide ist ein Balkendiagramm mit <code>graph twoway bar , horizontal</code>. Die Länge der Balken soll jeweils durch die Anzahl der Fälle in jeder Altersstufe, getrennt nach Geschlecht, bestimmt werden. Dazu müssen wir also zunächst die Anzahl der Befragten pro Alterstufe und Geschlecht bestimmen. Wenn wir den Allbus 2018 laden, haben wir ja einen Datensatz mit einer Zeile pro Person. Was wir jetzt aber benötigen ist eine Variante, in der wir den Datensatz sozusagen “zusammenschieben”: wir brauchen jeweils eine Zeile pro Altersstufe und Geschlecht und eine Variable mit der Zahl der Befragten.</p>
-<pre><code>Error in a18 %&gt;% filter(age &gt; 0, sex &gt; 0) %&gt;% group_by(age, sex) %&gt;% count(name = &quot;Anzahl_Befragte&quot;) %&gt;% : konnte Funktion &quot;%&gt;%&quot; nicht finden</code></pre>
+<pre><code>  age sex Anzahl_Befragte
+1  18   1              15
+2  18   2              11
+3  19   1              22
+4  19   2              15
+5  20   1              18
+6  20   2              16</code></pre>
 <p>Um dorthin zu kommen, steht uns der <code>collapse</code>-Befehl zur Verfügung:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="dataviz.html#cb13-1"></a>cd <span class="st">&quot;&quot;</span></span>
-<span id="cb13-2"><a href="dataviz.html#cb13-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span>
-<span id="cb13-3"><a href="dataviz.html#cb13-3"></a><span class="kw">tab</span> agec</span>
-<span id="cb13-4"><a href="dataviz.html#cb13-4"></a><span class="kw">keep</span> <span class="kw">if</span> sex &gt; 0</span>
-<span id="cb13-5"><a href="dataviz.html#cb13-5"></a><span class="kw">keep</span> <span class="kw">if</span> agec &gt; 0</span>
-<span id="cb13-6"><a href="dataviz.html#cb13-6"></a><span class="kw">collapse</span> (<span class="fu">count</span>) respid , <span class="kw">by</span>(sex age)</span>
-<span id="cb13-7"><a href="dataviz.html#cb13-7"></a><span class="ot">list</span> <span class="kw">in</span> 1/8</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb168-1"><a href="dataviz.html#cb168-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb168-2"><a href="dataviz.html#cb168-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb168-3"><a href="dataviz.html#cb168-3"></a><span class="kw">tab</span> agec</span>
+<span id="cb168-4"><a href="dataviz.html#cb168-4"></a><span class="kw">keep</span> <span class="kw">if</span> sex &gt; 0</span>
+<span id="cb168-5"><a href="dataviz.html#cb168-5"></a><span class="kw">keep</span> <span class="kw">if</span> agec &gt; 0</span>
+<span id="cb168-6"><a href="dataviz.html#cb168-6"></a><span class="kw">collapse</span> (<span class="fu">count</span>) respid , <span class="kw">by</span>(sex age)</span>
+<span id="cb168-7"><a href="dataviz.html#cb168-7"></a><span class="ot">list</span> <span class="kw">in</span> 1/8</span></code></pre></div>
 <p>Unter respid ist jetzt die Zahl der Befragten in der jeweiligen Kombination aus <code>age</code> und <code>sex</code> abgelegt:</p>
-<pre><code>Error in a18 %&gt;% filter(age &gt; 0, sex &gt; 0) %&gt;% group_by(age, sex) %&gt;% count(name = &quot;respid&quot;) %&gt;% : konnte Funktion &quot;%&gt;%&quot; nicht finden</code></pre>
+<pre><code>  age sex respid
+1  18   1     15
+2  18   2     11
+3  19   1     22
+4  19   2     15
+5  20   1     18
+6  20   2     16
+7  21   1     21
+8  21   2     13</code></pre>
 <p>Um verwirrung zu vermeiden, benennen wir <code>respid</code> in <code>total</code> um:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="dataviz.html#cb15-1"></a><span class="kw">rename</span> respid <span class="kw">total</span></span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb170-1"><a href="dataviz.html#cb170-1"></a><span class="kw">rename</span> respid <span class="kw">total</span></span></code></pre></div>
 <p>Allerdings möchten wir jetzt die Angaben für Frauen und Männer in getrennte Variablen ablegen:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="dataviz.html#cb16-1"></a><span class="kw">gen</span> total_m = <span class="kw">total</span> <span class="kw">if</span> sex == 1</span>
-<span id="cb16-2"><a href="dataviz.html#cb16-2"></a><span class="kw">gen</span> total_f = <span class="kw">total</span> <span class="kw">if</span> sex == 2</span>
-<span id="cb16-3"><a href="dataviz.html#cb16-3"></a><span class="ot">list</span> <span class="kw">in</span> 1/10</span></code></pre></div>
-<pre><code>Error in a18 %&gt;% filter(age &gt; 0, sex &gt; 0) %&gt;% group_by(age, sex) %&gt;% count(name = &quot;total&quot;) %&gt;% : konnte Funktion &quot;%&gt;%&quot; nicht finden</code></pre>
+<div class="sourceCode" id="cb171"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb171-1"><a href="dataviz.html#cb171-1"></a><span class="kw">gen</span> total_m = <span class="kw">total</span> <span class="kw">if</span> sex == 1</span>
+<span id="cb171-2"><a href="dataviz.html#cb171-2"></a><span class="kw">gen</span> total_f = <span class="kw">total</span> <span class="kw">if</span> sex == 2</span>
+<span id="cb171-3"><a href="dataviz.html#cb171-3"></a><span class="ot">list</span> <span class="kw">in</span> 1/10</span></code></pre></div>
+<pre><code>   age sex total total_m total_f
+1   18   1    15      15       .
+2   18   2    11       .      11
+3   19   1    22      22       .
+4   19   2    15       .      15
+5   20   1    18      18       .
+6   20   2    16       .      16
+7   21   1    21      21       .
+8   21   2    13       .      13
+9   22   1    18      18       .
+10  22   2    15       .      15</code></pre>
 <p>Jetzt können wir daraus ein Balkendiagramm erstellen:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="dataviz.html#cb18-1"></a><span class="kw">twoway</span>( <span class="bn">bar</span> neg_total_m age, horizontal )(<span class="bn">bar</span> total_f age, horizontal)</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb173-1"><a href="dataviz.html#cb173-1"></a><span class="kw">twoway</span>( <span class="bn">bar</span> neg_total_m age, horizontal )(<span class="bn">bar</span> total_f age, horizontal)</span></code></pre></div>
 <p><img src="04_pyramid001.png" width="60%" height="60%" style="display: block; margin: auto;" />
 Was hier noch fehlt ist, die Umorientierung der Zahlen für die Männer “nach links”. Dazu multiplizieren wir <code>total_m</code> mit <code>-1</code>:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="dataviz.html#cb19-1"></a><span class="kw">gen</span> neg_total_m = -total_m</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb174-1"><a href="dataviz.html#cb174-1"></a><span class="kw">gen</span> neg_total_m = -total_m</span></code></pre></div>
 <p>Damit dann verwenden wir <code>neg_total_m</code> für die Balken der Männer:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="dataviz.html#cb20-1"></a><span class="kw">twoway</span>( <span class="bn">bar</span> neg_total_m age, horizontal )(<span class="bn">bar</span> total_f age, horizontal)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb175-1"><a href="dataviz.html#cb175-1"></a><span class="kw">twoway</span>( <span class="bn">bar</span> neg_total_m age, horizontal )(<span class="bn">bar</span> total_f age, horizontal)</span></code></pre></div>
 <p><img src="04_pyramid002.png" width="60%" height="60%" style="display: block; margin: auto;" />
 Mit <code>xlabel</code> und <code>legend</code>noch einige Anpassungen, außerdem können wir mit <code>text</code> noch Beschriftungen hinzufügen:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="dataviz.html#cb21-1"></a><span class="kw">twoway</span>( <span class="bn">bar</span> neg_total_m age, horizontal )(<span class="bn">bar</span> total_f age, horizontal) ,<span class="kw">xlabel</span>( -40 <span class="st">&quot;40&quot;</span> -30 <span class="st">&quot;30&quot;</span> -20 <span class="st">&quot;20&quot;</span> -10 <span class="st">&quot;10&quot;</span> 0 10(10)40 ) <span class="bn">legend</span>(<span class="kw">off</span>) <span class="bn">text</span>(100 -8 <span class="st">&quot;Männer&quot;</span>) <span class="bn">text</span>(100 8 <span class="st">&quot;Frauen&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb176-1"><a href="dataviz.html#cb176-1"></a><span class="kw">twoway</span>( <span class="bn">bar</span> neg_total_m age, horizontal )(<span class="bn">bar</span> total_f age, horizontal) ,<span class="kw">xlabel</span>( -40 <span class="st">&quot;40&quot;</span> -30 <span class="st">&quot;30&quot;</span> -20 <span class="st">&quot;20&quot;</span> -10 <span class="st">&quot;10&quot;</span> 0 10(10)40 ) <span class="bn">legend</span>(<span class="kw">off</span>) <span class="bn">text</span>(100 -8 <span class="st">&quot;Männer&quot;</span>) <span class="bn">text</span>(100 8 <span class="st">&quot;Frauen&quot;</span>)</span></code></pre></div>
 <p><img src="04_pyramid.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="anhang" class="section level2">
 <h2><span class="header-section-number">4.6</span> Anhang</h2>
 <div id="aufb1" class="section level3">
 <h3><span class="header-section-number">4.6.1</span> Aufbereitung für Boxplot</h3>
-<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="dataviz.html#cb22-1"></a>cd <span class="st">&quot;&quot;</span></span>
-<span id="cb22-2"><a href="dataviz.html#cb22-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span>
-<span id="cb22-3"><a href="dataviz.html#cb22-3"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt; 0</span>
-<span id="cb22-4"><a href="dataviz.html#cb22-4"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span>
-<span id="cb22-5"><a href="dataviz.html#cb22-5"></a></span>
-<span id="cb22-6"><a href="dataviz.html#cb22-6"></a><span class="kw">egen</span> age_c = <span class="fu">cut</span>(age), <span class="fu">at</span>(20,35,50,65)</span>
-<span id="cb22-7"><a href="dataviz.html#cb22-7"></a>lab def agec1 20 <span class="st">&quot;20-34&quot;</span> 35 <span class="st">&quot;35-49&quot;</span> 50 <span class="st">&quot;50-64&quot;</span></span>
-<span id="cb22-8"><a href="dataviz.html#cb22-8"></a>lab val age_c agec1</span>
-<span id="cb22-9"><a href="dataviz.html#cb22-9"></a><span class="kw">gen</span> inc_m = inc <span class="kw">if</span> sex == 1</span>
-<span id="cb22-10"><a href="dataviz.html#cb22-10"></a><span class="kw">gen</span> inc_f = inc <span class="kw">if</span> sex == 2</span>
-<span id="cb22-11"><a href="dataviz.html#cb22-11"></a>lab <span class="kw">var</span> inc_m <span class="st">&quot;Männer&quot;</span></span>
-<span id="cb22-12"><a href="dataviz.html#cb22-12"></a>lab <span class="kw">var</span> inc_f <span class="st">&quot;Frauen&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb177-1"><a href="dataviz.html#cb177-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb177-2"><a href="dataviz.html#cb177-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb177-3"><a href="dataviz.html#cb177-3"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt; 0</span>
+<span id="cb177-4"><a href="dataviz.html#cb177-4"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span>
+<span id="cb177-5"><a href="dataviz.html#cb177-5"></a></span>
+<span id="cb177-6"><a href="dataviz.html#cb177-6"></a><span class="kw">egen</span> age_c = <span class="fu">cut</span>(age), <span class="fu">at</span>(20,35,50,65)</span>
+<span id="cb177-7"><a href="dataviz.html#cb177-7"></a>lab def agec1 20 <span class="st">&quot;20-34&quot;</span> 35 <span class="st">&quot;35-49&quot;</span> 50 <span class="st">&quot;50-64&quot;</span></span>
+<span id="cb177-8"><a href="dataviz.html#cb177-8"></a>lab val age_c agec1</span>
+<span id="cb177-9"><a href="dataviz.html#cb177-9"></a><span class="kw">gen</span> inc_m = inc <span class="kw">if</span> sex == 1</span>
+<span id="cb177-10"><a href="dataviz.html#cb177-10"></a><span class="kw">gen</span> inc_f = inc <span class="kw">if</span> sex == 2</span>
+<span id="cb177-11"><a href="dataviz.html#cb177-11"></a>lab <span class="kw">var</span> inc_m <span class="st">&quot;Männer&quot;</span></span>
+<span id="cb177-12"><a href="dataviz.html#cb177-12"></a>lab <span class="kw">var</span> inc_f <span class="st">&quot;Frauen&quot;</span></span></code></pre></div>
 </div>
 <div id="sep1" class="section level3">
 <h3><span class="header-section-number">4.6.2</span> <code>separate</code></h3>
 <p><code>separate</code> ist eine Abkürzung, um Angaben einer Variable entlang der Ausprägungen einer zweiten Variablen aufzuteilen. Das hilft uns bspw. die Aufteilung von <code>inc</code> nach dem Geschlecht (<code>sex</code>) zu vereinfachen. Wir können dies entweder mit zwei Befehlen mit <code>gen</code> und <code>if</code> durchführen oder diese zwei Schritte mit einem <code>separate</code> Befehl durchführen:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="dataviz.html#cb23-1"></a><span class="kw">gen</span> inc_m = inc <span class="kw">if</span> sex == 1</span>
-<span id="cb23-2"><a href="dataviz.html#cb23-2"></a><span class="kw">gen</span> inc_f = inc <span class="kw">if</span> sex == 2</span>
-<span id="cb23-3"><a href="dataviz.html#cb23-3"></a><span class="kw">separate</span> inc, <span class="kw">by</span>(sex)</span>
-<span id="cb23-4"><a href="dataviz.html#cb23-4"></a><span class="ot">list</span> inc sex inc_m inc_f inc1 inc2 <span class="kw">in</span> 1/10</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb178-1"><a href="dataviz.html#cb178-1"></a><span class="kw">gen</span> inc_m = inc <span class="kw">if</span> sex == 1</span>
+<span id="cb178-2"><a href="dataviz.html#cb178-2"></a><span class="kw">gen</span> inc_f = inc <span class="kw">if</span> sex == 2</span>
+<span id="cb178-3"><a href="dataviz.html#cb178-3"></a><span class="kw">separate</span> inc, <span class="kw">by</span>(sex)</span>
+<span id="cb178-4"><a href="dataviz.html#cb178-4"></a><span class="ot">list</span> inc sex inc_m inc_f inc1 inc2 <span class="kw">in</span> 1/10</span></code></pre></div>
 <pre><code> variable age_c not found
 r(111);
 
 
 
 
-(1,704 missing values generated)
+(1704 missing values generated)
 
-(1,773 missing values generated)
+(1773 missing values generated)
 
               storage   display    value
 variable name   type    format     label      variable label
@@ -501,8 +506,8 @@ inc2            int     %17.0g     inc        inc, sex == FRAU
 </div>
 <div class="footnotes">
 <hr />
-<ol start="1">
-<li id="fn1"><p>Was das genau ist, werden wir am Donnerstag besprechen. Für den Moment nur so viel: die Gerade gibt den Zusammenhangstrend beider Variablen wieder.<a href="dataviz.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<ol start="7">
+<li id="fn7"><p>Was das genau ist, werden wir am Donnerstag besprechen. Für den Moment nur so viel: die Gerade gibt den Zusammenhangstrend beider Variablen wieder.<a href="dataviz.html#fnref7" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="3.1 Kategoriale Merkmale mit tabulate beschreiben | GESIS Methodenseminar 2020" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
+
+
+<meta name="author" content="Andreas Filser" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020">
+
+<title>3.1 Kategoriale Merkmale mit tabulate beschreiben | GESIS Methodenseminar 2020</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#herzlich-willkommen">Herzlich Willkommen!</a></li>
+<li class="has-sub"><a href="1-Stata1.html#Stata1"><span class="toc-section-number">1</span> Einstieg in Stata</a><ul>
+<li><a href="1-1-taschenrechner.html#taschenrechner"><span class="toc-section-number">1.1</span> Taschenrechner</a></li>
+<li><a href="1-2-darstellung-in-diesem-skript.html#darstellung-in-diesem-skript"><span class="toc-section-number">1.2</span> Darstellung in diesem Skript</a></li>
+<li><a href="1-3-dofile-editor.html#dofile-editor"><span class="toc-section-number">1.3</span> DoFile Editor</a></li>
+<li><a href="1-4-datensätze-laden.html#datensätze-laden"><span class="toc-section-number">1.4</span> Datensätze laden</a></li>
+<li><a href="1-5-daten-codebücher-fragebogen.html#daten-codebücher-fragebogen"><span class="toc-section-number">1.5</span> Daten, Codebücher, Fragebogen</a></li>
+<li class="has-sub"><a href="1-6-überblicksbefehle.html#überblicksbefehle"><span class="toc-section-number">1.6</span> Überblicksbefehle</a><ul>
+<li><a href="1-6-überblicksbefehle.html#describe"><span class="toc-section-number">1.6.1</span> <code>describe</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#browse"><span class="toc-section-number">1.6.2</span> <code>browse</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#list"><span class="toc-section-number">1.6.3</span> <code>list</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#lookfor"><span class="toc-section-number">1.6.4</span> <code>lookfor</code></a></li>
+</ul></li>
+<li><a href="1-7-if-bedingung-nur-manche-zeilen-ansehen.html#if-bedingung---nur-manche-zeilen-ansehen"><span class="toc-section-number">1.7</span> if Bedingung - nur manche Zeilen ansehen</a></li>
+<li><a href="1-8-U1.html#U1"><span class="toc-section-number">1.8</span> Übungen</a></li>
+<li><a href="1-9-profi-übungen.html#profi-übungen"><span class="toc-section-number">1.9</span> Profi-Übungen</a></li>
+<li class="has-sub"><a href="1-10-weitere-anmerkungen.html#weitere-anmerkungen"><span class="toc-section-number">1.10</span> Weitere Anmerkungen</a><ul>
+<li><a href="1-10-weitere-anmerkungen.html#var_types"><span class="toc-section-number">1.10.1</span> Variablentypen</a></li>
+<li><a href="1-10-weitere-anmerkungen.html#otherfmts"><span class="toc-section-number">1.10.2</span> import anderer Dateiformate</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="2-Stata2.html#Stata2"><span class="toc-section-number">2</span> Arbeiten mit Datensätzen in Stata</a><ul>
+<li><a href="2-1-vorab-befehlsstruktur-hilfe.html#vorab-befehlsstruktur-hilfe"><span class="toc-section-number">2.1</span> Vorab: Befehlsstruktur &amp; Hilfe</a></li>
+<li><a href="2-2-auszählen-überblick-erhalten.html#auszählen-überblick-erhalten"><span class="toc-section-number">2.2</span> Auszählen &amp; Überblick erhalten</a></li>
+<li><a href="2-3-neue-variablen-erstellen.html#neue-variablen-erstellen"><span class="toc-section-number">2.3</span> Neue Variablen erstellen</a></li>
+<li><a href="2-4-bestehende-variablen-verändern.html#bestehende-variablen-verändern"><span class="toc-section-number">2.4</span> Bestehende Variablen verändern</a></li>
+<li><a href="2-5-gen-ist-gut-kontrolle-ist-besser.html#gen-ist-gut-kontrolle-ist-besser"><span class="toc-section-number">2.5</span> gen ist gut, Kontrolle ist besser</a></li>
+<li><a href="2-6-fehlende-werte.html#fehlende-werte"><span class="toc-section-number">2.6</span> Fehlende Werte</a></li>
+<li><a href="2-7-if-bedingungen-und-fehlende-werte.html#if-bedingungen-und-fehlende-werte"><span class="toc-section-number">2.7</span> if Bedingungen und fehlende Werte</a></li>
+<li><a href="2-8-keep-drop.html#keep-drop"><span class="toc-section-number">2.8</span> keep &amp; drop</a></li>
+<li><a href="2-9-labels-und-if-bedingungen.html#labels-und-if-bedingungen"><span class="toc-section-number">2.9</span> Labels und if-Bedingungen</a></li>
+<li><a href="2-10-nochmal-von-vorne-daten-neu-laden.html#nochmal-von-vorne-daten-neu-laden"><span class="toc-section-number">2.10</span> Nochmal von vorne: Daten neu laden</a></li>
+<li><a href="2-11-speichern.html#speichern"><span class="toc-section-number">2.11</span> Speichern</a></li>
+<li><a href="2-12-übungen.html#übungen"><span class="toc-section-number">2.12</span> Übungen</a></li>
+<li><a href="1-9-profi-übungen.html#profi-übungen"><span class="toc-section-number">2.13</span> Profi-Übungen</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-desc1.html#desc1"><span class="toc-section-number">3</span> Deskriptive Statistik</a><ul>
+<li class="has-sub"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#kategoriale-merkmale-mit-tabulate-beschreiben"><span class="toc-section-number">3.1</span> Kategoriale Merkmale mit <code>tabulate</code> beschreiben</a><ul>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#zwei-variablen-eine-tabelle-kontingenztabellen"><span class="toc-section-number">3.1.1</span> Zwei Variablen, eine Tabelle: Kontingenztabellen</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#in-prozent-relative-häufigkeiten"><span class="toc-section-number">3.1.2</span> In Prozent: Relative Häufigkeiten</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#pro-gruppe-1-zeilenprozente"><span class="toc-section-number">3.1.3</span> pro Gruppe 1: Zeilenprozente</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#pro-gruppe-2-spaltenprozente"><span class="toc-section-number">3.1.4</span> pro Gruppe 2: Spaltenprozente</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-2-metrische-variablen-beschreiben.html#metrische-variablen-beschreiben"><span class="toc-section-number">3.2</span> Metrische Variablen beschreiben</a><ul>
+<li><a href="3-2-metrische-variablen-beschreiben.html#summarize"><span class="toc-section-number">3.2.1</span> <code>summarize</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#tabstat"><span class="toc-section-number">3.2.2</span> <code>tabstat</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#by_vgl"><span class="toc-section-number">3.2.3</span> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#tabulate-mit-der-option-summarize"><span class="toc-section-number">3.2.4</span> <code>tabulate</code> mit der Option <code>summarize()</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#variance"><span class="toc-section-number">3.2.5</span> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#sk_kur"><span class="toc-section-number">3.2.6</span> Schiefe &amp; Wölbung</a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#gini-koeffizient"><span class="toc-section-number">3.2.7</span> Gini-Koeffizient</a></li>
+</ul></li>
+<li><a href="2-12-übungen.html#übungen"><span class="toc-section-number">3.3</span> Übungen</a></li>
+<li><a href="1-9-profi-übungen.html#profi-übungen"><span class="toc-section-number">3.4</span> Profi-Übungen</a></li>
+<li><a href="3-5-vlabel.html#vlabel"><span class="toc-section-number">3.5</span> Exkurs: labels vergeben</a></li>
+<li><a href="3-6-bys-su.html#bys_su"><span class="toc-section-number">3.6</span> Exkurs: Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+<li><a href="3-7-if-vgl.html#if_vgl"><span class="toc-section-number">3.7</span> Exkurs: Kennzahlvergleiche mit <code>if</code></a></li>
+</ul></li>
+<li class="has-sub"><a href="4-dataviz.html#dataviz"><span class="toc-section-number">4</span> Datenvisualisierung in Stata</a><ul>
+<li><a href="4-1-erste-entscheidungen.html#erste-entscheidungen"><span class="toc-section-number">4.1</span> Erste Entscheidungen</a></li>
+<li class="has-sub"><a href="4-2-grafik-syntax-in-stata.html#grafik-syntax-in-stata"><span class="toc-section-number">4.2</span> Grafik-Syntax in Stata</a><ul>
+<li><a href="4-2-grafik-syntax-in-stata.html#aufbau"><span class="toc-section-number">4.2.1</span> Aufbau</a></li>
+<li><a href="4-2-grafik-syntax-in-stata.html#twoway"><span class="toc-section-number">4.2.2</span> twoway</a></li>
+<li><a href="4-2-grafik-syntax-in-stata.html#kombinieren-von-zwei-twoway-grafiken"><span class="toc-section-number">4.2.3</span> Kombinieren von zwei twoway-Grafiken</a></li>
+<li><a href="4-2-grafik-syntax-in-stata.html#twoway-varianten"><span class="toc-section-number">4.2.4</span> twoway Varianten</a></li>
+<li><a href="4-2-grafik-syntax-in-stata.html#vorlagen"><span class="toc-section-number">4.2.5</span> Vorlagen</a></li>
+</ul></li>
+<li class="has-sub"><a href="4-3-optionen.html#optionen"><span class="toc-section-number">4.3</span> Optionen</a><ul>
+<li><a href="4-3-optionen.html#beschriftungen"><span class="toc-section-number">4.3.1</span> Beschriftungen</a></li>
+<li><a href="4-3-optionen.html#farben"><span class="toc-section-number">4.3.2</span> Farben</a></li>
+<li><a href="4-3-optionen.html#subgruppen"><span class="toc-section-number">4.3.3</span> Subgruppen</a></li>
+</ul></li>
+<li class="has-sub"><a href="4-4-beispiele-zum-selbst-anpassen.html#beispiele-zum-selbst-anpassen"><span class="toc-section-number">4.4</span> Beispiele zum selbst anpassen</a><ul>
+<li><a href="4-4-beispiele-zum-selbst-anpassen.html#boxplot"><span class="toc-section-number">4.4.1</span> Boxplot</a></li>
+</ul></li>
+<li><a href="4-5-bevölkerungspyramide.html#bevölkerungspyramide"><span class="toc-section-number">4.5</span> Bevölkerungspyramide</a></li>
+<li class="has-sub"><a href="4-6-anhang.html#anhang"><span class="toc-section-number">4.6</span> Anhang</a><ul>
+<li><a href="4-6-anhang.html#aufb1"><span class="toc-section-number">4.6.1</span> Aufbereitung für Boxplot</a></li>
+<li><a href="4-6-anhang.html#sep1"><span class="toc-section-number">4.6.2</span> <code>separate</code></a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="5-zshg.html#zshg"><span class="toc-section-number">5</span> Zusammenhangsmaße</a><ul>
+<li><a href="5-1-metrisch-skalierte-variablen.html#metrisch-skalierte-variablen"><span class="toc-section-number">5.1</span> Metrisch skalierte Variablen</a></li>
+<li class="has-sub"><a href="5-2-regression.html#regression"><span class="toc-section-number">5.2</span> Regression</a><ul>
+<li><a href="5-2-regression.html#beispieldatensatz"><span class="toc-section-number">5.2.1</span> Beispieldatensatz</a></li>
+<li><a href="5-2-regression.html#idee-einer-regression"><span class="toc-section-number">5.2.2</span> Idee einer Regression</a></li>
+<li><a href="5-2-regression.html#residuen"><span class="toc-section-number">5.2.3</span> Residuen</a></li>
+<li><a href="5-2-regression.html#quadrierte-residuen"><span class="toc-section-number">5.2.4</span> Quadrierte Residuen</a></li>
+<li><a href="5-2-regression.html#interpretation-der-regression"><span class="toc-section-number">5.2.5</span> Interpretation der Regression</a></li>
+<li><a href="5-2-regression.html#vorhergesagte-werte"><span class="toc-section-number">5.2.6</span> Vorhergesagte Werte</a></li>
+<li><a href="5-2-regression.html#residuen-teil-2"><span class="toc-section-number">5.2.7</span> Residuen Teil 2</a></li>
+<li><a href="5-2-regression.html#modellgüte"><span class="toc-section-number">5.2.8</span> Modellgüte</a></li>
+</ul></li>
+<li><a href="5-3-ordinal-skalierte-merkmale.html#ordinal-skalierte-merkmale"><span class="toc-section-number">5.3</span> Ordinal skalierte Merkmale</a></li>
+<li class="has-sub"><a href="5-4-nominal-skalierte-variablen.html#nominal-skalierte-variablen"><span class="toc-section-number">5.4</span> Nominal skalierte Variablen</a><ul>
+<li><a href="5-4-nominal-skalierte-variablen.html#odds-ratio"><span class="toc-section-number">5.4.1</span> Odds Ratio</a></li>
+<li><a href="5-4-nominal-skalierte-variablen.html#chi²-basierte-maße"><span class="toc-section-number">5.4.2</span> Chi²-basierte Maße</a></li>
+<li><a href="5-4-nominal-skalierte-variablen.html#cramers-upsilon"><span class="toc-section-number">5.4.3</span> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+<li><a href="5-4-nominal-skalierte-variablen.html#indifferenztabelle"><span class="toc-section-number">5.4.4</span> Indifferenztabelle</a></li>
+<li><a href="5-4-nominal-skalierte-variablen.html#phi"><span class="toc-section-number">5.4.5</span> <span class="math inline">\(\phi\)</span></a></li>
+</ul></li>
+</ul></li>
+<li><a href="6-zshg2.html#zshg2"><span class="toc-section-number">6</span> Zusammenhänge 2</a></li>
+<li><a href="7-inf1.html#inf1"><span class="toc-section-number">7</span> Inferenzstatistik I</a></li>
+<li><a href="8-inf2.html#inf2"><span class="toc-section-number">8</span> Inferenzstatistik II</a></li>
+<li><a href="9-hypo.html#hypo"><span class="toc-section-number">9</span> Hypothesentests</a></li>
+<li><a href="10-export1.html#export1"><span class="toc-section-number">10</span> Ergebnisexport &amp; weitere Tipps</a></li>
+<li class="has-sub"><a href="11-adva.html#adva"><span class="toc-section-number">11</span> Fortgeschrittene Themen</a><ul>
+<li><a href="11-1-wertelabels.html#wertelabels"><span class="toc-section-number">11.1</span> Wertelabels</a></li>
+<li><a href="11-2-sortieren.html#sortieren"><span class="toc-section-number">11.2</span> sortieren</a></li>
+<li><a href="11-3-missings-unterscheiden.html#missings-unterscheiden"><span class="toc-section-number">11.3</span> missings unterscheiden</a></li>
+<li><a href="11-4-indikatoren-umdrehen.html#indikatoren-umdrehen"><span class="toc-section-number">11.4</span> Indikatoren umdrehen</a></li>
+<li><a href="11-5-informationen-aus-mehreren-variablen.html#informationen-aus-mehreren-variablen"><span class="toc-section-number">11.5</span> Informationen aus mehreren Variablen</a></li>
+<li><a href="11-6-informationen-aus-mehreren-datensätzen.html#informationen-aus-mehreren-datensätzen"><span class="toc-section-number">11.6</span> Informationen aus mehreren Datensätzen</a></li>
+<li><a href="11-7-arbeiten-mit-textvariablen.html#arbeiten-mit-textvariablen"><span class="toc-section-number">11.7</span> Arbeiten mit Textvariablen</a></li>
+<li><a href="11-8-egen.html#egen"><span class="toc-section-number">11.8</span> egen</a></li>
+<li><a href="11-9-gruppierte-berechnungen.html#gruppierte-berechnungen"><span class="toc-section-number">11.9</span> gruppierte Berechnungen</a></li>
+<li><a href="11-10-collapse.html#collapse"><span class="toc-section-number">11.10</span> collapse</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="kategoriale-merkmale-mit-tabulate-beschreiben" class="section level2">
+<h2><span class="header-section-number">3.1</span> Kategoriale Merkmale mit <code>tabulate</code> beschreiben</h2>
+<p>Ganz nebenbei haben wir in Kapitel 2 bereits die Häufigkeitstabellen kennengelernt, beispielsweise können wir mit <code>tabulate</code> die Ausprägungen der Variable <code>xr20</code> zur Internetnutzung auszählen:</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb93-1"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#cb93-1"></a><span class="kw">tabulate</span> xr20</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize . qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . tab xr20
+## 
+## WIE HAEUFIG NUTZEN |
+##  SIE DAS INTERNET? |      Freq.     Percent        Cum.
+## -------------------+-----------------------------------
+##        TNZ: FILTER |        645       18.55       18.55
+##       KEINE ANGABE |          6        0.17       18.72
+##        WEISS NICHT |          2        0.06       18.78
+##  MEHRMALS TAEGLICH |      1,885       54.21       72.99
+##    EINMAL TAEGLICH |        499       14.35       87.35
+## MEHRMALS I.D.WOCHE |        290        8.34       95.69
+##  ETWA 1X PRO WOCHE |         72        2.07       97.76
+##           SELTENER |         74        2.13       99.88
+##                NIE |          4        0.12      100.00
+## -------------------+-----------------------------------
+##              Total |      3,477      100.00</code></pre>
+<p>Wir bekommen hier die absoluten sowie relativen Häufigkeiten angezeigt. In der ersten Spalte werden die verschiedenen Ausprägungen aufgelistet, in der zweiten Spalte stehen dann die Häufigkeit der jeweiligen Ausprägung, in der dritten Spalte finden wir die relativen Häufigkeiten und in der vierten Spalte finden wir die kumulierten relativen Häufigkeiten. Da auch für diese Variable Labels (mehr dazu <a href="3-5-vlabel.html#vlabel">hier</a>) vergeben wurden, sehen wir sofort, für welche inhaltlichen Kategorien die Zahlencodes jeweils stehen. Bspw. steht <code>1</code> dafür, dass der*die Befragte mehrmals täglich das Internet nutzt. Möchten wir die dahinterstehenden Zahlencodes sehen, müssen wir die Option <code>,nol</code> verwenden:</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb95-1"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#cb95-1"></a><span class="kw">tabulate</span> xr20,nol</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize . qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . tab xr20,nol
+## 
+## WIE HAEUFIG |
+##  NUTZEN SIE |
+##         DAS |
+##   INTERNET? |      Freq.     Percent        Cum.
+## ------------+-----------------------------------
+##         -10 |        645       18.55       18.55
+##          -9 |          6        0.17       18.72
+##          -8 |          2        0.06       18.78
+##           1 |      1,885       54.21       72.99
+##           2 |        499       14.35       87.35
+##           3 |        290        8.34       95.69
+##           4 |         72        2.07       97.76
+##           5 |         74        2.13       99.88
+##           6 |          4        0.12      100.00
+## ------------+-----------------------------------
+##       Total |      3,477      100.00</code></pre>
+<p>1885 Befragte nutzen das Internet also mehrmals täglich, 499 Befragte einmal am Tag. Außerdem enthält der Datensatz 4 Befragte, die das Internet nicht nutzen.</p>
+<p>Aus dem Codebuch (oder mit <code>labelbook</code>) erfahren wir, dass <code>-10</code>,<code>-9</code>,<code>-8</code> für <code>TNZ: FILTER</code>,<code>KEINE ANGABE</code>,<code>WEISS NICHT</code>. Wie in Session 2 gezeigt, können wir mit <code>mvdecode</code> diese Ausprägungen auf <code>.</code> setzen und Stata so mitteilen, dass es sich um fehlende Werte handelt. Dazu müssen wir in <code>,mv()</code> die entsprechenden Zahlencodes angeben:Details im Codebuch):</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb97-1"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#cb97-1"></a><span class="kw">mvdecode</span> xr20, mv(-10 -9 -8)</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize . qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . mvdecode xr20, mv(-10 -9 -8)
+##         xr20: 653 missing values generated</code></pre>
+<p>Wenn wir jetzt <code>tabulate</code> aufrufen, dann bekommen wir nur noch die gültigen Fälle angezeigt:</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb99-1"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#cb99-1"></a><span class="kw">tabulate</span> xr20</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize . qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode xr20, mv(-10 -9 -8)
+## 
+## . tabulate xr20
+## 
+## WIE HAEUFIG NUTZEN |
+##  SIE DAS INTERNET? |      Freq.     Percent        Cum.
+## -------------------+-----------------------------------
+##  MEHRMALS TAEGLICH |      1,885       66.75       66.75
+##    EINMAL TAEGLICH |        499       17.67       84.42
+## MEHRMALS I.D.WOCHE |        290       10.27       94.69
+##  ETWA 1X PRO WOCHE |         72        2.55       97.24
+##           SELTENER |         74        2.62       99.86
+##                NIE |          4        0.14      100.00
+## -------------------+-----------------------------------
+##              Total |      2,824      100.00</code></pre>
+<p>Jetzt macht aus die Interpretation der kumulierten relativen Häufigkeiten inhaltlich Sinn. So erfahren wir aus der vierten Spalte, dass bspw. 97.24% aller Befragten mind. einmal pro Woche das Internet nutzen.
+Außerdem erfahren wir aus der dritten Spalte erfahren, dass der Anteil der Nicht-Nutzer*innen 0.14% der Befragten (mit einer gültigen Angabe) beträgt.</p>
+<p>Wir können aber mit der Option <code>m</code> die Auszählung von <code>.</code> explizit anfordern:</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb101-1"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#cb101-1"></a><span class="kw">tabulate</span> xr20,<span class="fu">m</span></span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize . qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode xr20, mv(-10 -9 -8)
+## 
+## . tabulate xr20, m
+## 
+## WIE HAEUFIG NUTZEN |
+##  SIE DAS INTERNET? |      Freq.     Percent        Cum.
+## -------------------+-----------------------------------
+##  MEHRMALS TAEGLICH |      1,885       54.21       54.21
+##    EINMAL TAEGLICH |        499       14.35       68.56
+## MEHRMALS I.D.WOCHE |        290        8.34       76.91
+##  ETWA 1X PRO WOCHE |         72        2.07       78.98
+##           SELTENER |         74        2.13       81.10
+##                NIE |          4        0.12       81.22
+##                  . |        653       18.78      100.00
+## -------------------+-----------------------------------
+##              Total |      3,477      100.00</code></pre>
+<div id="zwei-variablen-eine-tabelle-kontingenztabellen" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Zwei Variablen, eine Tabelle: Kontingenztabellen</h3>
+<p>Neben der einfachen Verteilung der Variable interessiert uns aber meistens, ob sich die Verteilung zwischen Gruppen unterscheidet. Hierfür sind Kontingenztabellen ein wichtiges und sehr häuifg verwendetes Werkzeug.</p>
+<p>Aus Kontingenztabellen erfahren wir, wie häufig Merkmalskombinationen auftreten. Auch für Kontingenztabellen können wir ebenfalls <code>tabulate</code> verwenden. Zum Beispiel können wir uns eine Tabelle anzeigen lassen, die uns die Internetnutzung getrennt nach Geschlechtern zeigt. Da die Variable <code>sex</code> keine Missings hat, können wir direkt loslegen.</p>
+<p>Für die Kontingenztabelle geben wir dann nach <code>tabulate</code> die beiden Variablen an, welche die Zeilen und Spalten definieren:</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb103-1"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#cb103-1"></a><span class="kw">tabulate</span> xr20 sex</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize . qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+## 
+## . qui mvdecode xr20, mv(-10 -9 -8)
+## 
+## . tabulate xr20 sex
+## 
+##                    |      GESCHLECHT,
+## WIE HAEUFIG NUTZEN |      BEFRAGTE(R)
+##  SIE DAS INTERNET? |      MANN       FRAU |     Total
+## -------------------+----------------------+----------
+##  MEHRMALS TAEGLICH |     1,012        873 |     1,885 
+##    EINMAL TAEGLICH |       251        248 |       499 
+## MEHRMALS I.D.WOCHE |       137        153 |       290 
+##  ETWA 1X PRO WOCHE |        36         36 |        72 
+##           SELTENER |        30         44 |        74 
+##                NIE |         2          2 |         4 
+## -------------------+----------------------+----------
+##              Total |     1,468      1,356 |     2,824</code></pre>
+<p>Wir erkennen aus dieser Tabelle beispielsweise, dass 251 Männer und 248 Frauen einmal täglich das Internet nutzen.</p>
+</div>
+<div id="in-prozent-relative-häufigkeiten" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> In Prozent: Relative Häufigkeiten</h3>
+<p>Auch hier können wir uns die relativen Häufigkeiten anzeigen lassen, indem wir die Option <code>,cell</code> anwenden:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb105-1"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#cb105-1"></a><span class="kw">tabulate</span> xr20 sex, cell</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize . qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+## 
+## . qui mvdecode xr20, mv(-10 -9 -8)
+## 
+## . tabulate xr20 sex, cell
+## 
+## +-----------------+
+## | Key             |
+## |-----------------|
+## |    frequency    |
+## | cell percentage |
+## +-----------------+
+## 
+##                    |      GESCHLECHT,
+## WIE HAEUFIG NUTZEN |      BEFRAGTE(R)
+##  SIE DAS INTERNET? |      MANN       FRAU |     Total
+## -------------------+----------------------+----------
+##  MEHRMALS TAEGLICH |     1,012        873 |     1,885 
+##                    |     35.84      30.91 |     66.75 
+## -------------------+----------------------+----------
+##    EINMAL TAEGLICH |       251        248 |       499 
+##                    |      8.89       8.78 |     17.67 
+## -------------------+----------------------+----------
+## MEHRMALS I.D.WOCHE |       137        153 |       290 
+##                    |      4.85       5.42 |     10.27 
+## -------------------+----------------------+----------
+##  ETWA 1X PRO WOCHE |        36         36 |        72 
+##                    |      1.27       1.27 |      2.55 
+## -------------------+----------------------+----------
+##           SELTENER |        30         44 |        74 
+##                    |      1.06       1.56 |      2.62 
+## -------------------+----------------------+----------
+##                NIE |         2          2 |         4 
+##                    |      0.07       0.07 |      0.14 
+## -------------------+----------------------+----------
+##              Total |     1,468      1,356 |     2,824 
+##                    |     51.98      48.02 |    100.00</code></pre>
+<p>Um die Tabelle übersichtlich zu halten, können wir mit <code>nofreq</code> die absoluten Häufigkeiten ausblenden:</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb107-1"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#cb107-1"></a><span class="kw">tabulate</span> xr20 sex, cell nofreq</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize . qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+## 
+## . qui mvdecode xr20, mv(-10 -9 -8)
+## 
+## . tabulate xr20 sex, cell nofreq
+## 
+##                    |      GESCHLECHT,
+## WIE HAEUFIG NUTZEN |      BEFRAGTE(R)
+##  SIE DAS INTERNET? |      MANN       FRAU |     Total
+## -------------------+----------------------+----------
+##  MEHRMALS TAEGLICH |     35.84      30.91 |     66.75 
+##    EINMAL TAEGLICH |      8.89       8.78 |     17.67 
+## MEHRMALS I.D.WOCHE |      4.85       5.42 |     10.27 
+##  ETWA 1X PRO WOCHE |      1.27       1.27 |      2.55 
+##           SELTENER |      1.06       1.56 |      2.62 
+##                NIE |      0.07       0.07 |      0.14 
+## -------------------+----------------------+----------
+##              Total |     51.98      48.02 |    100.00</code></pre>
+<p>Die hier dargestellten relativen Häufigkeiten beziehen sich jeweils auf die Gesamtzahl der Befragten. Formal dargestellt wird also für die Kombination (<code>xr20=4</code>) und ledig (<code>sex = 2</code>) die Anzahl der 35-59 Jahre alten Befragten durch die Anzahl <strong>aller Befragten</strong> geteilt: <span class="math inline">\(\frac{\text{Anzahl 1x/Woche Internet nutzender Frauen}}{\text{Gesamtzahl der Befragten}}\)</span> - Wir können also aus dieser Tabelle ablesen, dass 1,27% der Befragten <em>weiblich und wöchentliche Internet-Userinnen</em> sind.</p>
+<p>Für den Vergleich zwischen Gruppen sind aber in der Regel die <em>bedingten relativen Häufigkeiten</em> noch informativer. Hier kommt es jetzt darauf an, welche der beiden Variablen die Gruppen definieren sollen und welche Variable wir untersuchen möchten:</p>
+</div>
+<div id="pro-gruppe-1-zeilenprozente" class="section level3">
+<h3><span class="header-section-number">3.1.3</span> pro Gruppe 1: Zeilenprozente</h3>
+<p>Wir können diese Tabelle auch mit Zeilenprozenten anzeigen lassen, indem wir die Option <code>row</code> verwenden:</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb109-1"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#cb109-1"></a><span class="kw">tabulate</span> xr20 sex, <span class="ot">row</span> nofreq</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize . qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+## 
+## . qui mvdecode xr20, mv(-10 -9 -8)
+## 
+## . tabulate xr20 sex, row nofreq
+## 
+##                    |      GESCHLECHT,
+## WIE HAEUFIG NUTZEN |      BEFRAGTE(R)
+##  SIE DAS INTERNET? |      MANN       FRAU |     Total
+## -------------------+----------------------+----------
+##  MEHRMALS TAEGLICH |     53.69      46.31 |    100.00 
+##    EINMAL TAEGLICH |     50.30      49.70 |    100.00 
+## MEHRMALS I.D.WOCHE |     47.24      52.76 |    100.00 
+##  ETWA 1X PRO WOCHE |     50.00      50.00 |    100.00 
+##           SELTENER |     40.54      59.46 |    100.00 
+##                NIE |     50.00      50.00 |    100.00 
+## -------------------+----------------------+----------
+##              Total |     51.98      48.02 |    100.00</code></pre>
+<p><em>Achtung!</em> Damit ändert sich jeweils die Interpretation der Tabelle! Wir ändern durch <code>row</code> die Bezugsgröße oder formal ausgedrückt den Nenner:</p>
+<p>Für die <strong>Zeilenprozente</strong> werden die Werte in Bezug zu den Zeilensummen gesetzt. Also wird die Anzahl der ledigen 35-59 Jährigen ins Verhältnis zur Gesamtzahl der 1x/Woche Internet nutzenden Befragten gesetzt: <span class="math inline">\(\frac{\text{Anzahl 1x/Woche Internet nutzender Frauen}}{\text{Anzahl 1x/Woche Internet nutzender Befragter}}\)</span></p>
+<p>Interpretation: 50.00% <em>der 1x/Woche Internet nutzenden Befragten</em> sind Frauen.</p>
+</div>
+<div id="pro-gruppe-2-spaltenprozente" class="section level3">
+<h3><span class="header-section-number">3.1.4</span> pro Gruppe 2: Spaltenprozente</h3>
+<p>Wir können diese Tabelle auch mit Spaltenprozenten anzeigen lassen, indem wir die Option <code>col</code> verwenden:</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb111-1"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#cb111-1"></a><span class="kw">tabulate</span> xr20 sex, col nofreq</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize . qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+## 
+## . qui mvdecode xr20, mv(-10 -9 -8)
+## 
+## . tabulate xr20 sex, col nofreq
+## 
+##                    |      GESCHLECHT,
+## WIE HAEUFIG NUTZEN |      BEFRAGTE(R)
+##  SIE DAS INTERNET? |      MANN       FRAU |     Total
+## -------------------+----------------------+----------
+##  MEHRMALS TAEGLICH |     68.94      64.38 |     66.75 
+##    EINMAL TAEGLICH |     17.10      18.29 |     17.67 
+## MEHRMALS I.D.WOCHE |      9.33      11.28 |     10.27 
+##  ETWA 1X PRO WOCHE |      2.45       2.65 |      2.55 
+##           SELTENER |      2.04       3.24 |      2.62 
+##                NIE |      0.14       0.15 |      0.14 
+## -------------------+----------------------+----------
+##              Total |    100.00     100.00 |    100.00</code></pre>
+<p>Für die <strong>Spaltenprozente</strong> werden die Werte in Bezug zu den Spaltensummen gesetzt. Also wird die Anzahl der 1x/Woche Internet nutzenden Frauen ins Verhältnis zur Zahl der befragten Frauen gesetzt: <span class="math inline">\(\frac{\text{Anzahl 1x/Woche Internet nutzender Frauen}}{\text{Gesamtzahl der befragten Frauen}}\)</span> - Interpretation: “2,65% der <em>befragten Frauen</em> nutzen einmal pro Woche das Internet”</p>
+</div>
+</div>
+<p style="text-align: center;">
+<a href="3-desc1.html"><button class="btn btn-default">Previous</button></a>
+<a href="3-2-metrische-variablen-beschreiben.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

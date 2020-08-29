@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="3.2 Metrische Variablen beschreiben | GESIS Methodenseminar 2020" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
+
+
+<meta name="author" content="Andreas Filser" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020">
+
+<title>3.2 Metrische Variablen beschreiben | GESIS Methodenseminar 2020</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#herzlich-willkommen">Herzlich Willkommen!</a></li>
+<li class="has-sub"><a href="1-Stata1.html#Stata1"><span class="toc-section-number">1</span> Einstieg in Stata</a><ul>
+<li><a href="1-1-taschenrechner.html#taschenrechner"><span class="toc-section-number">1.1</span> Taschenrechner</a></li>
+<li><a href="1-2-darstellung-in-diesem-skript.html#darstellung-in-diesem-skript"><span class="toc-section-number">1.2</span> Darstellung in diesem Skript</a></li>
+<li><a href="1-3-dofile-editor.html#dofile-editor"><span class="toc-section-number">1.3</span> DoFile Editor</a></li>
+<li><a href="1-4-datensätze-laden.html#datensätze-laden"><span class="toc-section-number">1.4</span> Datensätze laden</a></li>
+<li><a href="1-5-daten-codebücher-fragebogen.html#daten-codebücher-fragebogen"><span class="toc-section-number">1.5</span> Daten, Codebücher, Fragebogen</a></li>
+<li class="has-sub"><a href="1-6-überblicksbefehle.html#überblicksbefehle"><span class="toc-section-number">1.6</span> Überblicksbefehle</a><ul>
+<li><a href="1-6-überblicksbefehle.html#describe"><span class="toc-section-number">1.6.1</span> <code>describe</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#browse"><span class="toc-section-number">1.6.2</span> <code>browse</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#list"><span class="toc-section-number">1.6.3</span> <code>list</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#lookfor"><span class="toc-section-number">1.6.4</span> <code>lookfor</code></a></li>
+</ul></li>
+<li><a href="1-7-if-bedingung-nur-manche-zeilen-ansehen.html#if-bedingung---nur-manche-zeilen-ansehen"><span class="toc-section-number">1.7</span> if Bedingung - nur manche Zeilen ansehen</a></li>
+<li><a href="1-8-U1.html#U1"><span class="toc-section-number">1.8</span> Übungen</a></li>
+<li><a href="1-9-profi-übungen.html#profi-übungen"><span class="toc-section-number">1.9</span> Profi-Übungen</a></li>
+<li class="has-sub"><a href="1-10-weitere-anmerkungen.html#weitere-anmerkungen"><span class="toc-section-number">1.10</span> Weitere Anmerkungen</a><ul>
+<li><a href="1-10-weitere-anmerkungen.html#var_types"><span class="toc-section-number">1.10.1</span> Variablentypen</a></li>
+<li><a href="1-10-weitere-anmerkungen.html#otherfmts"><span class="toc-section-number">1.10.2</span> import anderer Dateiformate</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="2-Stata2.html#Stata2"><span class="toc-section-number">2</span> Arbeiten mit Datensätzen in Stata</a><ul>
+<li><a href="2-1-vorab-befehlsstruktur-hilfe.html#vorab-befehlsstruktur-hilfe"><span class="toc-section-number">2.1</span> Vorab: Befehlsstruktur &amp; Hilfe</a></li>
+<li><a href="2-2-auszählen-überblick-erhalten.html#auszählen-überblick-erhalten"><span class="toc-section-number">2.2</span> Auszählen &amp; Überblick erhalten</a></li>
+<li><a href="2-3-neue-variablen-erstellen.html#neue-variablen-erstellen"><span class="toc-section-number">2.3</span> Neue Variablen erstellen</a></li>
+<li><a href="2-4-bestehende-variablen-verändern.html#bestehende-variablen-verändern"><span class="toc-section-number">2.4</span> Bestehende Variablen verändern</a></li>
+<li><a href="2-5-gen-ist-gut-kontrolle-ist-besser.html#gen-ist-gut-kontrolle-ist-besser"><span class="toc-section-number">2.5</span> gen ist gut, Kontrolle ist besser</a></li>
+<li><a href="2-6-fehlende-werte.html#fehlende-werte"><span class="toc-section-number">2.6</span> Fehlende Werte</a></li>
+<li><a href="2-7-if-bedingungen-und-fehlende-werte.html#if-bedingungen-und-fehlende-werte"><span class="toc-section-number">2.7</span> if Bedingungen und fehlende Werte</a></li>
+<li><a href="2-8-keep-drop.html#keep-drop"><span class="toc-section-number">2.8</span> keep &amp; drop</a></li>
+<li><a href="2-9-labels-und-if-bedingungen.html#labels-und-if-bedingungen"><span class="toc-section-number">2.9</span> Labels und if-Bedingungen</a></li>
+<li><a href="2-10-nochmal-von-vorne-daten-neu-laden.html#nochmal-von-vorne-daten-neu-laden"><span class="toc-section-number">2.10</span> Nochmal von vorne: Daten neu laden</a></li>
+<li><a href="2-11-speichern.html#speichern"><span class="toc-section-number">2.11</span> Speichern</a></li>
+<li><a href="2-12-übungen.html#übungen"><span class="toc-section-number">2.12</span> Übungen</a></li>
+<li><a href="1-9-profi-übungen.html#profi-übungen"><span class="toc-section-number">2.13</span> Profi-Übungen</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-desc1.html#desc1"><span class="toc-section-number">3</span> Deskriptive Statistik</a><ul>
+<li class="has-sub"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#kategoriale-merkmale-mit-tabulate-beschreiben"><span class="toc-section-number">3.1</span> Kategoriale Merkmale mit <code>tabulate</code> beschreiben</a><ul>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#zwei-variablen-eine-tabelle-kontingenztabellen"><span class="toc-section-number">3.1.1</span> Zwei Variablen, eine Tabelle: Kontingenztabellen</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#in-prozent-relative-häufigkeiten"><span class="toc-section-number">3.1.2</span> In Prozent: Relative Häufigkeiten</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#pro-gruppe-1-zeilenprozente"><span class="toc-section-number">3.1.3</span> pro Gruppe 1: Zeilenprozente</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#pro-gruppe-2-spaltenprozente"><span class="toc-section-number">3.1.4</span> pro Gruppe 2: Spaltenprozente</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-2-metrische-variablen-beschreiben.html#metrische-variablen-beschreiben"><span class="toc-section-number">3.2</span> Metrische Variablen beschreiben</a><ul>
+<li><a href="3-2-metrische-variablen-beschreiben.html#summarize"><span class="toc-section-number">3.2.1</span> <code>summarize</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#tabstat"><span class="toc-section-number">3.2.2</span> <code>tabstat</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#by_vgl"><span class="toc-section-number">3.2.3</span> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#tabulate-mit-der-option-summarize"><span class="toc-section-number">3.2.4</span> <code>tabulate</code> mit der Option <code>summarize()</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#variance"><span class="toc-section-number">3.2.5</span> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#sk_kur"><span class="toc-section-number">3.2.6</span> Schiefe &amp; Wölbung</a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#gini-koeffizient"><span class="toc-section-number">3.2.7</span> Gini-Koeffizient</a></li>
+</ul></li>
+<li><a href="2-12-übungen.html#übungen"><span class="toc-section-number">3.3</span> Übungen</a></li>
+<li><a href="1-9-profi-übungen.html#profi-übungen"><span class="toc-section-number">3.4</span> Profi-Übungen</a></li>
+<li><a href="3-5-vlabel.html#vlabel"><span class="toc-section-number">3.5</span> Exkurs: labels vergeben</a></li>
+<li><a href="3-6-bys-su.html#bys_su"><span class="toc-section-number">3.6</span> Exkurs: Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+<li><a href="3-7-if-vgl.html#if_vgl"><span class="toc-section-number">3.7</span> Exkurs: Kennzahlvergleiche mit <code>if</code></a></li>
+</ul></li>
+<li class="has-sub"><a href="4-dataviz.html#dataviz"><span class="toc-section-number">4</span> Datenvisualisierung in Stata</a><ul>
+<li><a href="4-1-erste-entscheidungen.html#erste-entscheidungen"><span class="toc-section-number">4.1</span> Erste Entscheidungen</a></li>
+<li class="has-sub"><a href="4-2-grafik-syntax-in-stata.html#grafik-syntax-in-stata"><span class="toc-section-number">4.2</span> Grafik-Syntax in Stata</a><ul>
+<li><a href="4-2-grafik-syntax-in-stata.html#aufbau"><span class="toc-section-number">4.2.1</span> Aufbau</a></li>
+<li><a href="4-2-grafik-syntax-in-stata.html#twoway"><span class="toc-section-number">4.2.2</span> twoway</a></li>
+<li><a href="4-2-grafik-syntax-in-stata.html#kombinieren-von-zwei-twoway-grafiken"><span class="toc-section-number">4.2.3</span> Kombinieren von zwei twoway-Grafiken</a></li>
+<li><a href="4-2-grafik-syntax-in-stata.html#twoway-varianten"><span class="toc-section-number">4.2.4</span> twoway Varianten</a></li>
+<li><a href="4-2-grafik-syntax-in-stata.html#vorlagen"><span class="toc-section-number">4.2.5</span> Vorlagen</a></li>
+</ul></li>
+<li class="has-sub"><a href="4-3-optionen.html#optionen"><span class="toc-section-number">4.3</span> Optionen</a><ul>
+<li><a href="4-3-optionen.html#beschriftungen"><span class="toc-section-number">4.3.1</span> Beschriftungen</a></li>
+<li><a href="4-3-optionen.html#farben"><span class="toc-section-number">4.3.2</span> Farben</a></li>
+<li><a href="4-3-optionen.html#subgruppen"><span class="toc-section-number">4.3.3</span> Subgruppen</a></li>
+</ul></li>
+<li class="has-sub"><a href="4-4-beispiele-zum-selbst-anpassen.html#beispiele-zum-selbst-anpassen"><span class="toc-section-number">4.4</span> Beispiele zum selbst anpassen</a><ul>
+<li><a href="4-4-beispiele-zum-selbst-anpassen.html#boxplot"><span class="toc-section-number">4.4.1</span> Boxplot</a></li>
+</ul></li>
+<li><a href="4-5-bevölkerungspyramide.html#bevölkerungspyramide"><span class="toc-section-number">4.5</span> Bevölkerungspyramide</a></li>
+<li class="has-sub"><a href="4-6-anhang.html#anhang"><span class="toc-section-number">4.6</span> Anhang</a><ul>
+<li><a href="4-6-anhang.html#aufb1"><span class="toc-section-number">4.6.1</span> Aufbereitung für Boxplot</a></li>
+<li><a href="4-6-anhang.html#sep1"><span class="toc-section-number">4.6.2</span> <code>separate</code></a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="5-zshg.html#zshg"><span class="toc-section-number">5</span> Zusammenhangsmaße</a><ul>
+<li><a href="5-1-metrisch-skalierte-variablen.html#metrisch-skalierte-variablen"><span class="toc-section-number">5.1</span> Metrisch skalierte Variablen</a></li>
+<li class="has-sub"><a href="5-2-regression.html#regression"><span class="toc-section-number">5.2</span> Regression</a><ul>
+<li><a href="5-2-regression.html#beispieldatensatz"><span class="toc-section-number">5.2.1</span> Beispieldatensatz</a></li>
+<li><a href="5-2-regression.html#idee-einer-regression"><span class="toc-section-number">5.2.2</span> Idee einer Regression</a></li>
+<li><a href="5-2-regression.html#residuen"><span class="toc-section-number">5.2.3</span> Residuen</a></li>
+<li><a href="5-2-regression.html#quadrierte-residuen"><span class="toc-section-number">5.2.4</span> Quadrierte Residuen</a></li>
+<li><a href="5-2-regression.html#interpretation-der-regression"><span class="toc-section-number">5.2.5</span> Interpretation der Regression</a></li>
+<li><a href="5-2-regression.html#vorhergesagte-werte"><span class="toc-section-number">5.2.6</span> Vorhergesagte Werte</a></li>
+<li><a href="5-2-regression.html#residuen-teil-2"><span class="toc-section-number">5.2.7</span> Residuen Teil 2</a></li>
+<li><a href="5-2-regression.html#modellgüte"><span class="toc-section-number">5.2.8</span> Modellgüte</a></li>
+</ul></li>
+<li><a href="5-3-ordinal-skalierte-merkmale.html#ordinal-skalierte-merkmale"><span class="toc-section-number">5.3</span> Ordinal skalierte Merkmale</a></li>
+<li class="has-sub"><a href="5-4-nominal-skalierte-variablen.html#nominal-skalierte-variablen"><span class="toc-section-number">5.4</span> Nominal skalierte Variablen</a><ul>
+<li><a href="5-4-nominal-skalierte-variablen.html#odds-ratio"><span class="toc-section-number">5.4.1</span> Odds Ratio</a></li>
+<li><a href="5-4-nominal-skalierte-variablen.html#chi²-basierte-maße"><span class="toc-section-number">5.4.2</span> Chi²-basierte Maße</a></li>
+<li><a href="5-4-nominal-skalierte-variablen.html#cramers-upsilon"><span class="toc-section-number">5.4.3</span> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+<li><a href="5-4-nominal-skalierte-variablen.html#indifferenztabelle"><span class="toc-section-number">5.4.4</span> Indifferenztabelle</a></li>
+<li><a href="5-4-nominal-skalierte-variablen.html#phi"><span class="toc-section-number">5.4.5</span> <span class="math inline">\(\phi\)</span></a></li>
+</ul></li>
+</ul></li>
+<li><a href="6-zshg2.html#zshg2"><span class="toc-section-number">6</span> Zusammenhänge 2</a></li>
+<li><a href="7-inf1.html#inf1"><span class="toc-section-number">7</span> Inferenzstatistik I</a></li>
+<li><a href="8-inf2.html#inf2"><span class="toc-section-number">8</span> Inferenzstatistik II</a></li>
+<li><a href="9-hypo.html#hypo"><span class="toc-section-number">9</span> Hypothesentests</a></li>
+<li><a href="10-export1.html#export1"><span class="toc-section-number">10</span> Ergebnisexport &amp; weitere Tipps</a></li>
+<li class="has-sub"><a href="11-adva.html#adva"><span class="toc-section-number">11</span> Fortgeschrittene Themen</a><ul>
+<li><a href="11-1-wertelabels.html#wertelabels"><span class="toc-section-number">11.1</span> Wertelabels</a></li>
+<li><a href="11-2-sortieren.html#sortieren"><span class="toc-section-number">11.2</span> sortieren</a></li>
+<li><a href="11-3-missings-unterscheiden.html#missings-unterscheiden"><span class="toc-section-number">11.3</span> missings unterscheiden</a></li>
+<li><a href="11-4-indikatoren-umdrehen.html#indikatoren-umdrehen"><span class="toc-section-number">11.4</span> Indikatoren umdrehen</a></li>
+<li><a href="11-5-informationen-aus-mehreren-variablen.html#informationen-aus-mehreren-variablen"><span class="toc-section-number">11.5</span> Informationen aus mehreren Variablen</a></li>
+<li><a href="11-6-informationen-aus-mehreren-datensätzen.html#informationen-aus-mehreren-datensätzen"><span class="toc-section-number">11.6</span> Informationen aus mehreren Datensätzen</a></li>
+<li><a href="11-7-arbeiten-mit-textvariablen.html#arbeiten-mit-textvariablen"><span class="toc-section-number">11.7</span> Arbeiten mit Textvariablen</a></li>
+<li><a href="11-8-egen.html#egen"><span class="toc-section-number">11.8</span> egen</a></li>
+<li><a href="11-9-gruppierte-berechnungen.html#gruppierte-berechnungen"><span class="toc-section-number">11.9</span> gruppierte Berechnungen</a></li>
+<li><a href="11-10-collapse.html#collapse"><span class="toc-section-number">11.10</span> collapse</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="metrische-variablen-beschreiben" class="section level2">
+<h2><span class="header-section-number">3.2</span> Metrische Variablen beschreiben</h2>
+<p>Das bisherige Beispiel bezog sich auf kategoriale Variablen (mit einer begrenzten Anzahl an Ausprägungen). Für ein metrisches Merkmal, wie zum Beispiel das Alter macht eine Häufigkeitstabelle wenig Sinn, da das Alter sehr viele Ausprägungen hat und eine Tabelle unübersichtlich wäre - hier nur als Beispiel die ersten 25 Ausprägungen (es gibt insgesamt 77!):</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb113-1"><a href="3-2-metrische-variablen-beschreiben.html#cb113-1"></a><span class="kw">tab</span> age <span class="kw">if</span> age &lt; 43</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . tab age if age &lt; 43
+## 
+##            ALTER: |
+##       BEFRAGTE(R) |      Freq.     Percent        Cum.
+## ------------------+-----------------------------------
+## NICHT GENERIERBAR |          5        0.44        0.44
+##                18 |         26        2.31        2.75
+##                19 |         37        3.29        6.04
+##                20 |         34        3.02        9.06
+##                21 |         34        3.02       12.08
+##                22 |         33        2.93       15.01
+##                23 |         33        2.93       17.94
+##                24 |         31        2.75       20.69
+##                25 |         46        4.09       24.78
+##                26 |         43        3.82       28.60
+##                27 |         51        4.53       33.13
+##                28 |         52        4.62       37.74
+##                29 |         55        4.88       42.63
+##                30 |         39        3.46       46.09
+##                31 |         54        4.80       50.89
+##                32 |         50        4.44       55.33
+##                33 |         49        4.35       59.68
+##                34 |         51        4.53       64.21
+##                35 |         64        5.68       69.89
+##                36 |         58        5.15       75.04
+##                37 |         54        4.80       79.84
+##                38 |         51        4.53       84.37
+##                39 |         41        3.64       88.01
+##                40 |         51        4.53       92.54
+##                41 |         41        3.64       96.18
+##                42 |         43        3.82      100.00
+## ------------------+-----------------------------------
+##             Total |      1,126      100.00</code></pre>
+<p>Um eine Häufigkeitstabelle zu erstellen, müssen wir bei metrischen Merkmalen Klassen bilden. So könnten wir das Alter in Lebensjahrzehnte unterteilen. Zuvor müssen wir wieder die fehlenden Angaben<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> überschreiben:</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb115-1"><a href="3-2-metrische-variablen-beschreiben.html#cb115-1"></a><span class="kw">mvdecode</span> age, mv(-32)</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . mvdecode age, mv(-32)
+##          age: 5 missing values generated</code></pre>
+<p>Um die Klassen zu bilden, nutzen wir <code>egen</code> zusammen mit der Funktion <code>cut()</code>. In <code>cut</code> geben wir die zu unterteilende Variable an, außerdem legen wir in <code>at()</code> die Klassengrenzen fest.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> Die so genere Werte legen wir in einer neuen Variable <code>age_cat</code> ab:</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb117-1"><a href="3-2-metrische-variablen-beschreiben.html#cb117-1"></a><span class="kw">egen</span> age_cat = <span class="fu">cut</span>(age), <span class="fu">at</span>( 18 35 60 100 )</span></code></pre></div>
+<p>Auch hier gilt wieder: anschließend sollten wir mit <code>browse age age_cat</code> kontrollieren, ob das (richtig) funktioniert hat.
+Für die neue, klassierte Variable können wir dann wieder mit <code>tabulate</code> eine Häufigkeitstabelle anfordern:</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb118-1"><a href="3-2-metrische-variablen-beschreiben.html#cb118-1"></a><span class="kw">tabulate</span> age_cat</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+## 
+## . tabulate age_cat
+## 
+##     age_cat |      Freq.     Percent        Cum.
+## ------------+-----------------------------------
+##          18 |        718       20.68       20.68
+##          35 |      1,527       43.98       64.66
+##          60 |      1,227       35.34      100.00
+## ------------+-----------------------------------
+##       Total |      3,472      100.00</code></pre>
+<p>Stata verwendet für die Klassen jeweils die untere Klassengrenze. Wir haben also 718 18-34-jährige und 1527 35-59-jährige Befragte in unserem Datensatz.</p>
+<p><span class="math inline">\(\Rightarrow\)</span> Wie groß ist der Anteil der Befragten, die jünger als 60 Jahre sind? Wie groß ist der Anteil der Befragten, die 60 Jahre oder älter sind?<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<p>Natürlich können wir die Werte in <code>age_cat</code> auch besser beschriften - mehr dazu im <a href="3-5-vlabel.html#vlabel">Anhang</a></p>
+<div id="summarize" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> <code>summarize</code></h3>
+<p>Allerdings können metrische Variablen auch direkt Hilfe von Lage- und Konzentrationsmaßen beschrieben werden.</p>
+<p>Klassische Lagemaße zur Beschreibung von metrischen Variablen sind bspw. Minimum und Maximum, das arithm. Mittel sowie der Median und Quantile. Auch hier haben wir gestern bereits den wichtigsten Befehl kennen gelernt: <code>summarize</code> gibt uns einen ersten Überblick zur Verteilung einer metrischen Variable:</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb120-1"><a href="3-2-metrische-variablen-beschreiben.html#cb120-1"></a><span class="kw">summarize</span> age</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode age, mv(-32)
+## 
+## . summarize age
+## 
+##     Variable |       Obs        Mean    Std. Dev.       Min        Max
+## -------------+--------------------------------------------------------
+##          age |      3472    51.67713    17.64222         18         95</code></pre>
+<p>Wir erfahren also, dass die Befragten im Mittel 51.5568 Jahre alt sind, die jüngsten Befragten 18 Jahre alt und ältesten Befragten sind 95 Jahre alt.</p>
+<p>Mit der Option <code>,detail</code> bekommen wir eine deutlich umfangreichere Auskunft:</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb122-1"><a href="3-2-metrische-variablen-beschreiben.html#cb122-1"></a><span class="kw">summarize</span> age, <span class="kw">detail</span></span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode age, mv(-32)
+## 
+## . summarize age, detail
+## 
+##                      ALTER: BEFRAGTE(R)
+## -------------------------------------------------------------
+##       Percentiles      Smallest
+##  1%           19             18
+##  5%           23             18
+## 10%           27             18       Obs                3472
+## 25%           37             18       Sum of Wgt.        3472
+## 
+## 50%           53                      Mean           51.67713
+##                         Largest       Std. Dev.      17.64222
+## 75%           65             92
+## 90%           76             94       Variance       311.2478
+## 95%           80             94       Skewness      -.0082437
+## 99%           88             95       Kurtosis       2.128251</code></pre>
+<p>Hier wird eine ganze Menge auf einmal angezeigt - die Kennzahlen sind dabei in drei Spalten organisiert:</p>
+<ul>
+<li><p>Aus der ersten Spalte erfahren wir die Quantile (<code>Percentiles</code>). Ein Quantil einer Verteilung trennt die Daten so in zwei Teile, dass <code>x</code>% der Daten darunter und 100-<code>x</code>% darüber liegen. Hier können wir zB ablesen, dass 25% der Befragten 37 Jahre oder jünger sind. 95% der Befragten sind &lt;= 80 Jahre alt. Dementsprechend sind 5% der Befragten 80 Jahre oder älter. Die 50%-Grenze für das Alter (<em>der Median</em>) liegt bei 53 Jahren.</p></li>
+<li><p>die zweite Spalte gibt uns jeweils die 4 kleinsten und größten Werte für das Alter aus: die 4 kleinsten Alterswerte sind jeweils 18, die größten Werte sind 92,94,94 und 95.</p></li>
+<li><p>in der dritten Spalte bekommen wir eine Reihe weiterer Informationen:</p>
+<ul>
+<li>die Zahl der Beobachtungen (<code>Obs</code>) und das arithmetische Mittel (<code>Mean</code>)</li>
+<li>die Streuung anhand der Standardabweichung (<code>Std. Dev.</code>) und Varianz (<code>Variance</code>) <a href="3-2-metrische-variablen-beschreiben.html#variance">mehr dazu</a></li>
+<li>sowie die Schiefe (<code>Skewness</code>) und Wölbung (<code>Kurtosis</code>) <a href="3-2-metrische-variablen-beschreiben.html#sk_kur">mehr dazu</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="tabstat" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> <code>tabstat</code></h3>
+<p>Häufig möchten wir aber vielleicht nur eine bestimmte Information. Dafür ist <code>tabstat</code> eine gute Lösung. Mit <code>tabstat</code> können wir eine ganze Reihe statistischer Kennzahlen für metrische/kontinuierliche Merkmale berechnen. Die Syntax hat dabei das folgende Format: <code>tabstat age, s(*kennzahl*)</code></p>
+Hier eine Übersicht der Kennzahlen:
+<table class="table table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Option
+</th>
+<th style="text-align:left;">
+Kennzahl
+</th>
+<th style="text-align:left;">
+Kommentar
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+mean
+</td>
+<td style="text-align:left;">
+arithm. Mittel
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+median
+</td>
+<td style="text-align:left;">
+Median
+</td>
+<td style="text-align:left;">
+50% Grenze
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+count
+</td>
+<td style="text-align:left;">
+Anzahl der Beobachtungen ohne Missings
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+n
+</td>
+<td style="text-align:left;">
+entspricht count
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+sum
+</td>
+<td style="text-align:left;">
+Summe der Ausprägungen
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+max
+</td>
+<td style="text-align:left;">
+Maximum
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+min
+</td>
+<td style="text-align:left;">
+Minimum
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+range
+</td>
+<td style="text-align:left;">
+Spannweite = max - min
+</td>
+<td style="text-align:left;">
+Wie groß ist der Abstand zwischen kleinstem und größtem Wert?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+variance
+</td>
+<td style="text-align:left;">
+Varianz
+</td>
+<td style="text-align:left;">
+siehe <a href="3-2-metrische-variablen-beschreiben.html#variance">hier</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+sd
+</td>
+<td style="text-align:left;">
+Standardabweichung
+</td>
+<td style="text-align:left;">
+siehe <a href="3-2-metrische-variablen-beschreiben.html#variance">hier</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+cv
+</td>
+<td style="text-align:left;">
+Variationskoefficient (sd/mean)
+</td>
+<td style="text-align:left;">
+siehe <a href="3-2-metrische-variablen-beschreiben.html#variance">hier</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+skewness
+</td>
+<td style="text-align:left;">
+Schiefe
+</td>
+<td style="text-align:left;">
+siehe <a href="3-2-metrische-variablen-beschreiben.html#sk_kur">hier</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+kurtosis
+</td>
+<td style="text-align:left;">
+Wölbung
+</td>
+<td style="text-align:left;">
+siehe <a href="3-2-metrische-variablen-beschreiben.html#sk_kur">hier</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+pX
+</td>
+<td style="text-align:left;">
+X. Perzentil (5,10,25,50,75,90,95,99)
+</td>
+<td style="text-align:left;">
+zb. p(5) <span class="math inline">\(\rightarrow\)</span> wie hoch ist die Grenze, unterhalb welcher 5% (oberhalb welcher 95%) der Beobachtungen liegen?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+iqr
+</td>
+<td style="text-align:left;">
+Interquartilsdistanz = p75 - p25
+</td>
+<td style="text-align:left;">
+Wie groß ist der Abstand zwischen der 25% und 75%-Grenze?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+q
+</td>
+<td style="text-align:left;">
+Entspricht p25 p50 p75
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+<p>Hier ein Bespielbefehl für die Berechnung des arith. Mittels, des Medians, der Varianz und des Varianzkoeffizienten mit <code>tabstat</code>:</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb124-1"><a href="3-2-metrische-variablen-beschreiben.html#cb124-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="kw">mean</span> <span class="kw">median</span> <span class="kw">var</span> cv)</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode age, mv(-32)
+## 
+## . tabstat age, s(mean median var cv)
+## 
+##     variable |      mean       p50  variance        cv
+## -------------+----------------------------------------
+##          age |  51.67713        53  311.2478  .3413931
+## ------------------------------------------------------</code></pre>
+<p>Allerdings lassen sich mit <code>tabstat</code> nicht beliebige Quantil-Grenzen (nur für 5,10,25,50,75,90,95,99) berechnen, dafür können wir <code>centile</code> nutzen:</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb126-1"><a href="3-2-metrische-variablen-beschreiben.html#cb126-1"></a><span class="kw">centile</span> age, <span class="kw">centile</span>(35)</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode age, mv(-32)
+## 
+## . centile age, centile(35)
+## 
+##                                                        -- Binom. Interp. --
+##     Variable |     Obs  Percentile      Centile        [95% Conf. Interval]
+## -------------+-------------------------------------------------------------
+##          age |    3472         35            44              43          45</code></pre>
+<p>Aus den Angaben unter <code>Centile</code> erfahren wir, dass 35% der Befragten im Datensatz sind 44 Jahre alt oder jünger sind. Dementsprechend sind 65% der Befragten 44 Jahre oder älter.</p>
+</div>
+<div id="by_vgl" class="section level3">
+<h3><span class="header-section-number">3.2.3</span> Kennzahlen vergleichen mit <code>tabstat</code></h3>
+<p>Richtig spannend sind diese Kennzahlen auch wieder erst im Vergleich zwischen Gruppen. Hierfür steht uns die <code>by()</code>-Option von <code>tabstat</code> zur Verfügung. Bspw. können wir die Altersangaben aus den alten (<code>eastwest</code>=1) und neuen Bundesländern (<code>eastwest</code>=2) vergleichen, indem wir in <code>tabstat</code> die Option <code>by(eastwest)</code> verwenden:</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb128-1"><a href="3-2-metrische-variablen-beschreiben.html#cb128-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="kw">mean</span> <span class="kw">median</span> <span class="kw">var</span> cv) <span class="kw">by</span>(eastwest)</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode age, mv(-32)
+## 
+## . tabstat age, s(mean median var cv) by(eastwest)
+## 
+## Summary for variables: age
+##      by categories of: eastwest (ERHEBUNGSGEBIET (WOHNGEBIET): WEST - OST)
+## 
+##         eastwest |      mean       p50  variance        cv
+## -----------------+----------------------------------------
+## ALTE BUNDESLAEND |  50.66093        51  318.9731  .3525363
+## NEUE BUNDESLAEND |  53.90083        55  287.4093  .3145249
+## -----------------+----------------------------------------
+##            Total |  51.67713        53  311.2478  .3413931
+## ----------------------------------------------------------</code></pre>
+<p>Wir sehen hier also, dass sowohl das arith. Mittel als auch der Median des Befragtenalters in den alten Bundesländern höher ist als in den neuen Bundesländern. Außerdem ist auch die Streuung in den alten Bundesländern höher ist als in den neuen Bundesländern.</p>
+<p>Eine andere Option ist es, auf den <code>if</code>-Befehl zurückzugreifen - siehe <a href="3-7-if-vgl.html#if_vgl">hier</a></p>
+</div>
+<div id="tabulate-mit-der-option-summarize" class="section level3">
+<h3><span class="header-section-number">3.2.4</span> <code>tabulate</code> mit der Option <code>summarize()</code></h3>
+<p>Wir können aber auch zwei Variablen für den Kennzahlenvergleich verwenden. Bspw. sind neben Ost-West-Vergleichen auch häufig Geschlechterunterschiede von Interesse. Stata stellt uns damit mit der <code>summarise</code>-Option eine einfache Möglichkeit zur Verfügung:</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb130-1"><a href="3-2-metrische-variablen-beschreiben.html#cb130-1"></a><span class="kw">tab</span> sex eastwest, <span class="kw">summarize</span>(age)</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode age, mv(-32)
+## 
+## . tab sex eastwest, summarize(age)
+## 
+##      Means, Standard Deviations and Frequencies of ALTER: BEFRAGTE(R)
+## 
+## GESCHLECHT |   ERHEBUNGSGEBIET
+##          , | (WOHNGEBIET): WEST
+## BEFRAGTE(R |        - OST
+##          ) | ALTE BUND  NEUE BUND |     Total
+## -----------+----------------------+----------
+##       MANN |   50.5982  53.232727 | 51.415914
+##            | 18.177659  17.167354 | 17.906913
+##            |      1222        550 |      1772
+## -----------+----------------------+----------
+##       FRAU |  50.72696   54.58256 | 51.949412
+##            | 17.526641  16.720148 | 17.363097
+##            |      1161        539 |      1700
+## -----------+----------------------+----------
+##      Total | 50.660932  53.900826 | 51.677131
+##            | 17.859819  16.953149 | 17.642216
+##            |      2383       1089 |      3472</code></pre>
+<p>Wir sehen hier, dass 1222 Männer aus den alten Bundesländern befragt wurden, die im Durchschnitt 50.5982 alt sind. Die Standardabweichung des Alters in dieser Gruppe beträgt 18.177659 Jahre. Außerdem wurden 539 Frauen aus den neuen Bundesländern befragt, die im arith. Mittel 54.58256 alt sind und deren Altersangaben eine Standardabweichung 16.720148 aufweisen.</p>
+<p>Je nach Präferenz können wir eine der drei Kennzahlen (Anzahl der Beobachtungen, arith. Mittel und Standardabw.) ausblenden in dem wir die entsprechende Option verwenden:</p>
+<ul>
+<li><code>nofreq</code> Häufigkeiten ausblenden</li>
+<li><code>nomeans</code> arith. Mittel ausblenden</li>
+<li><code>nostandard</code> Standardabw. ausblenden</li>
+</ul>
+<p><code>tab sex eastwest, summarize(age) nofreq</code> würde uns also nur die arith. Mittel und Standardabweichungen ausgeben.</p>
+</div>
+<div id="variance" class="section level3">
+<h3><span class="header-section-number">3.2.5</span> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</h3>
+<p>Streuungsmaße helfen uns zu beurteilen, wie groß die Unterschiede in unseren Daten sind. Je größer das Streuungsmaß, desto mehr Unterschiede gibt es zwischen den beobachteten Werten.</p>
+<p>Die häufigste Kennzahl zur Beschreibung von Streuung ist aber die <strong>Varianz</strong>. Die Varianz ist definiert als die durchschnittliche quadrierte Abweichung vom arith. Mittel: <span class="math display">\[var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}\]</span><br />
+Was bedeutet diese Formel?<br />
+Schauen wir erst in den Zähler des Bruchs: <span class="math inline">\((x_{i}-\bar{x})^2\)</span>
+Es geht also um die Abstände der einzelnen Datenpunkte (<span class="math inline">\(x_{i}\)</span>) zum arithmetischen Mittel (<span class="math inline">\(\bar{x}\)</span>) - mathematisch die Differenz zwischen den einzelnen Datenpunkten <span class="math inline">\(x_{i}-\bar{x}\)</span> - hier eingezeichnet als gestrichelte Linien:
+<img src="Stata_Skript_files/figure-html/unnamed-chunk-18-1.png" width="70%" height="70%" style="display: block; margin: auto;" />
+Für Punkte, die über dem arith. Mittel liegen, erhalten wir für die Differenz einen positiven Wert (wir ziehen ja jeweils das arith. Mittel vom Wert für den Datenpunkt ab). Für Punkte mit Werten, die kleiner als das arith. Mittel sind, erhalten wir einen negativen Wert.<br />
+Würden wir die Abstände (gestrichelten Linien) einfach aufsummieren, erhielten wir als Ergebnis immer Null! Das arithmetische Mittel liegt ja per Definition immer genau “in der Mitte”: die Abstände nach oben sind in der Summe genauso groß wie die Abstände nach unten. Daher wird zunächst jeder Abstand quadriert: <span class="math inline">\((\bar{x} - x_{i})^2\)</span><br />
+Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert (<span class="math inline">\(\sum_{i=1}^{n}\)</span>) und dann durch die Anzahl der Beobachtungen geteilt werden (<span class="math inline">\(\frac{}{n}\)</span>)- zusammengefasst hier nochmal die Formel: <span class="math display">\[var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}\]</span></p>
+<p>Wir können die Varianz mit <code>tabstat , s(var)</code> berechnen:</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb132-1"><a href="3-2-metrische-variablen-beschreiben.html#cb132-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="kw">var</span>)</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode age, mv(-32)
+## 
+## . tabstat age, s(var)
+## 
+##     variable |  variance
+## -------------+----------
+##          age |  311.2478
+## ------------------------</code></pre>
+<p>In unseren Datensatz beträgt der Varianz des Alters also 311,2478 Jahre². Auf der Varianz beruhen noch zwei weitere Streuungsmaße. Die <strong>Standardabweichung</strong> entspricht der Wurzel der Varianz und hat somit die gleiche Messeinheit wie die Variable (hier als Jahre):</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb134-1"><a href="3-2-metrische-variablen-beschreiben.html#cb134-1"></a>dis <span class="fu">sqrt</span>(311.2478)</span>
+<span id="cb134-2"><a href="3-2-metrische-variablen-beschreiben.html#cb134-2"></a>## </span>
+<span id="cb134-3"><a href="3-2-metrische-variablen-beschreiben.html#cb134-3"></a>## </span>
+<span id="cb134-4"><a href="3-2-metrische-variablen-beschreiben.html#cb134-4"></a>## . dis <span class="fu">sqrt</span>(311.2417.642216</span></code></pre></div>
+<p>Wir können die Standardabweichung auch mit <code>tabstat , s(sd)</code> berechnen:</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb135-1"><a href="3-2-metrische-variablen-beschreiben.html#cb135-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="fu">sd</span>)</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode age, mv(-32)
+## 
+## . tabstat age, s(sd)
+## 
+##     variable |        sd
+## -------------+----------
+##          age |  17.64222
+## ------------------------</code></pre>
+<p>Der <strong>Variationskoeffizient</strong> entspricht <code>sd</code>/<code>mean</code> und dient dem Vergleich verschiedener Streuungen relativ zum jeweiligen Mittelwert, <code>tabstat , s(cv)</code> übernimmt die Berechnung für uns:</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb137-1"><a href="3-2-metrische-variablen-beschreiben.html#cb137-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(cv)</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode age, mv(-32)
+## 
+## . tabstat age, s(cv)
+## 
+##     variable |        cv
+## -------------+----------
+##          age |  .3413931
+## ------------------------</code></pre>
+<p>Somit können wir bspw. mit Hilfe von <code>,by(sex)</code> die Streuung des Alters bei männlichen und weiblichen Befragten vergleichen:</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb139-1"><a href="3-2-metrische-variablen-beschreiben.html#cb139-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(cv) <span class="kw">by</span>(sex)</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode age, mv(-32)
+## 
+## . tabstat age, s(cv) by(sex)
+## 
+## Summary for variables: age
+##      by categories of: sex (GESCHLECHT, BEFRAGTE(R))
+## 
+##    sex |        cv
+## -------+----------
+##   MANN |  .3482757
+##   FRAU |  .3342309
+## -------+----------
+##  Total |  .3413931
+## ------------------</code></pre>
+<p><span class="math inline">\(\Rightarrow\)</span> Für welches Geschlecht ist die Streuung also größer?<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
+</div>
+<div id="sk_kur" class="section level3">
+<h3><span class="header-section-number">3.2.6</span> Schiefe &amp; Wölbung</h3>
+<p>Skewness is a measure of the lack of symmetry of a distribution. If the distribution is symmetric, the coefficient of skewness is 0. If the coefficient is negative, the median is usually greater than the mean and the distribution is said to be skewed left. If the coefficient is positive, the median is usually less than the mean and the distribution is said to be skewed right. Kurtosis (from the Greek kyrtosis, meaning curvature) is a measure of peakedness of a distribution. The smaller the coefficient of kurtosis, the flatter the distribution. The normal distribution has a coefficient of kurtosis of 3 and provides a convenient benchmark.</p>
+</div>
+<div id="gini-koeffizient" class="section level3">
+<h3><span class="header-section-number">3.2.7</span> Gini-Koeffizient</h3>
+<p>Zur Beschreibung der (Ungleich-)Verteilung von metrischen Variablen, insbesondere bei Einkommens- und Vermögensdaten wird häufig der Gini-Koeffizient verwendet. Der Gini-Koeffizient beruht auf der Fläche zwischen der Lorenzkurve und der Gleichverteilung. Auf der x-Achse werden die kumulierten Perzentile der Befragten abgetragen, auf der y-Achse die Perzentile des HH-Einkommens:</p>
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-20-1.png" width="75%" height="75%" style="display: block; margin: auto;" />
+Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdings müssen wir diesen Befehl erst (einmalig) installieren:</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb141-1"><a href="3-2-metrische-variablen-beschreiben.html#cb141-1"></a><span class="kw">ssc</span> install fastgini</span>
+<span id="cb141-2"><a href="3-2-metrische-variablen-beschreiben.html#cb141-2"></a>fastgini di05</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode di05, mv(-50 -32 -7)
+## 
+## . fastgini di05
+## 
+## Gini coefficient = 0.3194886</code></pre>
+<p>Leider funktioniert <code>bys eastwest:</code> bei <code>fastgini</code> nicht, wir müssen hier auf die Variante mit <a href="3-7-if-vgl.html#if_vgl"><code>if</code></a> zurückgreifen:</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb143-1"><a href="3-2-metrische-variablen-beschreiben.html#cb143-1"></a>fastgini di05 <span class="kw">if</span> eastwest == 1</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode di05, mv(-50 -32 -7)
+## 
+## . fastgini di05 if eastwest == 1
+## 
+## Gini coefficient = 0.3148267</code></pre>
+<div class="sourceCode" id="cb145"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb145-1"><a href="3-2-metrische-variablen-beschreiben.html#cb145-1"></a>fastgini di05 <span class="kw">if</span> eastwest == 2</span></code></pre></div>
+<pre><code>## 
+## 
+## . set linesize. qui use &quot;D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta&quot;, clear
+## 
+## . qui mvdecode di05, mv(-50 -32 -7)
+## 
+## . fastgini di05 if eastwest == 2
+## 
+## Gini coefficient = 0.3101288</code></pre>
+<p><span class="math inline">\(\Rightarrow\)</span> <em>Wo sind die Haushaltseinkommen also ungleicher verteilt?</em><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a></p>
+<p>Anmerkung: hier wurden die Missings in <code>di05</code> mit <code>mvdecode di05, mv(-50 -32 -7)</code> ausgeschlossen.</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>Die Werte für fehlende Angaben finden wir Codebuch: auch hier ist <code>-32</code> wieder ein Code für fehlende Werte.<a href="3-2-metrische-variablen-beschreiben.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Für die Grenzen können wir auch eine sog. numlist <code>wert1(schrittbreite)wert2</code> verwenden. Darin geben wir zunächst die untere Grenze, dann die Schrittbreite und abschließend die obere Grenze an. Zb könnten wir so 10er-Schritte festlegen: <code>egen age_cat = cut(age), at( 10(10)100 )</code><a href="3-2-metrische-variablen-beschreiben.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>Aus der Spalte <code>Cum.</code> können wir ablesen, dass 64.66% der Befragten unter 60 Jahre alt sind. Dementsprechend sind 35.34% der Befragten 60 Jahre oder älter.<a href="3-2-metrische-variablen-beschreiben.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>Da der Variationskoeffizient für Männer mit <code>0.3482757</code> etwas größer ist als für Frauen (<code>0.3342309</code>), ist die Streuung bei den Männern etwas größer.<a href="3-2-metrische-variablen-beschreiben.html#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>Der etwas höhere Wert des Gini-Koeffizienten legt nahe, dass die Haushaltseinkommen in den alten Bundesländern (<code>eastwest</code>=1) etwas stärker ungleich verteilt als in den neuen Bundesländern (<code>eastwest</code>=2).<a href="3-2-metrische-variablen-beschreiben.html#fnref6" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<p style="text-align: center;">
+<a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html"><button class="btn btn-default">Previous</button></a>
+<a href="3-3-übungen.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>
