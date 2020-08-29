@@ -1,0 +1,12 @@
+
+
+Running D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Stata_Skript\profile.do ...
+variable age_c not found
+r(111);
+
+
+. webuse bpwide, clear
+(fictional blood-pressure data)
+
+. 
+end of do-file

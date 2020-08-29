@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5 Datenvisualisierung in Stata | GESIS Methodenseminar 2020</title>
+  <title>4 Datenvisualisierung in Stata | GESIS Methodenseminar 2020</title>
   <meta name="description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5 Datenvisualisierung in Stata | GESIS Methodenseminar 2020" />
+  <meta property="og:title" content="4 Datenvisualisierung in Stata | GESIS Methodenseminar 2020" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5 Datenvisualisierung in Stata | GESIS Methodenseminar 2020" />
+  <meta name="twitter:title" content="4 Datenvisualisierung in Stata | GESIS Methodenseminar 2020" />
   
   <meta name="twitter:description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="desc2.html"/>
-<link rel="next" href="lin-reg.html"/>
+<link rel="prev" href="desc1.html"/>
+<link rel="next" href="zshg.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -170,58 +170,90 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.13" data-path="Stata1.html"><a href="Stata1.html#profi-übungen"><i class="fa fa-check"></i><b>2.13</b> Profi-Übungen</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="desc1.html"><a href="desc1.html"><i class="fa fa-check"></i><b>3</b> Deskriptive Statistik</a><ul>
-<li class="chapter" data-level="3.1" data-path="desc1.html"><a href="desc1.html#kategoriale-merkmale"><i class="fa fa-check"></i><b>3.1</b> Kategoriale Merkmale</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="desc1.html"><a href="desc1.html#absolute-häufigkeiten"><i class="fa fa-check"></i><b>3.1.1</b> Absolute Häufigkeiten</a></li>
+<li class="chapter" data-level="3.1" data-path="desc1.html"><a href="desc1.html#kategoriale-merkmale-mit-tabulate-beschreiben"><i class="fa fa-check"></i><b>3.1</b> Kategoriale Merkmale mit <code>tabulate</code> beschreiben</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="desc1.html"><a href="desc1.html#zwei-variablen-eine-tabelle-kontingenztabellen"><i class="fa fa-check"></i><b>3.1.1</b> Zwei Variablen, eine Tabelle: Kontingenztabellen</a></li>
+<li class="chapter" data-level="3.1.2" data-path="desc1.html"><a href="desc1.html#in-prozent-relative-häufigkeiten"><i class="fa fa-check"></i><b>3.1.2</b> In Prozent: Relative Häufigkeiten</a></li>
+<li class="chapter" data-level="3.1.3" data-path="desc1.html"><a href="desc1.html#pro-gruppe-1-zeilenprozente"><i class="fa fa-check"></i><b>3.1.3</b> pro Gruppe 1: Zeilenprozente</a></li>
+<li class="chapter" data-level="3.1.4" data-path="desc1.html"><a href="desc1.html#pro-gruppe-2-spaltenprozente"><i class="fa fa-check"></i><b>3.1.4</b> pro Gruppe 2: Spaltenprozente</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="desc1.html"><a href="desc1.html#metrische-variablen"><i class="fa fa-check"></i><b>3.2</b> Metrische Variablen</a></li>
-<li class="chapter" data-level="3.3" data-path="desc1.html"><a href="desc1.html#exkurs-labels-vergeben"><i class="fa fa-check"></i><b>3.3</b> Exkurs: labels vergeben</a></li>
-<li class="chapter" data-level="3.4" data-path="desc1.html"><a href="desc1.html#kontingenztabellen"><i class="fa fa-check"></i><b>3.4</b> Kontingenztabellen</a></li>
-<li class="chapter" data-level="3.5" data-path="desc1.html"><a href="desc1.html#relative-häufigkeiten"><i class="fa fa-check"></i><b>3.5</b> Relative Häufigkeiten</a></li>
-<li class="chapter" data-level="3.6" data-path="desc1.html"><a href="desc1.html#zeilenprozente"><i class="fa fa-check"></i><b>3.6</b> Zeilenprozente</a></li>
-<li class="chapter" data-level="3.7" data-path="desc1.html"><a href="desc1.html#spaltenprozente"><i class="fa fa-check"></i><b>3.7</b> Spaltenprozente</a></li>
-<li class="chapter" data-level="3.8" data-path="Stata2.html"><a href="Stata2.html#übungen"><i class="fa fa-check"></i><b>3.8</b> Übungen</a></li>
-<li class="chapter" data-level="3.9" data-path="Stata1.html"><a href="Stata1.html#profi-übungen"><i class="fa fa-check"></i><b>3.9</b> Profi-Übungen</a></li>
+<li class="chapter" data-level="3.2" data-path="desc1.html"><a href="desc1.html#metrische-variablen-beschreiben"><i class="fa fa-check"></i><b>3.2</b> Metrische Variablen beschreiben</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="desc1.html"><a href="desc1.html#summarize"><i class="fa fa-check"></i><b>3.2.1</b> <code>summarize</code></a></li>
+<li class="chapter" data-level="3.2.2" data-path="desc1.html"><a href="desc1.html#tabstat"><i class="fa fa-check"></i><b>3.2.2</b> <code>tabstat</code></a></li>
+<li class="chapter" data-level="3.2.3" data-path="desc1.html"><a href="desc1.html#by_vgl"><i class="fa fa-check"></i><b>3.2.3</b> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
+<li class="chapter" data-level="3.2.4" data-path="desc1.html"><a href="desc1.html#tabulate-mit-der-option-summarize"><i class="fa fa-check"></i><b>3.2.4</b> <code>tabulate</code> mit der Option <code>summarize()</code></a></li>
+<li class="chapter" data-level="3.2.5" data-path="desc1.html"><a href="desc1.html#variance"><i class="fa fa-check"></i><b>3.2.5</b> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
+<li class="chapter" data-level="3.2.6" data-path="desc1.html"><a href="desc1.html#sk_kur"><i class="fa fa-check"></i><b>3.2.6</b> Schiefe &amp; Wölbung</a></li>
+<li class="chapter" data-level="3.2.7" data-path="desc1.html"><a href="desc1.html#gini-koeffizient"><i class="fa fa-check"></i><b>3.2.7</b> Gini-Koeffizient</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="desc2.html"><a href="desc2.html"><i class="fa fa-check"></i><b>4</b> Mehr deskriptive Statistik</a><ul>
-<li class="chapter" data-level="4.1" data-path="desc2.html"><a href="desc2.html#tabstat"><i class="fa fa-check"></i><b>4.1</b> <code>tabstat</code></a></li>
+<li class="chapter" data-level="3.3" data-path="Stata2.html"><a href="Stata2.html#übungen"><i class="fa fa-check"></i><b>3.3</b> Übungen</a></li>
+<li class="chapter" data-level="3.4" data-path="Stata1.html"><a href="Stata1.html#profi-übungen"><i class="fa fa-check"></i><b>3.4</b> Profi-Übungen</a></li>
+<li class="chapter" data-level="3.5" data-path="desc1.html"><a href="desc1.html#vlabel"><i class="fa fa-check"></i><b>3.5</b> Exkurs: labels vergeben</a></li>
+<li class="chapter" data-level="3.6" data-path="desc1.html"><a href="desc1.html#bys_su"><i class="fa fa-check"></i><b>3.6</b> Exkurs: Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+<li class="chapter" data-level="3.7" data-path="desc1.html"><a href="desc1.html#if_vgl"><i class="fa fa-check"></i><b>3.7</b> Exkurs: Kennzahlvergleiche mit <code>if</code></a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="dataviz.html"><a href="dataviz.html"><i class="fa fa-check"></i><b>5</b> Datenvisualisierung in Stata</a><ul>
-<li class="chapter" data-level="5.1" data-path="dataviz.html"><a href="dataviz.html#grafik-syntax-in-stata"><i class="fa fa-check"></i><b>5.1</b> Grafik-Syntax in Stata</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="dataviz.html"><a href="dataviz.html#aufbau"><i class="fa fa-check"></i><b>5.1.1</b> Aufbau</a></li>
-<li class="chapter" data-level="5.1.2" data-path="dataviz.html"><a href="dataviz.html#twoway"><i class="fa fa-check"></i><b>5.1.2</b> twoway</a></li>
-<li class="chapter" data-level="5.1.3" data-path="dataviz.html"><a href="dataviz.html#kombinieren-von-zwei-twoway-grafiken"><i class="fa fa-check"></i><b>5.1.3</b> Kombinieren von zwei twoway-Grafiken</a></li>
-<li class="chapter" data-level="5.1.4" data-path="dataviz.html"><a href="dataviz.html#twoway-varianten"><i class="fa fa-check"></i><b>5.1.4</b> twoway Varianten</a></li>
-<li class="chapter" data-level="5.1.5" data-path="dataviz.html"><a href="dataviz.html#vorlagen"><i class="fa fa-check"></i><b>5.1.5</b> Vorlagen</a></li>
-<li class="chapter" data-level="5.1.6" data-path="dataviz.html"><a href="dataviz.html#optionen"><i class="fa fa-check"></i><b>5.1.6</b> Optionen</a></li>
-<li class="chapter" data-level="5.1.7" data-path="dataviz.html"><a href="dataviz.html#farben"><i class="fa fa-check"></i><b>5.1.7</b> Farben</a></li>
-<li class="chapter" data-level="5.1.8" data-path="dataviz.html"><a href="dataviz.html#subgruppen"><i class="fa fa-check"></i><b>5.1.8</b> Subgruppen</a></li>
+<li class="chapter" data-level="4" data-path="dataviz.html"><a href="dataviz.html"><i class="fa fa-check"></i><b>4</b> Datenvisualisierung in Stata</a><ul>
+<li class="chapter" data-level="4.1" data-path="dataviz.html"><a href="dataviz.html#erste-entscheidungen"><i class="fa fa-check"></i><b>4.1</b> Erste Entscheidungen</a></li>
+<li class="chapter" data-level="4.2" data-path="dataviz.html"><a href="dataviz.html#grafik-syntax-in-stata"><i class="fa fa-check"></i><b>4.2</b> Grafik-Syntax in Stata</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="dataviz.html"><a href="dataviz.html#aufbau"><i class="fa fa-check"></i><b>4.2.1</b> Aufbau</a></li>
+<li class="chapter" data-level="4.2.2" data-path="dataviz.html"><a href="dataviz.html#twoway"><i class="fa fa-check"></i><b>4.2.2</b> twoway</a></li>
+<li class="chapter" data-level="4.2.3" data-path="dataviz.html"><a href="dataviz.html#kombinieren-von-zwei-twoway-grafiken"><i class="fa fa-check"></i><b>4.2.3</b> Kombinieren von zwei twoway-Grafiken</a></li>
+<li class="chapter" data-level="4.2.4" data-path="dataviz.html"><a href="dataviz.html#twoway-varianten"><i class="fa fa-check"></i><b>4.2.4</b> twoway Varianten</a></li>
+<li class="chapter" data-level="4.2.5" data-path="dataviz.html"><a href="dataviz.html#vorlagen"><i class="fa fa-check"></i><b>4.2.5</b> Vorlagen</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="dataviz.html"><a href="dataviz.html#beispiele-zum-selbst-anpassen"><i class="fa fa-check"></i><b>5.2</b> Beispiele zum selbst anpassen</a></li>
-<li class="chapter" data-level="5.3" data-path="dataviz.html"><a href="dataviz.html#abschließende-bemerkungen"><i class="fa fa-check"></i><b>5.3</b> Abschließende Bemerkungen</a></li>
-<li class="chapter" data-level="5.4" data-path="dataviz.html"><a href="dataviz.html#bevölkerungspyramide"><i class="fa fa-check"></i><b>5.4</b> Bevölkerungspyramide</a></li>
-<li class="chapter" data-level="5.5" data-path="dataviz.html"><a href="dataviz.html#anhang"><i class="fa fa-check"></i><b>5.5</b> Anhang</a><ul>
-<li class="chapter" data-level="5.5.1" data-path="dataviz.html"><a href="dataviz.html#aufb1"><i class="fa fa-check"></i><b>5.5.1</b> Aufbereitung für Boxplot</a></li>
+<li class="chapter" data-level="4.3" data-path="dataviz.html"><a href="dataviz.html#optionen"><i class="fa fa-check"></i><b>4.3</b> Optionen</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="dataviz.html"><a href="dataviz.html#beschriftungen"><i class="fa fa-check"></i><b>4.3.1</b> Beschriftungen</a></li>
+<li class="chapter" data-level="4.3.2" data-path="dataviz.html"><a href="dataviz.html#farben"><i class="fa fa-check"></i><b>4.3.2</b> Farben</a></li>
+<li class="chapter" data-level="4.3.3" data-path="dataviz.html"><a href="dataviz.html#subgruppen"><i class="fa fa-check"></i><b>4.3.3</b> Subgruppen</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="dataviz.html"><a href="dataviz.html#beispiele-zum-selbst-anpassen"><i class="fa fa-check"></i><b>4.4</b> Beispiele zum selbst anpassen</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="dataviz.html"><a href="dataviz.html#boxplot"><i class="fa fa-check"></i><b>4.4.1</b> Boxplot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="dataviz.html"><a href="dataviz.html#bevölkerungspyramide"><i class="fa fa-check"></i><b>4.5</b> Bevölkerungspyramide</a></li>
+<li class="chapter" data-level="4.6" data-path="dataviz.html"><a href="dataviz.html#anhang"><i class="fa fa-check"></i><b>4.6</b> Anhang</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="dataviz.html"><a href="dataviz.html#aufb1"><i class="fa fa-check"></i><b>4.6.1</b> Aufbereitung für Boxplot</a></li>
+<li class="chapter" data-level="4.6.2" data-path="dataviz.html"><a href="dataviz.html#sep1"><i class="fa fa-check"></i><b>4.6.2</b> <code>separate</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="zshg.html"><a href="zshg.html"><i class="fa fa-check"></i><b>5</b> Zusammenhangsmaße</a><ul>
+<li class="chapter" data-level="5.1" data-path="zshg.html"><a href="zshg.html#metrisch-skalierte-variablen"><i class="fa fa-check"></i><b>5.1</b> Metrisch skalierte Variablen</a></li>
+<li class="chapter" data-level="5.2" data-path="zshg.html"><a href="zshg.html#regression"><i class="fa fa-check"></i><b>5.2</b> Regression</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="zshg.html"><a href="zshg.html#beispieldatensatz"><i class="fa fa-check"></i><b>5.2.1</b> Beispieldatensatz</a></li>
+<li class="chapter" data-level="5.2.2" data-path="zshg.html"><a href="zshg.html#idee-einer-regression"><i class="fa fa-check"></i><b>5.2.2</b> Idee einer Regression</a></li>
+<li class="chapter" data-level="5.2.3" data-path="zshg.html"><a href="zshg.html#residuen"><i class="fa fa-check"></i><b>5.2.3</b> Residuen</a></li>
+<li class="chapter" data-level="5.2.4" data-path="zshg.html"><a href="zshg.html#quadrierte-residuen"><i class="fa fa-check"></i><b>5.2.4</b> Quadrierte Residuen</a></li>
+<li class="chapter" data-level="5.2.5" data-path="zshg.html"><a href="zshg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>5.2.5</b> Interpretation der Regression</a></li>
+<li class="chapter" data-level="5.2.6" data-path="zshg.html"><a href="zshg.html#vorhergesagte-werte"><i class="fa fa-check"></i><b>5.2.6</b> Vorhergesagte Werte</a></li>
+<li class="chapter" data-level="5.2.7" data-path="zshg.html"><a href="zshg.html#residuen-teil-2"><i class="fa fa-check"></i><b>5.2.7</b> Residuen Teil 2</a></li>
+<li class="chapter" data-level="5.2.8" data-path="zshg.html"><a href="zshg.html#modellgüte"><i class="fa fa-check"></i><b>5.2.8</b> Modellgüte</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="zshg.html"><a href="zshg.html#ordinal-skalierte-merkmale"><i class="fa fa-check"></i><b>5.3</b> Ordinal skalierte Merkmale</a></li>
+<li class="chapter" data-level="5.4" data-path="zshg.html"><a href="zshg.html#nominal-skalierte-variablen"><i class="fa fa-check"></i><b>5.4</b> Nominal skalierte Variablen</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="zshg.html"><a href="zshg.html#odds-ratio"><i class="fa fa-check"></i><b>5.4.1</b> Odds Ratio</a></li>
+<li class="chapter" data-level="5.4.2" data-path="zshg.html"><a href="zshg.html#chi²-basierte-maße"><i class="fa fa-check"></i><b>5.4.2</b> Chi²-basierte Maße</a></li>
+<li class="chapter" data-level="5.4.3" data-path="zshg.html"><a href="zshg.html#cramers-upsilon"><i class="fa fa-check"></i><b>5.4.3</b> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+<li class="chapter" data-level="5.4.4" data-path="zshg.html"><a href="zshg.html#indifferenztabelle"><i class="fa fa-check"></i><b>5.4.4</b> Indifferenztabelle</a></li>
+<li class="chapter" data-level="5.4.5" data-path="zshg.html"><a href="zshg.html#phi"><i class="fa fa-check"></i><b>5.4.5</b> <span class="math inline">\(\phi\)</span></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="lin-reg.html"><a href="lin-reg.html"><i class="fa fa-check"></i><b>6</b> Zusammenhangsmaße</a><ul>
-<li class="chapter" data-level="6.1" data-path="lin-reg.html"><a href="lin-reg.html#metrisch-skalierte-variablen"><i class="fa fa-check"></i><b>6.1</b> Metrisch skalierte Variablen</a></li>
-<li class="chapter" data-level="6.2" data-path="lin-reg.html"><a href="lin-reg.html#regression"><i class="fa fa-check"></i><b>6.2</b> Regression</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="lin-reg.html"><a href="lin-reg.html#beispieldatensatz"><i class="fa fa-check"></i><b>6.2.1</b> Beispieldatensatz</a></li>
-<li class="chapter" data-level="6.2.2" data-path="lin-reg.html"><a href="lin-reg.html#idee-einer-regression"><i class="fa fa-check"></i><b>6.2.2</b> Idee einer Regression</a></li>
-<li class="chapter" data-level="6.2.3" data-path="lin-reg.html"><a href="lin-reg.html#residuen"><i class="fa fa-check"></i><b>6.2.3</b> Residuen</a></li>
-<li class="chapter" data-level="6.2.4" data-path="lin-reg.html"><a href="lin-reg.html#quadrierte-residuen"><i class="fa fa-check"></i><b>6.2.4</b> Quadrierte Residuen</a></li>
-<li class="chapter" data-level="6.2.5" data-path="lin-reg.html"><a href="lin-reg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>6.2.5</b> Interpretation der Regression</a></li>
-<li class="chapter" data-level="6.2.6" data-path="lin-reg.html"><a href="lin-reg.html#vorhergesagte-werte"><i class="fa fa-check"></i><b>6.2.6</b> Vorhergesagte Werte</a></li>
-<li class="chapter" data-level="6.2.7" data-path="lin-reg.html"><a href="lin-reg.html#residuen-teil-2"><i class="fa fa-check"></i><b>6.2.7</b> Residuen Teil 2</a></li>
-<li class="chapter" data-level="6.2.8" data-path="lin-reg.html"><a href="lin-reg.html#modellgüte"><i class="fa fa-check"></i><b>6.2.8</b> Modellgüte</a></li>
+<li class="chapter" data-level="6.1" data-path="zshg.html"><a href="zshg.html#metrisch-skalierte-variablen"><i class="fa fa-check"></i><b>6.1</b> Metrisch skalierte Variablen</a></li>
+<li class="chapter" data-level="6.2" data-path="zshg.html"><a href="zshg.html#regression"><i class="fa fa-check"></i><b>6.2</b> Regression</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="zshg.html"><a href="zshg.html#beispieldatensatz"><i class="fa fa-check"></i><b>6.2.1</b> Beispieldatensatz</a></li>
+<li class="chapter" data-level="6.2.2" data-path="zshg.html"><a href="zshg.html#idee-einer-regression"><i class="fa fa-check"></i><b>6.2.2</b> Idee einer Regression</a></li>
+<li class="chapter" data-level="6.2.3" data-path="zshg.html"><a href="zshg.html#residuen"><i class="fa fa-check"></i><b>6.2.3</b> Residuen</a></li>
+<li class="chapter" data-level="6.2.4" data-path="zshg.html"><a href="zshg.html#quadrierte-residuen"><i class="fa fa-check"></i><b>6.2.4</b> Quadrierte Residuen</a></li>
+<li class="chapter" data-level="6.2.5" data-path="zshg.html"><a href="zshg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>6.2.5</b> Interpretation der Regression</a></li>
+<li class="chapter" data-level="6.2.6" data-path="zshg.html"><a href="zshg.html#vorhergesagte-werte"><i class="fa fa-check"></i><b>6.2.6</b> Vorhergesagte Werte</a></li>
+<li class="chapter" data-level="6.2.7" data-path="zshg.html"><a href="zshg.html#residuen-teil-2"><i class="fa fa-check"></i><b>6.2.7</b> Residuen Teil 2</a></li>
+<li class="chapter" data-level="6.2.8" data-path="zshg.html"><a href="zshg.html#modellgüte"><i class="fa fa-check"></i><b>6.2.8</b> Modellgüte</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="lin-reg.html"><a href="lin-reg.html#ordinal-skalierte-merkmale"><i class="fa fa-check"></i><b>6.3</b> Ordinal skalierte Merkmale</a></li>
-<li class="chapter" data-level="6.4" data-path="lin-reg.html"><a href="lin-reg.html#nominal-skalierte-variablen"><i class="fa fa-check"></i><b>6.4</b> Nominal skalierte Variablen</a><ul>
-<li class="chapter" data-level="6.4.1" data-path="lin-reg.html"><a href="lin-reg.html#odds-ratio"><i class="fa fa-check"></i><b>6.4.1</b> Odds Ratio</a></li>
-<li class="chapter" data-level="6.4.2" data-path="lin-reg.html"><a href="lin-reg.html#chi²-basierte-maße"><i class="fa fa-check"></i><b>6.4.2</b> Chi²-basierte Maße</a></li>
-<li class="chapter" data-level="6.4.3" data-path="lin-reg.html"><a href="lin-reg.html#cramers-upsilon"><i class="fa fa-check"></i><b>6.4.3</b> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
-<li class="chapter" data-level="6.4.4" data-path="lin-reg.html"><a href="lin-reg.html#indifferenztabelle"><i class="fa fa-check"></i><b>6.4.4</b> Indifferenztabelle</a></li>
-<li class="chapter" data-level="6.4.5" data-path="lin-reg.html"><a href="lin-reg.html#phi"><i class="fa fa-check"></i><b>6.4.5</b> <span class="math inline">\(\phi\)</span></a></li>
+<li class="chapter" data-level="6.3" data-path="zshg.html"><a href="zshg.html#ordinal-skalierte-merkmale"><i class="fa fa-check"></i><b>6.3</b> Ordinal skalierte Merkmale</a></li>
+<li class="chapter" data-level="6.4" data-path="zshg.html"><a href="zshg.html#nominal-skalierte-variablen"><i class="fa fa-check"></i><b>6.4</b> Nominal skalierte Variablen</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="zshg.html"><a href="zshg.html#odds-ratio"><i class="fa fa-check"></i><b>6.4.1</b> Odds Ratio</a></li>
+<li class="chapter" data-level="6.4.2" data-path="zshg.html"><a href="zshg.html#chi²-basierte-maße"><i class="fa fa-check"></i><b>6.4.2</b> Chi²-basierte Maße</a></li>
+<li class="chapter" data-level="6.4.3" data-path="zshg.html"><a href="zshg.html#cramers-upsilon"><i class="fa fa-check"></i><b>6.4.3</b> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+<li class="chapter" data-level="6.4.4" data-path="zshg.html"><a href="zshg.html#indifferenztabelle"><i class="fa fa-check"></i><b>6.4.4</b> Indifferenztabelle</a></li>
+<li class="chapter" data-level="6.4.5" data-path="zshg.html"><a href="zshg.html#phi"><i class="fa fa-check"></i><b>6.4.5</b> <span class="math inline">\(\phi\)</span></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a></li>
@@ -231,13 +263,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="adva.html"><a href="adva.html"><i class="fa fa-check"></i><b>11</b> Fortgeschrittene Themen</a><ul>
 <li class="chapter" data-level="11.1" data-path="adva.html"><a href="adva.html#wertelabels"><i class="fa fa-check"></i><b>11.1</b> Wertelabels</a></li>
 <li class="chapter" data-level="11.2" data-path="adva.html"><a href="adva.html#sortieren"><i class="fa fa-check"></i><b>11.2</b> sortieren</a></li>
-<li class="chapter" data-level="11.3" data-path="adva.html"><a href="adva.html#indikatoren-umdrehen"><i class="fa fa-check"></i><b>11.3</b> Indikatoren umdrehen</a></li>
-<li class="chapter" data-level="11.4" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-variablen"><i class="fa fa-check"></i><b>11.4</b> Informationen aus mehreren Variablen</a></li>
-<li class="chapter" data-level="11.5" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-datensätzen"><i class="fa fa-check"></i><b>11.5</b> Informationen aus mehreren Datensätzen</a></li>
-<li class="chapter" data-level="11.6" data-path="adva.html"><a href="adva.html#arbeiten-mit-textvariablen"><i class="fa fa-check"></i><b>11.6</b> Arbeiten mit Textvariablen</a></li>
-<li class="chapter" data-level="11.7" data-path="adva.html"><a href="adva.html#egen"><i class="fa fa-check"></i><b>11.7</b> egen</a></li>
-<li class="chapter" data-level="11.8" data-path="adva.html"><a href="adva.html#gruppierte-berechnungen"><i class="fa fa-check"></i><b>11.8</b> gruppierte Berechnungen</a></li>
-<li class="chapter" data-level="11.9" data-path="adva.html"><a href="adva.html#collapse"><i class="fa fa-check"></i><b>11.9</b> collapse</a></li>
+<li class="chapter" data-level="11.3" data-path="adva.html"><a href="adva.html#missings-unterscheiden"><i class="fa fa-check"></i><b>11.3</b> missings unterscheiden</a></li>
+<li class="chapter" data-level="11.4" data-path="adva.html"><a href="adva.html#indikatoren-umdrehen"><i class="fa fa-check"></i><b>11.4</b> Indikatoren umdrehen</a></li>
+<li class="chapter" data-level="11.5" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-variablen"><i class="fa fa-check"></i><b>11.5</b> Informationen aus mehreren Variablen</a></li>
+<li class="chapter" data-level="11.6" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-datensätzen"><i class="fa fa-check"></i><b>11.6</b> Informationen aus mehreren Datensätzen</a></li>
+<li class="chapter" data-level="11.7" data-path="adva.html"><a href="adva.html#arbeiten-mit-textvariablen"><i class="fa fa-check"></i><b>11.7</b> Arbeiten mit Textvariablen</a></li>
+<li class="chapter" data-level="11.8" data-path="adva.html"><a href="adva.html#egen"><i class="fa fa-check"></i><b>11.8</b> egen</a></li>
+<li class="chapter" data-level="11.9" data-path="adva.html"><a href="adva.html#gruppierte-berechnungen"><i class="fa fa-check"></i><b>11.9</b> gruppierte Berechnungen</a></li>
+<li class="chapter" data-level="11.10" data-path="adva.html"><a href="adva.html#collapse"><i class="fa fa-check"></i><b>11.10</b> collapse</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -260,69 +293,87 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="dataviz" class="section level1">
-<h1><span class="header-section-number">5</span> Datenvisualisierung in Stata</h1>
+<h1><span class="header-section-number">4</span> Datenvisualisierung in Stata</h1>
 <p>Wir starten wie immer mit dem Einlesen eines Datensatzes:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="dataviz.html#cb1-1"></a>cd <span class="st">&quot;...&quot;</span></span>
 <span id="cb1-2"><a href="dataviz.html#cb1-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span>
 <span id="cb1-3"><a href="dataviz.html#cb1-3"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt; 0</span>
-<span id="cb1-4"><a href="dataviz.html#cb1-4"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span>
-<span id="cb1-5"><a href="dataviz.html#cb1-5"></a><span class="kw">sample</span> 25 <span class="co">//25% Stichprobe aus den Daten -&gt; läuft schneller</span></span></code></pre></div>
+<span id="cb1-4"><a href="dataviz.html#cb1-4"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span></code></pre></div>
 <p>Für Grafiken gilt noch mehr als für alle anderen Aspekte in Stata: ausprobieren und sehen, was passiert! Nachdem in der Regel ja zumindest eine ungefähre Vorstellung existiert, wie die zu erstellende Grafik aussehen soll, sind Grafik-Gallerieren ein guter Startpunkt das eigene Trial &amp; Error. Die größte Herausforderung ist häufig, eine Vorstellung zu entwickeln, wie die Darstellung aussehen soll.</p>
 <p>Eine Übersicht zu allen verfügbaren Visualierungen inklusive Beispielbefehlen findet sich beispielsweise <a href="https://www.stata.com/support/faqs/graphics/gph/stata-graphs/">hier</a> oder <a href="https://www.stata.com/features/example-graphs/">hier</a>.</p>
+<div id="erste-entscheidungen" class="section level2">
+<h2><span class="header-section-number">4.1</span> Erste Entscheidungen</h2>
+<ul>
+<li>Wie viele Variablen sollen dargestellt werden?
+<ul>
+<li>Die Verteilung einer Variable</li>
+</ul></li>
+</ul>
+<p><img src="04_dist_plots.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Die Verteilung einer Variable, aufgeteilt nach einer zweiten Variablen</li>
+<li>Die gemeinsame Verteilung zweier (oder mehrer) Variablen</li>
+</ul>
+</div>
 <div id="grafik-syntax-in-stata" class="section level2">
-<h2><span class="header-section-number">5.1</span> Grafik-Syntax in Stata</h2>
+<h2><span class="header-section-number">4.2</span> Grafik-Syntax in Stata</h2>
 <p>Die Syntax für Graphiken in Stata unterscheidet sich vom dem bisher Kennengelernten.</p>
 <div id="aufbau" class="section level3">
-<h3><span class="header-section-number">5.1.1</span> Aufbau</h3>
+<h3><span class="header-section-number">4.2.1</span> Aufbau</h3>
 <p>Grafik-Befehle bestehen aus zwei Teilen: dem Befehl <code>graph</code> und der Angabe eines Grafik-Typs. Im folgenden Befehl ist <code>box</code> der Grafik-Typ:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="dataviz.html#cb2-1"></a><span class="kw">graph</span> box inc</span></code></pre></div>
-<p><img src="05_box.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="04_box.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="twoway" class="section level3">
-<h3><span class="header-section-number">5.1.2</span> twoway</h3>
+<h3><span class="header-section-number">4.2.2</span> twoway</h3>
 <p>Beim Grafik-Typ <code>twoway</code> muss der sog. Plottyp, spezifiziert werden. Bspw. für ein Streudiagramm mit dem Befehl <code>scatter</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="dataviz.html#cb3-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="kw">scatter</span> inc age</span></code></pre></div>
-<p><img src="05_twoway1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="04_twoway1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="kombinieren-von-zwei-twoway-grafiken" class="section level3">
-<h3><span class="header-section-number">5.1.3</span> Kombinieren von zwei twoway-Grafiken</h3>
+<h3><span class="header-section-number">4.2.3</span> Kombinieren von zwei twoway-Grafiken</h3>
 <p><code>twoway</code>-Grafiken können übereinander gelegt werden. So können wir durch Kombination der Plottypen <code>scatter</code> und <code>lfit</code> ein Streudiagram mit einer Regressionsgerade<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> kombinieren:
 <code>graph twoway (scatter inc age) (lfit inc age)</code>
 Eine alternative Schreibweise mit <code>||</code> führt zur gleichen Grafik:
 <code>graph twoway scatter inc age || lfit inc age</code></p>
-<p><img src="05_line_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="04_line_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="twoway-varianten" class="section level3">
-<h3><span class="header-section-number">5.1.4</span> twoway Varianten</h3>
+<h3><span class="header-section-number">4.2.4</span> twoway Varianten</h3>
 <p><code>graph twoway scatter</code> hatten wir jetzt schon kennen gelernt. Natürlich gibt es aber auch noch weitere Darstellungsformen.</p>
 <p><code>graph twoway bar</code> liefert uns ein Säulendiagramm:</p>
 <p>Mit der Option <code>,horizontal</code> können wir dieses Säulendiagramm in ein Balkendiagramm mit horizontalen Balken verwandeln:</p>
 <p>Mit <code>graph twoway connected</code> bekommen wir ein Punktdiagramm mit verbundenen Punkten</p>
 </div>
 <div id="vorlagen" class="section level3">
-<h3><span class="header-section-number">5.1.5</span> Vorlagen</h3>
+<h3><span class="header-section-number">4.2.5</span> Vorlagen</h3>
 <p>Das Aussehen von Grafiken wird durch sog. Grafik-Schemata beeinflusst. Beispielsweise wird mit <code>, scheme(sj)</code> die Grafik nach den Vorlage des Stata Journals erstellt:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="dataviz.html#cb4-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> inc age) (<span class="kw">lfit</span> inc age), <span class="dv">scheme</span>(sj)</span></code></pre></div>
-<p><img src="05_line_scatter_theme.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="04_line_scatter_theme.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Mit <code>graph query, schemes</code> wird eine Liste der verfügbaren Schemata angezeigt.</p>
 <p>Weitere Optionen bieten zB die <a href="https://www.stata-journal.com/article.html?article=gr0070">blindschemes</a> von Daniel Bischof oder <a href="https://www.stata-journal.com/sjpdf.html?articlenum=gr0002">lean2</a> von Svend Juul. Beide müssen zunächst mit <code>ssc install blindschemes</code> bzw. <code>net install gr0002_3, from("http://www.stata-journal.com/software/sj4-3")</code> installiert werden und stehen dann zur Verfügung, zB</p>
 <p>Hier noch ein Beispiel mit <code>plotplain</code> aus <code>blindschemes</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="dataviz.html#cb5-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> inc age) (<span class="kw">lfit</span> inc age), <span class="dv">scheme</span>(plotplain) <span class="bn">legend</span>(<span class="bn">cols</span>(2) pos(6))</span></code></pre></div>
-<p><img src="05_line_scatter_theme2.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="04_line_scatter_theme2.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>…und <code>lean2</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="dataviz.html#cb6-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> inc age) (<span class="kw">lfit</span> inc age), <span class="dv">scheme</span>(lean2) <span class="co">///</span></span></code></pre></div>
-<p><img src="05_line_scatter_theme3.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="04_line_scatter_theme3.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="optionen" class="section level3">
-<h3><span class="header-section-number">5.1.6</span> Optionen</h3>
-<p>Darüber hinaus kann die Grafik mit Hilfe von spezifischen Optionen angepasst werden.</p>
+</div>
+<div id="optionen" class="section level2">
+<h2><span class="header-section-number">4.3</span> Optionen</h2>
+<p>Darüber hinaus stehen eine ganze Reihe an Anpassungsmöglichkeiten zur Verfügung</p>
+<div id="beschriftungen" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> Beschriftungen</h3>
+<p>Eine klare Beschriftung ist zentraler Bestandteil jeder Datenvisualisierung. Im wesentlichen
+Folgende Überschriften stehen uns dazu zur Verfügung: <code>title("title") subtitle("subtitle") xtitle("xtitle") ytitle("ytitle") caption("caption")</code>
+<img src="04_beschriftungen.png" width="40%" height="40%" style="display: block; margin: auto;" /></p>
 <ul>
 <li><p><code>legend</code></p>
 <ul>
 <li><code>pos</code></li>
 <li>labeln</li>
 </ul></li>
-<li><p>Achsenoptionen <code>xlabel</code>, <code>ylabel</code>, <code>xtitle</code></p></li>
 <li><p><code>over</code></p></li>
 <li><p>Darstellungstypen</p>
 <ul>
@@ -334,46 +385,42 @@ Eine alternative Schreibweise mit <code>||</code> führt zur gleichen Grafik:
 <p>Optionen von <code>graph</code> können Unteroptionen haben oder aus einer Liste von Optionen zusammengesetzt werden. Hier zwei Beispiele: <code>xlabel(#20, angle(90))</code> oder <code>xscale(range(0 300) reverse alt)</code>.</p>
 </div>
 <div id="farben" class="section level3">
-<h3><span class="header-section-number">5.1.7</span> Farben</h3>
+<h3><span class="header-section-number">4.3.2</span> Farben</h3>
 <p>Obwohl es um Darstellungen geht, haben wir noch sehr wenig über Farben gesprochen.</p>
 <p><a href="https://www.instagram.com/colours.cafe/">Instagram</a></p>
 <p><a href="https://colorbrewer2.org">ColorBrewer</a></p>
 <p><a href="https://www.color-hex.com/">colorhex</a></p>
 </div>
 <div id="subgruppen" class="section level3">
-<h3><span class="header-section-number">5.1.8</span> Subgruppen</h3>
+<h3><span class="header-section-number">4.3.3</span> Subgruppen</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="dataviz.html#cb7-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 1 , mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 2 , mc(<span class="st">&quot;254 216 128&quot;</span>) <span class="bn">msymbol</span>(o)  ) <span class="co">///</span></span></code></pre></div>
-<p><img src="05_bunter_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="04_bunter_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="dataviz.html#cb8-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 1 , mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) ( <span class="kw">scatter</span>  inc age <span class="kw">if</span> sex == 2 , mc(<span class="st">&quot;254 216 128&quot;</span>) <span class="bn">msymbol</span>(o)  ) ( <span class="kw">lfit</span>  inc age <span class="kw">if</span> sex == 1 , lc(<span class="st">&quot;black&quot;</span>) ) ( <span class="kw">lfit</span>  inc age <span class="kw">if</span> sex == 2 , lc(<span class="st">&quot;orange&quot;</span>) <span class="bn">msymbol</span>(o)  ) <span class="co">///</span></span></code></pre></div>
-<p><img src="05_bunter_line_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="04_bunter_line_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="beispiele-zum-selbst-anpassen" class="section level2">
-<h2><span class="header-section-number">5.2</span> Beispiele zum selbst anpassen</h2>
+<h2><span class="header-section-number">4.4</span> Beispiele zum selbst anpassen</h2>
+<p>Im Folgenden</p>
+<p>Was gut aussieht ist natürlich subjektiv….</p>
+<div id="boxplot" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> Boxplot</h3>
 <p>Hier noch ein Beispiel mit (sehr) vielen Optionen als Vorlage für eigene Anpassungen (<a href="dataviz.html#aufb1">DoFile</a>):</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="dataviz.html#cb9-1"></a><span class="kw">graph</span> box inc_m inc_f, <span class="bn">over</span>(age_c) <span class="dv">scheme</span>(lean1) box(1, <span class="kw">color</span>(<span class="st">&quot;0 41 93&quot;</span>)) marker(1, mcolor(<span class="st">&quot;0 41 93&quot;</span>)  <span class="bn">msymbol</span>(<span class="st">&quot;o&quot;</span>) ) medline(lcolor(<span class="st">&quot;204 175 105&quot;</span>)) box(2, <span class="kw">color</span>(<span class="st">&quot;146 143 107&quot;</span>)) marker(2, mcolor(<span class="st">&quot;146 143 107&quot;</span>)  <span class="bn">msymbol</span>(<span class="st">&quot;o&quot;</span>) ) <span class="bn">legend</span>(<span class="bn">cols</span>(2) pos(12) region(fcolor(<span class="st">&quot;249 247 241&quot;</span>) lcolor(<span class="st">&quot;16 74 138&quot;</span>))) <span class="bn">ytitle</span>(<span class="st">&quot;{stSerif:Einkommen}{superscript:2018}&quot;</span>) b1title(<span class="st">&quot;Alter&quot;</span>) <span class="bn">title</span>(<span class="st">&quot;Einkommen&quot;</span>) <span class="bn">caption</span>(<span class="st">&quot;{bf:Quelle}: Allbus 2018 {it:eigene Berechnungen}&quot;</span>,<span class="bn">position</span>(5)) <span class="bn">plotregion</span>(fcolor(<span class="st">&quot;252 251 248&quot;</span>)) graphregion(fcolor(<span class="st">&quot;249 247 241&quot;</span>)) </span></code></pre></div>
-<p><img src="05_boxplot.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><img src="04_boxplot.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Auch die Darstellung auf der Startseite dieses Skripts wurde als Stata-Grafik erstellt:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="dataviz.html#cb10-1"></a><span class="kw">webuse</span> bpwide, <span class="kw">clear</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="dataviz.html#cb11-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  (<span class="kw">lfit</span> bp_before bp_after) ( <span class="kw">scatter</span> bp_before bp_after <span class="kw">if</span> agegrp == 1, mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) ( <span class="kw">scatter</span> bp_before bp_after <span class="kw">if</span> agegrp == 2, mc(<span class="st">&quot;0 125 186&quot;</span>) <span class="bn">msymbol</span>(o)  ) ( <span class="kw">scatter</span> bp_before bp_after <span class="kw">if</span> agegrp == 3, mc(<span class="st">&quot;214 210 196&quot;</span>) <span class="bn">msymbol</span>(o)  ), <span class="dv">scheme</span>(lean2) <span class="bn">legend</span>(<span class="kw">off</span>) <span class="bn">xtitle</span>(<span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="00_scatter.png" width="80%" style="display: block; margin: auto;" /></p>
-</div>
-<div id="abschließende-bemerkungen" class="section level2">
-<h2><span class="header-section-number">5.3</span> Abschließende Bemerkungen</h2>
 <p>Häufig ist die größte Herausforderung, die Daten so umzustellen, dass sie zum gewünschten <code>graph</code>-Befehl passen. Ein Beispiel ist die Erstellung einer Bevölkerungspyramide aus den Allbusdaten:</p>
 </div>
+</div>
 <div id="bevölkerungspyramide" class="section level2">
-<h2><span class="header-section-number">5.4</span> Bevölkerungspyramide</h2>
-<p><img src="05_pyramid.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
+<h2><span class="header-section-number">4.5</span> Bevölkerungspyramide</h2>
+<p><img src="04_pyramid.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
 <p>Auch eine Bevölkerungspyramide lässt sich als Stata-Grafik erstellen. Allerdings müssen dazu einige Zwischenschritte durchlaufen, die fortgeschrittene Datenaufbereitung mit <code>collapse</code> voraussetzen. Außerdem könnte ein Teil der Aufbereitung mit <code>reshape</code> abgekürzt werden. Mehr Informationen dazu finden sich am Ende dieses Skripts in Kapitel <a href="adva.html#adva">11</a>.</p>
 <p>Die grundsätzliche Funktion für die Bevölkerungspyramide ist ein Balkendiagramm mit <code>graph twoway bar , horizontal</code>. Die Länge der Balken soll jeweils durch die Anzahl der Fälle in jeder Altersstufe, getrennt nach Geschlecht, bestimmt werden. Dazu müssen wir also zunächst die Anzahl der Befragten pro Alterstufe und Geschlecht bestimmen. Wenn wir den Allbus 2018 laden, haben wir ja einen Datensatz mit einer Zeile pro Person. Was wir jetzt aber benötigen ist eine Variante, in der wir den Datensatz sozusagen “zusammenschieben”: wir brauchen jeweils eine Zeile pro Altersstufe und Geschlecht und eine Variable mit der Zahl der Befragten.</p>
-<pre><code>  age sex Anzahl_Befragte
-1  18   1              15
-2  18   2              11
-3  19   1              22
-4  19   2              15
-5  20   1              18
-6  20   2              16</code></pre>
+<pre><code>Error in a18 %&gt;% filter(age &gt; 0, sex &gt; 0) %&gt;% group_by(age, sex) %&gt;% count(name = &quot;Anzahl_Befragte&quot;) %&gt;% : konnte Funktion &quot;%&gt;%&quot; nicht finden</code></pre>
 <p>Um dorthin zu kommen, steht uns der <code>collapse</code>-Befehl zur Verfügung:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="dataviz.html#cb13-1"></a>cd <span class="st">&quot;&quot;</span></span>
 <span id="cb13-2"><a href="dataviz.html#cb13-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span>
@@ -383,59 +430,71 @@ Eine alternative Schreibweise mit <code>||</code> führt zur gleichen Grafik:
 <span id="cb13-6"><a href="dataviz.html#cb13-6"></a><span class="kw">collapse</span> (<span class="fu">count</span>) respid , <span class="kw">by</span>(sex age)</span>
 <span id="cb13-7"><a href="dataviz.html#cb13-7"></a><span class="ot">list</span> <span class="kw">in</span> 1/8</span></code></pre></div>
 <p>Unter respid ist jetzt die Zahl der Befragten in der jeweiligen Kombination aus <code>age</code> und <code>sex</code> abgelegt:</p>
-<pre><code>  age sex respid
-1  18   1     15
-2  18   2     11
-3  19   1     22
-4  19   2     15
-5  20   1     18
-6  20   2     16
-7  21   1     21
-8  21   2     13</code></pre>
+<pre><code>Error in a18 %&gt;% filter(age &gt; 0, sex &gt; 0) %&gt;% group_by(age, sex) %&gt;% count(name = &quot;respid&quot;) %&gt;% : konnte Funktion &quot;%&gt;%&quot; nicht finden</code></pre>
 <p>Um verwirrung zu vermeiden, benennen wir <code>respid</code> in <code>total</code> um:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="dataviz.html#cb15-1"></a><span class="kw">rename</span> respid <span class="kw">total</span></span></code></pre></div>
 <p>Allerdings möchten wir jetzt die Angaben für Frauen und Männer in getrennte Variablen ablegen:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="dataviz.html#cb16-1"></a><span class="kw">gen</span> total_m = <span class="kw">total</span> <span class="kw">if</span> sex == 1</span>
 <span id="cb16-2"><a href="dataviz.html#cb16-2"></a><span class="kw">gen</span> total_f = <span class="kw">total</span> <span class="kw">if</span> sex == 2</span>
 <span id="cb16-3"><a href="dataviz.html#cb16-3"></a><span class="ot">list</span> <span class="kw">in</span> 1/10</span></code></pre></div>
-<pre><code>   age sex total total_m total_f
-1   18   1    15      15       .
-2   18   2    11       .      11
-3   19   1    22      22       .
-4   19   2    15       .      15
-5   20   1    18      18       .
-6   20   2    16       .      16
-7   21   1    21      21       .
-8   21   2    13       .      13
-9   22   1    18      18       .
-10  22   2    15       .      15</code></pre>
+<pre><code>Error in a18 %&gt;% filter(age &gt; 0, sex &gt; 0) %&gt;% group_by(age, sex) %&gt;% count(name = &quot;total&quot;) %&gt;% : konnte Funktion &quot;%&gt;%&quot; nicht finden</code></pre>
 <p>Jetzt können wir daraus ein Balkendiagramm erstellen:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="dataviz.html#cb18-1"></a><span class="kw">twoway</span>( <span class="bn">bar</span> neg_total_m age, horizontal )(<span class="bn">bar</span> total_f age, horizontal)</span></code></pre></div>
-<p><img src="05_pyramid001.png" width="60%" height="60%" style="display: block; margin: auto;" />
+<p><img src="04_pyramid001.png" width="60%" height="60%" style="display: block; margin: auto;" />
 Was hier noch fehlt ist, die Umorientierung der Zahlen für die Männer “nach links”. Dazu multiplizieren wir <code>total_m</code> mit <code>-1</code>:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="dataviz.html#cb19-1"></a><span class="kw">gen</span> neg_total_m = -total_m</span></code></pre></div>
 <p>Damit dann verwenden wir <code>neg_total_m</code> für die Balken der Männer:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="dataviz.html#cb20-1"></a><span class="kw">twoway</span>( <span class="bn">bar</span> neg_total_m age, horizontal )(<span class="bn">bar</span> total_f age, horizontal)</span></code></pre></div>
-<p><img src="05_pyramid002.png" width="60%" height="60%" style="display: block; margin: auto;" />
+<p><img src="04_pyramid002.png" width="60%" height="60%" style="display: block; margin: auto;" />
 Mit <code>xlabel</code> und <code>legend</code>noch einige Anpassungen, außerdem können wir mit <code>text</code> noch Beschriftungen hinzufügen:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="dataviz.html#cb21-1"></a><span class="kw">twoway</span>( <span class="bn">bar</span> neg_total_m age, horizontal )(<span class="bn">bar</span> total_f age, horizontal) ,<span class="kw">xlabel</span>( -40 <span class="st">&quot;40&quot;</span> -30 <span class="st">&quot;30&quot;</span> -20 <span class="st">&quot;20&quot;</span> -10 <span class="st">&quot;10&quot;</span> 0 10(10)40 ) <span class="bn">legend</span>(<span class="kw">off</span>) <span class="bn">text</span>(100 -8 <span class="st">&quot;Männer&quot;</span>) <span class="bn">text</span>(100 8 <span class="st">&quot;Frauen&quot;</span>)</span></code></pre></div>
-<p><img src="05_pyramid.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
+<p><img src="04_pyramid.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="anhang" class="section level2">
-<h2><span class="header-section-number">5.5</span> Anhang</h2>
+<h2><span class="header-section-number">4.6</span> Anhang</h2>
 <div id="aufb1" class="section level3">
-<h3><span class="header-section-number">5.5.1</span> Aufbereitung für Boxplot</h3>
-<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="dataviz.html#cb22-1"></a><span class="kw">use</span> <span class="st">&quot;D:\Studium</span><span class="ch">\01</span><span class="st">_Oldenburg\Lehre\Datensaetze\Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span>
-<span id="cb22-2"><a href="dataviz.html#cb22-2"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt; 0</span>
-<span id="cb22-3"><a href="dataviz.html#cb22-3"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span>
-<span id="cb22-4"><a href="dataviz.html#cb22-4"></a></span>
-<span id="cb22-5"><a href="dataviz.html#cb22-5"></a><span class="kw">egen</span> age_c = <span class="fu">cut</span>(age), <span class="fu">at</span>(20,35,50,65)</span>
-<span id="cb22-6"><a href="dataviz.html#cb22-6"></a>lab def agec1 20 <span class="st">&quot;20-34&quot;</span> 35 <span class="st">&quot;35-49&quot;</span> 50 <span class="st">&quot;50-64&quot;</span></span>
-<span id="cb22-7"><a href="dataviz.html#cb22-7"></a>lab val age_c agec1</span>
-<span id="cb22-8"><a href="dataviz.html#cb22-8"></a><span class="kw">gen</span> inc_m = inc <span class="kw">if</span> sex == 1</span>
-<span id="cb22-9"><a href="dataviz.html#cb22-9"></a><span class="kw">gen</span> inc_f = inc <span class="kw">if</span> sex == 2</span>
-<span id="cb22-10"><a href="dataviz.html#cb22-10"></a>lab <span class="kw">var</span> inc_m <span class="st">&quot;Männer&quot;</span></span>
-<span id="cb22-11"><a href="dataviz.html#cb22-11"></a>lab <span class="kw">var</span> inc_f <span class="st">&quot;Frauen&quot;</span></span></code></pre></div>
+<h3><span class="header-section-number">4.6.1</span> Aufbereitung für Boxplot</h3>
+<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="dataviz.html#cb22-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb22-2"><a href="dataviz.html#cb22-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb22-3"><a href="dataviz.html#cb22-3"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt; 0</span>
+<span id="cb22-4"><a href="dataviz.html#cb22-4"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span>
+<span id="cb22-5"><a href="dataviz.html#cb22-5"></a></span>
+<span id="cb22-6"><a href="dataviz.html#cb22-6"></a><span class="kw">egen</span> age_c = <span class="fu">cut</span>(age), <span class="fu">at</span>(20,35,50,65)</span>
+<span id="cb22-7"><a href="dataviz.html#cb22-7"></a>lab def agec1 20 <span class="st">&quot;20-34&quot;</span> 35 <span class="st">&quot;35-49&quot;</span> 50 <span class="st">&quot;50-64&quot;</span></span>
+<span id="cb22-8"><a href="dataviz.html#cb22-8"></a>lab val age_c agec1</span>
+<span id="cb22-9"><a href="dataviz.html#cb22-9"></a><span class="kw">gen</span> inc_m = inc <span class="kw">if</span> sex == 1</span>
+<span id="cb22-10"><a href="dataviz.html#cb22-10"></a><span class="kw">gen</span> inc_f = inc <span class="kw">if</span> sex == 2</span>
+<span id="cb22-11"><a href="dataviz.html#cb22-11"></a>lab <span class="kw">var</span> inc_m <span class="st">&quot;Männer&quot;</span></span>
+<span id="cb22-12"><a href="dataviz.html#cb22-12"></a>lab <span class="kw">var</span> inc_f <span class="st">&quot;Frauen&quot;</span></span></code></pre></div>
+</div>
+<div id="sep1" class="section level3">
+<h3><span class="header-section-number">4.6.2</span> <code>separate</code></h3>
+<p><code>separate</code> ist eine Abkürzung, um Angaben einer Variable entlang der Ausprägungen einer zweiten Variablen aufzuteilen. Das hilft uns bspw. die Aufteilung von <code>inc</code> nach dem Geschlecht (<code>sex</code>) zu vereinfachen. Wir können dies entweder mit zwei Befehlen mit <code>gen</code> und <code>if</code> durchführen oder diese zwei Schritte mit einem <code>separate</code> Befehl durchführen:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="dataviz.html#cb23-1"></a><span class="kw">gen</span> inc_m = inc <span class="kw">if</span> sex == 1</span>
+<span id="cb23-2"><a href="dataviz.html#cb23-2"></a><span class="kw">gen</span> inc_f = inc <span class="kw">if</span> sex == 2</span>
+<span id="cb23-3"><a href="dataviz.html#cb23-3"></a><span class="kw">separate</span> inc, <span class="kw">by</span>(sex)</span>
+<span id="cb23-4"><a href="dataviz.html#cb23-4"></a><span class="ot">list</span> inc sex inc_m inc_f inc1 inc2 <span class="kw">in</span> 1/10</span></code></pre></div>
+<pre><code> variable age_c not found
+r(111);
+
+
+
+
+(1,704 missing values generated)
+
+(1,773 missing values generated)
+
+              storage   display    value
+variable name   type    format     label      variable label
+--------------------------------------------------------------------------------
+inc1            int     %17.0g     inc        inc, sex == MANN
+inc2            int     %17.0g     inc        inc, sex == FRAU
+
+     +-----------------------------------------------------------+
+     |          inc    sex   inc_m   inc_f   inc1           inc2 |
+     |-----------------------------------------------------------|
+     |-----------------------------------------------------------|
+     +-----------------------------------------------------------+</code></pre>
 
 </div>
 </div>
@@ -451,8 +510,8 @@ Mit <code>xlabel</code> und <code>legend</code>noch einige Anpassungen, außerde
           </div>
         </div>
       </div>
-<a href="desc2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="lin-reg.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="desc1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="zshg.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
