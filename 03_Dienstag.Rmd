@@ -10,7 +10,6 @@ library(kableExtra)
 stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 a18 <- readstata13::read.dta13("../Allbus2018.dta",convert.factors = F)
-t1 <- table(a18$german) # ablegen wie oben
 ```
 
 
@@ -84,6 +83,8 @@ tabulate xr20, m
 
 ### Zwei Variablen, eine Tabelle: Kontingenztabellen
 
+Neben der einfachen Verteilung der Variable interessiert uns aber meistens, ob sich die Verteilung zwischen Gruppen unterscheidet. Hierfür sind Kontingenztabellen ein wichtiges und sehr häuifg verwendetes Werkzeug.
+
 Aus Kontingenztabellen erfahren wir, wie häufig Merkmalskombinationen auftreten. Auch für Kontingenztabellen können wir ebenfalls `tabulate` verwenden. Zum Beispiel können wir uns eine Tabelle anzeigen lassen, die uns die Internetnutzung getrennt nach Geschlechtern zeigt. Da die Variable `sex` keine Missings hat, können wir direkt loslegen.
 
 Für die Kontingenztabelle geben wir dann nach `tabulate` die beiden Variablen an, welche die Zeilen und Spalten definieren:
@@ -130,8 +131,10 @@ tabulate xr20 sex, cell nofreq
 
 Die hier dargestellten relativen Häufigkeiten beziehen sich jeweils auf die Gesamtzahl der Befragten. Formal dargestellt wird also für die Kombination  (`xr20=4`) und ledig (`sex = 2`) die Anzahl der 35-59 Jahre alten Befragten durch die Anzahl **aller Befragten** geteilt: $\frac{\text{Anzahl 1x/Woche Internet nutzender Frauen}}{\text{Gesamtzahl der Befragten}}$ - Wir können also aus dieser Tabelle ablesen, dass 1,27% der Befragten *weiblich und wöchentliche Internet-Userinnen* sind. 
 
+Für den Vergleich zwischen Gruppen sind aber in der Regel die *bedingten relativen Häufigkeiten* noch informativer. Hier kommt es jetzt darauf an, welche der beiden Variablen die Gruppen definieren sollen und welche Variable wir untersuchen möchten:
 
 ### pro Gruppe 1: Zeilenprozente
+
 Wir können diese Tabelle auch mit Zeilenprozenten anzeigen lassen, indem wir die Option `row` verwenden:
 
 ```{stata row_pct, echo = T, eval = F}
@@ -223,9 +226,11 @@ $\Rightarrow$ Wie groß ist der Anteil der Befragten, die jünger als 60 Jahre s
 
 Natürlich können wir die Werte in `age_cat` auch besser beschriften - mehr dazu im [Anhang](#vlabel) 
 
-Allerdings können metrische Variablen auch direkt Hilfe von Lage- und Konzentrationsmaßen beschrieben werden.
 
 ### `summarize`
+
+Allerdings können metrische Variablen auch direkt Hilfe von Lage- und Konzentrationsmaßen beschrieben werden.
+
 Klassische Lagemaße zur Beschreibung von metrischen Variablen sind bspw. Minimum und Maximum, das arithm. Mittel sowie der Median und Quantile. Auch hier haben wir gestern bereits den wichtigsten Befehl kennen gelernt: `summarize` gibt uns einen ersten Überblick zur Verteilung einer metrischen Variable:
 
 ```{stata su1F, eval = F}
@@ -266,14 +271,28 @@ Hier wird eine ganze Menge auf einmal angezeigt - die Kennzahlen sind dabei in d
 
 ### `tabstat`
 
-Häufig möchten wir aber vielleicht nur eine bestimmte Information. Dafür ist `tabstat` eine gute Lösung. Mit `tabstat` können wir eine ganze Reihe statistischer Kennzahlen für metrische/kontinuierliche Merkmale berechnen. Die Syntax hat dabei immer das folgende Format: `tabstat age, s(mean median)`
+Häufig möchten wir aber vielleicht nur eine bestimmte Information. Dafür ist `tabstat` eine gute Lösung. Mit `tabstat` können wir eine ganze Reihe statistischer Kennzahlen für metrische/kontinuierliche Merkmale berechnen. Die Syntax hat dabei das folgende Format: `tabstat age, s(*kennzahl*)`
 
 Hier eine Übersicht der Kennzahlen:
 ```{r, ft.align = "center",message=F,warning=F, echo = F}
 library(kableExtra)
+opts <- options(knitr.kable.NA = "")
 readxl::read_xlsx("03_tabstat.xlsx",sheet = 1) %>% 
-  kable() %>% kable_styling(bootstrap_options = "condensed", full_width = F) %>% 
+  kable() %>% 
+  kable_styling(bootstrap_options = "condensed", full_width = F) %>% 
   column_spec(1,monospace = TRUE)
+```
+
+Hier ein Bespielbefehl für die Berechnung des arith. Mittels, des Medians, der Varianz und des Varianzkoeffizienten mit `tabstat`:
+```{stata tabstatF, eval = F}
+tabstat age, s(mean median var cv)
+```
+
+```{stata tabstatT, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode age, mv(-32)
+tabstat age, s(mean median var cv)
 ```
 
 Allerdings lassen sich mit `tabstat` nicht beliebige Quantil-Grenzen (nur für 5,10,25,50,75,90,95,99) berechnen, dafür können wir `centile` nutzen:
@@ -289,33 +308,50 @@ centile age, centile(35)
 ```
 Aus den Angaben unter `Centile` erfahren wir, dass 35% der Befragten im Datensatz sind 44 Jahre alt oder jünger sind. Dementsprechend sind 65% der Befragten 44 Jahre oder älter.
 
-### Kennzahlen vergleichen {#bys_vgl}
+### Kennzahlen vergleichen {#by_vgl}
 
-Richtig spannend sind diese Kennzahlen natürlich erst im Vergleich zwischen Gruppen. Bspw. können wir die Altersangaben aus den alten (`eastwest`=1) und neuen Bundesländern (`eastwest`=2) vergleichen, indem wir das Befehls-Präfix `bys varX:` verwenden. `bys` steht für "by sort" und damit sagen wir Stata, dass die folgende Berechnung getrennt nach den Werten für `varX` ausgeführt werden soll. Wenn wir also `summarize` für beide Ausprägungen von `eastwest` berechnen möchten, gehen wir wir folgt vor:
-```{stata bysuF, eval = F}
-bys eastwest: summarize age 
-```
-```{stata bysuT, echo = F}
-set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-qui mvdecode age, mv(-32)
-bys eastwest: summarize age 
-```
-In den neuen Bundesländern sind die Befragten im Schnitt also um 53.90083 - 50.66093 = `r 53.90083 - 50.66093` Jahre älter.
-
-Das funktioniert auch für alle `tabstat`-Befehle:
+Richtig spannend sind diese Kennzahlen auch wieder erst im Vergleich zwischen Gruppen. Hierfür steht uns die `by()`-Option von `tabstat` zur Verfügung. Bspw. können wir die Altersangaben aus den alten (`eastwest`=1) und neuen Bundesländern (`eastwest`=2) vergleichen, indem wir in `tabstat` die Option `by(eastwest)` verwenden:
 
 ```{stata bytabstF, eval = F}
-bys eastwest: tabstat age, s(cv)
+tabstat age, s(mean median var cv) by(eastwest)
 ```
 ```{stata bytabstT, echo = F}
 set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 qui mvdecode age, mv(-32)
-bys eastwest: tabstat age, s(cv)
+tabstat age, s(mean median var cv) by(eastwest)
 ```
 
+Wir sehen hier also, dass sowohl das arith. Mittel als auch der Median des Befragtenalters in den alten Bundesländern höher ist als in den neuen Bundesländern. Außerdem ist auch die Streuung in den alten Bundesländern höher ist als in den neuen Bundesländern.
+
 Eine andere Option ist es, auf den `if`-Befehl zurückzugreifen - siehe [hier](#if_vgl)
+
+
+### `tabulate` mit der Option `summarize()` 
+
+Wir können aber auch zwei Variablen für den Kennzahlenvergleich verwenden. Bspw. sind neben Ost-West-Vergleichen auch häufig Geschlechterunterschiede von Interesse. Stata stellt uns damit mit der `summarise`-Option eine einfache Möglichkeit zur Verfügung:
+
+```{stata tabsuF, eval = F}
+tabstat age, s(mean median var cv) by(eastwest)
+```
+```{stata tabsuT, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode age, mv(-32)
+tab sex eastwest, summarize(age)
+```
+
+Wir sehen hier, dass 1222 Männer aus den alten Bundesländern befragt wurden, die im Durchschnitt 50.5982 alt sind. Die Standardabweichung des Alters in dieser Gruppe beträgt 18.177659 Jahre. Außerdem wurden 539 Frauen aus den neuen Bundesländern befragt, die im arith. Mittel 54.58256 alt sind und deren Altersangaben eine Standardabweichung 16.720148 aufweisen.
+
+Je nach Präferenz können wir eine der drei Kennzahlen (Anzahl der Beobachtungen, arith. Mittel und Standardabw.) ausblenden in dem wir die entsprechende Option verwenden:
+
+  + `nofreq`               Häufigkeiten ausblenden
+  + `nomeans`              arith. Mittel ausblenden
+  + `nostandard`           Standardabw. ausblenden
+  
+`tab sex eastwest, summarize(age) nofreq` würde uns also nur die arith. Mittel und Standardabweichungen ausgeben.  
+
+
 
 
 ### Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient {#variance}
@@ -574,9 +610,23 @@ label values age_cat age_cat_lab
 tab age_cat
 ```
 
+## Exkurs: Kombination von `summarize` mit dem `by`-Präfix {#bys_su}
+
+Bspw. können wir die Altersangaben aus den alten (`eastwest`=1) und neuen Bundesländern (`eastwest`=2) vergleichen, indem wir das Befehls-Präfix `bys varX:` verwenden. `bys` steht für "by sort" und damit sagen wir Stata, dass die folgende Berechnung getrennt nach den Werten für `varX` ausgeführt werden soll. Wenn wir also `summarize` für beide Ausprägungen von `eastwest` berechnen möchten, gehen wir wir folgt vor:
+```{stata bysuF, eval = F}
+bys eastwest: summarize age 
+```
+```{stata bysuT, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode age, mv(-32)
+bys eastwest: summarize age 
+```
+In den neuen Bundesländern sind die Befragten im Schnitt also um 53.90083 - 50.66093 = `r 53.90083 - 50.66093` Jahre älter.
+
 ## Exkurs: Kennzahlvergleiche mit `if` {#if_vgl}
 
-Neben der Variante [`bys var:`](#bys_vgl) können wir auch mit Hilfe der `if`-Option Kennzahlen miteinander vergleichen:
+Neben der Variante [`bys var:`](#by_vgl) können wir auch mit Hilfe der `if`-Option Kennzahlen miteinander vergleichen:
 
 ```{stata ifF, eval = F}
 summarize age if eastwest == 1
@@ -599,3 +649,7 @@ qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 qui mvdecode age, mv(-32)
 bys eastwest: summarize age 
 ```
+
+
+
+

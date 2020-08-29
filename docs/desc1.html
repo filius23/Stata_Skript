@@ -180,15 +180,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="desc1.html"><a href="desc1.html#metrische-variablen-beschreiben"><i class="fa fa-check"></i><b>3.2</b> Metrische Variablen beschreiben</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="desc1.html"><a href="desc1.html#summarize"><i class="fa fa-check"></i><b>3.2.1</b> <code>summarize</code></a></li>
 <li class="chapter" data-level="3.2.2" data-path="desc1.html"><a href="desc1.html#tabstat"><i class="fa fa-check"></i><b>3.2.2</b> <code>tabstat</code></a></li>
-<li class="chapter" data-level="3.2.3" data-path="desc1.html"><a href="desc1.html#bys_vgl"><i class="fa fa-check"></i><b>3.2.3</b> Kennzahlen vergleichen</a></li>
-<li class="chapter" data-level="3.2.4" data-path="desc1.html"><a href="desc1.html#variance"><i class="fa fa-check"></i><b>3.2.4</b> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
-<li class="chapter" data-level="3.2.5" data-path="desc1.html"><a href="desc1.html#sk_kur"><i class="fa fa-check"></i><b>3.2.5</b> Schiefe &amp; Wölbung</a></li>
-<li class="chapter" data-level="3.2.6" data-path="desc1.html"><a href="desc1.html#gini-koeffizient"><i class="fa fa-check"></i><b>3.2.6</b> Gini-Koeffizient</a></li>
+<li class="chapter" data-level="3.2.3" data-path="desc1.html"><a href="desc1.html#by_vgl"><i class="fa fa-check"></i><b>3.2.3</b> Kennzahlen vergleichen</a></li>
+<li class="chapter" data-level="3.2.4" data-path="desc1.html"><a href="desc1.html#tabulate-mit-der-option-summarize"><i class="fa fa-check"></i><b>3.2.4</b> <code>tabulate</code> mit der Option <code>summarize()</code></a></li>
+<li class="chapter" data-level="3.2.5" data-path="desc1.html"><a href="desc1.html#variance"><i class="fa fa-check"></i><b>3.2.5</b> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
+<li class="chapter" data-level="3.2.6" data-path="desc1.html"><a href="desc1.html#sk_kur"><i class="fa fa-check"></i><b>3.2.6</b> Schiefe &amp; Wölbung</a></li>
+<li class="chapter" data-level="3.2.7" data-path="desc1.html"><a href="desc1.html#gini-koeffizient"><i class="fa fa-check"></i><b>3.2.7</b> Gini-Koeffizient</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="Stata2.html"><a href="Stata2.html#übungen"><i class="fa fa-check"></i><b>3.3</b> Übungen</a></li>
 <li class="chapter" data-level="3.4" data-path="Stata1.html"><a href="Stata1.html#profi-übungen"><i class="fa fa-check"></i><b>3.4</b> Profi-Übungen</a></li>
 <li class="chapter" data-level="3.5" data-path="desc1.html"><a href="desc1.html#vlabel"><i class="fa fa-check"></i><b>3.5</b> Exkurs: labels vergeben</a></li>
-<li class="chapter" data-level="3.6" data-path="desc1.html"><a href="desc1.html#if_vgl"><i class="fa fa-check"></i><b>3.6</b> Exkurs: Kennzahlvergleiche mit <code>if</code></a></li>
+<li class="chapter" data-level="3.6" data-path="desc1.html"><a href="desc1.html#bys_su"><i class="fa fa-check"></i><b>3.6</b> Exkurs: Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+<li class="chapter" data-level="3.7" data-path="desc1.html"><a href="desc1.html#if_vgl"><i class="fa fa-check"></i><b>3.7</b> Exkurs: Kennzahlvergleiche mit <code>if</code></a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="desc2.html"><a href="desc2.html"><i class="fa fa-check"></i><b>4</b> Mehr deskriptive Statistik</a><ul>
 <li class="chapter" data-level="4.1" data-path="desc1.html"><a href="desc1.html#tabstat"><i class="fa fa-check"></i><b>4.1</b> <code>tabstat</code></a></li>
@@ -344,6 +346,7 @@ MEHRMALS I.D.WOCHE |        290        8.34       76.91
              Total |      3,477      100.00</code></pre>
 <div id="zwei-variablen-eine-tabelle-kontingenztabellen" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> Zwei Variablen, eine Tabelle: Kontingenztabellen</h3>
+<p>Neben der einfachen Verteilung der Variable interessiert uns aber meistens, ob sich die Verteilung zwischen Gruppen unterscheidet. Hierfür sind Kontingenztabellen ein wichtiges und sehr häuifg verwendetes Werkzeug.</p>
 <p>Aus Kontingenztabellen erfahren wir, wie häufig Merkmalskombinationen auftreten. Auch für Kontingenztabellen können wir ebenfalls <code>tabulate</code> verwenden. Zum Beispiel können wir uns eine Tabelle anzeigen lassen, die uns die Internetnutzung getrennt nach Geschlechtern zeigt. Da die Variable <code>sex</code> keine Missings hat, können wir direkt loslegen.</p>
 <p>Für die Kontingenztabelle geben wir dann nach <code>tabulate</code> die beiden Variablen an, welche die Zeilen und Spalten definieren:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb12-1"><a href="desc1.html#cb12-1"></a><span class="kw">tabulate</span> xr20 sex</span></code></pre></div>
@@ -410,6 +413,7 @@ MEHRMALS I.D.WOCHE |      4.85       5.42 |     10.27
 -------------------+----------------------+----------
              Total |     51.98      48.02 |    100.00 </code></pre>
 <p>Die hier dargestellten relativen Häufigkeiten beziehen sich jeweils auf die Gesamtzahl der Befragten. Formal dargestellt wird also für die Kombination (<code>xr20=4</code>) und ledig (<code>sex = 2</code>) die Anzahl der 35-59 Jahre alten Befragten durch die Anzahl <strong>aller Befragten</strong> geteilt: <span class="math inline">\(\frac{\text{Anzahl 1x/Woche Internet nutzender Frauen}}{\text{Gesamtzahl der Befragten}}\)</span> - Wir können also aus dieser Tabelle ablesen, dass 1,27% der Befragten <em>weiblich und wöchentliche Internet-Userinnen</em> sind.</p>
+<p>Für den Vergleich zwischen Gruppen sind aber in der Regel die <em>bedingten relativen Häufigkeiten</em> noch informativer. Hier kommt es jetzt darauf an, welche der beiden Variablen die Gruppen definieren sollen und welche Variable wir untersuchen möchten:</p>
 </div>
 <div id="pro-gruppe-1-zeilenprozente" class="section level3">
 <h3><span class="header-section-number">3.1.3</span> pro Gruppe 1: Zeilenprozente</h3>
@@ -503,9 +507,9 @@ Für die neue, klassierte Variable können wir dann wieder mit <code>tabulate</c
 <p>Stata verwendet für die Klassen jeweils die untere Klassengrenze. Wir haben also 718 18-34-jährige und 1527 35-59-jährige Befragte in unserem Datensatz.</p>
 <p><span class="math inline">\(\Rightarrow\)</span> Wie groß ist der Anteil der Befragten, die jünger als 60 Jahre sind? Wie groß ist der Anteil der Befragten, die 60 Jahre oder älter sind?<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
 <p>Natürlich können wir die Werte in <code>age_cat</code> auch besser beschriften - mehr dazu im <a href="desc1.html#vlabel">Anhang</a></p>
-<p>Allerdings können metrische Variablen auch direkt Hilfe von Lage- und Konzentrationsmaßen beschrieben werden.</p>
 <div id="summarize" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> <code>summarize</code></h3>
+<p>Allerdings können metrische Variablen auch direkt Hilfe von Lage- und Konzentrationsmaßen beschrieben werden.</p>
 <p>Klassische Lagemaße zur Beschreibung von metrischen Variablen sind bspw. Minimum und Maximum, das arithm. Mittel sowie der Median und Quantile. Auch hier haben wir gestern bereits den wichtigsten Befehl kennen gelernt: <code>summarize</code> gibt uns einen ersten Überblick zur Verteilung einer metrischen Variable:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="desc1.html#cb29-1"></a><span class="kw">summarize</span> age</span></code></pre></div>
 <pre><code>    Variable |       Obs        Mean    Std. Dev.       Min        Max
@@ -542,7 +546,7 @@ Für die neue, klassierte Variable können wir dann wieder mit <code>tabulate</c
 </div>
 <div id="tabstat" class="section level3">
 <h3><span class="header-section-number">3.2.2</span> <code>tabstat</code></h3>
-<p>Häufig möchten wir aber vielleicht nur eine bestimmte Information. Dafür ist <code>tabstat</code> eine gute Lösung. Mit <code>tabstat</code> können wir eine ganze Reihe statistischer Kennzahlen für metrische/kontinuierliche Merkmale berechnen. Die Syntax hat dabei immer das folgende Format: <code>tabstat age, s(mean median)</code></p>
+<p>Häufig möchten wir aber vielleicht nur eine bestimmte Information. Dafür ist <code>tabstat</code> eine gute Lösung. Mit <code>tabstat</code> können wir eine ganze Reihe statistischer Kennzahlen für metrische/kontinuierliche Merkmale berechnen. Die Syntax hat dabei das folgende Format: <code>tabstat age, s(*kennzahl*)</code></p>
 Hier eine Übersicht der Kennzahlen:
 <table class="table table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -567,7 +571,6 @@ mean
 arithm. Mittel
 </td>
 <td style="text-align:left;">
-NA
 </td>
 </tr>
 <tr>
@@ -589,7 +592,6 @@ count
 Anzahl der Beobachtungen ohne Missings
 </td>
 <td style="text-align:left;">
-NA
 </td>
 </tr>
 <tr>
@@ -600,7 +602,6 @@ n
 entspricht count
 </td>
 <td style="text-align:left;">
-NA
 </td>
 </tr>
 <tr>
@@ -611,7 +612,6 @@ sum
 Summe der Ausprägungen
 </td>
 <td style="text-align:left;">
-NA
 </td>
 </tr>
 <tr>
@@ -622,7 +622,6 @@ max
 Maximum
 </td>
 <td style="text-align:left;">
-NA
 </td>
 </tr>
 <tr>
@@ -633,7 +632,6 @@ min
 Minimum
 </td>
 <td style="text-align:left;">
-NA
 </td>
 </tr>
 <tr>
@@ -710,7 +708,7 @@ pX
 X. Perzentil (5,10,25,50,75,90,95,99)
 </td>
 <td style="text-align:left;">
-zb. p(5) -&gt; wie hoch ist die Grenze, unterhalb derer 5% der Beobachtungen liegen?
+zb. p(5) -&gt; wie hoch ist die Grenze, unterhalb welcher 5% der Beobachtungen liegen? (Und: oberhalb welcher 95% der Beobachtungen liegen?)
 </td>
 </tr>
 <tr>
@@ -732,56 +730,76 @@ q
 Entspricht p25 p50 p75
 </td>
 <td style="text-align:left;">
-NA
 </td>
 </tr>
 </tbody>
 </table>
+<p>Hier ein Bespielbefehl für die Berechnung des arith. Mittels, des Medians, der Varianz und des Varianzkoeffizienten mit <code>tabstat</code>:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="desc1.html#cb33-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="kw">mean</span> <span class="kw">median</span> <span class="kw">var</span> cv)</span></code></pre></div>
+<pre><code>    variable |      mean       p50  variance        cv
+-------------+----------------------------------------
+         age |  51.67713        53  311.2478  .3413931
+------------------------------------------------------</code></pre>
 <p>Allerdings lassen sich mit <code>tabstat</code> nicht beliebige Quantil-Grenzen (nur für 5,10,25,50,75,90,95,99) berechnen, dafür können wir <code>centile</code> nutzen:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="desc1.html#cb33-1"></a><span class="kw">centile</span> age, <span class="kw">centile</span>(35)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb35-1"><a href="desc1.html#cb35-1"></a><span class="kw">centile</span> age, <span class="kw">centile</span>(35)</span></code></pre></div>
 <pre><code>                                                       -- Binom. Interp. --
     Variable |     Obs  Percentile      Centile        [95% Conf. Interval]
 -------------+-------------------------------------------------------------
          age |    3472         35            44              43          45</code></pre>
 <p>Aus den Angaben unter <code>Centile</code> erfahren wir, dass 35% der Befragten im Datensatz sind 44 Jahre alt oder jünger sind. Dementsprechend sind 65% der Befragten 44 Jahre oder älter.</p>
 </div>
-<div id="bys_vgl" class="section level3">
+<div id="by_vgl" class="section level3">
 <h3><span class="header-section-number">3.2.3</span> Kennzahlen vergleichen</h3>
-<p>Richtig spannend sind diese Kennzahlen natürlich erst im Vergleich zwischen Gruppen. Bspw. können wir die Altersangaben aus den alten (<code>eastwest</code>=1) und neuen Bundesländern (<code>eastwest</code>=2) vergleichen, indem wir das Befehls-Präfix <code>bys varX:</code> verwenden. <code>bys</code> steht für “by sort” und damit sagen wir Stata, dass die folgende Berechnung getrennt nach den Werten für <code>varX</code> ausgeführt werden soll. Wenn wir also <code>summarize</code> für beide Ausprägungen von <code>eastwest</code> berechnen möchten, gehen wir wir folgt vor:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb35-1"><a href="desc1.html#cb35-1"></a><span class="kw">bys</span> eastwest: <span class="kw">summarize</span> age </span></code></pre></div>
-<pre><code>-&gt; eastwest = ALTE BUNDESL
+<p>Richtig spannend sind diese Kennzahlen auch wieder erst im Vergleich zwischen Gruppen. Hierfür steht uns die <code>by()</code>-Option von <code>tabstat</code> zur Verfügung. Bspw. können wir die Altersangaben aus den alten (<code>eastwest</code>=1) und neuen Bundesländern (<code>eastwest</code>=2) vergleichen, indem wir in <code>tabstat</code> die Option <code>by(eastwest)</code> verwenden:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb37-1"><a href="desc1.html#cb37-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="kw">mean</span> <span class="kw">median</span> <span class="kw">var</span> cv) <span class="kw">by</span>(eastwest)</span></code></pre></div>
+<pre><code>Summary for variables: age
+     by categories of: eastwest (ERHEBUNGSGEBIET (WOHNGEBIET): WEST - OST)
 
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-         age |      2383    50.66093    17.85982         18         95
-
---------------------------------------------------------------------------------
--&gt; eastwest = NEUE BUNDESL
-
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-         age |      1089    53.90083    16.95315         18         94</code></pre>
-<p>In den neuen Bundesländern sind die Befragten im Schnitt also um 53.90083 - 50.66093 = 3.2399 Jahre älter.</p>
-<p>Das funktioniert auch für alle <code>tabstat</code>-Befehle:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb37-1"><a href="desc1.html#cb37-1"></a><span class="kw">bys</span> eastwest: <span class="kw">tabstat</span> age, <span class="fu">s</span>(cv)</span></code></pre></div>
-<pre><code>-&gt; eastwest = ALTE BUNDESL
-
-    variable |        cv
--------------+----------
-         age |  .3525363
-------------------------
-
---------------------------------------------------------------------------------
--&gt; eastwest = NEUE BUNDESL
-
-    variable |        cv
--------------+----------
-         age |  .3145249
-------------------------</code></pre>
+        eastwest |      mean       p50  variance        cv
+-----------------+----------------------------------------
+ALTE BUNDESLAEND |  50.66093        51  318.9731  .3525363
+NEUE BUNDESLAEND |  53.90083        55  287.4093  .3145249
+-----------------+----------------------------------------
+           Total |  51.67713        53  311.2478  .3413931
+----------------------------------------------------------</code></pre>
+<p>Wir sehen hier also, dass sowohl das arith. Mittel als auch der Median des Befragtenalters in den alten Bundesländern höher ist als in den neuen Bundesländern. Außerdem ist auch die Streuung in den alten Bundesländern höher ist als in den neuen Bundesländern.</p>
 <p>Eine andere Option ist es, auf den <code>if</code>-Befehl zurückzugreifen - siehe <a href="desc1.html#if_vgl">hier</a></p>
 </div>
+<div id="tabulate-mit-der-option-summarize" class="section level3">
+<h3><span class="header-section-number">3.2.4</span> <code>tabulate</code> mit der Option <code>summarize()</code></h3>
+<p>Wir können aber auch zwei Variablen für den Kennzahlenvergleich verwenden. Bspw. sind neben Ost-West-Vergleichen auch häufig Geschlechterunterschiede von Interesse. Stata stellt uns damit mit der <code>summarise</code>-Option eine einfache Möglichkeit zur Verfügung:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb39-1"><a href="desc1.html#cb39-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="kw">mean</span> <span class="kw">median</span> <span class="kw">var</span> cv) <span class="kw">by</span>(eastwest)</span></code></pre></div>
+<pre><code>     Means, Standard Deviations and Frequencies of ALTER: BEFRAGTE(R)
+
+GESCHLECHT |   ERHEBUNGSGEBIET
+         , | (WOHNGEBIET): WEST
+BEFRAGTE(R |        - OST
+         ) | ALTE BUND  NEUE BUND |     Total
+-----------+----------------------+----------
+      MANN |   50.5982  53.232727 | 51.415914
+           | 18.177659  17.167354 | 17.906913
+           |      1222        550 |      1772
+-----------+----------------------+----------
+      FRAU |  50.72696   54.58256 | 51.949412
+           | 17.526641  16.720148 | 17.363097
+           |      1161        539 |      1700
+-----------+----------------------+----------
+     Total | 50.660932  53.900826 | 51.677131
+           | 17.859819  16.953149 | 17.642216
+           |      2383       1089 |      3472</code></pre>
+<p>Wir sehen hier, dass 1222 Männer aus den alten Bundesländern befragt wurden, die im Durchschnitt 50.5982 alt sind. Die Standardabweichung des Alters in dieser Gruppe beträgt 18.177659 Jahre. Außerdem wurden 539 Frauen aus den neuen Bundesländern befragt, die im arith. Mittel 54.58256 alt sind und deren Altersangaben eine Standardabweichung 16.720148 aufweisen.</p>
+<p>Je nach Präferenz können wir eine der drei Kennzahlen (Anzahl der Beobachtungen, arith. Mittel und Standardabw.) ausblenden in dem wir die entsprechende Option verwenden:</p>
+<ul>
+<li><code>nofreq</code> Häufigkeiten ausblenden
+<ul>
+<li><code>nomeans</code> arith. Mittel ausblenden</li>
+<li><code>nostandard</code> Standardabw. ausblenden</li>
+</ul></li>
+</ul>
+<p><code>tab sex eastwest, summarize(age) nofreq</code> würde uns also nur die arith. Mittel und Standardabweichungen ausgeben.</p>
+</div>
 <div id="variance" class="section level3">
-<h3><span class="header-section-number">3.2.4</span> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</h3>
+<h3><span class="header-section-number">3.2.5</span> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</h3>
 <p>Streuungsmaße helfen uns zu beurteilen, wie groß die Unterschiede in unseren Daten sind. Je größer das Streuungsmaß, desto mehr Unterschiede gibt es zwischen den beobachteten Werten.</p>
 <p>Die häufigste Kennzahl zur Beschreibung von Streuung ist aber die <strong>Varianz</strong>. Die Varianz ist definiert als die durchschnittliche quadrierte Abweichung vom arith. Mittel: <span class="math display">\[var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}\]</span><br />
 Was bedeutet diese Formel?<br />
@@ -792,28 +810,28 @@ Für Punkte, die über dem arith. Mittel liegen, erhalten wir für die Differenz
 Würden wir die Abstände (gestrichelten Linien) einfach aufsummieren, erhielten wir als Ergebnis immer Null! Das arithmetische Mittel liegt ja per Definition immer genau “in der Mitte”: die Abstände nach oben sind in der Summe genauso groß wie die Abstände nach unten. Daher wird zunächst jeder Abstand quadriert: <span class="math inline">\((\bar{x} - x_{i})^2\)</span><br />
 Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert (<span class="math inline">\(\sum_{i=1}^{n}\)</span>) und dann durch die Anzahl der Beobachtungen geteilt werden (<span class="math inline">\(\frac{}{n}\)</span>)- zusammengefasst hier nochmal die Formel: <span class="math display">\[var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}\]</span></p>
 <p>Wir können die Varianz mit <code>tabstat , s(var)</code> berechnen:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb39-1"><a href="desc1.html#cb39-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="kw">var</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb41-1"><a href="desc1.html#cb41-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="kw">var</span>)</span></code></pre></div>
 <pre><code>    variable |  variance
 -------------+----------
          age |  311.2478
 ------------------------</code></pre>
 <p>In unseren Datensatz beträgt der Varianz des Alters also 311,2478 Jahre². Auf der Varianz beruhen noch zwei weitere Streuungsmaße. Die <strong>Standardabweichung</strong> entspricht der Wurzel der Varianz und hat somit die gleiche Messeinheit wie die Variable (hier als Jahre):</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb41-1"><a href="desc1.html#cb41-1"></a>dis <span class="fu">sqrt</span>(311.2478)</span>
-<span id="cb41-2"><a href="desc1.html#cb41-2"></a>17.642216</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb43-1"><a href="desc1.html#cb43-1"></a>dis <span class="fu">sqrt</span>(311.2478)</span>
+<span id="cb43-2"><a href="desc1.html#cb43-2"></a>17.642216</span></code></pre></div>
 <p>Wir können die Standardabweichung auch mit <code>tabstat , s(sd)</code> berechnen:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb42-1"><a href="desc1.html#cb42-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="fu">sd</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb44-1"><a href="desc1.html#cb44-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(<span class="fu">sd</span>)</span></code></pre></div>
 <pre><code>    variable |        sd
 -------------+----------
          age |  17.64222
 ------------------------</code></pre>
 <p>Der <strong>Variationskoeffizient</strong> entspricht <code>sd</code>/<code>mean</code> und dient dem Vergleich verschiedener Streuungen relativ zum jeweiligen Mittelwert, <code>tabstat , s(cv)</code> übernimmt die Berechnung für uns:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb44-1"><a href="desc1.html#cb44-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(cv)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb46-1"><a href="desc1.html#cb46-1"></a><span class="kw">tabstat</span> age, <span class="fu">s</span>(cv)</span></code></pre></div>
 <pre><code>    variable |        cv
 -------------+----------
          age |  .3413931
 ------------------------</code></pre>
 <p>Somit können wir bspw. mit Hilfe von <code>bys sex:</code> die Streuung des Alters bei männlichen und weiblichen Befragten vergleichen:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb46-1"><a href="desc1.html#cb46-1"></a><span class="kw">bys</span> sex: <span class="kw">tabstat</span> age, <span class="fu">s</span>(cv)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb48-1"><a href="desc1.html#cb48-1"></a><span class="kw">bys</span> sex: <span class="kw">tabstat</span> age, <span class="fu">s</span>(cv)</span></code></pre></div>
 <pre><code>-&gt; sex = MANN
 
     variable |        cv
@@ -831,21 +849,21 @@ Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert 
 <p><span class="math inline">\(\Rightarrow\)</span> Für welches Geschlecht ist die Streuung also größer?<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 </div>
 <div id="sk_kur" class="section level3">
-<h3><span class="header-section-number">3.2.5</span> Schiefe &amp; Wölbung</h3>
+<h3><span class="header-section-number">3.2.6</span> Schiefe &amp; Wölbung</h3>
 <p>Skewness is a measure of the lack of symmetry of a distribution. If the distribution is symmetric, the coefficient of skewness is 0. If the coefficient is negative, the median is usually greater than the mean and the distribution is said to be skewed left. If the coefficient is positive, the median is usually less than the mean and the distribution is said to be skewed right. Kurtosis (from the Greek kyrtosis, meaning curvature) is a measure of peakedness of a distribution. The smaller the coefficient of kurtosis, the flatter the distribution. The normal distribution has a coefficient of kurtosis of 3 and provides a convenient benchmark.</p>
 </div>
 <div id="gini-koeffizient" class="section level3">
-<h3><span class="header-section-number">3.2.6</span> Gini-Koeffizient</h3>
+<h3><span class="header-section-number">3.2.7</span> Gini-Koeffizient</h3>
 <p>Zur Beschreibung der (Ungleich-)Verteilung von metrischen Variablen, insbesondere bei Einkommens- und Vermögensdaten wird häufig der Gini-Koeffizient verwendet. Der Gini-Koeffizient beruht auf der Fläche zwischen der Lorenzkurve und der Gleichverteilung. Auf der x-Achse werden die kumulierten Perzentile der Befragten abgetragen, auf der y-Achse die Perzentile des HH-Einkommens:</p>
 <p><img src="Stata_Skript_files/figure-html/unnamed-chunk-7-1.png" width="75%" height="75%" style="display: block; margin: auto;" />
 Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdings müssen wir diesen Befehl erst (einmalig) installieren:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb48-1"><a href="desc1.html#cb48-1"></a><span class="kw">ssc</span> install fastgini</span>
-<span id="cb48-2"><a href="desc1.html#cb48-2"></a>fastgini di05</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb50-1"><a href="desc1.html#cb50-1"></a><span class="kw">ssc</span> install fastgini</span>
+<span id="cb50-2"><a href="desc1.html#cb50-2"></a>fastgini di05</span></code></pre></div>
 <pre><code>Gini coefficient = 0.3194886</code></pre>
 <p>Leider funktioniert <code>bys eastwest:</code> bei <code>fastgini</code> nicht, wir müssen hier auf die Variante mit <a href="desc1.html#if_vgl"><code>if</code></a> zurückgreifen:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb50-1"><a href="desc1.html#cb50-1"></a>fastgini di05 <span class="kw">if</span> eastwest == 1</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb52-1"><a href="desc1.html#cb52-1"></a>fastgini di05 <span class="kw">if</span> eastwest == 1</span></code></pre></div>
 <pre><code>Gini coefficient = 0.3148267</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb52-1"><a href="desc1.html#cb52-1"></a>fastgini di05 <span class="kw">if</span> eastwest == 2</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb54-1"><a href="desc1.html#cb54-1"></a>fastgini di05 <span class="kw">if</span> eastwest == 2</span></code></pre></div>
 <pre><code>Gini coefficient = 0.3101288</code></pre>
 <p><span class="math inline">\(\Rightarrow\)</span> <em>Wo sind die Haushaltseinkommen also ungleicher verteilt?</em><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
 <p>Anmerkung: hier wurden die Missings in <code>di05</code> mit <code>mvdecode di05, mv(-50 -32 -7)</code> ausgeschlossen.</p>
@@ -854,8 +872,8 @@ Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdin
 <div id="übungen" class="section level2">
 <h2><span class="header-section-number">3.3</span> Übungen</h2>
 <p>Laden Sie den Allbusdatensatz für 2018 <code>Allbus2018.dta</code> in Stata:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="desc1.html#cb54-1"></a><span class="kw">cd</span>(<span class="st">&quot;...&quot;</span>) <span class="co"># wo liegt der Datensatz?</span></span>
-<span id="cb54-2"><a href="desc1.html#cb54-2"></a>use <span class="st">&quot; Allbus2018.dta&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="desc1.html#cb56-1"></a><span class="kw">cd</span>(<span class="st">&quot;...&quot;</span>) <span class="co"># wo liegt der Datensatz?</span></span>
+<span id="cb56-2"><a href="desc1.html#cb56-2"></a>use <span class="st">&quot; Allbus2018.dta&quot;</span></span></code></pre></div>
 <ol class="example" style="list-style-type: decimal">
 <li>Wir interessieren uns für die Variable <code>gkpol</code>.</li>
 </ol>
@@ -915,9 +933,9 @@ Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdin
 <div id="vlabel" class="section level2">
 <h2><span class="header-section-number">3.5</span> Exkurs: labels vergeben</h2>
 <p>Wir können natürlich auch Werte in selbst erstellten Variablen, wie zB <code>age_cat</code>, beschriften. Dazu definieren wir ein Wertelabel an. Dazu verwenden wir <code>label define</code>, gefolgt von einem Objektnamen für dieses Label (hier <code>age_cat_lab</code>) und dann jeweils die Ausprägungen zusammen mit dem entsprechenden label in <code>""</code>. Dieses Label-Objekt wenden wir dann mit <code>label values</code> auf die Variable <code>age_cat</code> an:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb55-1"><a href="desc1.html#cb55-1"></a><span class="kw">label</span> <span class="kw">define</span> age_cat_lab 18 <span class="st">&quot;18-34 Jahre&quot;</span> 35 <span class="st">&quot;35-29 Jahre&quot;</span> 60 <span class="st">&quot;über 60 Jahre&quot;</span> </span>
-<span id="cb55-2"><a href="desc1.html#cb55-2"></a><span class="kw">label</span> <span class="kw">values</span> age_cat age_cat_lab</span>
-<span id="cb55-3"><a href="desc1.html#cb55-3"></a><span class="kw">tab</span> age_cat</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb57-1"><a href="desc1.html#cb57-1"></a><span class="kw">label</span> <span class="kw">define</span> age_cat_lab 18 <span class="st">&quot;18-34 Jahre&quot;</span> 35 <span class="st">&quot;35-29 Jahre&quot;</span> 60 <span class="st">&quot;über 60 Jahre&quot;</span> </span>
+<span id="cb57-2"><a href="desc1.html#cb57-2"></a><span class="kw">label</span> <span class="kw">values</span> age_cat age_cat_lab</span>
+<span id="cb57-3"><a href="desc1.html#cb57-3"></a><span class="kw">tab</span> age_cat</span></code></pre></div>
 <pre><code>      age_cat |      Freq.     Percent        Cum.
 --------------+-----------------------------------
   18-34 Jahre |        718       20.68       20.68
@@ -926,11 +944,29 @@ Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdin
 --------------+-----------------------------------
         Total |      3,472      100.00</code></pre>
 </div>
+<div id="bys_su" class="section level2">
+<h2><span class="header-section-number">3.6</span> Exkurs: Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</h2>
+<p>Bspw. können wir die Altersangaben aus den alten (<code>eastwest</code>=1) und neuen Bundesländern (<code>eastwest</code>=2) vergleichen, indem wir das Befehls-Präfix <code>bys varX:</code> verwenden. <code>bys</code> steht für “by sort” und damit sagen wir Stata, dass die folgende Berechnung getrennt nach den Werten für <code>varX</code> ausgeführt werden soll. Wenn wir also <code>summarize</code> für beide Ausprägungen von <code>eastwest</code> berechnen möchten, gehen wir wir folgt vor:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb59-1"><a href="desc1.html#cb59-1"></a><span class="kw">bys</span> eastwest: <span class="kw">summarize</span> age </span></code></pre></div>
+<pre><code>-&gt; eastwest = ALTE BUNDESL
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+         age |      2383    50.66093    17.85982         18         95
+
+--------------------------------------------------------------------------------
+-&gt; eastwest = NEUE BUNDESL
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+         age |      1089    53.90083    16.95315         18         94</code></pre>
+<p>In den neuen Bundesländern sind die Befragten im Schnitt also um 53.90083 - 50.66093 = 3.2399 Jahre älter.</p>
+</div>
 <div id="if_vgl" class="section level2">
-<h2><span class="header-section-number">3.6</span> Exkurs: Kennzahlvergleiche mit <code>if</code></h2>
-<p>Neben der Variante <a href="desc1.html#bys_vgl"><code>bys var:</code></a> können wir auch mit Hilfe der <code>if</code>-Option Kennzahlen miteinander vergleichen:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb57-1"><a href="desc1.html#cb57-1"></a><span class="kw">summarize</span> age <span class="kw">if</span> eastwest == 1</span>
-<span id="cb57-2"><a href="desc1.html#cb57-2"></a><span class="kw">summarize</span> age <span class="kw">if</span> eastwest == 2</span></code></pre></div>
+<h2><span class="header-section-number">3.7</span> Exkurs: Kennzahlvergleiche mit <code>if</code></h2>
+<p>Neben der Variante <a href="desc1.html#by_vgl"><code>bys var:</code></a> können wir auch mit Hilfe der <code>if</code>-Option Kennzahlen miteinander vergleichen:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb61-1"><a href="desc1.html#cb61-1"></a><span class="kw">summarize</span> age <span class="kw">if</span> eastwest == 1</span>
+<span id="cb61-2"><a href="desc1.html#cb61-2"></a><span class="kw">summarize</span> age <span class="kw">if</span> eastwest == 2</span></code></pre></div>
 <pre><code>    Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
          age |      2383    50.66093    17.85982         18         95
@@ -939,7 +975,7 @@ Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdin
 -------------+--------------------------------------------------------
          age |      1089    53.90083    16.95315         18         94</code></pre>
 <p>Das führt natürlich im Kern zum gleichen Ergebnis wie die oben gezeigte Variante:</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb59-1"><a href="desc1.html#cb59-1"></a><span class="kw">bys</span> eastwest: <span class="kw">summarize</span> age </span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb63-1"><a href="desc1.html#cb63-1"></a><span class="kw">bys</span> eastwest: <span class="kw">summarize</span> age </span></code></pre></div>
 <pre><code>-&gt; eastwest = ALTE BUNDESL
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
