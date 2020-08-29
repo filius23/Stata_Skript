@@ -477,7 +477,7 @@ ggplot(gdf, aes(x = pct_id, y = pct_di05)) +
   geom_line(aes(y = pct_id), linetype = 2, size = .95, color = "#172869") + # Diagonale
   geom_line(size = .5, color = "#9ED80B") + # Lorenzkurve
   geom_segment(data = gini_ann_df, aes(xend = pct_id, x = pct_id , y = 0, yend = pct_id), size = .35, linetype = 2) + # gestrichelte Linie
-  geom_segment(data = gini_ann_df, aes(xend = .5, x = 0 , y = 0.5, yend = .5), size = .35, linetype = 2) + # gestrichelte Linie
+  geom_segment(data = gini_ann_df, aes(xend = pct_id, x = 0 , y = pct_id, yend = pct_id), size = .35, linetype = 2) + # gestrichelte Linie
   geom_segment(data = gini_ann_df, aes(xend = pct_id+.0035, x = pct_id+.05 , y = pct_di05- .15, yend = pct_di05-.0075), arrow = arrow(length = unit(.02,"npc"),type = "closed")) + # lorenzkurve pfeil
   geom_label(data = gini_ann_df, aes(label=labl,x = pct_id+.05, y = pct_di05- .15), hjust = 0, fontface = "italic", size = 3.2, 
              color = "grey25", fill = alpha("#9ED80B",.75)) + # lorenzkurve label
