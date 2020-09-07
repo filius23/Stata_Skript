@@ -335,13 +335,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-2"><a href="zshg.html#cb1-2"></a><span class="kw">use</span>  Allbus_1980-2018.dta   </span>
 <span id="cb1-3"><a href="zshg.html#cb1-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2012</span>
 <span id="cb1-4"><a href="zshg.html#cb1-4"></a><span class="kw">mvdecode</span> age bmi, mv(-32 -13)</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-
-
-(64681 observations deleted)
+<pre><code>(64681 observations deleted)
 
          age: 7 missing values generated
         hs18: 1859 missing values generated</code></pre>
@@ -351,17 +345,7 @@ r(111);
 <p><img src="Stata_Skript_files/figure-html/s07_15b-1.png" width="80%" height="80%" style="display: block; margin: auto;" />
 In Stata können wir den Korrelationskoeffizienten mit <code>corr</code> berechnen:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="zshg.html#cb3-1"></a><span class="fu">corr</span> age bmi</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-
-
-
-
-
-
-(obs=1620)
+<pre><code>(obs=1620)
 
              |      age      bmi
 -------------+------------------
@@ -377,10 +361,7 @@ r(111);
 <p><img src="Stata_Skript_files/figure-html/regp1-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Mit Regressionsmodellen können wir lineare Zusammenhänge zwischen zwei metrischen Merkmalen untersuchen. In Stata können wir eine Regression mit dem <code>reg</code> Befehl berechnen:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="zshg.html#cb6-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-      Source |       SS       df       MS              Number of obs =       4
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
 -------------+------------------------------           F(  1,     2) =   11.07
        Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
     Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
@@ -410,20 +391,7 @@ r(111);
 <p>Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade?</p>
 <p>Die vorhergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der Summe aus dem Wert neben <code>_cons</code> und dem Koeffizienten neben <code>var1</code> multipliziert mit dem jeweiligen Wert für <code>var1</code>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="zshg.html#cb8-1"></a><span class="kw">reg</span> var2 var1, <span class="kw">noheader</span></span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-
-
-
-
-
-
-
-
-------------------------------------------------------------------------------
-        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+<pre><code>        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
         var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
        _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
@@ -433,11 +401,7 @@ r(111);
 Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: 2.1351+0.5811*1= 2.7162</p>
 <p>Wir könnten also auch einen vorhergesagten Wert für einen beliebigen Wert von <code>var1</code> berechnen, für 5:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="zshg.html#cb10-1"></a>dis 2.1351+0.5811*5</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-5.0406</code></pre>
+<pre><code>5.0406</code></pre>
 <p>Mit <code>predict</code> können wir jeweils die vorhergesagten Werte für die Ausprägungen von <code>var1</code> im Datensatz berechnen und in einer neuen Variable <code>pred_vorher</code> ablegen:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb12-1"><a href="zshg.html#cb12-1"></a><span class="kw">predict</span> pred_vorher, <span class="kw">xb</span></span></code></pre></div>
 <pre><code>  var1 var2 pred_vorher mean_var2
@@ -493,18 +457,12 @@ r(111);
 <span id="cb14-3"><a href="zshg.html#cb14-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 1990</span>
 <span id="cb14-4"><a href="zshg.html#cb14-4"></a><span class="kw">mvdecode</span> educ, mv(-9 6 7)</span>
 <span id="cb14-5"><a href="zshg.html#cb14-5"></a><span class="kw">mvdecode</span> mi02, mv(-9 -8 -7)</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-        educ: 65 missing values generated
+<pre><code>        educ: 65 missing values generated
 
         mi02: 97 missing values generated</code></pre>
 <p>So sieht die Verteilung zunächst in einer Kreuztabelle aus:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="zshg.html#cb16-1"></a><span class="kw">tab</span> educ mi02</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-       ALLGEMEINER |     ZUZUG VON: ASYLSUCHENDEN
+<pre><code>       ALLGEMEINER |     ZUZUG VON: ASYLSUCHENDEN
     SCHULABSCHLUSS | UNEINGESC  ZUZUG BEG  GANZ UNTE |     Total
 -------------------+---------------------------------+----------
     OHNE ABSCHLUSS |         7         18         36 |        61 
@@ -519,17 +477,7 @@ FACHHOCHSCHULREIFE |        48        101         21 |       170
 <h3><span class="header-section-number">5.2.1</span> Spearman- Rangkorrelation</h3>
 <p>Zur Bestimmung eines Zusammenhangs zwischen zwei <em>ordinal</em> skalierten Variablen empfiehlt sich der Spearman-Rangkorrelationskoeffizient (<span class="math inline">\(\rho\)</span>). Für den Rangkorrelationskoeffizienten werden die Werte der Variablen in Ränge überführt und dann mit diesen Rängen den Korrelationskoeffizient berechnet. Wir können den Rangkorrelationskoeffizienten mit <code>spearman</code> berechnen:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="zshg.html#cb18-1"></a><span class="kw">spearman</span> educ mi02</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-
-
-
-
-
-
- Number of obs =    2889
+<pre><code> Number of obs =    2889
 Spearman&#39;s rho =      -0.3749
 
 Test of Ho: educ and mi02 are independent
@@ -540,18 +488,7 @@ Test of Ho: educ and mi02 are independent
 <h3><span class="header-section-number">5.2.2</span> Konkordanzmaße</h3>
 <p>Ein weiteres Zusammenhangsmaß für ordinale Variablen sind Konkordanzmaße wie Kendall’s <span class="math inline">\(\tau\)</span>. Hierfür die Werteverhältnisse gezählt, zur Berechnung in Stata können wir <code>ktau</code> verwenden:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="zshg.html#cb20-1"></a><span class="kw">ktau</span> educ mi02</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-
-
-
-
-
-
-
-  Number of obs =    2889
+<pre><code>  Number of obs =    2889
 Kendall&#39;s tau-a =      -0.2151
 Kendall&#39;s tau-b =      -0.3350
 Kendall&#39;s score = -897325
@@ -562,10 +499,7 @@ Test of Ho: educ and mi02 are independent
 <p>Auch hier zeigt sich eine Zusammenhangsstärke in der gleichen Größenordnung wie beim Rangkorrelationskoeffizienten (<span class="math inline">\(\tau_a\)</span> = <code>-0.2151</code> und <span class="math inline">\(\tau_b\)</span> = <code>-0.3350</code>). Zudem ist auch hier das Vorzeichen negativ: <code>educ</code> korreliert negativ mit <code>mi02</code>. Der Wert von Kendall’s <span class="math inline">\(\tau_a\)</span> ist deutlich niedriger als von Kendall’s <span class="math inline">\(\tau_b\)</span>, da hier der Nenner durch die Berücksichtigung <em>aller</em> möglichen Paarvergleiche größer wird, der Zähler aber für beide Varianten von Kendall’s <span class="math inline">\(\tau\)</span> gleich definiert ist.</p>
 <p>Ein weiteres Maß ist Goodman &amp; Kruskal’s <span class="math inline">\(\gamma\)</span>, dieses bekommen wir mit der Option <code>,gamma</code> in <code>tab</code>:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="zshg.html#cb22-1"></a><span class="kw">tab</span> educ mi02, <span class="kw">gamma</span></span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-       ALLGEMEINER |     ZUZUG VON: ASYLSUCHENDEN
+<pre><code>       ALLGEMEINER |     ZUZUG VON: ASYLSUCHENDEN
     SCHULABSCHLUSS | UNEINGESC  ZUZUG BEG  GANZ UNTE |     Total
 -------------------+---------------------------------+----------
     OHNE ABSCHLUSS |         7         18         36 |        61 
@@ -586,14 +520,7 @@ FACHHOCHSCHULREIFE |        48        101         21 |       170
 <div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="zshg.html#cb24-1"></a>cd <span class="st">&quot;&quot;</span></span>
 <span id="cb24-2"><a href="zshg.html#cb24-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_1980-2018.dta&quot;</span>,<span class="kw">clear</span></span>
 <span id="cb24-3"><a href="zshg.html#cb24-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2014 &amp; dh01 &gt; 0 &amp; dh04 &gt; 0 &amp; aq03 &gt; 0</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-
-
-
-(64715 observations deleted)</code></pre>
+<pre><code>(64715 observations deleted)</code></pre>
 <p>Unser Beispiel für nominal skalierte Variablen dreht sich um die Frage: <em>Haben allein lebende Befragte eher ein Haustier als Befragte, die mit weiteren Personen zusammenleben?</em></p>
 <p>Dazu betrachten wir die Variablen <code>aq03</code> und <code>dh01</code>, später auch noch <code>dh04</code>:</p>
 <table>
@@ -638,16 +565,7 @@ r(111);
 </table>
 <p>Ausgangspunkt der Zusammenhangsmaße für nominale Merkmale ist die Kontingenztabelle der beiden Variablen:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="zshg.html#cb26-1"></a><span class="kw">tab</span> aq03 dh01</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-
-
-
-
-
- HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
     IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
 -----------------+----------------------+----------
             HUND |       350         41 |       391 
@@ -672,10 +590,7 @@ KEINS VON BEIDEN |     1,784        579 |     2,363
 10    1     1</code></pre>
 <p>Die daraus resultierende Kontingenztabelle ist schön übersichtlich:</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb30-1"><a href="zshg.html#cb30-1"></a><span class="kw">tab</span> aq03b dh01</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-           | MEHRPERSONENHAUSHALT?
+<pre><code>           | MEHRPERSONENHAUSHALT?
      aq03b | MEHRPERSO  EINPERSON |     Total
 -----------+----------------------+----------
          0 |       968        115 |     1,083 
@@ -697,16 +612,7 @@ r(111);
 </ul>
 <p>Odds Ratios sind aber auch aus “größeren” Tabellen berechenbar - zB können wir auch die exakte Haushaltsgröße <code>dh04</code> sowie die detaillierten Kategorien zum Haustierbesitz (<code>aq03</code>) verwenden:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb32-1"><a href="zshg.html#cb32-1"></a><span class="kw">tab</span> aq03 dh04</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-
-
-
-
-
- HUND ODER KATZE |                                    ANZAHL DER HAUSHALTSPERSONEN
+<pre><code> HUND ODER KATZE |                                    ANZAHL DER HAUSHALTSPERSONEN
     IM HAUSHALT? |         1          2          3          4          5          6          7          8         10 |     Total
 -----------------+---------------------------------------------------------------------------------------------------+----------
             HUND |        41        153         86         73         32          4          2          0          0 |       391 
@@ -731,17 +637,7 @@ KEINS VON BEIDEN |       579        938        388        342         91        
 <h3><span class="header-section-number">5.3.2</span> Chi²-basierte Maße</h3>
 <p><span class="math inline">\(\chi^2\)</span> basiert auf dem Vergleich der beobachteten Häufigkeit mit einer (theoretischen) Verteilung, welche statistische Unabhängigkeit abbildet (Indifferenztabelle - <a href="zshg.html#indiff">mehr dazu</a>). Wir bleiben bei <code>aq03</code> und <code>dh01</code>. Den <span class="math inline">\(\chi^2\)</span>-Wert für diese Häufigkeitstabelle bekommen wir mit <code>, chi2</code>:</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb34-1"><a href="zshg.html#cb34-1"></a><span class="kw">tab</span> aq03 dh01, chi</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-
-
-
-
-
-
- HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
     IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
 -----------------+----------------------+----------
             HUND |       350         41 |       391 
@@ -763,10 +659,7 @@ KEINS VON BEIDEN |     1,784        579 |     2,363
 <h3><span class="header-section-number">5.3.4</span> <span class="math inline">\(\phi\)</span></h3>
 <p>Eine Variante von Cramer’s <span class="math inline">\(\upsilon\)</span> für 2x2-Tabellen ist <span class="math inline">\(\phi\)</span>. Dies wäre das passende Maß für die zusammengefasste Variable aller Haustierbesitzer*innen <code>aq03b</code> von oben und <code>dh01</code>:</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="zshg.html#cb36-1"></a><span class="kw">tab</span> aq03b dh01, chi</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-           | MEHRPERSONENHAUSHALT?
+<pre><code>           | MEHRPERSONENHAUSHALT?
      aq03b | MEHRPERSO  EINPERSON |     Total
 -----------+----------------------+----------
          0 |       968        115 |     1,083 
@@ -895,10 +788,7 @@ Als Formel wird das in der Regel wie folgt dargestellt:
 3    7    7      4.75  2.25
 4    8    6      4.75  1.25</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb46-1"><a href="zshg.html#cb46-1"></a><span class="kw">tabstat</span> m_abw, <span class="fu">s</span>(<span class="kw">sum</span>)</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-    variable |       sum
+<pre><code>    variable |       sum
 -------------+----------
        m_abw |         0
 ------------------------</code></pre>
@@ -907,10 +797,7 @@ Anders formuliert: die gestrichelten Linien nach oben sind in Summe genauso lang
 Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wir minimieren können:</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb48-1"><a href="zshg.html#cb48-1"></a><span class="kw">gen</span> m_abw2 = m_abw^2 </span>
 <span id="cb48-2"><a href="zshg.html#cb48-2"></a><span class="kw">tabstat</span> m_abw2, <span class="fu">s</span>(<span class="kw">sum</span>)</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-      Source |       SS       df       MS              Number of obs =       4
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
 -------------+------------------------------           F(  1,     2) =   11.07
        Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
     Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
@@ -938,10 +825,7 @@ r(111);
 <h3><span class="header-section-number">5.7.4</span> Interpretation der Regression</h3>
 <p>Die Minimierung erledigt <code>reg</code> für uns. Hier geben wir zuerst das Merkmal an, das auf der y-Achse liegt (die <em>abhängige</em> Variable) und dann das Merkmal für die x-Achse (<em>unabhängige</em> Variable) an. Ein positiver Wert unter <code>Coef.</code> in der Zeile von <code>var1</code> bedeutet, dass unsere Gerade von links nach rechts ansteigt und ein negativer eine fallende Linie bedeuten würde. Der Wert unter <code>var1</code> gibt an, um <em>wieviel sich die Gerade pro “Schritt nach rechts” nach oben/unten verändert</em>. Die Gerade steigt also pro Einheit von <code>var1</code> um 0.5810811:</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb51-1"><a href="zshg.html#cb51-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-      Source |       SS       df       MS              Number of obs =       4
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
 -------------+------------------------------           F(  1,     2) =   11.07
        Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
     Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
@@ -962,20 +846,7 @@ r(111);
 <p>Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade?
 Die vohergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der Summe aus dem Wert neben <code>_cons</code> und dem Koeffizienten neben <code>var1</code> multipliziert mit dem jeweiligen Wert für <code>var1</code>.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb53-1"><a href="zshg.html#cb53-1"></a><span class="kw">reg</span> var2 var1, <span class="kw">noheader</span></span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-
-
-
-
-
-
-
-
-------------------------------------------------------------------------------
-        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+<pre><code>        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
         var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
        _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
@@ -1022,59 +893,37 @@ Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regre
 4    8    6      4.75  1.25 1.5625         6.7839    6.783784 -0.7837838 0.6143170</code></pre>
 <p>Dann können wir die Summen der quadierten Abweichungen aus der Mittelwertregel und dem Regressionsmodell vergleichen:</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb63-1"><a href="zshg.html#cb63-1"></a>dis 7.5625+0.5625+5.0625+1.5625 <span class="co">// abw2 aus Mittelwertsregel</span></span>
-<span id="cb63-2"><a href="zshg.html#cb63-2"></a> <span class="kw">variable</span> age_c <span class="kw">not</span> found</span>
-<span id="cb63-3"><a href="zshg.html#cb63-3"></a><span class="fu">r</span>(111);</span>
-<span id="cb63-4"><a href="zshg.html#cb63-4"></a></span>
-<span id="cb63-5"><a href="zshg.html#cb63-5"></a></span>
-<span id="cb63-6"><a href="zshg.html#cb63-6"></a>14.75</span></code></pre></div>
+<span id="cb63-2"><a href="zshg.html#cb63-2"></a>14.75</span></code></pre></div>
 <div class="sourceCode" id="cb64"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb64-1"><a href="zshg.html#cb64-1"></a>dis 0.5129657+0.4937911+0.6356830+0.6143170 <span class="co">// res2 aus regressionsmodell</span></span>
-<span id="cb64-2"><a href="zshg.html#cb64-2"></a> <span class="kw">variable</span> age_c <span class="kw">not</span> found</span>
-<span id="cb64-3"><a href="zshg.html#cb64-3"></a><span class="fu">r</span>(111);</span>
-<span id="cb64-4"><a href="zshg.html#cb64-4"></a></span>
-<span id="cb64-5"><a href="zshg.html#cb64-5"></a></span>
-<span id="cb64-6"><a href="zshg.html#cb64-6"></a>2.2567568</span></code></pre></div>
+<span id="cb64-2"><a href="zshg.html#cb64-2"></a>2.2567568</span></code></pre></div>
 <p>Zum Beispiel können wir uns fragen, um wieviel sich die Summe der quadrierten Residuen verringert wenn wir statt des <code>mean</code> unser <code>reg</code>-Modell verwenden:</p>
 <div class="sourceCode" id="cb65"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb65-1"><a href="zshg.html#cb65-1"></a>dis 14.75 -  2.256757</span>
-<span id="cb65-2"><a href="zshg.html#cb65-2"></a> <span class="kw">variable</span> age_c <span class="kw">not</span> found</span>
-<span id="cb65-3"><a href="zshg.html#cb65-3"></a><span class="fu">r</span>(111);</span>
-<span id="cb65-4"><a href="zshg.html#cb65-4"></a></span>
-<span id="cb65-5"><a href="zshg.html#cb65-5"></a></span>
-<span id="cb65-6"><a href="zshg.html#cb65-6"></a>12.493243</span></code></pre></div>
+<span id="cb65-2"><a href="zshg.html#cb65-2"></a>12.493243</span></code></pre></div>
 <p>Wenn wir diese Veränderung ins Verhältnis mit dem “Ausgangswert”, also den Residuen aus der Mittelwertregel setzen, dann erhalten wir das <span class="math inline">\(R^{2}\)</span> für unser <code>reg</code>-Modell. Dieses gibt die prozentuale Verringerung der Residuen durch das <code>reg</code>-Modell im Vergleich zur Mittelwertregel an:</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb66-1"><a href="zshg.html#cb66-1"></a>dis (14.75 -  2.256757) / 14.75</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-.84699953</code></pre>
+<pre><code>.84699953</code></pre>
 <p>Unser Regressionsmodell kann also 84,7% der Streuung um den Mittelwert erklären. Dieser Wert wird auch als <span class="math inline">\(R^2\)</span> bezeichnet. Im Regressionsoutput können wir das <span class="math inline">\(R^2\)</span> oben rechts unter <code>R-squared</code> ablesen.</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb68-1"><a href="zshg.html#cb68-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
+-------------+------------------------------           F(  1,     2) =   11.07
+       Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
+    Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
+-------------+------------------------------           Adj R-squared =  0.7705
+       Total |       14.75     3  4.91666667           Root MSE      =  1.0623
 
-
-no variables defined
-r(111);
-
-end of do-file
-r(111);</code></pre>
+------------------------------------------------------------------------------
+        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------</code></pre>
 <p>Außerdem sehen wir oben links in der Spalte <code>SS</code> die “Sum of Squares”. Hier finden wir auch die Werte von oben wieder: unter Total ist die Summe der quadrierten Abweichungen der beobachteten Werte vom arith. Mittel angegeben (<code>14.75</code>, sozusagen die Summe der <code>m_abw2</code> von oben). Residual gibt die Summe der Abweichungsquadrate zwischen den beobachteten Werten und den vorhergesagten Werten der Regression (<code>2.256..</code>, Die Summe von <code>res2</code>).</p>
 </div>
 <div id="indiff" class="section level3">
 <h3><span class="header-section-number">5.7.7</span> Indifferenztabelle</h3>
 <p><span class="math inline">\(\chi^2\)</span> ergibt sich wie gesagt aus der Differenz zwischen der Indifferenztabelle und den beobachteten Häufigkeiten. Die Indifferenztabelle können wir mit <code>,expected</code> aufrufen (mit <code>nofreq</code> blenden wir die tatsächlichen Häufigkeiten aus):</p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb70-1"><a href="zshg.html#cb70-1"></a><span class="kw">tab</span>  aq03  dh01, expected nofreq</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-
-
-
-
-
-
- HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
     IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
 -----------------+----------------------+----------
             HUND |     312.3       78.7 |     391.0 
@@ -1085,17 +934,7 @@ KEINS VON BEIDEN |   1,887.1      475.9 |   2,363.0
            Total |   2,752.0      694.0 |   3,446.0 </code></pre>
 <p>Ausgangspunkt für diese Indifferenztabelle sind die relativen Häufigkeiten der tatsächlich beoachteten Werte:</p>
 <div class="sourceCode" id="cb72"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb72-1"><a href="zshg.html#cb72-1"></a><span class="kw">tab</span>  aq03  dh01, cell nofreq</span></code></pre></div>
-<pre><code> variable age_c not found
-r(111);
-
-
-
-
-
-
-
-
- HUND ODER KATZE | MEHRPERSONENHAUSHALT?
+<pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
     IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
 -----------------+----------------------+----------
             HUND |     10.16       1.19 |     11.35 
