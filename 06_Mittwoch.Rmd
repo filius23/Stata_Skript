@@ -1,1 +1,4 @@
 # Zusammenhänge 2 {#zshg2}
+## Zusammenhänge vergleichen
+
+Natürlich können wir hier mit `if` auch Vergleiche ziehen. 

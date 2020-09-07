@@ -138,6 +138,27 @@ su age_diff
 
 `egen` ist die Erweiterung von `gen` und gibt uns die Möglichkeit, eine ganze Reihe von Berechnungen durchzuführen.
 
+## Subgruppen-Variablen erstellen mit `separate` {#sep1}
+
+`separate` ist eine Abkürzung, um Angaben einer Variable entlang der Ausprägungen einer zweiten Variablen aufzuteilen. Das hilft uns bspw. die Aufteilung von `inc` nach dem Geschlecht (`sex`) zu vereinfachen. Wir können dies entweder mit zwei Befehlen mit `gen` und `if` durchführen oder diese zwei Schritte mit einem `separate` Befehl durchführen:
+
+```{stata sepF, eval = F}
+gen inc_m = inc if sex == 1
+gen inc_f = inc if sex == 2
+separate inc, by(sex)
+list inc sex inc_m inc_f inc1 inc2 in 1/10
+```
+
+
+```{stata sepT, echo = F, cleanlog = T}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+gen inc_m = inc if sex == 1
+gen inc_f = inc if sex == 2
+separate inc, by(sex)
+list inc sex inc_m inc_f inc1 inc2 in 1/10
+```
+
 ## gruppierte Berechnungen
 
 ```{stata, cleanlog = F, eval = F}

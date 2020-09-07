@@ -1,8 +1,15 @@
 # Inferenzstatistik I {#inf1}
 
 ```{r setup7, echo = F, message=F, warning = F}
-# .libPaths("D:/R-library")
+.libPaths("D:/R-library4")
 knitr::opts_chunk$set(collapse = F)
 library(Statamarkdown)
 ```
 
+```{stata readinif1b, echo= F}
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+keep if year == 2012
+mvdecode age hs18, mv(-32 -13)
+rename hs18 bmi
+```

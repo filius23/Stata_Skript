@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="4.2 Verteilungen vergleichen mit Facetten | GESIS Methodenseminar 2020" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
+
+
+<meta name="author" content="Andreas Filser" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020">
+
+<title>4.2 Verteilungen vergleichen mit Facetten | GESIS Methodenseminar 2020</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#herzlich-willkommen">Herzlich Willkommen!</a></li>
+<li class="has-sub"><a href="1-Stata1.html#Stata1"><span class="toc-section-number">1</span> Einstieg in Stata</a><ul>
+<li><a href="1-1-taschenrechner.html#taschenrechner"><span class="toc-section-number">1.1</span> Taschenrechner</a></li>
+<li><a href="1-2-darstellung-in-diesem-skript.html#darstellung-in-diesem-skript"><span class="toc-section-number">1.2</span> Darstellung in diesem Skript</a></li>
+<li><a href="1-3-dofile-editor.html#dofile-editor"><span class="toc-section-number">1.3</span> DoFile Editor</a></li>
+<li><a href="1-4-datensätze-laden.html#datensätze-laden"><span class="toc-section-number">1.4</span> Datensätze laden</a></li>
+<li><a href="1-5-daten-codebücher-fragebogen.html#daten-codebücher-fragebogen"><span class="toc-section-number">1.5</span> Daten, Codebücher, Fragebogen</a></li>
+<li class="has-sub"><a href="1-6-überblicksbefehle.html#überblicksbefehle"><span class="toc-section-number">1.6</span> Überblicksbefehle</a><ul>
+<li><a href="1-6-überblicksbefehle.html#describe"><span class="toc-section-number">1.6.1</span> <code>describe</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#browse"><span class="toc-section-number">1.6.2</span> <code>browse</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#list"><span class="toc-section-number">1.6.3</span> <code>list</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#lookfor"><span class="toc-section-number">1.6.4</span> <code>lookfor</code></a></li>
+</ul></li>
+<li><a href="1-7-if-bedingung-nur-manche-zeilen-ansehen.html#if-bedingung---nur-manche-zeilen-ansehen"><span class="toc-section-number">1.7</span> if Bedingung - nur manche Zeilen ansehen</a></li>
+<li><a href="1-8-U1.html#U1"><span class="toc-section-number">1.8</span> Übungen</a></li>
+<li><a href="1-9-profi-übungen.html#profi-übungen"><span class="toc-section-number">1.9</span> Profi-Übungen</a></li>
+<li class="has-sub"><a href="1-10-weitere-anmerkungen.html#weitere-anmerkungen"><span class="toc-section-number">1.10</span> Weitere Anmerkungen</a><ul>
+<li><a href="1-10-weitere-anmerkungen.html#var_types"><span class="toc-section-number">1.10.1</span> Variablentypen</a></li>
+<li><a href="1-10-weitere-anmerkungen.html#otherfmts"><span class="toc-section-number">1.10.2</span> import anderer Dateiformate</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="2-Stata2.html#Stata2"><span class="toc-section-number">2</span> Arbeiten mit Datensätzen in Stata</a><ul>
+<li><a href="2-1-vorab-befehlsstruktur-hilfe.html#vorab-befehlsstruktur-hilfe"><span class="toc-section-number">2.1</span> Vorab: Befehlsstruktur &amp; Hilfe</a></li>
+<li><a href="2-2-auszählen-überblick-erhalten.html#auszählen-überblick-erhalten"><span class="toc-section-number">2.2</span> Auszählen &amp; Überblick erhalten</a></li>
+<li><a href="2-3-neue-variablen-erstellen.html#neue-variablen-erstellen"><span class="toc-section-number">2.3</span> Neue Variablen erstellen</a></li>
+<li><a href="2-4-bestehende-variablen-verändern.html#bestehende-variablen-verändern"><span class="toc-section-number">2.4</span> Bestehende Variablen verändern</a></li>
+<li><a href="2-5-gen-ist-gut-kontrolle-ist-besser.html#gen-ist-gut-kontrolle-ist-besser"><span class="toc-section-number">2.5</span> gen ist gut, Kontrolle ist besser</a></li>
+<li><a href="2-6-fehlende-werte.html#fehlende-werte"><span class="toc-section-number">2.6</span> Fehlende Werte</a></li>
+<li><a href="2-7-if-bedingungen-und-fehlende-werte.html#if-bedingungen-und-fehlende-werte"><span class="toc-section-number">2.7</span> if Bedingungen und fehlende Werte</a></li>
+<li><a href="2-8-keep-drop.html#keep-drop"><span class="toc-section-number">2.8</span> keep &amp; drop</a></li>
+<li><a href="2-9-labels-und-if-bedingungen.html#labels-und-if-bedingungen"><span class="toc-section-number">2.9</span> Labels und if-Bedingungen</a></li>
+<li><a href="2-10-nochmal-von-vorne-daten-neu-laden.html#nochmal-von-vorne-daten-neu-laden"><span class="toc-section-number">2.10</span> Nochmal von vorne: Daten neu laden</a></li>
+<li><a href="2-11-speichern.html#speichern"><span class="toc-section-number">2.11</span> Speichern</a></li>
+<li><a href="2-12-übungen.html#übungen"><span class="toc-section-number">2.12</span> Übungen</a></li>
+<li><a href="1-9-profi-übungen.html#profi-übungen"><span class="toc-section-number">2.13</span> Profi-Übungen</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-desc1.html#desc1"><span class="toc-section-number">3</span> Deskriptive Statistik</a><ul>
+<li class="has-sub"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#kategoriale-merkmale-mit-tabulate-beschreiben"><span class="toc-section-number">3.1</span> Kategoriale Merkmale mit <code>tabulate</code> beschreiben</a><ul>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#zwei-variablen-eine-tabelle-kontingenztabellen"><span class="toc-section-number">3.1.1</span> Zwei Variablen, eine Tabelle: Kontingenztabellen</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#in-prozent-relative-häufigkeiten"><span class="toc-section-number">3.1.2</span> In Prozent: Relative Häufigkeiten</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#pro-gruppe-1-zeilenprozente"><span class="toc-section-number">3.1.3</span> pro Gruppe 1: Zeilenprozente</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#pro-gruppe-2-spaltenprozente"><span class="toc-section-number">3.1.4</span> pro Gruppe 2: Spaltenprozente</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-2-metrische-variablen-beschreiben.html#metrische-variablen-beschreiben"><span class="toc-section-number">3.2</span> Metrische Variablen beschreiben</a><ul>
+<li><a href="3-2-metrische-variablen-beschreiben.html#summarize"><span class="toc-section-number">3.2.1</span> <code>summarize</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#tabstat"><span class="toc-section-number">3.2.2</span> <code>tabstat</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#by_vgl"><span class="toc-section-number">3.2.3</span> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#tabulate-mit-der-option-summarize"><span class="toc-section-number">3.2.4</span> <code>tabulate</code> mit der Option <code>summarize()</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#variance"><span class="toc-section-number">3.2.5</span> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#sk_kur"><span class="toc-section-number">3.2.6</span> Schiefe &amp; Wölbung</a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#gini-koeffizient"><span class="toc-section-number">3.2.7</span> Gini-Koeffizient</a></li>
+</ul></li>
+<li><a href="2-12-übungen.html#übungen"><span class="toc-section-number">3.3</span> Übungen</a></li>
+<li><a href="1-9-profi-übungen.html#profi-übungen"><span class="toc-section-number">3.4</span> Profi-Übungen</a></li>
+<li><a href="3-5-vlabel.html#vlabel"><span class="toc-section-number">3.5</span> Exkurs: labels vergeben</a></li>
+<li><a href="3-6-bys-su.html#bys_su"><span class="toc-section-number">3.6</span> Exkurs: Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+<li><a href="3-7-if-vgl.html#if_vgl"><span class="toc-section-number">3.7</span> Exkurs: Kennzahlvergleiche mit <code>if</code></a></li>
+</ul></li>
+<li class="has-sub"><a href="4-dataviz.html#dataviz"><span class="toc-section-number">4</span> Datenvisualisierung in Stata</a><ul>
+<li class="has-sub"><a href="4-1-visualisierung-einer-variable.html#visualisierung-einer-variable"><span class="toc-section-number">4.1</span> Visualisierung einer Variable</a><ul>
+<li><a href="4-1-visualisierung-einer-variable.html#metrische-variablen"><span class="toc-section-number">4.1.1</span> metrische Variablen</a></li>
+<li><a href="4-1-visualisierung-einer-variable.html#kategoriale-variablen"><span class="toc-section-number">4.1.2</span> Kategoriale Variablen</a></li>
+</ul></li>
+<li><a href="4-2-verteilungen-vergleichen-mit-facetten.html#verteilungen-vergleichen-mit-facetten"><span class="toc-section-number">4.2</span> Verteilungen vergleichen mit Facetten</a></li>
+<li class="has-sub"><a href="4-3-gemeinsame-verteilung-zweier-variablen.html#gemeinsame-verteilung-zweier-variablen"><span class="toc-section-number">4.3</span> Gemeinsame Verteilung zweier Variablen</a><ul>
+<li><a href="4-3-gemeinsame-verteilung-zweier-variablen.html#mosaikplot"><span class="toc-section-number">4.3.1</span> Mosaikplot</a></li>
+<li><a href="4-3-gemeinsame-verteilung-zweier-variablen.html#streudiagramm"><span class="toc-section-number">4.3.2</span> Streudiagramm</a></li>
+</ul></li>
+<li><a href="4-4-weitere-twoway-grafiken.html#weitere-twoway-grafiken"><span class="toc-section-number">4.4</span> Weitere <code>twoway</code> Grafiken</a></li>
+<li><a href="4-5-kombinieren-von-zwei-twoway-grafiken.html#kombinieren-von-zwei-twoway-grafiken"><span class="toc-section-number">4.5</span> Kombinieren von zwei twoway-Grafiken</a></li>
+<li class="has-sub"><a href="4-6-optionen.html#optionen"><span class="toc-section-number">4.6</span> Optionen</a><ul>
+<li><a href="4-6-optionen.html#titel"><span class="toc-section-number">4.6.1</span> Titel</a></li>
+<li><a href="4-6-optionen.html#achsenbeschriftung"><span class="toc-section-number">4.6.2</span> Achsenbeschriftung</a></li>
+<li><a href="4-6-optionen.html#text-einfügen"><span class="toc-section-number">4.6.3</span> Text einfügen</a></li>
+<li><a href="4-6-optionen.html#schriftart"><span class="toc-section-number">4.6.4</span> Schriftart</a></li>
+<li><a href="4-6-optionen.html#legend"><span class="toc-section-number">4.6.5</span> Legende</a></li>
+<li><a href="4-6-optionen.html#marker"><span class="toc-section-number">4.6.6</span> Marker</a></li>
+<li><a href="4-6-optionen.html#farben"><span class="toc-section-number">4.6.7</span> Farben</a></li>
+<li><a href="4-6-optionen.html#vorlagen"><span class="toc-section-number">4.6.8</span> Vorlagen</a></li>
+</ul></li>
+<li><a href="4-7-beispiele-zum-selbst-anpassen.html#beispiele-zum-selbst-anpassen"><span class="toc-section-number">4.7</span> Beispiele zum selbst anpassen</a></li>
+<li class="has-sub"><a href="4-8-gruppierte-darstellungen.html#gruppierte-darstellungen"><span class="toc-section-number">4.8</span> Gruppierte Darstellungen</a><ul>
+<li><a href="4-8-gruppierte-darstellungen.html#boxplot"><span class="toc-section-number">4.8.1</span> Boxplot</a></li>
+</ul></li>
+<li><a href="4-9-bevölkerungspyramide.html#bevölkerungspyramide"><span class="toc-section-number">4.9</span> Bevölkerungspyramide</a></li>
+<li class="has-sub"><a href="4-10-anhang.html#anhang"><span class="toc-section-number">4.10</span> Anhang</a><ul>
+<li><a href="4-10-anhang.html#aufb1"><span class="toc-section-number">4.10.1</span> Aufbereitung für Boxplot</a></li>
+<li><a href="4-10-anhang.html#sep1"><span class="toc-section-number">4.10.2</span> <code>separate</code></a></li>
+<li><a href="4-10-anhang.html#boxplot1"><span class="toc-section-number">4.10.3</span> Boxplot</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="5-zshg.html#zshg"><span class="toc-section-number">5</span> Zusammenhangsmaße</a><ul>
+<li class="has-sub"><a href="5-1-metrisch-skalierte-variablen.html#metrisch-skalierte-variablen"><span class="toc-section-number">5.1</span> Metrisch skalierte Variablen</a><ul>
+<li><a href="5-1-metrisch-skalierte-variablen.html#cor"><span class="toc-section-number">5.1.1</span> Korrelationskoeffizient</a></li>
+<li><a href="5-1-metrisch-skalierte-variablen.html#regression"><span class="toc-section-number">5.1.2</span> Regression</a></li>
+</ul></li>
+<li class="has-sub"><a href="5-2-ordinal-skalierte-merkmale.html#ordinal-skalierte-merkmale"><span class="toc-section-number">5.2</span> Ordinal skalierte Merkmale</a><ul>
+<li><a href="5-2-ordinal-skalierte-merkmale.html#spear"><span class="toc-section-number">5.2.1</span> Spearman- Rangkorrelation</a></li>
+<li><a href="5-2-ordinal-skalierte-merkmale.html#tau"><span class="toc-section-number">5.2.2</span> Konkordanzmaße</a></li>
+</ul></li>
+<li class="has-sub"><a href="5-3-nominal-skalierte-variablen.html#nominal-skalierte-variablen"><span class="toc-section-number">5.3</span> Nominal skalierte Variablen</a><ul>
+<li><a href="5-3-nominal-skalierte-variablen.html#OR"><span class="toc-section-number">5.3.1</span> Odds Ratio</a></li>
+<li><a href="5-3-nominal-skalierte-variablen.html#chi2"><span class="toc-section-number">5.3.2</span> Chi²-basierte Maße</a></li>
+<li><a href="5-3-nominal-skalierte-variablen.html#cramers-upsilon"><span class="toc-section-number">5.3.3</span> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+<li><a href="5-3-nominal-skalierte-variablen.html#phi"><span class="toc-section-number">5.3.4</span> <span class="math inline">\(\phi\)</span></a></li>
+</ul></li>
+<li><a href="5-4-welches-maß-richtig.html#welches-maß-richtig"><span class="toc-section-number">5.4</span> Welches Maß richtig?</a></li>
+<li><a href="2-12-übungen.html#übungen"><span class="toc-section-number">5.5</span> Übungen</a></li>
+<li><a href="1-9-profi-übungen.html#profi-übungen"><span class="toc-section-number">5.6</span> Profi-Übungen</a></li>
+<li class="has-sub"><a href="4-10-anhang.html#anhang"><span class="toc-section-number">5.7</span> Anhang</a><ul>
+<li><a href="5-7-anhang.html#reg"><span class="toc-section-number">5.7.1</span> Idee einer Regression</a></li>
+<li><a href="5-7-anhang.html#resid"><span class="toc-section-number">5.7.2</span> Residuen</a></li>
+<li><a href="5-7-anhang.html#quadrierte-residuen"><span class="toc-section-number">5.7.3</span> Quadrierte Residuen</a></li>
+<li><a href="5-7-anhang.html#interpretation-der-regression"><span class="toc-section-number">5.7.4</span> Interpretation der Regression</a></li>
+<li><a href="5-7-anhang.html#reg_pred"><span class="toc-section-number">5.7.5</span> Vorhergesagte Werte</a></li>
+<li><a href="5-7-anhang.html#resid2"><span class="toc-section-number">5.7.6</span> Residuen Teil 2</a></li>
+<li><a href="5-7-anhang.html#indiff"><span class="toc-section-number">5.7.7</span> Indifferenztabelle</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="6-zshg2.html#zshg2"><span class="toc-section-number">6</span> Zusammenhänge 2</a><ul>
+<li><a href="6-1-zusammenhänge-vergleichen.html#zusammenhänge-vergleichen"><span class="toc-section-number">6.1</span> Zusammenhänge vergleichen</a></li>
+</ul></li>
+<li><a href="7-inf1.html#inf1"><span class="toc-section-number">7</span> Inferenzstatistik I</a></li>
+<li><a href="8-inf2.html#inf2"><span class="toc-section-number">8</span> Inferenzstatistik II</a></li>
+<li><a href="9-hypo.html#hypo"><span class="toc-section-number">9</span> Hypothesentests</a></li>
+<li><a href="10-export1.html#export1"><span class="toc-section-number">10</span> Ergebnisexport &amp; weitere Tipps</a></li>
+<li class="has-sub"><a href="11-adva.html#adva"><span class="toc-section-number">11</span> Fortgeschrittene Themen</a><ul>
+<li><a href="11-1-wertelabels.html#wertelabels"><span class="toc-section-number">11.1</span> Wertelabels</a></li>
+<li><a href="11-2-sortieren.html#sortieren"><span class="toc-section-number">11.2</span> sortieren</a></li>
+<li><a href="11-3-missings-unterscheiden.html#missings-unterscheiden"><span class="toc-section-number">11.3</span> missings unterscheiden</a></li>
+<li><a href="11-4-indikatoren-umdrehen.html#indikatoren-umdrehen"><span class="toc-section-number">11.4</span> Indikatoren umdrehen</a></li>
+<li><a href="11-5-informationen-aus-mehreren-variablen.html#informationen-aus-mehreren-variablen"><span class="toc-section-number">11.5</span> Informationen aus mehreren Variablen</a></li>
+<li><a href="11-6-informationen-aus-mehreren-datensätzen.html#informationen-aus-mehreren-datensätzen"><span class="toc-section-number">11.6</span> Informationen aus mehreren Datensätzen</a></li>
+<li><a href="11-7-arbeiten-mit-textvariablen.html#arbeiten-mit-textvariablen"><span class="toc-section-number">11.7</span> Arbeiten mit Textvariablen</a></li>
+<li><a href="11-8-egen.html#egen"><span class="toc-section-number">11.8</span> egen</a></li>
+<li><a href="11-9-gruppierte-berechnungen.html#gruppierte-berechnungen"><span class="toc-section-number">11.9</span> gruppierte Berechnungen</a></li>
+<li><a href="11-10-collapse.html#collapse"><span class="toc-section-number">11.10</span> collapse</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="verteilungen-vergleichen-mit-facetten" class="section level2">
+<h2><span class="header-section-number">4.2</span> Verteilungen vergleichen mit Facetten</h2>
+<p>In der Regel wollen wir aber Verteilungen vergleichen, wie wir das auch schon in Kapitel 3 mit Hilfe von Tabellen und Kennzahlen getan haben. Hier hilft die Option <code>by</code> weiter. Wir hängen an die Befehle von oben einfach <code>,by (sex)</code> an, um getrennte Darstellungen für Männer und Frauen zu bekommen:</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb159-1"><a href="4-2-verteilungen-vergleichen-mit-facetten.html#cb159-1"></a><span class="kw">graph</span> box inc, <span class="kw">by</span>(sex)</span>
+<span id="cb159-2"><a href="4-2-verteilungen-vergleichen-mit-facetten.html#cb159-2"></a><span class="kw">histogram</span> inc, <span class="kw">by</span>(sex)</span>
+<span id="cb159-3"><a href="4-2-verteilungen-vergleichen-mit-facetten.html#cb159-3"></a><span class="kw">twoway</span> (<span class="kw">kdensity</span> inc), <span class="kw">by</span>(sex) <span class="co">// zur Bedeutung von twoway gleich mehr</span></span></code></pre></div>
+<p><img src="04_dist_plots2.png" width="100%" height="100%" style="display: block; margin: auto;" />
+Das funktioniert auch für die Säulen- und Balkendiagramme:</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb160-1"><a href="4-2-verteilungen-vergleichen-mit-facetten.html#cb160-1"></a><span class="kw">graph</span> <span class="bn">bar</span> (<span class="fu">count</span>) respid, <span class="bn">over</span>(educ)  <span class="kw">by</span>(sex)</span>
+<span id="cb160-2"><a href="4-2-verteilungen-vergleichen-mit-facetten.html#cb160-2"></a><span class="kw">graph</span> <span class="bn">hbar</span> (<span class="fu">count</span>) respid, <span class="bn">over</span>(educ)  <span class="kw">by</span>(sex)</span></code></pre></div>
+<p><img src="04_bar_plots2.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+<p style="text-align: center;">
+<a href="4-1-visualisierung-einer-variable.html"><button class="btn btn-default">Previous</button></a>
+<a href="4-3-gemeinsame-verteilung-zweier-variablen.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>
