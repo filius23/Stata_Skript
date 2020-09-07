@@ -3,7 +3,12 @@
 ```{r setup4, echo = F, message=F, warning = F}
 .libPaths("D:/R-library4")
 knitr::opts_chunk$set(collapse = TRUE)
+library(tidyverse)
 library(Statamarkdown)
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+a18 <- readstata13::read.dta13("../Allbus2018.dta",convert.factors = F)
 ```
 
 Wir starten wie immer mit dem Einlesen eines Datensatzes:
@@ -11,208 +16,325 @@ Wir starten wie immer mit dem Einlesen eines Datensatzes:
 cd "..."
 use "Allbus_2018.dta", clear
 replace inc = . if inc < 0
+replace educ = . if educ < 0
 replace age = . if age < 0
 ```
 
-Für Grafiken gilt noch mehr als für alle anderen Aspekte in Stata: ausprobieren und sehen, was passiert! Nachdem in der Regel ja zumindest eine ungefähre Vorstellung existiert, wie die zu erstellende Grafik aussehen soll, sind Grafik-Gallerieren ein guter Startpunkt das eigene Trial & Error. Die größte Herausforderung ist häufig, eine Vorstellung zu entwickeln, wie die Darstellung aussehen soll.
+Für Grafiken gilt noch mehr als für alle anderen Aspekte in Stata: ausprobieren und sehen, was passiert! Nachdem in der Regel ja zumindest eine ungefähre Vorstellung existiert, wie die zu erstellende Grafik aussehen soll, sind Grafik-Gallerien ein guter Startpunkt das eigene Trial & Error. Die größte Herausforderung ist häufig, eine Vorstellung zu entwickeln, wie die Darstellung aussehen soll. Daher im Folgenden einige Beispiele für verschiedene Anwendungsfälle. Diese lassen sich ganz grob entlang zweier Fragen einteilen:
 
-Eine Übersicht zu allen verfügbaren Visualierungen inklusive Beispielbefehlen findet sich beispielsweise [hier](https://www.stata.com/support/faqs/graphics/gph/stata-graphs/) oder [hier](https://www.stata.com/features/example-graphs/).
++ Soll eine oder mehrere Variablen dargestellt werden? 
++ Was ist das Skalenniveau der darzustellenden Variable(n)?
 
-## Erste Entscheidungen
+Grundsätzlich bestehen Grafik-Befehle aus zwei Teilen: dem Befehl `graph` und der Angabe eines Grafik-Typs. 
 
-+ Wie viele Variablen sollen dargestellt werden? 
-  + Die Verteilung einer Variable 
 
-```{r dist_plots, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+## Visualisierung einer Variable
+
+### metrische Variablen
+
+Die Verteilung metrischer Variablen (wie z.B. die Einkommensangaben in `inc`) können als Boxplot, Histogramm oder kdensity dargestellt werden. Während Histogramme und K-Density-Plots die Häufigkeit von Ausprägungen innerhalb von Wertebereichen zeigen, fassen Boxplots die Lagemaße zu einer Darstellung zusammen - mehr dazu hier [hier](#boxplot1).
+
+```{stata, eval = F}
+graph box inc
+histogram inc
+kdensity inc
+```
+
+```{r dist_plots, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
 knitr::include_graphics("04_dist_plots.png")
 ```
-  
-  + Die Verteilung einer Variable, aufgeteilt nach einer zweiten Variablen
-  + Die gemeinsame Verteilung zweier (oder mehrer) Variablen
 
 
+### Kategoriale Variablen
 
+Die Darstellung einer kategorialen Variable ist häufig eine grafische Übersetzung einer Häufigkeitsauszählung. Insbesondere bieten sich dafür Säulen- und Balkendiagramme an. Beispielsweise könnten wir die Schulabschlüsse der Befragen auszählen. Dazu zählen[^041] wir die `respid`s pro Ausprägung von `educ`[^042], mit `graph bar` bzw `graph hbar` bekommen wir dann ein Säulen- bw. Balkendiagramm.
 
+[^041]: Daher die Angabe `(count)`.
+[^042]: `over(educ)` legt dabei fest, dass innerhalb der Kategorien von `educ` gezählt werden soll.
 
-
-## Grafik-Syntax in Stata
-
-Die Syntax für Graphiken in Stata unterscheidet sich vom dem bisher Kennengelernten. 
-
-### Aufbau 
-Grafik-Befehle bestehen aus zwei Teilen: dem Befehl `graph` und der Angabe eines Grafik-Typs. Im folgenden Befehl ist `box` der Grafik-Typ:  
-
-```{stata box1, eval = F}
-graph box inc
+```{stata, eval = F}
+graph bar (count) respid, over(educ)  
+graph hbar (count) respid, over(educ) 
 ```
 
-```{r box1_plot, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("04_box.png")
+```{r bar_plots, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
+knitr::include_graphics("04_bar_plots.png")
+```
+
+## Verteilungen vergleichen mit Facetten
+
+In der Regel wollen wir aber Verteilungen vergleichen, wie wir das auch schon in Kapitel 3 mit Hilfe von Tabellen und Kennzahlen getan haben. Hier hilft die Option `by` weiter. Wir hängen an die Befehle von oben einfach `,by (sex)` an, um getrennte Darstellungen für Männer und Frauen zu bekommen:
+
+```{stata, eval = F}
+graph box inc, by(sex)
+histogram inc, by(sex)
+twoway (kdensity inc), by(sex) // zur Bedeutung von twoway gleich mehr
+```
+
+```{r dist_plots2, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
+knitr::include_graphics("04_dist_plots2.png")
+```
+Das funktioniert auch für die Säulen- und Balkendiagramme:
+```{stata, eval = F}
+graph bar (count) respid, over(educ)  by(sex)
+graph hbar (count) respid, over(educ)  by(sex)
+```
+
+```{r bar_plots2, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
+knitr::include_graphics("04_bar_plots2.png")
 ```
 
 
-### twoway
-Beim Grafik-Typ `twoway` muss der sog. Plottyp, spezifiziert werden. Bspw. für ein Streudiagramm mit dem Befehl `scatter`:
+## Gemeinsame Verteilung zweier Variablen
 
-```{stata twoway1, echo=1, results="hide", eval = F}
+### Mosaikplot
+Für die gemeinsame Verteilung zweiter kategorialer Merkmale empfiehlt sich ein Mosaikplot. Dafür gibt es aber keinen Standardbefehl in Stata, sondern wir müssen den Befehl `spineplot` erst installieren:
+
+```{stata, eval = F}
+ssc install spineplot // Befehl installieren (nur 1x nötig)
+spineplot educ  agec
+```
+
+```{r mosaic_plot, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("04_mosaic.png")
+```
+Ein Mosaikplot stellt die bedingen Häufigkeiten dar: die Breite der Säulen wird durch die Größe der Altersgruppen bestimmt. Die Anzahl der Befragten aus den jeweiligen Kategorien von `educ` bestimmen dann jeweils die Farbanteile innerhalb der Säulen. 
+
+
+### Streudiagramm
+
+Eine sehr weit verbreitete Darstellung für zwei metrische Variablen ist das sog. Streudiagramm ("scatter plot"), dieses bekommen wir mit `twoway scatter`. Bspw. können wir die gemeinsame Verteilung des Alters und des Einkommens der Befragten so darstellen:
+
+```{stata scatter1,eval = F}
 graph twoway scatter inc age
-graph export "04_twoway1.png", replace
 ```
 
-```{r twoway1_plot, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
+```{r scatter_plot, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
 knitr::include_graphics("04_twoway1.png")
 ```
 
+## Weitere `twoway` Grafiken
+
+Eben kam bereits der Befehl `twoway` vor. `twoway` stellt eine ganze Reihe an Darstellungen zur Auswahl, die wir hier nicht besprochen haben. Eine Übersicht zu allen verfügbaren Visualierungen inklusive Beispielbefehlen findet sich beispielsweise [hier](https://www.stata.com/support/faqs/graphics/gph/stata-graphs/) oder [hier](https://www.stata.com/features/example-graphs/).
 
 
-### Kombinieren von zwei twoway-Grafiken
-`twoway`-Grafiken  können übereinander gelegt werden. So können wir durch Kombination der Plottypen `scatter` und `lfit` ein Streudiagram mit einer Regressionsgerade[^51] kombinieren:
- `graph twoway (scatter inc age) (lfit inc age)`
-Eine alternative Schreibweise mit `||` führt zur gleichen Grafik:
-`graph twoway scatter inc age || lfit inc age`
+## Kombinieren von zwei twoway-Grafiken
 
-```{stata twoway2, echo = F, eval = F}
-graph twoway (scatter inc age) (lfit inc age)
-graph export "04_line_scatter.png", replace
+Eine besonders hilfreiche Funktion ist das Übereinanderlegen mehrer `twoway` Grafiken. Dazu hängen wir die Befehle mit `(scatter ...) (scatter ...)` einfach aneinander. Mit dieser Strategie können wir zwei nach Geschlechtern getrennte Streudiagramme aufeinander legen und so die Punkte farblich unterscheidbar machen:
+
+```{stata scatter_sex, eval = F}
+graph twoway (scatter inc age if sex==1) (scatter inc age if sex==2)
 ```
 
-```{r twoway2_plot, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("04_line_scatter.png")
+```{r scatter_sex2, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("04_scatter_bysex.png")
 ```
- 
-[^51]: Was das genau ist, werden wir am Donnerstag besprechen. Für den Moment nur so viel: die Gerade gibt den Zusammenhangstrend beider Variablen wieder.
-
-### twoway Varianten
-
-`graph twoway scatter` hatten wir jetzt schon kennen gelernt. Natürlich gibt es aber auch noch weitere Darstellungsformen.
-
-`graph twoway bar` liefert uns ein Säulendiagramm:
+Hier haben wir also jetzt blaue Punkte für `sex == 1` und rote Punkte für `sex == 2`. Leider sagt uns die Legende aber überhaupt nichts dazu. Dazu kommen wir [gleich](#legend). 
 
 
-Mit der Option `,horizontal` können wir dieses Säulendiagramm in ein Balkendiagramm mit horizontalen Balken verwandeln:
+## Optionen
 
-Mit `graph twoway connected` bekommen wir ein Punktdiagramm mit verbundenen Punkten
+Diese grundlegenden Darstellungen können mit Hilfe einer ganzen Reihe an Optionen angepasst werden. Auch hier beschränken wir uns auf die wesentlichsten Optionen:
+
+### Titel
+
+Eine klare Beschriftung ist zentraler Bestandteil jeder Datenvisualisierung. Folgende Überschriften stehen uns dazu zur Verfügung: 
+
+```{stata, eval = F}
+graph ...., title("Titel") subtitle("Untertitel") xtitle("x-Achsentitel") ytitle("y-Achsentitel") caption("Bildunterschrift")
+```
+
+```{r lab, echo = F,out.width = "80%",out.height= "80%", fig.align="center"}
+knitr::include_graphics("04_scatter_title.png")
+```
+
+Weitere Optionen unter `help title_options`. 
+
+### Achsenbeschriftung
+
+Außerdem können wir die Achsenbeschriftungen verändern - hier ein Beispiel für die x-Achse[^043]
+
+`xscale(range(0 100))` $\rightarrow$ x-Achse auf 0-100 ausdehnen
+`xtick(0 (10) 100 )`  $\rightarrow$ an allen Zehner-Grenzen zwischen 0 und 100, `0(10)100` ist die Abkürzung für `0,10,20,30,40,50,60,70,80,90,100`
+`xlabel(0 "Null" 10 "zehn" 20 (10) 100)`  $\rightarrow$ Beschriftung der "ticks"
+
+```{stata, eval = F}
+graph .... , xscale(range(0 100)) xtick(0 (10) 100 )` xlabel(0 "Null" 10 "zehn" 20 (10) 100) 
+```
+
+```{r axis_lab, echo = F,out.width = "80%",out.height= "80%", fig.align="center"}
+knitr::include_graphics("04_scatter_axis.png")
+```
+
+Mehr Optionen finden sich unter `help axis_label_options`. Bspw. kann man mit `xlabel(..., alternate) ` die Achsenlabels nach oben und unten verschieben.
+
+[^043]: für die y-Achse funktionert das genauso, lediglich mit `yticks` usw.
+
+### Text einfügen 
+
+Wir können mit `text()` auch ein Text auf der Grafik positionieren - wie geben erst die y-Koordinate, dann die x-Koordinate an und dann den gewünschten Text:
+
+
+```{stata text, eval = F}
+graph twoway scatter inc age, text(17500 80 "text")
+```
+```{r text_pos, echo = F,out.width = "80%",out.height= "80%", fig.align="center"}
+knitr::include_graphics("04_scatter_text.png")
+```
+
+
+### Schriftart
+
+Eine Reihe an Schriftarten stehen für Textangaben zur Verfügung:
+
+```{stata, eval = F}
+graph twoway scatter inc age, title("{stSerif:Einkommen {bf:fett} {it:kursiv}}") subtitle("Text{superscript:hochgestellt}{subscript:tiefgestellt}") xtitle("Alter {it:age}") ytitle("{stMono:Einkommen}") xlabel(0 " {stMono:Null}" 10 "{bf:zehn}" 20 (10) 100) text(15000 20 "Hier ein Symbol: {&Omega}") xscale(range(0 100))
+```
+```{r text_opts, echo = F,out.width = "80%",out.height= "80%", fig.align="center"}
+knitr::include_graphics( "04_scatter_text_fmts.png")
+```
+
+Mehr dazu unter `help graph_text`
+
+### Legende {#legend}
+
+Oben hatten wir gesehen, dass die automatische Legende nicht unbedingt aussagekräftig ist. Mit der Option `legend` können wir die Legende beschriften und einen Titel vergeben:
+
+```{stata scatter_sex_leg, eval = F}
+graph twoway (scatter inc age if sex==1) (scatter inc age if sex==2), legend(lab(1 "Männer") lab(2 "Frauen") title("Geschlecht"))
+```
+
+```{r scatter_sex_legp, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("04_scatter_bysex_legend.png")
+```
+
+Mit der Option `pos` können wir außerdem die Position der Legende anpassen - wir geben dabei eine Zahl zwischen 0 und 12 an. Die Werte 1-12 entsprechen die Stunden auf einer Uhr, 0 setzt die Legende in die Mitte der Grafik. 
+
+```{stata scatter_sex_leg2, eval = F}
+graph twoway (scatter inc age if sex==1) (scatter inc age if sex==2), legend(lab(1 "Männer") lab(2 "Frauen") title("Geschlecht") pos(9))
+```
+```{r scatter_sex_leg2p, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("04_scatter_bysex_legend_pos.png")
+```
+
+
+Weitere Optionen und Beispiele unter `help legend_options`. Mit `legend(off)` kann die Legende auch ausgeblendet werden. 
+  
 
 
 
+### Marker
+
+Im Stata-Jargon werden die Punkte "marker" genannt. Deren Aussehen können wir mit entsprechenden Optionen ebenfalls verändern. Zum einen können wir mit `msymbol` die Form des Markers verändern, mit `msize` können wir die Größe und mit `mcolor` die Farbe anpassen:
+
+```{stata msym_size , eval = F}
+graph twoway scatter inc age, msymbol(D) msize(small) mcolor(sand)
+```
+```{r msym_size2, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("04_msym_size.png")
+```
+Dabei können wir aus einer Reihe an Formen, Größen und Farben wählen:
+```{r msymbol_size_overview, echo = F,out.width = "60%",out.height="80%",fig.show='hold', fig.align="center"}
+knitr::include_graphics(c("04_msymbol.png","04_msize.png","04_mcolor.png"))
+```
+
+In unserem Beispiel vorhin hatten wir die Farben der marker aber genutzt, um die Angaben für Männer und Frauen zu unterscheiden. Hier geben wir dann `mcolor` etc. jeweils innerhalb der Klammern an:
+```{stata m_scatter_color, eval = F}
+graph twoway (scatter inc age if sex==1, mcolor(orange) msize(small)) (scatter inc age if sex==2, mcolor(sand) msymbol(D) msize(small)), legend(lab(1 "Männer") lab(2 "Frauen")) 
+```
+```{r msym_sex, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("04_mcolor_sex.png")
+```
+
+Mit `mlcolor` und `mlwidth` können wir jedem marker die Farbe und Dicke[^045] der Umrandung angeben:
+
+[^045]: Zur Auswahl stehen: `vthin`,`thin`,`medthin`,`medium `,`medthick`,`thick`,`vthick`,`vvthick`,`vvvthick`
+
+```{stata ml_scatter_color, eval = F}
+graph twoway (scatter inc age if sex==1, mcolor(orange) msize(small) mlcolor(gs3) mlwidth(vthin)) (scatter inc age if sex==2, mcolor(sand) msymbol(D) msize(small) mlcolor(gs3) mlwidth(vvthin)), legend(lab(1 "Männer") lab(2 "Frauen")) 
+```
+```{r ml_scatter, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("04_ml_sex.png")
+```
+
+### Farben
+
+Obwohl es um Darstellungen geht, haben wir noch sehr wenig über Farben gesprochen. Neben den oben gezeigten vordefinierten Farben können wir auch Farben als RGB-Codes[^046] angeben und so Farben eigenen Paletten verwenden:
+
+```{stata rgb, eval = F}
+graph twoway (scatter inc age if sex==1, mcolor("91	37 97") msize(small)) (scatter inc age if sex==2, mcolor("150 196 134") msymbol(D)), legend(lab(1 "Männer") lab(2 "Frauen"))
+```
+
+```{r rgbp, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("04_col_scatter.png")
+```
+
+Außerdem können wir mit `plotregion(fcolor( ))` und `graphregion(fcolor( ))` die Hintergrundfarben der Grafik und des Koordinatenbereichs anpassen. Mit `region(fcolor( ))` können wir die den Hintergrund der Legende verändern.
+
+```{stata bg_col, eval = F}
+graph twoway (scatter inc age if sex==1, mcolor("91	37 97") msize(small)) (scatter inc age if sex==2, mcolor("150 196 134") msymbol(D)), legend(lab(1 "Männer") lab(2 "Frauen") region(fcolor(red))) plotregion(fcolor(eltblue)) graphregion(fcolor(olive_teal))
+```
+
+```{r bg_colp, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("04_bg_col.png")
+```
+
+Farbpaletten sind ein Thema für sich und was gut aussieht ist natürlich subjektiv.... (das letzte Beispiel wohl eher nicht). Allerdings gibt es einige Leitlinien, siehe [hier](https://blog.datawrapper.de/beautifulcolors/). Es gibt zahlreiche Möglichkeiten selbst zu erstellen: zB. mit [Adobe Color](https://color.adobe.com/create/color-wheel) oder [Paletton](https://paletton.com/). Außerdem gibt es unzählige Quellen für Farbpaletten: [Instagram](https://www.instagram.com/colours.cafe/) oder [ColorBrewer](https://colorbrewer2.org)
+
+
+
+
+[^046]: RGB steht dabei als Abkürzung für die Anteile der Grundfarben Rot, Grün und Blau an der Mischfarbe.
 
 ### Vorlagen
-Das Aussehen von Grafiken wird durch sog. Grafik-Schemata beeinflusst. Beispielsweise wird mit `, scheme(sj)`  die Grafik nach den Vorlage des Stata Journals erstellt:
 
+Eine Alternative ist auf Grafik-Schemata zuzückzugreifen. Beispielsweise wird mit `, scheme(sj)`  die Grafik nach den Vorlage des Stata Journals erstellt:
 
-```{stata theme, echo = 1,results="hide", eval = F}
-graph twoway (scatter inc age) (lfit inc age), scheme(sj)
-graph export "04_line_scatter_theme.png", replace
+```{stata theme,  eval = F}
+graph twoway scatter inc age , scheme(sj)
 ```
 
-```{r theme_plot, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("04_line_scatter_theme.png")
+```{r theme_plot, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("04_sjtheme.png")
 ```
 
 Mit `graph query, schemes` wird eine Liste der verfügbaren Schemata angezeigt.
 
 
-Weitere Optionen bieten zB die [blindschemes](https://www.stata-journal.com/article.html?article=gr0070) von Daniel Bischof oder [lean2](https://www.stata-journal.com/sjpdf.html?articlenum=gr0002) von Svend Juul. Beide müssen zunächst mit `ssc install blindschemes` bzw. `net install gr0002_3, from("http://www.stata-journal.com/software/sj4-3")` installiert werden und stehen dann zur Verfügung, zB 
+Weitere Optionen bieten zB die [blindschemes](https://www.stata-journal.com/article.html?article=gr0070) von Daniel Bischof. Diese müssen zunächst mit `ssc install blindschemes`  installiert werden und stehen dann zur Verfügung, zB 
 
 Hier noch ein Beispiel mit `plotplain` aus `blindschemes`:
-```{stata theme2, echo = 1,results="hide", eval = F}
-graph twoway (scatter inc age) (lfit inc age), scheme(plotplain) legend(cols(2) pos(6))
-graph export "04_line_scatter_theme2.png", replace
+```{stata theme2, eval = F}
+ssc install blindschemes
+graph twoway scatter inc age, scheme(plotplain) 
 ```
 
 ```{r theme_plot2, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("04_line_scatter_theme2.png")
-```
-
-...und `lean2`:
-
-```{stata theme3, echo = 1,results="hide", eval = F}
-graph twoway (scatter inc age) (lfit inc age), scheme(lean2) ///
-  legend(cols(2) pos(6))
-graph export "04_line_scatter_theme3.png", replace
-```
-
-```{r theme_plot3, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("04_line_scatter_theme3.png")
-```
-
-## Optionen
-
-Darüber hinaus stehen eine ganze Reihe an Anpassungsmöglichkeiten zur Verfügung
-
-### Beschriftungen
-
-Eine klare Beschriftung ist zentraler Bestandteil jeder Datenvisualisierung. Im wesentlichen 
-Folgende Überschriften stehen uns dazu zur Verfügung: `title("title") subtitle("subtitle") xtitle("xtitle") ytitle("ytitle") caption("caption")`
-```{r lab, echo = F,out.width = "40%",out.height= "40%", fig.align="center"}
-knitr::include_graphics("04_beschriftungen.png")
+knitr::include_graphics("04_plotplain_theme.png")
 ```
 
 
-+ `legend`
-  + `pos`
-  + labeln
-
-
-+ `over`
-
-+ Darstellungstypen
-  + Symbole/Linientypen
-  +
-
-+ Farboptionen `mcolor`, `lcolor`, `graphregion(color(orange))` 
-
-Optionen von `graph` können Unteroptionen haben oder aus einer Liste von Optionen zusammengesetzt werden. Hier zwei Beispiele: `xlabel(#20, angle(90))` oder `xscale(range(0 300) reverse alt)`.
-
-### Farben
-
-Obwohl es um Darstellungen geht, haben wir noch sehr wenig über Farben gesprochen. 
-
-[Instagram](https://www.instagram.com/colours.cafe/)
-
-[ColorBrewer](https://colorbrewer2.org)
-
-[colorhex](https://www.color-hex.com/)
-
-
-### Subgruppen
-
-```{stata colored_scatter, echo=1, results="hide", eval = F}
-graph twoway  ( scatter  inc age if sex == 1 , mc("0 62 81") msymbol(o) ) ( scatter  inc age if sex == 2 , mc("254 216 128") msymbol(o)  ) ///
-, scheme(lean2) legend(off) xtitle("")
-```
-```{stata colored_scatter_ex, echo=F, results="hide",eval = F}
-graph export "04_bunter_scatter.png", replace
-```
-
-```{r colored_scatter_print, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("04_bunter_scatter.png")
-```
-
-
-```{stata colored_line_scatter, echo=1, results="hide", eval = F}
-graph twoway  ( scatter  inc age if sex == 1 , mc("0 62 81") msymbol(o) ) ( scatter  inc age if sex == 2 , mc("254 216 128") msymbol(o)  ) ( lfit  inc age if sex == 1 , lc("black") ) ( lfit  inc age if sex == 2 , lc("orange") msymbol(o)  ) ///
-, scheme(lean2) legend(off) xtitle("")
-```
-```{stata colored_line_scatter_ex, echo=F, results="hide",eval = F}
-graph export "04_bunter_line_scatter.png", replace
-```
-
-```{r colored_line_scatter_print, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("04_bunter_line_scatter.png")
-```
+##  Gruppierte Darstellungen 
+Neben `,by()` können wir in `graph box` auch 
 
 ## Beispiele zum selbst anpassen
 
-Im Folgenden 
-
-Was gut aussieht ist natürlich subjektiv....
+Im Folgenden finden sich nun einige Beispiele mit (sehr) vielen Optionen als Vorlage für eigene Anpassungen. Trial & error wärmstens empfohlen!
 
 ### Boxplot
 
-Hier noch ein Beispiel mit (sehr) vielen Optionen als Vorlage für eigene Anpassungen ([DoFile](#aufb1)):
+Für gruppierte Boxplots (hier nach Geschlecht) muss die dargestellte Variable zunächst aufgesplittet werden. Hier findet sich das ([DoFile](#aufb1)) zur Aufbereitung.
+
 ```{stata fancy_bpplot, eval=F, results="hide",collectcode=F, eval = F}
-graph box inc_m inc_f, over(age_c) scheme(lean1) box(1, color("0 41 93")) marker(1, mcolor("0 41 93")  msymbol("o") ) medline(lcolor("204 175 105")) box(2, color("146 143 107")) marker(2, mcolor("146 143 107")  msymbol("o") ) legend(cols(2) pos(12) region(fcolor("249 247 241") lcolor("16 74 138"))) ytitle("{stSerif:Einkommen}{superscript:2018}") b1title("Alter") title("Einkommen") caption("{bf:Quelle}: Allbus 2018 {it:eigene Berechnungen}",position(5)) plotregion(fcolor("252 251 248")) graphregion(fcolor("249 247 241")) 
+graph box inc inc_f, over(age_c) ///
+scheme(lean1) ///
+box(1, color("0 41 93")) marker(1, mcolor("0 41 93")  msymbol("o") ) medline(lcolor("204 175 105")) /// optionen box1
+box(2, color("146 143 107")) marker(2, mcolor("146 143 107")  msymbol("o") ) /// box2 anpassen
+legend(cols(2) pos(12) region(fcolor("249 247 241") lcolor("16 74 138")))  /// Legende
+ytitle("{stSerif:Einkommen}{superscript:2018}") b1title("Alter") /// Achsenbeschriftung
+title("Einkommen") caption("{bf:Quelle}: Allbus 2018 {it:eigene Berechnungen}",position(5)) /// titel usw.
+plotregion(fcolor("252 251 248")) graphregion(fcolor("249 247 241")) // Hintergrundfarben
+
 ```
 
 
@@ -220,29 +342,38 @@ graph box inc_m inc_f, over(age_c) scheme(lean1) box(1, color("0 41 93")) marker
 knitr::include_graphics("04_boxplot.png")
 ```
 
+### Scatterplot 
 Auch die Darstellung auf der Startseite dieses Skripts wurde als Stata-Grafik erstellt:
 
 ```{stata loadbp, echo=T, results="hide",collectcode=F}
 webuse bpwide, clear
 ```
 ```{stata titelbild, eval = F}
-graph twoway  (lfit bp_before bp_after) ( scatter bp_before bp_after if agegrp == 1, mc("0 62 81") msymbol(o) ) ( scatter bp_before bp_after if agegrp == 2, mc("0 125 186") msymbol(o)  ) ( scatter bp_before bp_after if agegrp == 3, mc("214 210 196") msymbol(o)  ), scheme(lean2) legend(off) xtitle("")
+graph twoway  ///
+( scatter bp_before bp_after if agegrp == 1, mc("0 62 81") msymbol(o) ) /// Altersgruppe 1 -> dunkle Punkte
+( scatter bp_before bp_after if agegrp == 2, mc("0 125 186") msymbol(d)  ) /// Altersgruppe 2 -> blaue Rhomben
+( scatter bp_before bp_after if agegrp == 3, mc("214 210 196") msymbol(s)  ) /// Altersgruppe 3 -> Vierecke
+, scheme(lean2) /// Schema
+legend(lab(1 "30-45") lab(2 "{stMono:46-59}") lab(3 "60+") lcolor("16 74 138") region(fcolor("249 247 241") lcolor("16 74 138")) pos(6) cols(3)  )  /// legende -> 3 Spalten
+xtitle("{stSerif:Blutdruck nachher}") ytitle("{stMono:Blutdruck vorher}") /// Achsenbeschriftung
+text(185 172 "Ein Text" "über {stSerif: 2} Zeilen") title("{&Delta}p={stSerif:R}*V") // Textfeld einfügen
 ```
 
 ```{r titelbild_include, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("00_scatter.png")
+knitr::include_graphics("04_scatter_manyopts.png")
 ```
 
 
+
+
+### Bevölkerungspyramide
 Häufig ist die größte Herausforderung, die Daten so umzustellen, dass sie zum gewünschten `graph`-Befehl passen. Ein Beispiel ist die Erstellung einer Bevölkerungspyramide aus den Allbusdaten:
 
-
-## Bevölkerungspyramide
 ```{r pyra1, echo = F,out.width = "60%",out.height= "60%", fig.align="center"}
 knitr::include_graphics("04_pyramid.png")
 ```
 
-Auch eine Bevölkerungspyramide lässt sich als Stata-Grafik erstellen. Allerdings müssen dazu einige Zwischenschritte durchlaufen, die fortgeschrittene Datenaufbereitung mit `collapse` voraussetzen. Außerdem könnte ein Teil der Aufbereitung mit `reshape` abgekürzt werden. Mehr Informationen dazu finden sich am Ende dieses Skripts in Kapitel [11](#adva).
+Auch diese Bevölkerungspyramide lässt sich als Stata-Grafik erstellen. Allerdings müssen dazu einige Zwischenschritte durchlaufen, die fortgeschrittene Datenaufbereitung mit `collapse` voraussetzen. Außerdem könnte ein Teil der Aufbereitung mit `separate` abgekürzt werden. Mehr Informationen dazu finden sich am Ende dieses Skripts in Kapitel [11](#adva).
 
 Die grundsätzliche Funktion für die Bevölkerungspyramide ist ein Balkendiagramm mit `graph twoway bar , horizontal`. Die Länge der Balken soll jeweils durch die Anzahl der Fälle in jeder Altersstufe, getrennt nach Geschlecht, bestimmt werden. Dazu müssen wir also zunächst die Anzahl der Befragten pro Alterstufe und Geschlecht bestimmen. Wenn wir den Allbus 2018 laden, haben wir ja einen Datensatz mit einer Zeile pro Person. Was wir jetzt aber benötigen ist eine Variante, in der wir den Datensatz sozusagen "zusammenschieben": wir brauchen jeweils eine Zeile pro Altersstufe und Geschlecht und eine Variable mit der Zahl der Befragten.
 
@@ -267,14 +398,15 @@ a18 %>% filter(age>0,sex>0) %>%  group_by(age,sex) %>% count(name = "respid") %>
 ```
 Um verwirrung zu vermeiden, benennen wir `respid` in `total ` um:
 ```{stata, eval = F}
-rename respid total
+rename respid Anzahl_Befragte
 ```
-Allerdings möchten wir jetzt die Angaben für Frauen und Männer in getrennte Variablen ablegen:
+Allerdings möchten wir jetzt die Angaben für Frauen und Männer in getrennte Variablen ablegen.[^048]
 ```{stata, eval = F}
-gen total_m = total if sex == 1
-gen total_f = total if sex == 2
+gen total_m = Anzahl_Befragte if sex == 1
+gen total_f = Anzahl_Befragte if sex == 2
 list in 1/10
 ```
+[^048]: Eine Abkürzung für diesen Schritt mit Hilfe von `separate` findet sich in Kapitel [11](#adva) 
 
 ```{r, echo =F}
 a18 %>% filter(age>0,sex>0) %>%  group_by(age,sex) %>% count(name = "total") %>% ungroup() %>% mutate(total_m = ifelse(sex == 1, total,"."),total_f = ifelse(sex == 2, total,".")) %>% slice(1:10) %>% data.frame(.)
@@ -282,7 +414,7 @@ a18 %>% filter(age>0,sex>0) %>%  group_by(age,sex) %>% count(name = "total") %>%
 
 Jetzt können wir daraus ein Balkendiagramm erstellen:
 ```{stata, eval = F}
-twoway( bar neg_total_m age, horizontal )(bar total_f age, horizontal)
+twoway( bar total_m age, horizontal )(bar total_f age, horizontal)
 ```
 
 ```{r pyra2, echo = F,out.width = "60%",out.height= "60%", fig.align="center"}
@@ -327,23 +459,64 @@ lab var inc_m "Männer"
 lab var inc_f "Frauen"
 ```
 
-### `separate` {#sep1}
+### Boxplot  {#boxplot1}
 
-`separate` ist eine Abkürzung, um Angaben einer Variable entlang der Ausprägungen einer zweiten Variablen aufzuteilen. Das hilft uns bspw. die Aufteilung von `inc` nach dem Geschlecht (`sex`) zu vereinfachen. Wir können dies entweder mit zwei Befehlen mit `gen` und `if` durchführen oder diese zwei Schritte mit einem `separate` Befehl durchführen:
+Definition der Bestandteile eines Boxplots: 
 
-```{stata sepF, eval = F}
-gen inc_m = inc if sex == 1
-gen inc_f = inc if sex == 2
-separate inc, by(sex)
-list inc sex inc_m inc_f inc1 inc2 in 1/10
++ ggf. Ausreißer
++ unterer Whisker: `q1 - 1.5* IQR`
++ untere Grenze: 1. Quartil 
++ mittlere Linie: Median 
++ obere Grenze: 3. Quartil 
++ oberer Whisker: `q3 + 1.5* IQR`
++ ggf. Ausreißer
+
+Die Box enthält also die zentralen 50% des Wertebereichs.
+```{r, boxplot1, echo = F, out.height="75%", out.width="75%", fig.align="center", warning=F,message=F}
+.libPaths("D:\\R-library4") 
+library(tidyverse)
+
+path <- "D:/oCloud/RFS/" # wo liegt der Datensatz?
+a16 <- read.csv(paste0(path,"allbus2016.csv"),sep = ";",header = T,stringsAsFactors = F) # einlesen
+ak <- readr::read_delim(paste0(path,"allbus_kumuliert.csv"), delim = ";", col_types = cols(.default = col_double()))
+bp_ann_df <- 
+  filter(ak,hs16>0) %>% 
+  mutate_at(vars(hs16),~ifelse(.<0,NA,.)) %>% 
+  summarise(q25 = quantile(hs16,probs = .25),
+            q50 = quantile(hs16,probs = .5),
+            q75 = quantile(hs16,probs = .75),
+            whis1 = q25 - 1.5*(q75-q25) + .5 ,
+            whis2 = q75 + 1.5*(q75-q25) - .5) %>% 
+  mutate_all(~if_else(. < 0,0,.)) %>% 
+  pivot_longer(cols=everything(), values_to = "hs16") %>% 
+  mutate(xend1 = ifelse(grepl("whis",name),.015,.4),
+         name = case_when(name == "q25" ~ "1. Quartil (25% Grenze)",
+                          name == "q50" ~ "Median (50% Grenze)",
+                          name == "q75" ~ "3. Quartil (75% Grenze)",
+                          name == "whis1" ~ "unterer Whisker",
+                          name == "whis2" ~ "oberer Whisker"),
+         x = 1)
+
+bp_ann_ausr <- filter(ak,!between(hs16,146,197),hs16>0) %>% select(hs16) %>% mutate(name="Ausreißer",x=1) %>% 
+  distinct() %>% group_by(aus=hs16>146) %>% 
+  mutate(hs16m=mean(hs16) %>% if_else(.<144,140,.))
+
+  
+ggplot(filter(ak,hs16>0), aes(x = 0, y = hs16)) + 
+  geom_boxplot() + 
+  geom_label(data = bp_ann_df, aes(x = x-.45, y = hs16, label = name), hjust = 0, label.size = .0,fontface="italic", size = 5.25) +
+  geom_label(data = bp_ann_ausr, aes(x = x-.45, y = hs16m, label = name), hjust = 0, label.size = .0,fontface="italic", size = 5.25) +
+  geom_segment(data = bp_ann_df, aes(x = x-.451, xend = xend1, yend = hs16, y = hs16), color = "#172869",
+               lineend = 'butt', linejoin ='bevel',arrow = arrow(length = unit(.025,"npc"), type = "closed")) +
+  geom_segment(data = bp_ann_ausr, aes(x = x-.451, xend = .015, yend = hs16, y = hs16m), color = "#172869",
+               lineend = 'butt', linejoin ='bevel',arrow = arrow(length = unit(.01,"npc"), type = "closed")) +
+  labs(color = "", # legenden-label auf leer
+       y = "", # y-Achse labeln
+       x="")+ # x-Achse labeln
+  theme_void() + 
+  theme(axis.text.x = element_blank()) +
+  expand_limits(x = c(0,1.1))
+
 ```
 
 
-```{stata sepT, echo = F}
-set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-gen inc_m = inc if sex == 1
-gen inc_f = inc if sex == 2
-separate inc, by(sex)
-list inc sex inc_m inc_f inc1 inc2 in 1/10
-```
