@@ -1,6 +1,7 @@
 # Zusammenhangsmaße {#zshg}
 
 ```{r setup051, echo = F, include=FALSE}
+.libPaths("D:/R-library4")
 library(patchwork)
 library(tidyverse)
 options(width = 200)
