@@ -86,7 +86,7 @@ sex
 
 Mit `///` können wir Zeilen verknüpfen:
 ```{stata rowbased3, eval = F}
-d pv01 age ///
+d pv01 age /// 
 sex
 ```
 ```{stata rowbased3b, echo = F}
@@ -104,6 +104,18 @@ d pv01 age sex // dies ist ein kommentar
 set linesize 80
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 d pv01 age sex
+```
+
+`///` kann auch zum Kommentieren verwendet werden:
+```{stata comment3, eval = F}
+d pv01 age /// hier kann ein kommentar stehen
+sex // hier geht es weiter
+```
+```{stata comment4, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+d pv01 age /// hier kann ein kommentar stehen
+sex // hier geht es weiter
 ```
 
 
@@ -469,6 +481,8 @@ Damit sind die Originaldaten aber natürlich weg.
       + Löschen Sie alle Beobachtungen von Befragten aus Städten mit 500.000 Einwohnern und mehr aus dem Speicher.
       + Kontrollieren Sie mit einem erneuten `tabulate`-Befehl, ob alle Fälle weg sind. (Denken Sie an die fehlenden Werte!)
 
+(@) Kommentieren Sie ihre bisherigen Befehle mit `//`! Was haben Sie jeweils gemacht? Probieren Sie auch aus, mit `///` einen Befehl über mehrere Zeilen zu verteilen!
+
 
 <!-- Filter für fehlende Werte -> yborn Missings? -->
 
@@ -476,6 +490,11 @@ Damit sind die Originaldaten aber natürlich weg.
 
 Für alle, die noch etwas mehr machen möchten: 
 
+(@)  Laden Sie den Datensatz `Allbus2018` in Stata. 
+      + Behalten Sie die Befragte, die zwischen 1970 und 1980 geboren wurden im Speicher!
+      + Unter welchem Variablennamen ist das Geburtsjahr abgelegt? Nutzen Sie `lookfor`!
+      + Wie hilft Ihnen `inrange` hier weiter?
+      
 
 
 

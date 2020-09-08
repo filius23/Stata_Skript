@@ -358,7 +358,7 @@ r(199);
 end of do-file
 r(199);</code></pre>
 <p>Mit <code>///</code> können wir Zeilen verknüpfen:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="Stata2.html#cb13-1"></a><span class="kw">d</span> pv01 age <span class="co">///</span></span>
+<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="Stata2.html#cb13-1"></a><span class="kw">d</span> pv01 age <span class="co">/// </span></span>
 <span id="cb13-2"><a href="Stata2.html#cb13-2"></a>sex</span></code></pre></div>
 <pre><code>              storage   display    value
 variable name   type    format     label      variable label
@@ -374,11 +374,20 @@ variable name   type    format     label      variable label
 pv01            byte    %12.0g     pv01       BEFR.: WAHLABSICHT BUNDESTAGSWAHL
 age             byte    %12.0g     age        ALTER: BEFRAGTE(R)
 sex             byte    %12.0g     sex        GESCHLECHT, BEFRAGTE(R)</code></pre>
+<p><code>///</code> kann auch zum Kommentieren verwendet werden:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="Stata2.html#cb17-1"></a><span class="kw">d</span> pv01 age <span class="co">/// hier kann ein kommentar stehen</span></span>
+<span id="cb17-2"><a href="Stata2.html#cb17-2"></a>sex <span class="co">// hier geht es weiter</span></span></code></pre></div>
+<pre><code>              storage   display    value
+variable name   type    format     label      variable label
+--------------------------------------------------------------------------------
+pv01            byte    %12.0g     pv01       BEFR.: WAHLABSICHT BUNDESTAGSWAHL
+age             byte    %12.0g     age        ALTER: BEFRAGTE(R)
+sex             byte    %12.0g     sex        GESCHLECHT, BEFRAGTE(R)</code></pre>
 </div>
 <div id="auszählen-überblick-erhalten" class="section level2">
 <h2><span class="header-section-number">2.2</span> Auszählen &amp; Überblick erhalten</h2>
 <p>Mit <code>tabulate</code> bekommen wir eine Auszählung der Ausprägungen einer Variable. Dies ist wohl der wichtigste Befehl in Stata:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="Stata2.html#cb17-1"></a><span class="kw">tabulate</span> sex</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="Stata2.html#cb19-1"></a><span class="kw">tabulate</span> sex</span></code></pre></div>
 <pre><code>&gt; r\Allbus2018.dta&quot;, clear
 
 
@@ -391,7 +400,7 @@ BEFRAGTE(R) |      Freq.     Percent        Cum.
       Total |      3,477      100.00</code></pre>
 <p>Wir sehen hier also, dass <code>sex</code> zwei Ausprägungen hat und 1773 Männer und 1704 Frauen enthält.</p>
 <p>Für metrisch skalierte Variablen mit deutlich mehr Ausprägungen können wir <code>tabulate</code> zwar theoretisch auch verwenden, allerdings wird eine Tabelle hier sehr schnell sehr unübersichtlich:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="Stata2.html#cb19-1"></a><span class="kw">tabulate</span> age</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="Stata2.html#cb21-1"></a><span class="kw">tabulate</span> age</span></code></pre></div>
 <pre><code>           ALTER: |
       BEFRAGTE(R) |      Freq.     Percent        Cum.
 ------------------+-----------------------------------
@@ -476,13 +485,13 @@ NICHT GENERIERBAR |          5        0.14        0.14
 ------------------+-----------------------------------
             Total |      3,477      100.00</code></pre>
 <p>Für metrische Variablen empfiehlt sich daher <code>summarize</code> als Überblicksbefehl:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="Stata2.html#cb21-1"></a><span class="kw">summarize</span> age</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="Stata2.html#cb23-1"></a><span class="kw">summarize</span> age</span></code></pre></div>
 <p>Hier bekommen wir die Anzahl der Beobachtungen (<code>Obs.</code>), das arithmetische Mittel (<code>Mean</code>), sowie die Minimal- und Maximalwerte ausgegeben (<code>Min</code>&amp;<code>Max</code>). (zur Standardabweichung <code>Std. Dev.</code> kommen wir noch).</p>
 <pre><code>    Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
          age |      3477     51.5568    17.91249        -32         95</code></pre>
 <p><code>summarize</code> klappt auch mit mehreren Variablen auf einmal:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="Stata2.html#cb23-1"></a><span class="kw">summarize</span> age inc <span class="co">// klappt auch mit mehreren Variablen</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb25-1"><a href="Stata2.html#cb25-1"></a><span class="kw">summarize</span> age inc <span class="co">// klappt auch mit mehreren Variablen</span></span></code></pre></div>
 <pre><code>    Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
          age |      3477     51.5568    17.91249        -32         95
@@ -491,28 +500,28 @@ NICHT GENERIERBAR |          5        0.14        0.14
 <div id="neue-variablen-erstellen" class="section level2">
 <h2><span class="header-section-number">2.3</span> Neue Variablen erstellen</h2>
 <p>Natürlich sind wir nicht nur darauf beschränkt, bestehende Variablen anzusehen, sondern wir können auch neue Variablen erstellen. Das geht mit <code>gen</code>. Dazu geben wir erst den neuen Variablennamen an und nach <code>=</code>, wie die neue Variable bestimmt werden soll:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb25-1"><a href="Stata2.html#cb25-1"></a><span class="kw">gen</span> age_mon = age * 12</span>
-<span id="cb25-2"><a href="Stata2.html#cb25-2"></a>su age_mon</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb27-1"><a href="Stata2.html#cb27-1"></a><span class="kw">gen</span> age_mon = age * 12</span>
+<span id="cb27-2"><a href="Stata2.html#cb27-2"></a>su age_mon</span></code></pre></div>
 <pre><code>    Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
      age_mon |      3477    618.6816    214.9499       -384       1140</code></pre>
 <p>Wenn wir eine Variable überschreiben möchten, dann müssen wir diese erst mit <code>drop</code> löschen, bevor wir sie überschreiben. Würden wir den <code>gen</code> Befehl von gerade nochmal verwenden, dann bekommen wir eine Fehlermeldung:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb27-1"><a href="Stata2.html#cb27-1"></a><span class="kw">gen</span> age_mon = age * 12</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="Stata2.html#cb29-1"></a><span class="kw">gen</span> age_mon = age * 12</span></code></pre></div>
 <pre><code>age_mon already defined
 r(110);
 
 end of do-file
 r(110);</code></pre>
 <p>Wir müssen den Namen <code>age_mon</code> also erst wieder frei machen, dann funktioniert der Befehl auch:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="Stata2.html#cb29-1"></a><span class="kw">drop</span> age_mon</span>
-<span id="cb29-2"><a href="Stata2.html#cb29-2"></a><span class="kw">gen</span> age_mon = age * 12</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb31-1"><a href="Stata2.html#cb31-1"></a><span class="kw">drop</span> age_mon</span>
+<span id="cb31-2"><a href="Stata2.html#cb31-2"></a><span class="kw">gen</span> age_mon = age * 12</span></code></pre></div>
 </div>
 <div id="bestehende-variablen-verändern" class="section level2">
 <h2><span class="header-section-number">2.4</span> Bestehende Variablen verändern</h2>
 <p>Alternativ können wir auch mit <code>replace</code> explizit eine bestehende Variable überschreiben:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb30-1"><a href="Stata2.html#cb30-1"></a><span class="kw">replace</span> age_mon = age * 12</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb32-1"><a href="Stata2.html#cb32-1"></a><span class="kw">replace</span> age_mon = age * 12</span></code></pre></div>
 <p>Hier können wir aber nur bestehende Variablen ansprechen, sonst bekommen wir auch hier eine Fehlermeldung:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb31-1"><a href="Stata2.html#cb31-1"></a><span class="kw">replace</span> age_mon12 = age * 12</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="Stata2.html#cb33-1"></a><span class="kw">replace</span> age_mon12 = age * 12</span></code></pre></div>
 <pre><code>variable age_mon12 not found
 r(111);
 
@@ -522,22 +531,22 @@ r(111);</code></pre>
 <div id="gen-ist-gut-kontrolle-ist-besser" class="section level2">
 <h2><span class="header-section-number">2.5</span> gen ist gut, Kontrolle ist besser</h2>
 <p>Wie gerade gesehen gibt uns Stata aber keinerlei Erfolgsmeldungen. Nach der Bearbeitung oder Neuurstellung von Variablen sollte ein Blick in die Daten folgen. Dazu empfiehlt es sich, wieder auf den <code>browse</code> Befehl zurückzugreifen:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="Stata2.html#cb33-1"></a>browse respid age age_mon</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb35-1"><a href="Stata2.html#cb35-1"></a>browse respid age age_mon</span></code></pre></div>
 <p><img src="02_stata_browse_kontrolle.png" width="40%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="fehlende-werte" class="section level2">
 <h2><span class="header-section-number">2.6</span> Fehlende Werte</h2>
 <p>Wenn wir uns nochmal die Variable <code>age</code> ansehen, dann fallen die negativen Altersangaben ins Auge:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb34-1"><a href="Stata2.html#cb34-1"></a><span class="kw">summarize</span> age</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="Stata2.html#cb36-1"></a><span class="kw">summarize</span> age</span></code></pre></div>
 <pre><code>    Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
          age |      3477     51.5568    17.91249        -32         95</code></pre>
 <p>Ein Blick ins Codebuch zeigt, dass es sich hier natürlich nicht um Befragte mit einem negativen Alter handelt. Sondern aufgrund der fehlenden Angaben zum Geburtsdatum lässt sich für manche Befragte das Alter nicht generieren. Für diese Fälle wurde dann -32 als Wert in <code>age</code> abgelegt:
 <img src="02_age_codebuch.PNG" width="60%" style="display: block; margin: auto;" /></p>
 <p>Diese Information müssen wir Stata mitteilen, indem wir -32 als <em>missing value</em> überschreiben. Diese <em>missing value</em>s werden in Stata mit <code>.</code> abgelegt und werden dann für die Berechnung von Mittelwerten usw. ausgeschlossen. Um also -32 als <code>.</code> zu überschreiben, können wir zB auf den <code>replace</code> Befehl zurückgreifen:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="Stata2.html#cb36-1"></a><span class="kw">summarize</span> age</span>
-<span id="cb36-2"><a href="Stata2.html#cb36-2"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age == -32</span>
-<span id="cb36-3"><a href="Stata2.html#cb36-3"></a><span class="kw">summarize</span> age</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb38-1"><a href="Stata2.html#cb38-1"></a><span class="kw">summarize</span> age</span>
+<span id="cb38-2"><a href="Stata2.html#cb38-2"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age == -32</span>
+<span id="cb38-3"><a href="Stata2.html#cb38-3"></a><span class="kw">summarize</span> age</span></code></pre></div>
 <pre><code>    Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
          age |      3477     51.5568    17.91249        -32         95
@@ -549,16 +558,16 @@ r(111);</code></pre>
          age |      3472    51.67713    17.64222         18         95</code></pre>
 <p>Wir bekommen von Stata mitgeteilt, dass wir 5 Beobachtungen verändert und auf missing gesetzt haben. Im folgenden <code>summarize</code> werden diese fehlden Werte dann ignoriert.</p>
 <p>Ein Spezialbefehl für die Überschreibung von bestimmten Werten ist <code>mvdecode</code>. Mit <code>mvdecode</code> können wir <code>-32</code> und <code>-10</code> in mehreren Variablen gleichzeitig als missing überschreiben. Zum Beispiel in <code>dm03</code>, <code>dg03</code> und <code>isced97</code>:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb38-1"><a href="Stata2.html#cb38-1"></a><span class="kw">mvdecode</span> dm03 dg03 isced97, mv(-32 -10)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="Stata2.html#cb40-1"></a><span class="kw">mvdecode</span> dm03 dg03 isced97, mv(-32 -10)</span></code></pre></div>
 <pre><code>&gt; r\Allbus2018.dta&quot;, clear
 
         dm03: 3002 missing values generated
         dg03: 344 missing values generated
      isced97: 23 missing values generated</code></pre>
 <p>Mit <code>mdesc</code> bekommen wir eine Auszählung zu fehlenden Werten. <code>mdesc</code> ist allerdings kein Standard-Stata-Befehl, sondern muss extra installiert werden. Das ist allerdings kein größerer Aufwand:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="Stata2.html#cb40-1"></a><span class="kw">ssc</span> install mdesc</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb42-1"><a href="Stata2.html#cb42-1"></a><span class="kw">ssc</span> install mdesc</span></code></pre></div>
 <p>Anschließend können wir mit <code>mdesc</code> die Zahl der missings in <code>age</code>, <code>dm03</code>, <code>dg03</code> und <code>isced97</code> ausgeben lassen:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb41-1"><a href="Stata2.html#cb41-1"></a>mdesc age dm03 dg03 isced97</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb43-1"><a href="Stata2.html#cb43-1"></a>mdesc age dm03 dg03 isced97</span></code></pre></div>
 <pre><code>    Variable    |     Missing          Total     Percent Missing
 ----------------+-----------------------------------------------
             age |           5          3,477           0.14
@@ -570,36 +579,25 @@ r(111);</code></pre>
 <div id="if-bedingungen-und-fehlende-werte" class="section level2">
 <h2><span class="header-section-number">2.7</span> if Bedingungen und fehlende Werte</h2>
 <p>Eine häufige Fehlerquelle bei fehlende Werten in Stata ist deren Verhältnis zu <code>&gt;</code>. Fehlende Werte werden nämlich von Stata als “unendlich groß” gewertet! Wenn wir uns Befragte mit einem Alter über 92 ausgeben lassen, dann bekommen wir auch diejenigen ohne Altersangabe ausgegegeben:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb43-1"><a href="Stata2.html#cb43-1"></a><span class="ot">list</span> sex land age <span class="kw">if</span> age &gt; 92</span></code></pre></div>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="Stata2.html#cb44-1"></a>      <span class="op">+---------------------------+</span></span>
-<span id="cb44-2"><a href="Stata2.html#cb44-2"></a><span class="st">      </span><span class="er">|</span><span class="st">  </span>sex           land   age <span class="op">|</span></span>
-<span id="cb44-3"><a href="Stata2.html#cb44-3"></a><span class="st">      </span><span class="er">|</span><span class="op">---------------------------</span><span class="er">|</span></span>
-<span id="cb44-4"><a href="Stata2.html#cb44-4"></a><span class="st"> </span><span class="fl">126.</span> <span class="op">|</span><span class="st"> </span>MANN        SACHSEN    <span class="dv">94</span> <span class="op">|</span></span>
-<span id="cb44-5"><a href="Stata2.html#cb44-5"></a><span class="st"> </span><span class="fl">322.</span> <span class="op">|</span><span class="st"> </span>FRAU   RHEINLAND<span class="op">-</span>PF     . <span class="op">|</span></span>
-<span id="cb44-6"><a href="Stata2.html#cb44-6"></a><span class="st"> </span><span class="fl">353.</span> <span class="op">|</span><span class="st"> </span>MANN   NORDRHEIN<span class="op">-</span>WE    <span class="dv">94</span> <span class="op">|</span></span>
-<span id="cb44-7"><a href="Stata2.html#cb44-7"></a><span class="st"> </span><span class="fl">556.</span> <span class="op">|</span><span class="st"> </span>FRAU   NORDRHEIN<span class="op">-</span>WE     . <span class="op">|</span></span>
-<span id="cb44-8"><a href="Stata2.html#cb44-8"></a><span class="fl">1342.</span> <span class="op">|</span><span class="st"> </span>FRAU   NORDRHEIN<span class="op">-</span>WE     . <span class="op">|</span></span>
-<span id="cb44-9"><a href="Stata2.html#cb44-9"></a><span class="st">      </span><span class="er">|</span><span class="op">---------------------------</span><span class="er">|</span></span>
-<span id="cb44-10"><a href="Stata2.html#cb44-10"></a><span class="fl">2135.</span> <span class="op">|</span><span class="st"> </span>FRAU    BRANDENBURG     . <span class="op">|</span></span>
-<span id="cb44-11"><a href="Stata2.html#cb44-11"></a><span class="fl">3130.</span> <span class="op">|</span><span class="st"> </span>MANN         HESSEN     . <span class="op">|</span></span>
-<span id="cb44-12"><a href="Stata2.html#cb44-12"></a><span class="fl">3299.</span> <span class="op">|</span><span class="st"> </span>MANN   RHEINLAND<span class="op">-</span>PF    <span class="dv">95</span> <span class="op">|</span></span>
-<span id="cb44-13"><a href="Stata2.html#cb44-13"></a><span class="st">      </span><span class="op">+---------------------------+</span></span></code></pre></div>
-<p>Es gibt zwei Möglichkeiten, dies zu umgehen:</p>
-<ul>
-<li>entweder wir verwenden <code>inrange</code> - wobei wir hier eine Obergrenze angeben müssen und außerdem die Untergrenze immer mit eingeschlossen wird. Wenn wir also nur Fälle sehen wollen, die <em>älter</em> als 92 sind, dann müssen wir einen Wert über 92 angeben:</li>
-</ul>
-<div class="sourceCode" id="cb45"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb45-1"><a href="Stata2.html#cb45-1"></a><span class="ot">list</span> sex land age <span class="kw">if</span> <span class="fu">inrange</span>(age,92.1,100)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb45-1"><a href="Stata2.html#cb45-1"></a><span class="ot">list</span> sex land age <span class="kw">if</span> age &gt; 92</span></code></pre></div>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="Stata2.html#cb46-1"></a>      <span class="op">+---------------------------+</span></span>
 <span id="cb46-2"><a href="Stata2.html#cb46-2"></a><span class="st">      </span><span class="er">|</span><span class="st">  </span>sex           land   age <span class="op">|</span></span>
 <span id="cb46-3"><a href="Stata2.html#cb46-3"></a><span class="st">      </span><span class="er">|</span><span class="op">---------------------------</span><span class="er">|</span></span>
 <span id="cb46-4"><a href="Stata2.html#cb46-4"></a><span class="st"> </span><span class="fl">126.</span> <span class="op">|</span><span class="st"> </span>MANN        SACHSEN    <span class="dv">94</span> <span class="op">|</span></span>
-<span id="cb46-5"><a href="Stata2.html#cb46-5"></a><span class="st"> </span><span class="fl">353.</span> <span class="op">|</span><span class="st"> </span>MANN   NORDRHEIN<span class="op">-</span>WE    <span class="dv">94</span> <span class="op">|</span></span>
-<span id="cb46-6"><a href="Stata2.html#cb46-6"></a><span class="fl">3299.</span> <span class="op">|</span><span class="st"> </span>MANN   RHEINLAND<span class="op">-</span>PF    <span class="dv">95</span> <span class="op">|</span></span>
-<span id="cb46-7"><a href="Stata2.html#cb46-7"></a><span class="st">      </span><span class="op">+---------------------------+</span></span></code></pre></div>
+<span id="cb46-5"><a href="Stata2.html#cb46-5"></a><span class="st"> </span><span class="fl">322.</span> <span class="op">|</span><span class="st"> </span>FRAU   RHEINLAND<span class="op">-</span>PF     . <span class="op">|</span></span>
+<span id="cb46-6"><a href="Stata2.html#cb46-6"></a><span class="st"> </span><span class="fl">353.</span> <span class="op">|</span><span class="st"> </span>MANN   NORDRHEIN<span class="op">-</span>WE    <span class="dv">94</span> <span class="op">|</span></span>
+<span id="cb46-7"><a href="Stata2.html#cb46-7"></a><span class="st"> </span><span class="fl">556.</span> <span class="op">|</span><span class="st"> </span>FRAU   NORDRHEIN<span class="op">-</span>WE     . <span class="op">|</span></span>
+<span id="cb46-8"><a href="Stata2.html#cb46-8"></a><span class="fl">1342.</span> <span class="op">|</span><span class="st"> </span>FRAU   NORDRHEIN<span class="op">-</span>WE     . <span class="op">|</span></span>
+<span id="cb46-9"><a href="Stata2.html#cb46-9"></a><span class="st">      </span><span class="er">|</span><span class="op">---------------------------</span><span class="er">|</span></span>
+<span id="cb46-10"><a href="Stata2.html#cb46-10"></a><span class="fl">2135.</span> <span class="op">|</span><span class="st"> </span>FRAU    BRANDENBURG     . <span class="op">|</span></span>
+<span id="cb46-11"><a href="Stata2.html#cb46-11"></a><span class="fl">3130.</span> <span class="op">|</span><span class="st"> </span>MANN         HESSEN     . <span class="op">|</span></span>
+<span id="cb46-12"><a href="Stata2.html#cb46-12"></a><span class="fl">3299.</span> <span class="op">|</span><span class="st"> </span>MANN   RHEINLAND<span class="op">-</span>PF    <span class="dv">95</span> <span class="op">|</span></span>
+<span id="cb46-13"><a href="Stata2.html#cb46-13"></a><span class="st">      </span><span class="op">+---------------------------+</span></span></code></pre></div>
+<p>Es gibt zwei Möglichkeiten, dies zu umgehen:</p>
 <ul>
-<li>oder wir hängen den <code>missing()</code>-Operator an die Bedingung an. Wenn wir diesen mit Hilfe eines <code>!</code> verneinen, bekommen wir nur nicht-fehlende Fälle ausgegeben:</li>
+<li>entweder wir verwenden <code>inrange</code> - wobei wir hier eine Obergrenze angeben müssen und außerdem die Untergrenze immer mit eingeschlossen wird. Wenn wir also nur Fälle sehen wollen, die <em>älter</em> als 92 sind, dann müssen wir einen Wert über 92 angeben:</li>
 </ul>
-<div class="sourceCode" id="cb47"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb47-1"><a href="Stata2.html#cb47-1"></a><span class="ot">list</span> sex land age <span class="kw">if</span> age &gt; 92 &amp; !<span class="fu">missing</span>(age)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb47-1"><a href="Stata2.html#cb47-1"></a><span class="ot">list</span> sex land age <span class="kw">if</span> <span class="fu">inrange</span>(age,92.1,100)</span></code></pre></div>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="Stata2.html#cb48-1"></a>      <span class="op">+---------------------------+</span></span>
 <span id="cb48-2"><a href="Stata2.html#cb48-2"></a><span class="st">      </span><span class="er">|</span><span class="st">  </span>sex           land   age <span class="op">|</span></span>
 <span id="cb48-3"><a href="Stata2.html#cb48-3"></a><span class="st">      </span><span class="er">|</span><span class="op">---------------------------</span><span class="er">|</span></span>
@@ -607,13 +605,24 @@ r(111);</code></pre>
 <span id="cb48-5"><a href="Stata2.html#cb48-5"></a><span class="st"> </span><span class="fl">353.</span> <span class="op">|</span><span class="st"> </span>MANN   NORDRHEIN<span class="op">-</span>WE    <span class="dv">94</span> <span class="op">|</span></span>
 <span id="cb48-6"><a href="Stata2.html#cb48-6"></a><span class="fl">3299.</span> <span class="op">|</span><span class="st"> </span>MANN   RHEINLAND<span class="op">-</span>PF    <span class="dv">95</span> <span class="op">|</span></span>
 <span id="cb48-7"><a href="Stata2.html#cb48-7"></a><span class="st">      </span><span class="op">+---------------------------+</span></span></code></pre></div>
+<ul>
+<li>oder wir hängen den <code>missing()</code>-Operator an die Bedingung an. Wenn wir diesen mit Hilfe eines <code>!</code> verneinen, bekommen wir nur nicht-fehlende Fälle ausgegeben:</li>
+</ul>
+<div class="sourceCode" id="cb49"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb49-1"><a href="Stata2.html#cb49-1"></a><span class="ot">list</span> sex land age <span class="kw">if</span> age &gt; 92 &amp; !<span class="fu">missing</span>(age)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="Stata2.html#cb50-1"></a>      <span class="op">+---------------------------+</span></span>
+<span id="cb50-2"><a href="Stata2.html#cb50-2"></a><span class="st">      </span><span class="er">|</span><span class="st">  </span>sex           land   age <span class="op">|</span></span>
+<span id="cb50-3"><a href="Stata2.html#cb50-3"></a><span class="st">      </span><span class="er">|</span><span class="op">---------------------------</span><span class="er">|</span></span>
+<span id="cb50-4"><a href="Stata2.html#cb50-4"></a><span class="st"> </span><span class="fl">126.</span> <span class="op">|</span><span class="st"> </span>MANN        SACHSEN    <span class="dv">94</span> <span class="op">|</span></span>
+<span id="cb50-5"><a href="Stata2.html#cb50-5"></a><span class="st"> </span><span class="fl">353.</span> <span class="op">|</span><span class="st"> </span>MANN   NORDRHEIN<span class="op">-</span>WE    <span class="dv">94</span> <span class="op">|</span></span>
+<span id="cb50-6"><a href="Stata2.html#cb50-6"></a><span class="fl">3299.</span> <span class="op">|</span><span class="st"> </span>MANN   RHEINLAND<span class="op">-</span>PF    <span class="dv">95</span> <span class="op">|</span></span>
+<span id="cb50-7"><a href="Stata2.html#cb50-7"></a><span class="st">      </span><span class="op">+---------------------------+</span></span></code></pre></div>
 </div>
 <div id="keep-drop" class="section level2">
 <h2><span class="header-section-number">2.8</span> keep &amp; drop</h2>
 <p>Manchmal möchten wir nur bestimmte Beobachtungen im Datensatz behalten. Beispielsweise möchten wir für eine Analyse nur Befragte mit einem Einkommen über 1500 EUR im Datensatz behalten. Dazu können wir <code>keep</code> oder <code>drop</code> die gewünschten Fälle behalten bzw. die ungewünschten ausschließen:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb49-1"><a href="Stata2.html#cb49-1"></a><span class="kw">use</span> Allbus2018.dta</span>
-<span id="cb49-2"><a href="Stata2.html#cb49-2"></a><span class="kw">keep</span> <span class="kw">if</span> inc &gt;= 1500</span>
-<span id="cb49-3"><a href="Stata2.html#cb49-3"></a><span class="kw">d</span>,<span class="fu">s</span></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb51-1"><a href="Stata2.html#cb51-1"></a><span class="kw">use</span> Allbus2018.dta</span>
+<span id="cb51-2"><a href="Stata2.html#cb51-2"></a><span class="kw">keep</span> <span class="kw">if</span> inc &gt;= 1500</span>
+<span id="cb51-3"><a href="Stata2.html#cb51-3"></a><span class="kw">d</span>,<span class="fu">s</span></span></code></pre></div>
 <pre><code>(1813 observations deleted)
 
 
@@ -623,9 +632,9 @@ Contains data from D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta
  size:     1,642,368                          
 Sorted by:  
      Note:  dataset has changed since last saved</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb51-1"><a href="Stata2.html#cb51-1"></a><span class="kw">use</span> Allbus2018.dta</span>
-<span id="cb51-2"><a href="Stata2.html#cb51-2"></a><span class="kw">drop</span> <span class="kw">if</span> inc &lt; 1500</span>
-<span id="cb51-3"><a href="Stata2.html#cb51-3"></a><span class="kw">d</span>,<span class="fu">s</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb53-1"><a href="Stata2.html#cb53-1"></a><span class="kw">use</span> Allbus2018.dta</span>
+<span id="cb53-2"><a href="Stata2.html#cb53-2"></a><span class="kw">drop</span> <span class="kw">if</span> inc &lt; 1500</span>
+<span id="cb53-3"><a href="Stata2.html#cb53-3"></a><span class="kw">d</span>,<span class="fu">s</span></span></code></pre></div>
 <pre><code>(1813 observations deleted)
 
 
@@ -640,7 +649,7 @@ Sorted by:
 <div id="labels-und-if-bedingungen" class="section level2">
 <h2><span class="header-section-number">2.9</span> Labels und if-Bedingungen</h2>
 <p>Genauso könnten wir auch vorgehen wenn wir nur männliche oder weibliche Befragte im Datensatz behalten möchten. Hier nochmal die Auszählung der Variable <code>sex</code>:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb53-1"><a href="Stata2.html#cb53-1"></a><span class="kw">tabulate</span> sex</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb55-1"><a href="Stata2.html#cb55-1"></a><span class="kw">tabulate</span> sex</span></code></pre></div>
 <pre><code>&gt; r\Allbus2018.dta&quot;, clear
 
 
@@ -652,17 +661,17 @@ BEFRAGTE(R) |      Freq.     Percent        Cum.
 ------------+-----------------------------------
       Total |      3,477      100.00</code></pre>
 <p>Allerdings sind <code>MANN</code> und <code>FRAU</code> lediglich <em>Variablenlabels</em>. D.h. hier wurden Zahlencodes wieder mit Beschreibungen assoziiert. Wir können diese Labels nicht für <code>if</code>-Bedingungen verwenden:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb55-1"><a href="Stata2.html#cb55-1"></a><span class="kw">keep</span> <span class="kw">if</span> sex == <span class="st">&quot;FRAU&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb57-1"><a href="Stata2.html#cb57-1"></a><span class="kw">keep</span> <span class="kw">if</span> sex == <span class="st">&quot;FRAU&quot;</span></span></code></pre></div>
 <p><code>type mismatch r(109);</code></p>
 <p>Im Hintergrund ist <code>sex</code> nämlich eine numerische Variable</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb56-1"><a href="Stata2.html#cb56-1"></a><span class="kw">describe</span> sex</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb58-1"><a href="Stata2.html#cb58-1"></a><span class="kw">describe</span> sex</span></code></pre></div>
 <pre><code>              storage   display    value
 variable name   type    format     label      variable label
 ------------------------------------------------------------------------------------------
 sex             byte    %12.0g     sex        GESCHLECHT, BEFRAGTE(R)</code></pre>
 <p>Unter <code>value label</code> sehen wir, dass hier das Label <code>sex</code> angefügt wurde.</p>
 <p>Wir können die eigentlichen Werte in <code>tabulate</code> mit der Option <code>,nol</code> ausblenden:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb58-1"><a href="Stata2.html#cb58-1"></a><span class="kw">tabulate</span> sex, nol</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb60-1"><a href="Stata2.html#cb60-1"></a><span class="kw">tabulate</span> sex, nol</span></code></pre></div>
 <pre><code>&gt; r\Allbus2018.dta&quot;, clear
 
 
@@ -674,31 +683,31 @@ BEFRAGTE(R) |      Freq.     Percent        Cum.
 ------------+-----------------------------------
       Total |      3,477      100.00</code></pre>
 <p>Wenn wir also nach Frauen filtern möchten, müssen wir den entsprechenden Zahlencode angeben:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb60-1"><a href="Stata2.html#cb60-1"></a><span class="kw">keep</span> <span class="kw">if</span> sex == 2</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb62-1"><a href="Stata2.html#cb62-1"></a><span class="kw">keep</span> <span class="kw">if</span> sex == 2</span></code></pre></div>
 <p>Mehr zu labels <a href="adva.html#adva">hier</a></p>
 </div>
 <div id="nochmal-von-vorne-daten-neu-laden" class="section level2">
 <h2><span class="header-section-number">2.10</span> Nochmal von vorne: Daten neu laden</h2>
 <p>Variable gelöscht, die doch nötig ist? Falsch recodiert? Das ist zwar ärgerlich, aber ein riesen Vorteil der DoFile-basierten Datenarbeit mit Stata ist die Reproduzierbarkeit. Wir können einfach nochmal von vorne anfangen. Dazu lesen wir die Original-Daten einfach erneut mit <code>use</code> ein. Allerdings ist dann eine Besonderheit zu beachten:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb61-1"><a href="Stata2.html#cb61-1"></a><span class="kw">use</span> <span class="st">&quot;Allbus2018.dta&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb63-1"><a href="Stata2.html#cb63-1"></a><span class="kw">use</span> <span class="st">&quot;Allbus2018.dta&quot;</span></span></code></pre></div>
 <p><code>no; dataset in memory has changed since last saved</code></p>
 <p>Wir müssen erst den existierenden Datensatz mit <code>clear</code> löschen</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb62-1"><a href="Stata2.html#cb62-1"></a><span class="kw">clear</span></span>
-<span id="cb62-2"><a href="Stata2.html#cb62-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus2018.dta&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb64-1"><a href="Stata2.html#cb64-1"></a><span class="kw">clear</span></span>
+<span id="cb64-2"><a href="Stata2.html#cb64-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus2018.dta&quot;</span></span></code></pre></div>
 <p>oder die <code>clear</code> Option für <code>use</code> verwenden:</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb63-1"><a href="Stata2.html#cb63-1"></a><span class="kw">use</span> <span class="st">&quot;Allbus2018.dta&quot;</span>, <span class="kw">clear</span></span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb65-1"><a href="Stata2.html#cb65-1"></a><span class="kw">use</span> <span class="st">&quot;Allbus2018.dta&quot;</span>, <span class="kw">clear</span></span></code></pre></div>
 </div>
 <div id="speichern" class="section level2">
 <h2><span class="header-section-number">2.11</span> Speichern</h2>
 <p>Natürlich können wir unsere Daten auch abspeichern, wenn alles wie gewünscht geklappt hat. Dafür gibt es den Befehl <code>save</code>, der analog zu <code>use</code> funktioniert. Wenn wir allerdings einfach wieder den Original-Datensatznamen angeben und in der Zwischenzeit Variablen erstellt oder gelöscht haben, dann bekommen wir folgende Fehlermeldung:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb64-1"><a href="Stata2.html#cb64-1"></a>cd ... </span>
-<span id="cb64-2"><a href="Stata2.html#cb64-2"></a><span class="kw">save</span> <span class="st">&quot;Allbus2018.dta&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb66-1"><a href="Stata2.html#cb66-1"></a>cd ... </span>
+<span id="cb66-2"><a href="Stata2.html#cb66-2"></a><span class="kw">save</span> <span class="st">&quot;Allbus2018.dta&quot;</span></span></code></pre></div>
 <p><code>file Allbus2018.dta already exists</code><br />
 <code>r(602);</code></p>
 <p>Wir geben also entweder einen anderen Dateinamen an:</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb65-1"><a href="Stata2.html#cb65-1"></a><span class="kw">save</span> <span class="st">&quot;Allbus2018_neu.dta&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb67-1"><a href="Stata2.html#cb67-1"></a><span class="kw">save</span> <span class="st">&quot;Allbus2018_neu.dta&quot;</span></span></code></pre></div>
 <p>Wir können aber auch mit der Option <code>replace</code> explizit mitteilen, dass die Datei überschrieben werden soll:</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb66-1"><a href="Stata2.html#cb66-1"></a><span class="kw">save</span> <span class="st">&quot;Allbus2018.dta&quot;</span>, <span class="kw">replace</span></span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb68-1"><a href="Stata2.html#cb68-1"></a><span class="kw">save</span> <span class="st">&quot;Allbus2018.dta&quot;</span>, <span class="kw">replace</span></span></code></pre></div>
 <p>Damit sind die Originaldaten aber natürlich weg.</p>
 </div>
 <div id="übungen-2" class="section level2">
@@ -724,12 +733,21 @@ BEFRAGTE(R) |      Freq.     Percent        Cum.
 <li>Löschen Sie alle Beobachtungen von Befragten aus Städten mit 500.000 Einwohnern und mehr aus dem Speicher.</li>
 <li>Kontrollieren Sie mit einem erneuten <code>tabulate</code>-Befehl, ob alle Fälle weg sind. (Denken Sie an die fehlenden Werte!)</li>
 </ul></li>
+<li>Kommentieren Sie ihre bisherigen Befehle mit <code>//</code>! Was haben Sie jeweils gemacht? Probieren Sie auch aus, mit <code>///</code> einen Befehl über mehrere Zeilen zu verteilen!</li>
 </ol>
 <!-- Filter für fehlende Werte -> yborn Missings? -->
 </div>
 <div id="profi-übungen-2" class="section level2">
 <h2><span class="header-section-number">2.13</span> Profi-Übungen 2</h2>
 <p>Für alle, die noch etwas mehr machen möchten:</p>
+<ol start="4" class="example" style="list-style-type: decimal">
+<li>Laden Sie den Datensatz <code>Allbus2018</code> in Stata.
+<ul>
+<li>Behalten Sie die Befragte, die zwischen 1970 und 1980 geboren wurden im Speicher!</li>
+<li>Unter welchem Variablennamen ist das Geburtsjahr abgelegt? Nutzen Sie <code>lookfor</code>!</li>
+<li>Wie hilft Ihnen <code>inrange</code> hier weiter?</li>
+</ul></li>
+</ol>
 
 </div>
 </div>
