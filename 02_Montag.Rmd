@@ -450,13 +450,25 @@ Damit sind die Originaldaten aber natürlich weg.
 
 ## Übungen 2
 
-+ Laden Sie den Datensatz `Allbus2018` in Stata. 
+(@) Laden Sie den Datensatz `Allbus2018` in Stata. 
+      + In welcher Variable ist das Geburtsjahr der Befragten abgelegt?
+      + Nutzen Sie `summary` für einen Überblick. Hat die Altersvariable negative Werte, die Sie mit `.` ersetzen sollten? 
+      + Überschreiben Sie diese negativen Werte mit `.`, um sie so Stata kenntlich zu machen.
+      + Erstellen Sie eine neue Variable mit dem Alter der Befragten im Jahr 2020! 
+      + Lassen Sie sich das Geburtsjahr und die neu erstellte Variable für die ersten 20 Beobachtungen anzeigen - hat alles geklappt wie es soll?
+      + Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Speicher. 
+      + Wie viele Spalten hat der Datensatz nach dieser Veränderung? Wie viele Zeilen? 
 
-+ In welcher Variable ist das Geburtsjahr der Befragten abgelegt?
-+ Erstellen Sie eine neue Variable mit dem Alter der Befragten im Jahr 2020! 
-+ Lassen Sie sich das Geburtsjahr und die neu erstellte Variable für die ersten 20 Beobachtungen anzeigen - hat alles geklappt wie es soll?
-+ Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Datensatz. 
-+ Wie viele Spalten hat `nach_1960`? Wie viele Zeilen? 
+
+(@)  Laden Sie den Datensatz `Allbus2018` in Stata. 
+      + Lassen Sie sich mit Hilfe von `tabulate` die Variable `gkpol` anzeigen.
+      + Lassen Sie sich die Zahlencodes anstelle der Labels anzeigen.
+      + Überschreiben Sie alle Codes für fehlende Angaben mit `.`
+      + Lassen Sie sich mit `tabulate` die Häufigkeitsauszählung erneut anzeigen. Hat sich die Fallzahl vorhin verändert?
+      + Wie können Sie die fehlenden Werte auch in `tabulate` auszählen lassen? Lassen Sie sich diese Auszählung anzeigen!
+      + Löschen Sie alle Beobachtungen von Befragten aus Städten mit 500.000 Einwohnern und mehr aus dem Speicher.
+      + Kontrollieren Sie mit einem erneuten `tabulate`-Befehl, ob alle Fälle weg sind. (Denken Sie an die fehlenden Werte!)
+
 
 <!-- Filter für fehlende Werte -> yborn Missings? -->
 

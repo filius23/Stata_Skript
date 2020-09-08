@@ -169,7 +169,12 @@ tabulate xr20 sex, col nofreq
 
 Für die **Spaltenprozente** werden die Werte in Bezug zu den Spaltensummen gesetzt. Also wird die Anzahl der 1x/Woche Internet nutzenden Frauen ins Verhältnis zur Zahl der befragten Frauen gesetzt: $\frac{\text{Anzahl 1x/Woche Internet nutzender Frauen}}{\text{Gesamtzahl der befragten Frauen}}$ - Interpretation: "2,65% der *befragten Frauen* nutzen einmal pro Woche das Internet" 
 
+
+*** 
+
 **[Übung1](#tab)**
+
+*** 
 
 ## Metrische Variablen beschreiben
 
@@ -500,30 +505,25 @@ use " Allbus2018.dta"
 
 Forschungsfrage: Vergleichen Sie die HH-Einkommensverteilung in Ost und West!
 
-(@) Laden Sie den **kumulierten** Allbusdatensatz.
-(@) Erstellen Sie jeweils einen Datensatz für das Befragungsjahr 1994 und 2010 - `filter`n Sie also den kumulierten Datensatz jeweils einmal nach einem Jahr und legen Sie das Ergebnis in separaten Objekten ab, zB. `a94`.
-(@) Betrachten Sie zunächst für 1994 die HH-Einkommensverteilungen (Variable `di05`) 
-  + Denken Sie daran, die negativen Werte mit `NA` zu überschreiben!
-  + Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle im Datensatz für 1994 - was sagen Ihnen die Werte jeweils?
-  + Berechnen Sie den Gini-Koeffizenten! 
-  + Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable `eastwest`) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?
-(@) Betrachten Sie dann die HH-Einkommensverteilungen für 2010 (Variable `di05`) 
-  + Denken Sie daran, die negativen Werte mit `NA` zu überschreiben!
-  + Berechnen Sie jeweils für Ost und West das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle im Datensatz für 2010 - was sagen Ihnen die Werte jeweils?
-(@) Vergleichen Sie die Werte aus 1994 und 2010. Welche Tendenz können Sie für die Ost-West-Unterschiede erkennen?
-(@) Erstellen Sie jeweils einen Boxplot für Ost und West!
-  + Welche Kennzahlen können Sie jeweils aus den horizontalen Linien ablesen?
-  + Was können Sie jeweils zur den Einkommensverteilungen sagen? 
-  + Durch Anhängen des Arguments `+  coord_cartesian(ylim = c(min,max))` können Sie "zoomen" indem Sie statt `min` und `max` die Limits setzen.    
+(@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`).
+    + Fokussieren Sie zunächst auf das Befragungsjahr 1994 mit Hilfe von `keep` oder `drop`.
+    + Betrachten Sie die HH-Einkommensverteilungen (Variable `di05`) 
+    + Denken Sie daran, die negativen Werte für `di05` mit `.` zu überschreiben! (Entweder mit `replace` oder `mvdecode`)
+    + Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle aus dem Jahr 1994 - was sagen Ihnen die Werte jeweils?
+    + Berechnen Sie den Gini-Koeffizenten! 
+    + Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable `eastwest`) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?
 
-
-
+(@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`).
+    + Betrachten Sie dann die HH-Einkommensverteilungen für 2010 (Variable `di05`), behalten Sie also mit Hilfe von `keep` oder `drop` nur die Angaben aus dem Befragungsjahr 2010 im Speicher.
+    + Denken Sie daran, die negativen Werte für `di05` mit `.` zu überschreiben!
+    + Berechnen Sie jeweils für Ost und West das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle im Datensatz für 2010 - was sagen Ihnen die Werte jeweils?
+    + Vergleichen Sie die Werte aus 1994 und 2010. Welche Tendenz können Sie für die Ost-West-Unterschiede erkennen?
 
 ### Weitere Übungen 3
 
 (@) Erstellen Sie eine Häufigkeitstabelle für das Geburtsjahr der Befragten (`yborn`)!
     + Müssen Sie die Variable erst klassieren um eine sinnvoll interpretierbare Tabelle zu erhalten? 
-    + Gibt es fehlende Werte, die Sie mit `mvdecode` überschreiben sollten?
+    + Gibt es fehlende Werte, die Sie mit `mvdecode`/`replace` überschreiben sollten?
     + Verwenden Sie die Jahrzehntgrenzen ab 1910.
     + Erstellen Sie eine Tabelle für die neu erstellte, kategorisierte Variable.
     + Wie groß ist der Anteil der Befragten, die bis 1970 geboren wurden?

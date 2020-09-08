@@ -40,7 +40,6 @@ display 3 + 12
 ```
 ```{stata s_input2, echo=F}
 display 3 + 12
-display 3 + 12
 ```
 
 
@@ -49,7 +48,6 @@ display sqrt(9)
 ```
 
 ```{stata s_input4, echo=F}
-dis sqrt(9)
 dis sqrt(9)
 ```
 
@@ -81,7 +79,7 @@ Das ist aber alles soweit sehr unspektulär - es gibt schönere und günstigere 
 
 ```{stata readin, eval = F}
 cd "C:/Users/Andreas/Dokumente/Statistik/"
-use "ZA5250_v2-0-0.dta"
+use "Allbus2018.dta"
 ```
 
 Der Einlesevorgang besteht also aus zwei Befehlen: zuerst geben wir `cd` den Pfad an, unter welchem der einzulesende Datensatz zu finden ist. Natürlich hängt der Dateipfad aber ganz davon ab, wo Sie den Datensatz gespeichert haben, hier ist es "C:/Users/Andreas/Dokumente/Statistik/":
@@ -141,7 +139,12 @@ Sowohl im Codebuch als auch in der Fragebogendokumentation finden wir Kürzel li
 
 ## Überblicksbefehle
 
-Für eine erste Annäherung an die Daten helfen uns drei Überblicksbefehle: `descrive`, `browse` und `list`.
+Für eine erste Annäherung an die Daten helfen uns drei Überblicksbefehle:  `browse`, `describe` und `list`. Zur Erinnerung: wir haben den Datensatz geladen:
+
+```{stata readin2x, eval = F}
+cd "C:/Users/Andreas/Dokumente/Statistik/"
+use "Allbus2018.dta"
+```
 
 ### `describe`
 Mit `describe, short` bekommen wir einen Überblick zu den eingelesenen Daten:
@@ -181,7 +184,9 @@ qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 describe pv*
 ```
 
+
 ### `browse`
+
 Mit `browse` bekommen wir eine Ansicht des Datensatzes:
 ```{stata browse1, eval = F}
 browse
@@ -198,7 +203,14 @@ browse eastwest german sex age mstat
 knitr::include_graphics("01_Stata9_bro_Datensatz2.png")
 ```
 
-Wenn wir einen Datensatz aus dem Speicher löschen wollen, dann können wir dies mit `clear`.
+Hier bekommen aber immer die gelabelte Ansicht - allerdings stehen dahinter Zahlenwerte. Die Labels helfen uns, deren Bedeutung zu verstehen. Wenn wir aber wie in den nächsten Tagen auch mit den Daten arbeiten wollen, dann beziehen sich diese Operationen immer auf die dahinterstehenden Zahlenwerte. Diese bekommen wir mit der Option `nolabel` (oft auch einfach als `nol` abgekürzt):
+
+```{stata browse_nol, eval = F}
+browse eastwest german sex age mstat, nol
+```
+```{r browse_window2_nol, echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("01_Stata9_bro_Datensatz2_nol.png")
+```
 
 ### `list`
 
@@ -233,10 +245,16 @@ All diese Befehle setzen aber voraus, dass wir wissen, unter welchem Variablenna
 lookfor "alter"
 ```
 ```{stata lookfb, echo = F}
+set linesize 200
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 lookfor "alter"
 ```
 
+
+
+## löschen
+
+Wenn wir einen Datensatz aus dem Speicher löschen wollen, dann können wir dies mit `clear`.
 
 ## if Bedingung - nur manche Zeilen ansehen
 
@@ -294,13 +312,12 @@ list sex land if inrange(age,20,30)
   + Wie viele Variablen und wie viele Fälle enthält der Datensatz?
   + Unter welchem Variablennamen ist die Selbsteinschätzung des Gesundheitszustands der Befragten ablegt?
   + Unter welchem Variablennamen ist die Information abgelegt, in welchem Bundesland die Befragten wohnen?
-  + Welches Skalenniveau haben die beiden erwähnten Variablen? [^14] 
+  + Finden Sie die beiden Variablen auch im Codebuch?
   + Welche Information ist in der Variable `respid` abgelegt? 
   + Wie können Sie sich die Zeile anzeigen lassen, welche den/die Befragte*n mit der `respid` 3469 enthält?
   + Wie alt ist der/die Befragte mit der `respid` 3469? Welches Geschlecht und welche Wahlabsicht hat die Person angegeben?
   
   
-[^14]: Diese Frage ist eine inhaltliche, Stata hilft Ihnen hier nicht weiter.  
 
 ## Profi-Übungen 1
 
