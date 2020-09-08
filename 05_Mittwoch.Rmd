@@ -29,7 +29,7 @@ Zusammenhänge sind das Herz (fast) aller statistischer Analysen. Im Folgenden l
 | $K$ = 1,00 | Perfekter | 
 
 
-## Metrisch skalierte Variablen
+## Metrisch skalierte Variablen {#zshg_met}
 
 Wir sehen uns den (möglichen) Zusammenhang zwischen dem Alter und dem BMI der Befragten an. Dazu schließen wir zunächst die Missings aus:
 ```{stata readin1, eval = F}
@@ -95,7 +95,7 @@ Es handelt sich also um einen geringen Zusammenhang.
 
 ### Regression {#regression}
 
-Regressionsmodelle zeigen uns den (linearen) Trend zwischen zwei Variablen. Hier geht es darum, um wie sich im Durchschnitt `var2` verändert, wenn sich `var1` um eine Einheit erhöht. Im Folgenden sehen wir, dass Regressionsmodelle mit `reg` erstellt werden können und wie wir den Output interpretieren können. Falls Sie nochmal mehr zu den Grundlagen erfahren wollten, findet sich [hier](#reg) eine ausführlichere Erklärung der Grundlagen. 
+Regressionsmodelle zeigen uns den (linearen) Trend zwischen zwei Variablen. Hier geht es darum, um wie sich im Durchschnitt `var2` verändert, wenn sich `var1` um eine Einheit erhöht. `var2` ist also unsere abhängige, `var1` unsere unabhängige Variable - wir möchten `var2` mit `var1` vorhersagen. Im Folgenden sehen wir, dass Regressionsmodelle mit `reg` erstellt werden können und wie wir den Output interpretieren können. Falls Sie nochmal mehr zu den Grundlagen erfahren wollten, findet sich [hier](#reg) eine ausführlichere Erklärung. 
 
 Wir betrachten einen kleinen Beispieldatensatz mit lediglich 4 Fällen und zwei metrischen Variablen `var1` und `var2`:
 ```{stata use_data, eval = F}
@@ -135,15 +135,18 @@ Ein positiver Wert unter `Coef.` in der Zeile von `var1` bedeutet, dass unsere G
 
 > Die Gerade steigt also pro Einheit von `var1` um `r m1$coefficients[2]`.
 
-Außerdem erkennen wir unter `R-squared` die [Modellgüte](#r2) unseres Regressionsmodells. Das $R^2$ hilft uns einzuschätzen, um wieviel besser unsere Gerade aus `reg` die Werte vorhersagen kann als das einfache arithmetische Mittel. Das $R^{2}$ für unser `reg`-Modell gibt die prozentuale Verringerung der [Residuen](#resid2) durch das `reg`-Modell im Vergleich zur Mittelwertregel an: 
+Der Wert neben `_cons` gibt uns Auskunft darüber, wie hoch der vorhergesagte Wert für `var2` wäre, wenn `var1` = 0.
+
+> Für `var1` = 0 würden wir `var2` = 2.135135 vorhersagen.
+
+Außerdem erkennen wir unter `R-squared` die [Modellgüte](#r2) unseres Regressionsmodells. $R^2$ gibt die prozentuale Verbesserung der Vorhersgen durch die Gerade aus `reg` im Vergleich zum arithmetische Mittel an. $R^{2}$ bezieht sich auf die Verringerung der [Residuen](#resid2) durch das `reg`-Modell im Vergleich zur Mittelwertregel. 
 
 > Unser Regressionsmodell kann also 84,7\% der Streuung um den Mittelwert erklären. 
 
-Außerdem sehen wir oben links in der Spalte `SS` die "Sum of Squares": unter Total ist die Summe der quadrierten Abweichungen der beobachteten Werte vom arith. Mittel angegeben (die Abstände zwischen den orangen und schwarzen Punkten: `14.75`). Residual gibt die Summe der Abweichungsquadrate zwischen den beobachteten Werten und den vorhergesagten Werten der Regression (die Abstände zwischen den schwarzen und den blauen Punkten:`2.256..`). 
+Außerdem sehen wir oben links in der Spalte `SS` die ["Sum of Squares"](#quad_res): unter `Total` ist die Summe der quadrierten Abweichungen der beobachteten Werte vom arith. Mittel angegeben (die Abstände zwischen den orangen und schwarzen Punkten: `14.75`). Residual gibt die Summe der Abweichungsquadrate zwischen den beobachteten Werten und den vorhergesagten Werten der Regression (die Abstände zwischen den schwarzen und den blauen Punkten:`2.256..`). 
 
 ***
 
-In unserer Grafik sieht diese Gerade so aus:
 ```{r reg_graph,out.width = "80%",fig.height= 3.5, echo=T, fig.align="center" , echo = F,warning=F,message=F}
 df$mean_var2 <- mean(df$var2)
 ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_stata() +
@@ -153,16 +156,17 @@ ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_sta
   geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
   geom_point(aes(x = var1, y = pred_vorher), color = "dodgerblue3", size = 3) +
   geom_segment(aes(x = var1, xend = var1, y = var2, yend = pred_vorher), color = "dodgerblue3", size = .65, linetype = 1) +
+  expand_limits(y=c(0,8),x=c(0,8)) +
   theme(aspect.ratio = 1)
 ```
 
 
-Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade? 
+### vorhergesagte Werte
 
-Die vorhergesagten Werte aus `reg var2 var1` entsprechen einfach der Summe aus dem Wert neben `_cons` und dem Koeffizienten neben `var1` multipliziert mit dem jeweiligen Wert für `var1`.[^50]
+Die vorhergesagten Werte aus `reg var2 var1` entsprechen einfach der Summe aus dem Wert neben `_cons` und dem Koeffizienten neben `var1` multipliziert mit dem jeweiligen Wert für `var1`. Wir starten also sozusagen bei `var2`=0  und gehen dann eben x Schritte entlang der Geraden.
 
 ```{stata, eval=F}
-reg var2 var1, noheader
+reg var2 var1, noheader /// noheader macht den Output übersichtlicher
 ```
 
 
@@ -178,23 +182,38 @@ qui set linesize 90
 reg var2 var1, noheader
 ```
 
-Vorhergesagte Werte werden mit $\widehat{var2}$  bezeichnet - das ^ steht dabei für "vorhergesagt":
+Vorhergesagte Werte für `var2` werden mit $\widehat{var2}$  bezeichnet - das $\widehat{}$ steht dabei für "geschätzt":
 
 $$\widehat{var2}=\texttt{Intercept} + 0.5811 \times \texttt{var1}$$  
 Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: 2.1351+0.5811\*1= `r 2.1351+0.5811*1`
 
 Wir könnten also auch einen vorhergesagten Wert für einen beliebigen Wert von `var1` berechnen, für 5:
 ```{stata pre_dis}
-dis 2.1351+0.5811*5
+display 2.1351+0.5811*5
 ```
 
+Alternativ können wir uns die Tipparbeit auch sparen, indem wir erst `reg` laufen lassen und dann mit `_b` auf die Ergebnisse zugreifen:
+```{stata pre_dis2, eval = F}
+reg var2 var1
+display _b[_cons] + _b[var1] * 5
+```
+```{stata, echo=F}
+use "regression_bsp.dta", clear
+qui reg var2 var1
+display _b[_cons] + _b[var1] * 5
+```
 
-[^50]: Die Option `noheader` macht den Output von `reg` etwas übersichtlicher.
 
 Mit `predict` können wir jeweils die vorhergesagten Werte für die Ausprägungen von `var1` im Datensatz berechnen und in einer neuen Variable `pred_vorher` ablegen:
 ```{stata, eval = F}
 predict pred_vorher, xb
 ```
+Hier wird also gerechnet:
+
+$$2.1351 + 0.5810811 * 1 = 2.716216$$
+$$2.1351 + 0.5810811 * 2 = 3.297297$$
+$$2.1351 + 0.5810811 * 7 = 6.202703$$
+$$2.1351 + 0.5810811 * 8 = 6.783784$$
 
 ```{r predx, echo=F}
 m1 <- lm(var2~ var1, data = df)  
@@ -204,9 +223,9 @@ df %>% select(matches("(var|pred_)"))
 ```
 Die Grafik oben zeigt wie Vorhersagen auf Basis des Regressionsmodells aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für `var1`. 
 
+**[Übung1](#auf_met)**
 
-
-## Ordinal skalierte Merkmale
+## Ordinal skalierte Merkmale {#zshg_ord}
 
 Ein klassisches ordinales Merkmal ist die Bildung (`educ`):
  
@@ -311,7 +330,10 @@ Auch Goodman & Kruskal's $\gamma$ deutet auf einen negativen Zusammenhang hin, h
 
 Insgesamt ist also von einem mittleren Zusammenhang zwischen `educ` und `mi02` auszugehen. 
 
-## Nominal skalierte Variablen
+**[Übung2](#auf_ord)**
+
+
+## Nominal skalierte Variablen {#zshg_nom}
 
 ```{stata nomF, eval = F}
 cd ""
@@ -441,16 +463,16 @@ $$\text{Odds Ratio Haustier allein vs. 2P HH} = \frac{0.1986183}{0.4754797}=0.41
 + Allein lebende Befragte haben im Vergleich zu zweit lebenden Befragten die `r round(odds_ht_HH1/odds_ht_HH2,3)`-fache Chance ein Haustier im Haushalt zu haben. 
 + Zu zweit lebende Befragte haben im Vergleich zu allein lebenden Befragten die `r round(odds_ht_HH2/odds_ht_HH1,3)`-fache Chance ein Haustier im Haushalt zu haben. 
 
-$\rightarrow$ Haben allein lebende Befragte eher Katzen als Befragte in einem Haushalt mit 4 Personen?  (`aq03` = 2 & 3 sind Katzenbesitzer\*innen)
+$\rightarrow$ Haben allein lebende Befragte eher Katzen als Befragte in einem Haushalt mit 4 Personen?  (`aq03` = 2 & 3 sind Katzenbesitzer\*innen)[^054] 
 
-
+[^054]: Nein - weil $\text{Odds Haustier in 4P-HH} = \frac{73+91+26}{342} = 0.5555556$ und $\text{Odds Haustier allein} = \frac{41 +65 +9 }{579} = 0.1986183$, dementsprechend $\text{Odds Ratio Haustier allein vs. 4P HH} = \frac{0.1986183}{0.5555556}=0.3575129$
 
 ### Chi²-basierte Maße {#chi2}
 
 $\chi^2$  basiert auf dem Vergleich der beobachteten Häufigkeit mit einer (theoretischen) Verteilung, welche statistische Unabhängigkeit abbildet (Indifferenztabelle - [mehr dazu](#indiff)). Wir bleiben bei `aq03` und `dh01`. Den $\chi^2$-Wert für diese Häufigkeitstabelle bekommen wir mit `, chi2`:
   
 ```{r, echo=F}
-tab1 <- xtabs(~ aq03 + dh01, data = filter(a14, year == 2014 & dh01 > 0 & dh04 > 0 & aq03 > 0))
+tab1 <- xtabs(~ aq03 + dh04, data = filter(a14, year == 2014 & dh01 > 0 & dh04 > 0 & aq03 > 0))
 tx <- chisq.test(tab1)
 ```
 
@@ -458,19 +480,23 @@ tx <- chisq.test(tab1)
 tab aq03 dh01, chi
 ```
 ```{stata, chitabT, echo =F}
-set linesize 90
+set linesize 200
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
 qui keep if year == 2014 & dh01 > 0 & dh04 > 0 & aq03 > 0
 qui mvdecode aq03 dh01 dh04, mv(-32 -9)
-tab aq03 dh01, chi
+tab aq03 dh04, chi wrap
 ```
 ### Cramer's $\upsilon$
 Auf Basis dieses $\chi^2$-Werts von `r round(as.numeric(tx$statistic),3)` können wir Cramer's $\upsilon$ berechnen. Dieses ist definiert als der Quotient aus dem $\chi^2$-Wert und der Fallzahl multipliziert mit dem Minimum der Zeilen- und Spaltenzahl. `n`, erkennen wir aus dem `Total` rechts unten in der Tabelle
 
-$$ Cramer's\,\,\upsilon = \sqrt{\frac{\chi^2}{n*\,min(k-1,m-1)}}=\sqrt{\frac{90.1737}{3466*1}} = 0.1613$$
+$$ Cramer's\,\,\upsilon = \sqrt{\frac{\chi^2}{n*\,min(k-1,m-1)}}=\sqrt{\frac{157.1103}{3466*1}} = 0.2129061$$
   
 Dieser Wert für Cramer's $\upsilon$ legt einen geringen Zusammenhang nahe.
+
+```{stata, vcalc, echo =T}
+dis sqrt(157.1103/(3466*1))
+```
 
 ### $\phi$
 
@@ -492,6 +518,11 @@ tab aq03b dh01, chi
 ```
 
 $$\phi= \sqrt{\frac{\chi^2}{n}}=\sqrt{\frac{89.0092}{3466}} = 0.1602$$ 
+```{stata, phicalc, echo =T}
+dis sqrt(89.0092/3466)
+```
+
+**[Übung3](#auf_nom)**
 
 ## Welches Maß richtig?
 
@@ -516,29 +547,67 @@ Ausschlaggebend ist dabei die Variable mit dem niedrigeren Skalenniveau! Ggf. k�
 
 ## Übungen
 
-
-(@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2014 aus! Untersuchen Sie den Zusammenhang zwischen dem Alter der Befragten `age` und der Dauer des Fernsehkonsums (`lm02`) in Minuten!
-    + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben. 
-    + Berechnen Sie die passenden Zusammenhangsmaße!
+### Übung 1 {#auf_met}
+(@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2014 aus! Untersuchen Sie den Zusammenhang zwischen dem Alter der Befragten `age` und der Dauer des Fernsehkonsums (`lm02`) in Minuten! Verwenden Sie `age` als unabhängige Variable.  
+    + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
+    + Überprüfen Sie z.B. mit `summary` für beide Variablen, ob alle negativen Werte ausgeschlossen wurden.
+    + Berechnen Sie das passende Zusammenhangsmaß!
     + Wie stark ist der Zusammenhang?
-    + Welche Fernsehdauer würden Sie für eine\*n 50-jährigen Befragten vorhersagen? Tipp[^055]
-    + Welche Fernsehdauer würden Sie für eine\*n 51-jährigen Befragten vorhersagen?
-    + Welche Fernsehdauer würden Sie für eine\*n 52-jährigen Befragten vorhersagen?
-    + Vergleichen Sie diese drei Werte: was fällt Ihnen auf wenn Sie die
+    + Welche Fernsehdauer würden Sie für eine\*n 50-jährigen Befragte\*n vorhersagen? 
+    + Welche Fernsehdauer würden Sie für eine\*n 51-jährigen Befragte\*n vorhersagen?
+    + Welche Fernsehdauer würden Sie für eine\*n 52-jährigen Befragte\*n vorhersagen?
+    + Vergleichen Sie diese drei Werte: was fällt Ihnen auf wenn Sie die vorhergesagten Werte vergleichen? (Tipp: bilden Sie die Differenz zwischen den Werten!)
 
-[^055]: Berechnen Sie ein [Regressionsmodell](#reg_pred)
+[Zurück zu Zusammenhangsmaße für metrische Variablen](#zshg_met)
+
+### Übung 2 {#auf_ord}
+
+(@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2016 aus! Untersuchen Sie den Zusammenhang zwischen der Bildung der Befragten `educ` und ihrer Einstellung zur Erwerbstätigkeit von Müttern (`fr03b`)!
+    + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
+    + Erstellen Sie eine Kontingenztabelle, um zu kontrollieren, ob alle negativen Werte ausgeschlossen wurden.
+    + Berechnen Sie die passenden Zusammenhangsmaße!
+    + Wie stark ist der Zusammenhang? 
+    + In welche Richtung deutet der Zusammenhang? Stimmen Befragte mit höherem Schulabschluss der Aussage eher zu oder eher nicht zu als Befragte mit niedrigeren Abschlüssen?
+
+Hier die Frage zu `fr03b` aus dem Codebuch:
+```{r codebuch_fr03b, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("05_cdb_fr03b.png")
+```
+
+[Zurück zu Zusammenhangsmaße für ordinale Variablen](#zshg_ord)
+
+### Übung 3 {#auf_nom}
+
+(@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2016 aus! Untersuchen Sie den Zusammenhang zwischen ost/westdeutschem Wohnort der Befragten `eastwest` und der Frage, ob Sie mit 15 Jahren mit beiden Eltern zusammengewohnt haben (`df44`)!
+    + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
+    + Erstellen Sie eine Kontingenztabelle für `eastwest` und `df44`, um zu kontrollieren, ob alle negativen Werte ausgeschlossen wurden.
+    + Erstellen Sie eine Variable `df44b`, welche den Wert 1 annimmt wenn `df44`=4 (also Befragte, die mit 15 Jahren ohne Eltern gelebt haben) und 0 für alle anderen Konstellationen.
+    + Kontrollieren Sie diesen Schritt mit einer Kreuztabelle für `df44` und `df44b`.
+    + Erstellen Sie dann eine Kreuztabelle für `df44b` und `eastwest`, um die Odds Ratios für die Chance ohne Eltern gelebt zu haben zwischen Ost und West zu berechnen.
+    + Berechnen Sie die Odds Ratio!
+    + In welche Richtung deutet der Zusammenhang? 
+    + Wie stark ist der Zusammenhang? Berechnen Sie das passende $\chi^2$-basierte Maß!
+
+Hier die Frage zu `df44` aus dem Codebuch:
+```{r codebuch_df44, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("05_cdb_df44.png")
+```
+[Zurück zu Zusammenhangsmaße für nominale Variablen](#zshg_nom)
+
+
+### weitere Übungen
 
 (@) Gibt es einen Zusammenhang zwischen dem BMI (`hs18`) und dem Einkommen (`inc`) der Befragten aus dem Jahr 2014?
-  + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben. 
-  + Welches ist das passende Zusammenhangsmaß für diesen Zusammenhang?
-  + Berechnen Sie dementsprechend die Zusammenhängsstärke!
+    + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben. 
+    + Welches ist das passende Zusammenhangsmaß für diesen Zusammenhang?
+    + Berechnen Sie dementsprechend die Zusammenhängsstärke!
 
 (@) Leben ältere Menschen eher in kleineren Orten? Berechnen Sie ein geeignetes Maß für den Zusammenhang zwischen `gkpol` und dem Alter der Befragten (`age`)! 
-  + Berechnen Sie diesen Zusammenhang für das Jahr 2014!
-  + Welche Skalenniveaus haben beide Variablen jeweils? 
-  + Welches Zusammenhangsmaß können Sie dementsprechend verwenden? (Zur Erinnerung: das niedrigere Skalenniveau ist ausschlaggebend!) 
-  + Verwenden Sie `egen cut()`, um `age` in eine ordinale Variable zu überführen! (siehe Kapitel 3, verwenden Sie zB die Lebensjahrzehnte)
-  + Berechnen Sie (mind.) ein passendes Zusammenhangsmaß! Ist der Zusammenhang als stark einzustufen?
+    + Berechnen Sie diesen Zusammenhang für das Jahr 2014!
+    + Welche Skalenniveaus haben beide Variablen jeweils? 
+    + Welches Zusammenhangsmaß können Sie dementsprechend verwenden? (Zur Erinnerung: das niedrigere Skalenniveau ist ausschlaggebend!) 
+    + Verwenden Sie `egen cut()`, um `age` in eine ordinale Variable zu überführen! (siehe Kapitel 3, verwenden Sie zB die Lebensjahrzehnte)
+    + Berechnen Sie (mind.) ein passendes Zusammenhangsmaß! Ist der Zusammenhang als stark einzustufen?
 
 ## Profi-Übungen
 
@@ -575,9 +644,9 @@ ggplot(df, aes(x = var1, y = var2)) +
 
 Ziel der Regression ist es, den Zusammenhang zwischen diesen beiden Variablen zu bestimmen. Gibt es einen Trend, in dem Sinn, dass ein höherer Wert von `var1` mit einem höheren oder niedrigeren Wert von `var2` einhergeht?
 
-Etwas anders gesagt könnte man auch fragen, welchen Wert für `var2` wir vorhersagen würden, wenn wir `var1` kennen. Ein Ausgangspunkt ist das arithmetische Mittel. Dieses können wir mit `mean` zB für `var2` berechnen.[^61] Diesen Wert fügen wir als neue Spalte `mean_var2` in den Datensatz ein:
+Etwas anders gesagt könnte man auch fragen, welchen Wert für `var2` wir vorhersagen würden, wenn wir `var1` kennen. Ein Ausgangspunkt ist das arithmetische Mittel. Dieses können wir mit `mean` zB für `var2` berechnen.[^055] Diesen Wert fügen wir als neue Spalte `mean_var2` in den Datensatz ein:
 
-[^61]: Mehr zu `egen` in Kapitel \@ref(egen)
+[^055]: Mehr zu `egen` in Kapitel \@ref(egen)
 
 ```{stata, eval=F}
 egen mean_var2 = mean(var2)
@@ -644,11 +713,13 @@ ggplot(df, aes(x = var1, y = var2)) +
   theme(aspect.ratio = 1)
 ```
 
-*Was bedeutet also ein negativer oder ein positiver Wert für das Residuum?*
+$\rightarrow$ Was bedeutet also ein negativer oder ein positiver Wert für das Residuum?[^056]
+
+[^056]: Ein positiver Wert des Residuums bedeutet, dass der beobachtete Wert größer als der vorhergesagte Wert ist. Die Regressionsgerade *unterschätzt* also den Wert. Ein negatives Residuum bedeutet dementsprechend, dass die Regressionsgerade den Wert überschätzt - der wahre Wert ist niedriger als der vorhergesagte Wert. Siehe [Formeln](#resid)
 
 Die horizontale Linie für das arithm. Mittel ist aber sehr deutlich nicht die beste Methode, um die Werte für `var2` vorherzusagen. In der Graphik können wir deutlich sehen, dass die Werte "weiter links", also mit geringeren Werten für `var1`, auch geringere Werte für `var2` aufweisen. Wir könnten also unseren Vorhersagefehler bzw. das *Residuum* minimieren indem wir die Linie drehen. Die Idee der Regressionsanalyse ist es dabei, die Residuuen zu minimieren. Was würde aber passieren wenn wir die Residuen aus der Mittelwertsvorhersage aufsummieren, um Sie dann zu minimieren?
 
-### Quadrierte Residuen
+### Quadrierte Residuen {#quad_res}
 
 Mit `tabstat ..., s(sum)` können wir die Summe für eine Variable bilden:
 ```{stata, eval = F}
@@ -743,7 +814,7 @@ ggplot(df, aes(x = var1, y = var2)) +
 ### Vorhergesagte Werte {#reg_pred}
 
 Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade? 
-Die vohergesagten Werte aus `reg var2 var1` entsprechen einfach der Summe aus dem Wert neben `_cons` und dem Koeffizienten neben `var1` multipliziert mit dem jeweiligen Wert für `var1`.[^52]
+Die vohergesagten Werte aus `reg var2 var1` entsprechen einfach der Summe aus dem Wert neben `_cons` und dem Koeffizienten neben `var1` multipliziert mit dem jeweiligen Wert für `var1`.[^057]
 
 ```{stata, eval=F}
 reg var2 var1, noheader
@@ -767,7 +838,7 @@ Vorhergesagte Werte werden mit $\widehat{var2}$  bezeichnet - der ^ steht dabei 
 $$\widehat{var2}=\texttt{Intercept} + 0.5811 \times \texttt{var1}$$  
 Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: 2.1351+0.5811\*1= `r 2.1351+0.5811*1`
 
-[^52]: Die Option `noheader` macht den Output von `reg` etwas übersichtlicher.
+[^057]: Die Option `noheader` macht den Output von `reg` etwas übersichtlicher.
 
 Also könnten wir mit `gen` die vorhergesagten Werte "manuell" berechnen:
 ```{stata, eval = F}
@@ -829,9 +900,9 @@ ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_sta
   geom_segment(aes(x = var1, xend = var1, y = var2, yend = pred_vorher), color = "dodgerblue3", size = .65, linetype = 1) +
   theme(aspect.ratio = 1)
 ```
-$\rightarrow$ *Wie groß ist die (einfache) Summe der Residuen für `pred_vorher`?*[^053]
+$\rightarrow$ *Wie groß ist die (einfache) Summe der Residuen für `pred_vorher`?*[^058]
 
-[^053]: 
+[^058]: Die (einfache, unquadrierte) Summe der Resiuden beträgt auch hier Null.
 
 ### Modellgüte {#r2}
 
