@@ -1,0 +1,28 @@
+
+
+running D:\oCloud\Home-Cloud\Lehre\Methodenseminar\S
+> tata_Skript\profile.do ...
+
+
+. set linesize 80
+
+. qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+
+. qui egen age_cat = cut(age), at( 18 35 60 100 ) 
+
+. label define age_cat_lab 18 "18-34 Jahre" 35 "35-29 Jahre" 60 "über 60 Jahre" 
+
+. label values age_cat age_cat_lab
+
+. tab age_cat
+
+      age_cat |      Freq.     Percent        Cum.
+--------------+-----------------------------------
+  18-34 Jahre |        718       20.68       20.68
+  35-29 Jahre |      1,527       43.98       64.66
+über 60 Jahre |      1,227       35.34      100.00
+--------------+-----------------------------------
+        Total |      3,472      100.00
+
+. 
+end of do-file

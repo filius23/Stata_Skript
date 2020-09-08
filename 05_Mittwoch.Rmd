@@ -223,7 +223,11 @@ df %>% select(matches("(var|pred_)"))
 ```
 Die Grafik oben zeigt wie Vorhersagen auf Basis des Regressionsmodells aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für `var1`. 
 
+***
+
 **[Übung1](#auf_met)**
+
+***
 
 ## Ordinal skalierte Merkmale {#zshg_ord}
 
@@ -330,7 +334,11 @@ Auch Goodman & Kruskal's $\gamma$ deutet auf einen negativen Zusammenhang hin, h
 
 Insgesamt ist also von einem mittleren Zusammenhang zwischen `educ` und `mi02` auszugehen. 
 
+***
+
 **[Übung2](#auf_ord)**
+
+***
 
 
 ## Nominal skalierte Variablen {#zshg_nom}
@@ -364,7 +372,7 @@ Dazu betrachten wir die Variablen `aq03` und `dh01`, später auch noch `dh04`:
 | | `2` Nein, ich lebe allein
 | `dh04` | Gesamtzahl der Personen im Haushalt
 
-```{r , echo = F, message =F}
+```{r a14Readin, echo = F, message =F}
 a14 <- readr::read_delim(paste0(path,"allbus_kumuliert_1980-2018.csv"), delim = ";", col_types = cols(.default = col_double())) %>%filter(year==2014) %>%  mutate_all(~ifelse(.<0,NA,.))
 ```
 
@@ -522,7 +530,11 @@ $$\phi= \sqrt{\frac{\chi^2}{n}}=\sqrt{\frac{89.0092}{3466}} = 0.1602$$
 dis sqrt(89.0092/3466)
 ```
 
+***
+
 **[Übung3](#auf_nom)**
+
+***
 
 ## Welches Maß richtig?
 
@@ -545,9 +557,9 @@ Wir haben jetzt eine ganze Reihe an Zusammenhangsmaßen kennengelernt, die folge
 
 Ausschlaggebend ist dabei die Variable mit dem niedrigeren Skalenniveau! Ggf. können metrische Variablen durch Kategorisierung (Kapitel 3) in ordinale Variablen überführt werden.  
 
-## Übungen
+## Übungen 5
 
-### Übung 1 {#auf_met}
+### Übung 5-1 {#auf_met}
 (@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2014 aus! Untersuchen Sie den Zusammenhang zwischen dem Alter der Befragten `age` und der Dauer des Fernsehkonsums (`lm02`) in Minuten! Verwenden Sie `age` als unabhängige Variable.  
     + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
     + Überprüfen Sie z.B. mit `summary` für beide Variablen, ob alle negativen Werte ausgeschlossen wurden.
@@ -560,7 +572,7 @@ Ausschlaggebend ist dabei die Variable mit dem niedrigeren Skalenniveau! Ggf. k�
 
 [Zurück zu Zusammenhangsmaße für metrische Variablen](#zshg_met)
 
-### Übung 2 {#auf_ord}
+### Übung 5-2 {#auf_ord}
 
 (@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2016 aus! Untersuchen Sie den Zusammenhang zwischen der Bildung der Befragten `educ` und ihrer Einstellung zur Erwerbstätigkeit von Müttern (`fr03b`)!
     + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
@@ -576,7 +588,7 @@ knitr::include_graphics("05_cdb_fr03b.png")
 
 [Zurück zu Zusammenhangsmaße für ordinale Variablen](#zshg_ord)
 
-### Übung 3 {#auf_nom}
+### Übung 5-3 {#auf_nom}
 
 (@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2016 aus! Untersuchen Sie den Zusammenhang zwischen ost/westdeutschem Wohnort der Befragten `eastwest` und der Frage, ob Sie mit 15 Jahren mit beiden Eltern zusammengewohnt haben (`df44`)!
     + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
@@ -595,7 +607,7 @@ knitr::include_graphics("05_cdb_df44.png")
 [Zurück zu Zusammenhangsmaße für nominale Variablen](#zshg_nom)
 
 
-### weitere Übungen
+### Weitere Übungen 5
 
 (@) Gibt es einen Zusammenhang zwischen dem BMI (`hs18`) und dem Einkommen (`inc`) der Befragten aus dem Jahr 2014?
     + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben. 
@@ -609,7 +621,7 @@ knitr::include_graphics("05_cdb_df44.png")
     + Verwenden Sie `egen cut()`, um `age` in eine ordinale Variable zu überführen! (siehe Kapitel 3, verwenden Sie zB die Lebensjahrzehnte)
     + Berechnen Sie (mind.) ein passendes Zusammenhangsmaß! Ist der Zusammenhang als stark einzustufen?
 
-## Profi-Übungen
+## Profi-Übungen 5
 
 Für alle, die noch etwas mehr machen möchten:
 
@@ -973,7 +985,9 @@ qui mvdecode aq03 dh01 dh04, mv(-32 -9)
 tab aq03 dh01,cell nofreq
 ```
 
-```{r, echo = F}
+```{r, echo = F,message = F,warning=F}
+tab1 <- xtabs(~ aq03 + dh01, data = filter(a14, year == 2014 & dh01 > 0 & dh04 > 0 & aq03 > 0))
+tx <- chisq.test(tab1)
 rel_tab1 <- prop.table(tab1)
 abs_tab1 <- addmargins(tab1)
 rand_tab1 <- addmargins(rel_tab1)

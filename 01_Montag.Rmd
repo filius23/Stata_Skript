@@ -274,7 +274,7 @@ list sex land if inrange(age,20,30)
 
 
 
-## Übungen {#U1}
+## Übungen 1 {#U1}
 
 + Führen Sie folgende (oder beliebige andere) Taschenrechneraufgaben mit Stata durch:
   + 2 * 4
@@ -302,7 +302,7 @@ list sex land if inrange(age,20,30)
   
 [^14]: Diese Frage ist eine inhaltliche, Stata hilft Ihnen hier nicht weiter.  
 
-## Profi-Übungen
+## Profi-Übungen 1
 
 Für alle, die noch etwas mehr machen möchten: 
 
@@ -313,7 +313,7 @@ Für alle, die noch etwas mehr machen möchten:
 + Löschen Sie alle Beobachtungen für die USA! Wie viele Fälle bleiben übrig?
 
 
-## Weitere Anmerkungen
+## Anhang 1
 
 
 ### Variablentypen {#var_types}

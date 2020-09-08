@@ -329,42 +329,12 @@ Wir sehen hier also, dass sowohl das arith. Mittel als auch der Median des Befra
 Eine andere Option ist es, auf den `if`-Befehl zurückzugreifen - siehe [hier](#if_vgl)
 
 
-
-
-
-### Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient {#variance}
+### Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient {#streu}
 
 Streuungsmaße helfen uns zu beurteilen, wie groß die Unterschiede in unseren Daten sind. Je größer das Streuungsmaß, desto mehr Unterschiede gibt es zwischen den beobachteten Werten.
 
 Die häufigste Kennzahl zur Beschreibung von Streuung ist aber die **Varianz**. Die Varianz ist definiert als die durchschnittliche quadrierte Abweichung vom arith. Mittel: $$var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}$$    
-Was bedeutet diese Formel?    
-Schauen wir erst in den Zähler des Bruchs: $(x_{i}-\bar{x})^2$
-Es geht also um die Abstände der einzelnen Datenpunkte ($x_{i}$) zum arithmetischen Mittel ($\bar{x}$) - mathematisch die Differenz zwischen den einzelnen Datenpunkten $x_{i}-\bar{x}$ - hier eingezeichnet als gestrichelte Linien:
-```{r dpi = 800, echo = F, out.height="70%", out.width="70%", fig.align="center"}
-eq <-  substitute(italic(bar(x))) # formel erstellen
-
-a18 %>% 
-  select(respid,age) %>% 
-  filter(age > 0) %>% 
-  na.omit() %>%  
-  sample_n(30) %>% 
-  select(respid, age) %>% 
-  mutate(mean = mean(a18$age,na.rm = T), id = 1:n()) %>% 
-  ggplot(.,aes(x = id, y = age)) +
-  geom_segment(aes(yend= mean, xend = id ),
-               size = .45, linetype = 2, color = "#1BB6AF") +
-  geom_point(size = 1.95, color = "#172869") +
-  geom_hline(aes(yintercept = mean), color = "#AF6125", size = .75) +
-  geom_label(aes(x = min(id)-.75, y = mean, label = as.character(as.expression(eq))), label.size = .01, hjust = 0.5, color = "#AF6125", fill = "white", parse = T, size = 4.5) +
-  guides(color = F) +
-  labs(y = "Alter (age)", x = "", caption = "Zufällige Auswahl von 30 Fällen des Allbus 2018") +
-  theme_minimal(base_size = 13) +
-  expand_limits(y = 15) +
-  theme(axis.text.x = element_blank(), plot.caption = element_text(size = rel(.75)), plot.caption.position = "plot")
-```
-Für Punkte, die über dem arith. Mittel liegen, erhalten wir für die Differenz einen positiven Wert (wir ziehen ja jeweils das arith. Mittel vom Wert für den Datenpunkt ab). Für Punkte mit Werten, die kleiner als das arith. Mittel sind, erhalten wir einen negativen Wert.     
-Würden wir die Abstände (gestrichelten Linien) einfach aufsummieren, erhielten wir als Ergebnis immer Null! Das arithmetische Mittel liegt ja per Definition immer genau "in der Mitte": die Abstände nach oben sind in der Summe genauso groß wie die Abstände nach unten. Daher wird zunächst jeder Abstand quadriert: $(\bar{x} - x_{i})^2$   
-Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert ($\sum_{i=1}^{n}$) und dann durch die Anzahl der Beobachtungen geteilt werden ($\frac{}{n}$)- zusammengefasst hier nochmal die Formel:  $$var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}$$
+[Was bedeutet diese Formel?](#variance)    
 
 Wir können die Varianz mit `tabstat , s(var)` berechnen:
 ```{stata varF, eval = F}
@@ -422,66 +392,7 @@ $\Rightarrow$ Für welches Geschlecht ist die Streuung also größer?[^034]
 
 [^034]: Da der Variationskoeffizient für Männer mit `0.3482757` etwas größer ist als für Frauen (`0.3342309`), ist die Streuung bei den Männern etwas größer.
 
-### Schiefe & Wölbung {#sk_kur}
 
-Die Schiefe (skewness) ist ein Maß für die Asymmetrie einer Verteilung. Bei einer symmetrischen Verteilung beträgt die Schiefe 0. Ein negativer Wert für die Schiefe deutet darauf hin, dass Median > Mean und Verteilung wird als links-schief/rechts-steil bezeichnet. Bei einem positiven Wert der Schiefe ist Median < Mean und die Verteilung ist rechts-schief/links-steil. 
-
-Die Wölbung (Kurtosis) ist ein Maß für die Steilheit bzw. "Spitzigkeit" einer Verteilung. Je kleiner der Wert der Kurtosis, desto desto flacher die Verteilung. Bspw. hat die Normalverteilung hat eine Kurtosis von 3.
-
-```{r skew_kurt_graph, echo=F, warning=F, message=F, out.height="75%", out.width="100%", fig.align="center"}
-d1 <-  readr::read_delim("D:/oCloud/RFS/allbus_kumuliert.csv", delim = ";", col_types = cols(.default = col_double())) %>% 
-  mutate_all(~ifelse(.<0,NA,.)) %>% 
-  mutate(across(everything(),~ifelse(.x<0,NA,.x))) %>% 
-  filter(year == 2004, inc <= 20000, !is.na(inc), sex == 1)
-  
-f_kurt1 <- moments::kurtosis(d1$inc[d1$sex==1])
-f_skew1 <- moments::skewness(d1$inc[d1$sex==1])
-library(paletteer)
-p1 <- ggplot(data = d1[d1$sex==1,], aes(x=inc)) +
-  geom_density(color = "#2297E6FF", fill = alpha("#2297E6FF",.1), size = .5,n=200) + 
-  theme_void(base_size = 7) +
-  labs(y = "", x = "", title = paste0("Schiefe = ",sprintf("%1.3f",f_skew1)," Wölbung = ", sprintf("%1.3f",f_kurt1))) +
-  theme(plot.title = element_text(hjust = 0.5),plot.subtitle = element_text(hjust = 0.5)) +
-  geom_segment(data = data.frame(inc = mean(d1$inc)),aes(x=inc,xend =inc,y=0,yend = 6e-04),  color = "#AF6125FF") +
-  geom_segment(data = data.frame(inc = median(d1$inc)),aes(x=inc,xend =inc,y=0,yend = 6e-04),color = "#172869")+
-  geom_label(data = data.frame(inc = mean(d1$inc),lab1 = "mean"),  aes(x=inc, y= 5e-04,label=lab1),size= 3.5,hjust=0,color = "#AF6125FF") +
-  geom_label(data = data.frame(inc = median(d1$inc),lab1="median"),aes(x=inc, y= 4e-04,label=lab1),size= 3.5,hjust=1,color = "#172869") +
-  expand_limits(x= -2000)
-
-d2 <- tibble(x = c(seq(0,4,.01),rep(4.4,90)) ) %>% mutate(educ = df(x, df1 = 300, df2 = 2)*-1)
-f_kurt2 <- moments::kurtosis(d2$educ)
-f_skew2 <- moments::skewness(d2$educ)
-p2 <- ggplot(data = d2, aes(x=educ)) +
-  geom_density(color = "#2297E6FF", fill = alpha("#2297E6FF",.1), size = .5) + 
-  theme_void(base_size = 7) +
-  labs(y = "", x = "", title = paste0("Schiefe = ",sprintf("%1.3f",f_skew2)," Wölbung = ", sprintf("%1.3f",f_kurt2))) +
-  theme(plot.title = element_text(hjust = 0.5),plot.subtitle = element_text(hjust = 0.5)) +
-  geom_segment(data = data.frame(educ = mean(d2$educ)),aes(x=educ,xend =educ,y=0,yend = 8),  color = "#AF6125FF") +
-  geom_segment(data = data.frame(educ = median(d2$educ)),aes(x=educ,xend =educ,y=0,yend = 8),color = "#172869")+
-  geom_label(data = data.frame(educ = mean(d2$educ),lab1 = "mean"),  aes(x=educ, y= 3,label=lab1),size= 3.5,hjust=1,color ="#AF6125FF") +
-  geom_label(data = data.frame(educ = median(d2$educ),lab1="median"),aes(x=educ, y= 4,label=lab1),size= 3.5,hjust=0,color = "#172869") +
-  expand_limits(x= .02)
-
-
-
-d3 <- tibble(educ = c(seq(0,4,.01),rep(2,20),rep(4.1,10)) ) 
-f_kurt3 <- moments::kurtosis(d3$educ)
-f_skew3 <- moments::skewness(d3$educ)
-p3 <- ggplot(data = d3, aes(x=educ)) +
-  geom_density(color = "#3397E6FF", fill = alpha("#3397E6FF",.1), size = .5) + 
-  theme_void(base_size = 7) +
-  labs(y = "", x = "", title = paste0("Schiefe = ",sprintf("%1.3f",f_skew3)," Wölbung = ", sprintf("%1.3f",f_kurt3))) +
-  theme(plot.title = element_text(hjust = 0.5),plot.subtitle = element_text(hjust = 0.5)) +
-  geom_segment(data = data.frame(educ = mean(d3$educ)),aes(x=educ,xend =educ,y=0,yend = 1),  color = "#AF6135FF") +
-  geom_segment(data = data.frame(educ = median(d3$educ)),aes(x=educ,xend =educ,y=0,yend =1),color = "#173869")+
-  geom_label(data = data.frame(educ = mean(d3$educ),lab1 = "mean"),  aes(x=educ, y= .35,label=lab1),size= 3.5,hjust=0,color ="#AF6135FF") +
-  geom_label(data = data.frame(educ = median(d3$educ),lab1="median"),aes(x=educ, y= .45,label=lab1),size= 3.5,hjust=1,color = "#173869")
-library(patchwork)
-p1 + p2 + p3 + plot_layout(nrow = 1)
-```
-
-
-In Stata bekommen wir die Schiefe und Wölbung einer Verteilung mit `summary varname,detail` angezeigt.
 
 
 ### Gini-Koeffizient
@@ -568,9 +479,9 @@ $\Rightarrow$ *Wo sind die Haushaltseinkommen also ungleicher verteilt?*[^033]
 Anmerkung: hier wurden die Missings in `di05` mit `mvdecode di05, mv(-50 -32 -7)` ausgeschlossen.
 
 
-## Übungen 
+## Übungen 3
 
-### Übung 1 {#tab}
+### Übung 3-1 {#tab}
 
 (@) Wir interessieren uns für die Variable `gkpol`. 
 
@@ -585,11 +496,30 @@ use " Allbus2018.dta"
     + Wie groß ist der Anteil der Befragten, die in einem Ort mit höchstens 99.999 Einwohnern leben?
     + Wie groß ist der Anteil der Befragten, die in einem Ort mit *mindestens* 100.000 Einwohnern leben?
 
-### Übung 2 {#met}  
+### Übung 3-2 {#met}  
+
+Forschungsfrage: Vergleichen Sie die HH-Einkommensverteilung in Ost und West!
+
+(@) Laden Sie den **kumulierten** Allbusdatensatz.
+(@) Erstellen Sie jeweils einen Datensatz für das Befragungsjahr 1994 und 2010 - `filter`n Sie also den kumulierten Datensatz jeweils einmal nach einem Jahr und legen Sie das Ergebnis in separaten Objekten ab, zB. `a94`.
+(@) Betrachten Sie zunächst für 1994 die HH-Einkommensverteilungen (Variable `di05`) 
+  + Denken Sie daran, die negativen Werte mit `NA` zu überschreiben!
+  + Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle im Datensatz für 1994 - was sagen Ihnen die Werte jeweils?
+  + Berechnen Sie den Gini-Koeffizenten! 
+  + Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable `eastwest`) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?
+(@) Betrachten Sie dann die HH-Einkommensverteilungen für 2010 (Variable `di05`) 
+  + Denken Sie daran, die negativen Werte mit `NA` zu überschreiben!
+  + Berechnen Sie jeweils für Ost und West das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle im Datensatz für 2010 - was sagen Ihnen die Werte jeweils?
+(@) Vergleichen Sie die Werte aus 1994 und 2010. Welche Tendenz können Sie für die Ost-West-Unterschiede erkennen?
+(@) Erstellen Sie jeweils einen Boxplot für Ost und West!
+  + Welche Kennzahlen können Sie jeweils aus den horizontalen Linien ablesen?
+  + Was können Sie jeweils zur den Einkommensverteilungen sagen? 
+  + Durch Anhängen des Arguments `+  coord_cartesian(ylim = c(min,max))` können Sie "zoomen" indem Sie statt `min` und `max` die Limits setzen.    
 
 
 
-### Weitere Übungen
+
+### Weitere Übungen 3
 
 (@) Erstellen Sie eine Häufigkeitstabelle für das Geburtsjahr der Befragten (`yborn`)!
     + Müssen Sie die Variable erst klassieren um eine sinnvoll interpretierbare Tabelle zu erhalten? 
@@ -608,7 +538,7 @@ use " Allbus2018.dta"
 
 
 
-## Profi-Übungen
+## Profi-Übungen 3
 
 Für alle, die noch etwas mehr machen möchten: 
 
@@ -629,9 +559,9 @@ Für alle, die noch etwas mehr machen möchten:
 <!-- evtl. sogar Vorgriff auf collapse? -->
 
 
+## Anhang Kap 3
 
-
-## Exkurs: labels vergeben {#vlabel}
+### labels vergeben {#vlabel}
 
 Wir können natürlich auch Werte in selbst erstellten Variablen, wie zB `age_cat`, beschriften. Dazu definieren wir ein Wertelabel an. Dazu verwenden wir `label define`, gefolgt von einem Objektnamen für dieses Label (hier `age_cat_lab`) und dann jeweils die Ausprägungen zusammen mit dem entsprechenden label in `""`. Dieses Label-Objekt wenden wir dann mit `label values` auf die Variable `age_cat` an:
 ```{stata lab1, eval = F}
@@ -649,7 +579,100 @@ label values age_cat age_cat_lab
 tab age_cat
 ```
 
-## Exkurs: Kombination von `summarize` mit dem `by`-Präfix {#bys_su}
+### Varianz erklärt {#variance}
+Die häufigste Kennzahl zur Beschreibung von Streuung ist aber die **Varianz**. Die Varianz ist definiert als die durchschnittliche quadrierte Abweichung vom arith. Mittel: $$var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}$$    
+[Was bedeutet diese Formel?](#variance)    
+
+Schauen wir erst in den Zähler des Bruchs: $(x_{i}-\bar{x})^2$
+Es geht also um die Abstände der einzelnen Datenpunkte ($x_{i}$) zum arithmetischen Mittel ($\bar{x}$) - mathematisch die Differenz zwischen den einzelnen Datenpunkten $x_{i}-\bar{x}$ - hier eingezeichnet als gestrichelte Linien:
+```{r dpi = 800, echo = F, out.height="70%", out.width="70%", fig.align="center"}
+eq <-  substitute(italic(bar(x))) # formel erstellen
+
+a18 %>% 
+  select(respid,age) %>% 
+  filter(age > 0) %>% 
+  na.omit() %>%  
+  sample_n(30) %>% 
+  select(respid, age) %>% 
+  mutate(mean = mean(a18$age,na.rm = T), id = 1:n()) %>% 
+  ggplot(.,aes(x = id, y = age)) +
+  geom_segment(aes(yend= mean, xend = id ),
+               size = .45, linetype = 2, color = "#1BB6AF") +
+  geom_point(size = 1.95, color = "#172869") +
+  geom_hline(aes(yintercept = mean), color = "#AF6125", size = .75) +
+  geom_label(aes(x = min(id)-.75, y = mean, label = as.character(as.expression(eq))), label.size = .01, hjust = 0.5, color = "#AF6125", fill = "white", parse = T, size = 4.5) +
+  guides(color = F) +
+  labs(y = "Alter (age)", x = "", caption = "Zufällige Auswahl von 30 Fällen des Allbus 2018") +
+  theme_minimal(base_size = 13) +
+  expand_limits(y = 15) +
+  theme(axis.text.x = element_blank(), plot.caption = element_text(size = rel(.75)), plot.caption.position = "plot")
+```
+Für Punkte, die über dem arith. Mittel liegen, erhalten wir für die Differenz einen positiven Wert (wir ziehen ja jeweils das arith. Mittel vom Wert für den Datenpunkt ab). Für Punkte mit Werten, die kleiner als das arith. Mittel sind, erhalten wir einen negativen Wert.     
+Würden wir die Abstände (gestrichelten Linien) einfach aufsummieren, erhielten wir als Ergebnis immer Null! Das arithmetische Mittel liegt ja per Definition immer genau "in der Mitte": die Abstände nach oben sind in der Summe genauso groß wie die Abstände nach unten. Daher wird zunächst jeder Abstand quadriert: $(\bar{x} - x_{i})^2$   
+Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert ($\sum_{i=1}^{n}$) und dann durch die Anzahl der Beobachtungen geteilt werden ($\frac{}{n}$)- zusammengefasst hier nochmal die Formel:  $$var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}$$
+
+### Schiefe & Wölbung {#sk_kur}
+
+Die Schiefe (skewness) ist ein Maß für die Asymmetrie einer Verteilung. Bei einer symmetrischen Verteilung beträgt die Schiefe 0. Ein negativer Wert für die Schiefe deutet darauf hin, dass Median > Mean und Verteilung wird als links-schief/rechts-steil bezeichnet. Bei einem positiven Wert der Schiefe ist Median < Mean und die Verteilung ist rechts-schief/links-steil. 
+
+Die Wölbung (Kurtosis) ist ein Maß für die Steilheit bzw. "Spitzigkeit" einer Verteilung. Je kleiner der Wert der Kurtosis, desto desto flacher die Verteilung. Bspw. hat die Normalverteilung hat eine Kurtosis von 3.
+
+```{r skew_kurt_graph, echo=F, warning=F, message=F, out.height="75%", out.width="100%", fig.align="center"}
+d1 <-  readr::read_delim("D:/oCloud/RFS/allbus_kumuliert.csv", delim = ";", col_types = cols(.default = col_double())) %>% 
+  mutate_all(~ifelse(.<0,NA,.)) %>% 
+  mutate(across(everything(),~ifelse(.x<0,NA,.x))) %>% 
+  filter(year == 2004, inc <= 20000, !is.na(inc), sex == 1)
+  
+f_kurt1 <- moments::kurtosis(d1$inc[d1$sex==1])
+f_skew1 <- moments::skewness(d1$inc[d1$sex==1])
+library(paletteer)
+p1 <- ggplot(data = d1[d1$sex==1,], aes(x=inc)) +
+  geom_density(color = "#2297E6FF", fill = alpha("#2297E6FF",.1), size = .5,n=200) + 
+  theme_void(base_size = 7) +
+  labs(y = "", x = "", title = paste0("Schiefe = ",sprintf("%1.3f",f_skew1)," Wölbung = ", sprintf("%1.3f",f_kurt1))) +
+  theme(plot.title = element_text(hjust = 0.5),plot.subtitle = element_text(hjust = 0.5)) +
+  geom_segment(data = data.frame(inc = mean(d1$inc)),aes(x=inc,xend =inc,y=0,yend = 6e-04),  color = "#AF6125FF") +
+  geom_segment(data = data.frame(inc = median(d1$inc)),aes(x=inc,xend =inc,y=0,yend = 6e-04),color = "#172869")+
+  geom_label(data = data.frame(inc = mean(d1$inc),lab1 = "mean"),  aes(x=inc, y= 5e-04,label=lab1),size= 3.5,hjust=0,color = "#AF6125FF") +
+  geom_label(data = data.frame(inc = median(d1$inc),lab1="median"),aes(x=inc, y= 4e-04,label=lab1),size= 3.5,hjust=1,color = "#172869") +
+  expand_limits(x= -2000)
+
+d2 <- tibble(x = c(seq(0,4,.01),rep(4.4,90)) ) %>% mutate(educ = df(x, df1 = 300, df2 = 2)*-1)
+f_kurt2 <- moments::kurtosis(d2$educ)
+f_skew2 <- moments::skewness(d2$educ)
+p2 <- ggplot(data = d2, aes(x=educ)) +
+  geom_density(color = "#2297E6FF", fill = alpha("#2297E6FF",.1), size = .5) + 
+  theme_void(base_size = 7) +
+  labs(y = "", x = "", title = paste0("Schiefe = ",sprintf("%1.3f",f_skew2)," Wölbung = ", sprintf("%1.3f",f_kurt2))) +
+  theme(plot.title = element_text(hjust = 0.5),plot.subtitle = element_text(hjust = 0.5)) +
+  geom_segment(data = data.frame(educ = mean(d2$educ)),aes(x=educ,xend =educ,y=0,yend = 8),  color = "#AF6125FF") +
+  geom_segment(data = data.frame(educ = median(d2$educ)),aes(x=educ,xend =educ,y=0,yend = 8),color = "#172869")+
+  geom_label(data = data.frame(educ = mean(d2$educ),lab1 = "mean"),  aes(x=educ, y= 3,label=lab1),size= 3.5,hjust=1,color ="#AF6125FF") +
+  geom_label(data = data.frame(educ = median(d2$educ),lab1="median"),aes(x=educ, y= 4,label=lab1),size= 3.5,hjust=0,color = "#172869") +
+  expand_limits(x= .02)
+
+
+
+d3 <- tibble(educ = c(seq(0,4,.01),rep(2,20),rep(4.1,10)) ) 
+f_kurt3 <- moments::kurtosis(d3$educ)
+f_skew3 <- moments::skewness(d3$educ)
+p3 <- ggplot(data = d3, aes(x=educ)) +
+  geom_density(color = "#3397E6FF", fill = alpha("#3397E6FF",.1), size = .5) + 
+  theme_void(base_size = 7) +
+  labs(y = "", x = "", title = paste0("Schiefe = ",sprintf("%1.3f",f_skew3)," Wölbung = ", sprintf("%1.3f",f_kurt3))) +
+  theme(plot.title = element_text(hjust = 0.5),plot.subtitle = element_text(hjust = 0.5)) +
+  geom_segment(data = data.frame(educ = mean(d3$educ)),aes(x=educ,xend =educ,y=0,yend = 1),  color = "#AF6135FF") +
+  geom_segment(data = data.frame(educ = median(d3$educ)),aes(x=educ,xend =educ,y=0,yend =1),color = "#173869")+
+  geom_label(data = data.frame(educ = mean(d3$educ),lab1 = "mean"),  aes(x=educ, y= .35,label=lab1),size= 3.5,hjust=0,color ="#AF6135FF") +
+  geom_label(data = data.frame(educ = median(d3$educ),lab1="median"),aes(x=educ, y= .45,label=lab1),size= 3.5,hjust=1,color = "#173869")
+library(patchwork)
+p1 + p2 + p3 + plot_layout(nrow = 1)
+```
+
+
+In Stata bekommen wir die Schiefe und Wölbung einer Verteilung mit `summary varname,detail` angezeigt.
+
+### Kombination von `summarize` mit dem `by`-Präfix {#bys_su}
 
 Bspw. können wir die Altersangaben aus den alten (`eastwest`=1) und neuen Bundesländern (`eastwest`=2) vergleichen, indem wir das Befehls-Präfix `bys varX:` verwenden. `bys` steht für "by sort" und damit sagen wir Stata, dass die folgende Berechnung getrennt nach den Werten für `varX` ausgeführt werden soll. Wenn wir also `summarize` für beide Ausprägungen von `eastwest` berechnen möchten, gehen wir wir folgt vor:
 ```{stata bysuF, eval = F}
@@ -663,7 +686,7 @@ bys eastwest: summarize age
 ```
 In den neuen Bundesländern sind die Befragten im Schnitt also um 53.90083 - 50.66093 = `r 53.90083 - 50.66093` Jahre älter.
 
-## Exkurs: Kennzahlvergleiche mit `if` {#if_vgl}
+### Kennzahlvergleiche mit `if` {#if_vgl}
 
 Neben der Variante [`bys var:`](#by_vgl) können wir auch mit Hilfe der `if`-Option Kennzahlen miteinander vergleichen:
 
@@ -689,7 +712,7 @@ qui mvdecode age, mv(-32)
 bys eastwest: summarize age 
 ```
 
-## Exkurs: Kennzahlvergleich mit `tabulate` und der Option `summarize()` 
+### Kennzahlvergleich mit `tabulate` und der Option `summarize()` 
 
 Wir können aber auch zwei Variablen für den Kennzahlenvergleich verwenden. Bspw. sind neben Ost-West-Vergleichen auch häufig Geschlechterunterschiede von Interesse. Stata stellt uns damit mit der `summarise`-Option eine einfache Möglichkeit zur Verfügung:
 

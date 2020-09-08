@@ -70,7 +70,7 @@ zB. wird dieses Label mit `lookfor` gefunden:
 lookfor "Alters"
 ```
 ```{stata lab113b, echo = F}
-set linesize 80
+set linesize 100
 qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 qui egen age_cat = cut(age), at( 18 35 60 100 ) 
 qui label define age_cat_lab 18 "18-34 Jahre" 35 "35-29 Jahre" 60 "über 60 Jahre" 
@@ -80,11 +80,15 @@ lookfor "Alters"
 ```
 
 ## sortieren
-`sort`
+Mit `sort` können wir unseren Datensatz sortieren. Dazu geben wir einfach die Variablen an, nach denen sortiert werden soll:
+```{stata sort1, eval = F}
+sort age educ sex
+```
+`sort` sortiert dabei immer in aufsteigenden Reihenfolge. Mit `gsort` können wir darüber hinaus auch in umgekehrter (fallender) Reihenfolge sortieren, indem wir `-` vor die entsprechende Variable stellen. Hier zb von alt nach jung, innerhalb des gleichen Alters dann aufsteigend nach Bildung und für gleich alte und gebildetet Befragte dann die Frauen (`sex`=2) vor den Männern (`sex`=1):
+```{stata gsort1, eval = F}
+gsort -age educ -sex 
+```
 
-## missings unterscheiden
-
-## Indikatoren umdrehen
 
 ## Informationen aus mehreren Variablen
 
@@ -121,22 +125,18 @@ su age_diff
 
 [^0111]: Diese Beispiel bezieht sich also nur auf heterosexuelle Paare.
 
-## Informationen aus mehreren Datensätzen
-
-`merge`
-
-## Arbeiten mit Textvariablen
-
-`substr`
-
-`regexr`
-
-`regexm`
-
 
 ## egen {#egen}
 
 `egen` ist die Erweiterung von `gen` und gibt uns die Möglichkeit, eine ganze Reihe von Berechnungen durchzuführen.
+
+## gruppierte Berechnungen
+
+```{stata, cleanlog = F, eval = F}
+bys agec: egen mean_inc = mean(inc)
+list agec mean_inc in 1/10
+```
+
 
 ## Subgruppen-Variablen erstellen mit `separate` {#sep1}
 
@@ -156,18 +156,77 @@ qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 gen inc_m = inc if sex == 1
 gen inc_f = inc if sex == 2
 separate inc, by(sex)
-list inc sex inc_m inc_f inc1 inc2 in 1/10
+```
+```{r,eval=F}
+     +-----------------------------------------------------------+
+     |          inc    sex   inc_m   inc_f   inc1           inc2 |
+     |-----------------------------------------------------------|
+  1. |         2200   MANN    2200       .   2200              . |
+  2. |         1500   FRAU       .    1500      .           1500 |
+  3. |         1400   MANN    1400       .   1400              . |
+  4. |         3600   MANN    3600       .   3600              . |
+  5. |         1700   FRAU       .    1700      .           1700 |
+     |-----------------------------------------------------------|
+  6. |         3450   MANN    3450       .   3450              . |
+  7. |          854   FRAU       .     854      .            854 |
+  8. |         1500   MANN    1500       .   1500              . |
+  9. | KEINE ANGABE   FRAU       .      -9      .   KEINE ANGABE |
+ 10. |          978   FRAU       .     978      .            978 |
+     +-----------------------------------------------------------+
 ```
 
-## gruppierte Berechnungen
-
-```{stata, cleanlog = F, eval = F}
-bys agec: egen mean_inc = mean(inc)
-list agec mean_inc in 1/10
-```
 
 
 
 ## collapse
 
 Manchmal möchten wir vielleicht nur einen Mittelwert pro Gruppe und die einzelnen Werte interessieren uns gar nicht. Wir möchten unseren Datensatz also verkürzen, sodass er lediglich einen Wert pro Gruppe enthält. Dazu
+
+## Indikatoren umdrehen
+
+Manchmal haben wir eine einzelne Likert-Skala, die wir "umdrehen" möchten. Bspw. stehen hohe Werte der Variable `mm01` für eine hohe Zustimmung zur Aussage, dass die Ausübung des Islams in Deutschland beschränkt werden sollte. In `mm02` stehen hohe Werte hingegen für eine hohe Zustimmung zur Aussage, dass der Islam zu Deutschland gehört:
+
+```{stata rev_indik,eval = F}
+use  "Allbus_1980-2018.dta",clear
+keep if year == 2016 
+mvdecode mm01 mm02, mv(-10 -9 -1)
+d mm01 mm02
+tab mm01
+tab mm01,nol
+```
+```{stata rev_indik2,echo = F}
+set linesize 200
+qui use  "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_1980-2018.dta",clear
+qui keep if year == 2016 & age > 0
+qui mvdecode mm01 mm02, mv(-10 -9 -1)
+d mm01 mm02
+tab mm01
+tab mm01,nol
+```
+
+Um aus beiden Variablen einen Index zu bilden, muss eine Variable umgedreht werden, sodass die Skalen beide inhaltlich in die gleiche Richtung laufen. Da `mm01` von 1-7 reicht, können wir durch 1 - mm01 die Skala umkehren. Zur Kontrolle vergleichen wir die alte und die neue Variable abschließend:
+
+```{stata rev_indik3,eval = F}
+gen mm01a = 8 - mm01
+tab mm01a mm01
+```
+
+
+```{stata rev_indik4,echo = F}
+set linesize 200
+qui use  "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_1980-2018.dta",clear
+qui keep if year == 2016 & age > 0
+qui mvdecode mm01 mm02, mv(-10 -9 -1)
+gen mm01a = 8 - mm01
+tab mm01a mm01
+```
+
+## Informationen aus mehreren Datensätzen
+
+Mit `merge` können wir Informationen aus mehreren Datensätzen zusammenfügen.
+
+## Arbeiten mit Textvariablen
+
+
+Dafür helfen uns sog. "regular expressions", in Stata stehen hierfür zb `substr` `regexr` und `regexm` zur Verfügung.
+

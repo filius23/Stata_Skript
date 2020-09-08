@@ -448,7 +448,7 @@ save "Allbus2018.dta", replace
 ```
 Damit sind die Originaldaten aber natürlich weg.
 
-## Übungen
+## Übungen 2
 
 + Laden Sie den Datensatz `Allbus2018` in Stata. 
 
@@ -460,7 +460,7 @@ Damit sind die Originaldaten aber natürlich weg.
 
 <!-- Filter für fehlende Werte -> yborn Missings? -->
 
-## Profi-Übungen
+## Profi-Übungen 2
 
 Für alle, die noch etwas mehr machen möchten: 
 

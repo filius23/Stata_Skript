@@ -45,7 +45,7 @@ knitr::include_graphics("04_dist_plots.png")
 ```
 
 
-### Kategoriale Variablen
+### Kategoriale Variablen {#bar_col}
 
 Die Darstellung einer kategorialen Variable ist häufig eine grafische Übersetzung einer Häufigkeitsauszählung. Insbesondere bieten sich dafür Säulen- und Balkendiagramme an. Beispielsweise könnten wir die Schulabschlüsse der Befragen auszählen. Dazu zählen[^041] wir die `respid`s pro Ausprägung von `educ`[^042], mit `graph bar` bzw `graph bar, horizontal` bekommen wir dann ein Säulen- bw. Balkendiagramm.
 
@@ -85,7 +85,13 @@ knitr::include_graphics("04_bar_plots2.png")
 ```
 
 
-## Gemeinsame Verteilung zweier Variablen
+***
+
+**[Übung1](#plt1)**
+
+***
+
+## Gemeinsame Verteilung zweier Variablen {#bivar_plot}
 
 ### Mosaikplot
 Für die gemeinsame Verteilung zweiter kategorialer Merkmale empfiehlt sich ein Mosaikplot. Dafür gibt es aber keinen Standardbefehl in Stata, sondern wir müssen den Befehl `spineplot` erst installieren:
@@ -117,8 +123,7 @@ knitr::include_graphics("04_twoway1.png")
 
 Eben kam bereits der Befehl `twoway` vor. `twoway` stellt eine ganze Reihe an Darstellungen zur Auswahl, die wir hier nicht besprochen haben. Eine Übersicht zu allen verfügbaren Visualierungen inklusive Beispielbefehlen findet sich beispielsweise [hier](https://www.stata.com/support/faqs/graphics/gph/stata-graphs/) oder [hier](https://www.stata.com/features/example-graphs/).
 
-
-## Kombinieren von zwei twoway-Grafiken
+## Kombinieren von zwei twoway-Grafiken {#twoway_comb}
 
 Eine besonders hilfreiche Funktion ist das Übereinanderlegen mehrer `twoway` Grafiken. Dazu hängen wir die Befehle mit `(scatter ...) (scatter ...)` einfach aneinander. Mit dieser Strategie können wir zwei nach Geschlechtern getrennte Streudiagramme aufeinander legen und so die Punkte farblich unterscheidbar machen:
 
@@ -132,11 +137,89 @@ knitr::include_graphics("04_scatter_bysex.png")
 Hier haben wir also jetzt blaue Punkte für `sex == 1` und rote Punkte für `sex == 2`. Leider sagt uns die Legende aber überhaupt nichts dazu. Dazu kommen wir [gleich](#legend). 
 
 
+## Gruppierte Boxplots
+
+Auf ähnliche Weise können wir auch Boxplots nebeneinander legen. Auch hier geben wir nach dem Grafikkommando `graph box` die Subgruppen für die jeweiligen Variablen an. Allerdings funktioniert das hier leider nicht direkt mit `if`. Wir müssen stattdessen einen Zwischenschritt gehen und separate Variablen für jede Untergruppe erstellen.[^048]
+
+```{stata box_group, eval = F}
+gen inc1 = inc if educ == 1
+gen inc2 = inc if educ == 2
+gen inc3 = inc if educ == 3
+gen inc4 = inc if educ == 4
+gen inc5 = inc if educ == 5
+graph box inc1 inc2 inc3 inc4 inc5
+```
+
+```{r box_group_graph, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("04_box_byeduc.png")
+```
+
+[^048]: Das geht auch schneller mit `separate` - siehe Kapitel [11](#adva).6
+
+Das hat den Vorteil, dass wir dann gruppierte Boxplots nach Geschlecht erstellen können, wenn wir zusätzlich `,by(sex)` anhängen:
+```{stata box_group2, eval = F}
+graph box inc1 inc2 inc3 inc4 inc5, by(sex)
+```
+
+```{r box_group_graph2, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("04_box_educ_bysex.png")
+```
+
+***
+
+**[Übung2](#plt2)**
+
+***
+
+## Übungen 4
+
+### Übung 4-1 {#plt1}
+
+(@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2014 aus! Erstellen Sie einen Boxplot, ein Histogramm und einen k-Density-Plot für den BMI der Befragten (`hs18`).  
+    + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
+    + Überprüfen Sie z.B. mit `summary`, ob alle negativen Werte ausgeschlossen wurden.
+    + Erstellen Sie eine weitere Variante dieser Grafiken, welche die Verteilung des BMIs jeweils nach Geschlecht zeigen.
+    
+(@) Erstellen Sie ebenfalls für die Befragten aus dem Jahr 2014 eine Grafik, welche die Häufigkeit der Befragten aus den alten und neuen Bundesländern (`eastwest`) wiedergibt!  
+    + Erstellen Sie sowohl ein Säulen- als auch ein Balkendiagramm!
+    + Erstellen Sie eine weitere Darstellung, welche zusätzlich nach dem Geschlecht unterscheidet!
+
+[Zurück zu univariate Grafiken](#bar_col)
+
+### Übung 4-2 {#plt2}
+
+(@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) erneut und wählen Sie die Befragten aus dem Jahr 2016 aus! Erstellen Sie einen Mosaikplot, welcher die Bildung der Befragten (`educ`) sowie deren Kontakte zu Ausländern bei der Arbeit (`mc02`) abbildet.  
+    + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
+    + Überprüfen Sie z.B. mit `table`, ob alle negativen Werte ausgeschlossen wurden.
+    + Betrachten Sie die Darstellung: welche Merkmalskombination aus `educ` und `mc02` ist die häufigste? Überprüfen Sie ihre Einschätzung mit Hilfe einer Kontingenztabelle (`tab educ mc02`)
+    
+(@) Erstellen Sie einen Scatterplot für das Alter `age` und `xt11`, die Bearbeitungsdauer des Politikquiz. Erstellen Sie den Scatterplot so, dass die Befragte aus Ost und West durch unterschiedliche Farben markert sind - so wie es [hier](#twoway_comb) gemacht wurde!
+    
+(@) Laden Sie den Allbus 2018 (`Allbus_2018.dta`) und erstellen Sie einen Boxplot zur Bearbeitungsdauer des Politikquiz!
+    + Erstellen Sie einen gruppierte Darstellung, je nachdem ob die Befragten aus den alten und neuen Bundesländern (`eastwest`) kommen! 
+    + Splitten Sie diese Darstellung zusätzlich nach dem Geschlecht der Befragten auf!
+
+```{r xt11_cdb, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("04_xt11_cdb.png")
+```
+
+[Zurück zu bivariaten Grafiken](#bivar_plot)
+
+### Weitere Übungen Kap4
+
+(@) Wählen Sie eine der oben erstellten Grafiken aus und
+    + verändern Sie den Titel, Untertitel und Achsenbeschriftung, siehe [hier](#title).
+    + Verändern Sie die Form/Farben der Punkte, Balken oder Box! Siehe [hier](#mark) und [hier](#color)
+    
+(@) Verändern Sie die Legende des Scatterplots aus Aufgabe 4 - siehe [hier](#color)
+
+(@) Erstellen Sie eine Alterspyramide für ein Jahr aus dem kumulierten Allbus! Laden Sie dafür den kumulierten Allbus und wählen ein Jahr aus (`tab year` zeigt Ihnen, welche Auswahl sie haben). Vollziehen Sie dann die [hier](#pyramid) gezeigten Schritte nach! Passen Sie Farben, Schrift usw. nach Ihren Vorstellungen an! Sie können anstatt der Altersgruppen auch bspw. die Bildungsgruppen `educ` oder Wohnortgröße `gkpol` verwenden!
+
 ## Optionen
 
-Diese grundlegenden Darstellungen können mit Hilfe einer ganzen Reihe an Optionen angepasst werden. Auch hier beschränken wir uns auf die wesentlichsten Optionen:
+Diese grundlegenden Darstellungen können mit Hilfe einer ganzen Reihe an Optionen angepasst werden. Auch hier beschränken wir uns auf die wesentlichsten Optionen. Bei konkreten Fragen hilft oftmals auch eine Google-Suche nach: "stata graph text smaller" o.ä.
 
-### Titel
+### Titel {#title}
 
 Eine klare Beschriftung ist zentraler Bestandteil jeder Datenvisualisierung. Folgende Überschriften stehen uns dazu zur Verfügung: 
 
@@ -154,9 +237,9 @@ Weitere Optionen unter `help title_options`.
 
 Außerdem können wir die Achsenbeschriftungen verändern - hier ein Beispiel für die x-Achse[^043]
 
-`xscale(range(0 100))` $\rightarrow$ x-Achse auf 0-100 ausdehnen
-`xtick(0 (10) 100 )`  $\rightarrow$ an allen Zehner-Grenzen zwischen 0 und 100, `0(10)100` ist die Abkürzung für `0,10,20,30,40,50,60,70,80,90,100`
-`xlabel(0 "Null" 10 "zehn" 20 (10) 100)`  $\rightarrow$ Beschriftung der "ticks"
++ `xscale(range(0 100))` $\rightarrow$ x-Achse auf 0-100 ausdehnen
++ `xtick(0 (10) 100 )`  $\rightarrow$ an allen Zehner-Grenzen zwischen 0 und 100, `0(10)100` ist die Abkürzung für `0,10,20,30,40,50,60,70,80,90,100`
++ `xlabel(0 "Null" 10 "zehn" 20 (10) 100)`  $\rightarrow$ Beschriftung der "ticks"
 
 ```{stata, eval = F}
 graph .... , xscale(range(0 100)) xtick(0 (10) 100 )` xlabel(0 "Null" 10 "zehn" 20 (10) 100) 
@@ -183,12 +266,17 @@ knitr::include_graphics("04_scatter_text.png")
 ```
 
 
-### Schriftart
+### Schriftart & Textgröße {#font}
 
 Eine Reihe an Schriftarten stehen für Textangaben zur Verfügung:
 
 ```{stata, eval = F}
-graph twoway scatter inc age, title("{stSerif:Einkommen {bf:fett} {it:kursiv}}") subtitle("Text{superscript:hochgestellt}{subscript:tiefgestellt}") xtitle("Alter {it:age}") ytitle("{stMono:Einkommen}") xlabel(0 " {stMono:Null}" 10 "{bf:zehn}" 20 (10) 100) text(15000 20 "Hier ein Symbol: {&Omega}") xscale(range(0 100))
+graph twoway scatter inc age, ///
+title("{stSerif:Einkommen {bf:fett} {it:kursiv}}") ///
+  subtitle("Text{superscript:hochgestellt}{subscript:tiefgestellt}") /// 
+  xtitle("Alter {it:age}") ytitle("{stMono:Einkommen}") ///
+  xlabel(0 " {stMono:Null}" 10 "{bf:zehn}" 20 (10) 100) ///
+  text(15000 20 "Hier ein Symbol: {&Omega}") xscale(range(0 100))
 ```
 ```{r text_opts, echo = F,out.width = "80%",out.height= "80%", fig.align="center"}
 knitr::include_graphics( "04_scatter_text_fmts.png")
@@ -196,12 +284,35 @@ knitr::include_graphics( "04_scatter_text_fmts.png")
 
 Mehr dazu unter `help graph_text`
 
+Außerdem können wir mit der Option `size` die jeweilige Größe des Textes anpassen, dabei können wir die Größenangaben aus \@ref(Grafik Optionen) verwenden. Mit der Option `angle(90)` können wir außerdem den Text um 90 Grad (und natürlich um jeden beliebigen Wert durch entsprechende Angabe):
+```{stata, eval = F}
+graph twoway scatter inc age, ///
+ title("Text1", size(vsmall)) ///
+ subtitle("Untertitel",size(large)) /// 
+  xtitle("Alter",size(small)) ytitle("{stMono:Einkommen}",size(vhuge)) ///
+  xlabel(0 " {stMono:Null}" 10 "{bf:zehn}" 20 (10) 100 , labsize(tiny) angle(90))
+```
+```{r text_size, echo = F,out.width = "80%",out.height= "80%", fig.align="center"}
+knitr::include_graphics( "04_scatter_text_size.png")
+```
+
+Wenn die Option [`over`](#bar_col) verwendet wird, dann müssen die Textoptionen in `over` angegeben werden:
+
+```{stata, eval = F}
+graph bar (count) respid, /// 
+  over(gkpol,label(labsize(small) angle(90)))
+```
+```{r text_size_over, echo = F,out.width = "80%",out.height= "80%", fig.align="center"}
+knitr::include_graphics( "04_scatter_text_over.png")
+```
+
 ### Legende {#legend}
 
 Oben hatten wir gesehen, dass die automatische Legende nicht unbedingt aussagekräftig ist. Mit der Option `legend` können wir die Legende beschriften und einen Titel vergeben:
 
 ```{stata scatter_sex_leg, eval = F}
-graph twoway (scatter inc age if sex==1) (scatter inc age if sex==2), legend(lab(1 "Männer") lab(2 "Frauen") title("Geschlecht"))
+graph twoway (scatter inc age if sex==1) (scatter inc age if sex==2), ///
+  legend(lab(1 "Männer") lab(2 "Frauen") title("Geschlecht"))
 ```
 
 ```{r scatter_sex_legp, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
@@ -211,19 +322,17 @@ knitr::include_graphics("04_scatter_bysex_legend.png")
 Mit der Option `pos` können wir außerdem die Position der Legende anpassen - wir geben dabei eine Zahl zwischen 0 und 12 an. Die Werte 1-12 entsprechen die Stunden auf einer Uhr, 0 setzt die Legende in die Mitte der Grafik. 
 
 ```{stata scatter_sex_leg2, eval = F}
-graph twoway (scatter inc age if sex==1) (scatter inc age if sex==2), legend(lab(1 "Männer") lab(2 "Frauen") title("Geschlecht") pos(9))
+graph twoway (scatter inc age if sex==1) (scatter inc age if sex==2), ///
+  legend(lab(1 "Männer") lab(2 "Frauen") title("Geschlecht") pos(9))
 ```
 ```{r scatter_sex_leg2p, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
 knitr::include_graphics("04_scatter_bysex_legend_pos.png")
 ```
 
-
 Weitere Optionen und Beispiele unter `help legend_options`. Mit `legend(off)` kann die Legende auch ausgeblendet werden. 
-  
 
 
-
-### Marker
+### Marker {#mark}
 
 Im Stata-Jargon werden die Punkte "marker" genannt. Deren Aussehen können wir mit entsprechenden Optionen ebenfalls verändern. Zum einen können wir mit `msymbol` die Form des Markers verändern, mit `msize` können wir die Größe und mit `mcolor` die Farbe anpassen:
 
@@ -234,13 +343,16 @@ graph twoway scatter inc age, msymbol(D) msize(small) mcolor(sand)
 knitr::include_graphics("04_msym_size.png")
 ```
 Dabei können wir aus einer Reihe an Formen, Größen und Farben wählen:
-```{r msymbol_size_overview, echo = F,out.width = "60%",out.height="80%",fig.show='hold', fig.align="center"}
+```{r msymbol_size_overview, echo = F,out.width = "60%",out.height="80%",fig.show='hold', fig.align="center", fig.cap="Marker Optionen"}
 knitr::include_graphics(c("04_msymbol.png","04_msize.png","04_mcolor.png"))
 ```
 
 In unserem Beispiel vorhin hatten wir die Farben der marker aber genutzt, um die Angaben für Männer und Frauen zu unterscheiden. Hier geben wir dann `mcolor` etc. jeweils innerhalb der Klammern an:
 ```{stata m_scatter_color, eval = F}
-graph twoway (scatter inc age if sex==1, mcolor(orange) msize(small)) (scatter inc age if sex==2, mcolor(sand) msymbol(D) msize(small)), legend(lab(1 "Männer") lab(2 "Frauen")) 
+graph twoway /// 
+  (scatter inc age if sex==1, mcolor(orange) msize(small)) ///
+  (scatter inc age if sex==2, mcolor(sand) msymbol(D) msize(small)), ///
+  legend(lab(1 "Männer") lab(2 "Frauen")) 
 ```
 ```{r msym_sex, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
 knitr::include_graphics("04_mcolor_sex.png")
@@ -251,18 +363,24 @@ Mit `mlcolor` und `mlwidth` können wir jedem marker die Farbe und Dicke[^045] d
 [^045]: Zur Auswahl stehen: `vthin`,`thin`,`medthin`,`medium `,`medthick`,`thick`,`vthick`,`vvthick`,`vvvthick`
 
 ```{stata ml_scatter_color, eval = F}
-graph twoway (scatter inc age if sex==1, mcolor(orange) msize(small) mlcolor(gs3) mlwidth(vthin)) (scatter inc age if sex==2, mcolor(sand) msymbol(D) msize(small) mlcolor(gs3) mlwidth(vvthin)), legend(lab(1 "Männer") lab(2 "Frauen")) 
+graph twoway /// 
+  (scatter inc age if sex==1, mcolor(orange) msize(small) mlcolor(gs3) mlwidth(vthin)) ///
+  (scatter inc age if sex==2, mcolor(sand) msymbol(D) msize(small) mlcolor(gs3) mlwidth(vvthin)), ///
+  legend(lab(1 "Männer") lab(2 "Frauen")) 
 ```
 ```{r ml_scatter, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
 knitr::include_graphics("04_ml_sex.png")
 ```
 
-### Farben
+### Farben {#color}
 
 Obwohl es um Darstellungen geht, haben wir noch sehr wenig über Farben gesprochen. Neben den oben gezeigten vordefinierten Farben können wir auch Farben als RGB-Codes[^046] angeben und so Farben eigenen Paletten verwenden:
 
 ```{stata rgb, eval = F}
-graph twoway (scatter inc age if sex==1, mcolor("91	37 97") msize(small)) (scatter inc age if sex==2, mcolor("150 196 134") msymbol(D)), legend(lab(1 "Männer") lab(2 "Frauen"))
+graph twoway /// 
+  (scatter inc age if sex==1, mcolor("91	37 97") msize(small)) ///
+  (scatter inc age if sex==2, mcolor("150 196 134") msymbol(D)), ///
+  legend(lab(1 "Männer") lab(2 "Frauen"))
 ```
 
 ```{r rgbp, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
@@ -272,7 +390,11 @@ knitr::include_graphics("04_col_scatter.png")
 Außerdem können wir mit `plotregion(fcolor( ))` und `graphregion(fcolor( ))` die Hintergrundfarben der Grafik und des Koordinatenbereichs anpassen. Mit `region(fcolor( ))` können wir die den Hintergrund der Legende verändern.
 
 ```{stata bg_col, eval = F}
-graph twoway (scatter inc age if sex==1, mcolor("91	37 97") msize(small)) (scatter inc age if sex==2, mcolor("150 196 134") msymbol(D)), legend(lab(1 "Männer") lab(2 "Frauen") region(fcolor(red))) plotregion(fcolor(eltblue)) graphregion(fcolor(olive_teal))
+graph twoway ///
+  (scatter inc age if sex==1, mcolor("91	37 97") msize(small)) ///
+  (scatter inc age if sex==2, mcolor("150 196 134") msymbol(D)), ///
+  legend(lab(1 "Männer") lab(2 "Frauen") region(fcolor(red))) ///
+  plotregion(fcolor(eltblue)) graphregion(fcolor(olive_teal))
 ```
 
 ```{r bg_colp, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
@@ -281,10 +403,32 @@ knitr::include_graphics("04_bg_col.png")
 
 Farbpaletten sind ein Thema für sich und was gut aussieht ist natürlich subjektiv.... (das letzte Beispiel wohl eher nicht). Allerdings gibt es einige Leitlinien, siehe [hier](https://blog.datawrapper.de/beautifulcolors/). Es gibt zahlreiche Möglichkeiten selbst zu erstellen: zB. mit [Adobe Color](https://color.adobe.com/create/color-wheel) oder [Paletton](https://paletton.com/). Außerdem gibt es unzählige Quellen für Farbpaletten: [Instagram](https://www.instagram.com/colours.cafe/) oder [ColorBrewer](https://colorbrewer2.org)
 
-
-
-
 [^046]: RGB steht dabei als Abkürzung für die Anteile der Grundfarben Rot, Grün und Blau an der Mischfarbe.
+
+#### Boxplots anpassen
+Die Farben in Boxplots können wir mit `box` anpassen - bei mehreren Boxen geben wir zuerst eine Zahl an, auf welche Box sich die Optionen beziehen sollen. Die Ausreißer können wir mit `marker` berarbeiten:
+```{stata box_color, eval = F}
+graph box inc1 inc2 , ///
+	box(1, color("orange") blcolor(black)) marker(1, mcolor("purple")  msymbol("Dh") ) ///
+	box(2, color("159 97 184") blcolor(navy)) marker(2, mcolor("gs45")  msymbol("Sh") ) 
+```
+```{r box_color2, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("04_box_col.png")
+```
+
+
+#### Balken/Säulendigramme anpassen
+
+Für Balkendiagramme ist `bar()` die richtige Option. Mit `fcolor` können wir die Flächenfarbe anpassen, mit `color` die Umrandung.
+```{stata bar_color, eval = F}
+graph bar (count) respid, over(eastwest) bar(1,fcolor(orange) color(gs4))
+```
+```{r bar_color2, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("04_bar_col.png")
+```
+
+Leider ist die unterschiedliche Einfärbung von Balken etwas komplizierter, hierzu müssen wir erst mit `collapse` den Datensatz umformen. Siehe [hier](#pyramid).
+
 
 ### Vorlagen
 
@@ -314,16 +458,29 @@ knitr::include_graphics("04_plotplain_theme.png")
 ```
 
 
-##  Gruppierte Darstellungen 
-Neben `,by()` können wir in `graph box` auch 
-
-## Beispiele zum selbst anpassen
+## Anhang & Beispiele zum selbst anpassen
 
 Im Folgenden finden sich nun einige Beispiele mit (sehr) vielen Optionen als Vorlage für eigene Anpassungen. Trial & error wärmstens empfohlen!
 
 ### Boxplot
 
-Für gruppierte Boxplots (hier nach Geschlecht) muss die dargestellte Variable zunächst aufgesplittet werden. Hier findet sich das ([DoFile](#aufb1)) zur Aufbereitung.
+Wie oben gezeigt, muss für gruppierte Boxplots (hier nach Geschlecht) muss die dargestellte Variable zunächst aufgesplittet werden:
+```{stata fancy_bpplot_prep, eval=F, results="hide",collectcode=F, eval = F}
+cd ""
+use "Allbus_2018.dta", clear
+replace inc = . if inc < 0
+replace age = . if age < 0
+
+egen age_c = cut(age), at(20,35,50,65) // Alter in Gruppen
+lab def agec1 20 "20-34" 35 "35-49" 50 "50-64" // Gruppen labeln
+lab val age_c agec1
+// Einkommen in Männer und Frauen splitten:
+gen inc_m = inc if sex == 1
+gen inc_f = inc if sex == 2
+lab var inc_m "Männer"
+lab var inc_f "Frauen"
+```
+
 
 ```{stata fancy_bpplot, eval=F, results="hide",collectcode=F, eval = F}
 graph box inc inc_f, over(age_c) ///
@@ -343,7 +500,8 @@ knitr::include_graphics("04_boxplot.png")
 ```
 
 ### Scatterplot 
-Auch die Darstellung auf der Startseite dieses Skripts wurde als Stata-Grafik erstellt:
+
+Hier ein angepasster Scatterplot, welcher aus drei überlagerten [`scatter`](#twoway_comb) besteht:
 
 ```{stata loadbp, echo=T, results="hide",collectcode=F}
 webuse bpwide, clear
@@ -366,7 +524,8 @@ knitr::include_graphics("04_scatter_manyopts.png")
 
 
 
-### Bevölkerungspyramide
+### Bevölkerungspyramide {#pyramid}
+
 Häufig ist die größte Herausforderung, die Daten so umzustellen, dass sie zum gewünschten `graph`-Befehl passen. Ein Beispiel ist die Erstellung einer Bevölkerungspyramide aus den Allbusdaten:
 
 ```{r pyra1, echo = F,out.width = "60%",out.height= "60%", fig.align="center"}
@@ -375,7 +534,7 @@ knitr::include_graphics("04_pyramid.png")
 
 Auch diese Bevölkerungspyramide lässt sich als Stata-Grafik erstellen. Allerdings müssen dazu einige Zwischenschritte durchlaufen, die fortgeschrittene Datenaufbereitung mit `collapse` voraussetzen. Außerdem könnte ein Teil der Aufbereitung mit `separate` abgekürzt werden. Mehr Informationen dazu finden sich am Ende dieses Skripts in Kapitel [11](#adva).
 
-Die grundsätzliche Funktion für die Bevölkerungspyramide ist ein Balkendiagramm mit `graph twoway hbar`. Die Länge der Balken soll jeweils durch die Anzahl der Fälle in jeder Altersstufe, getrennt nach Geschlecht, bestimmt werden. Dazu müssen wir also zunächst die Anzahl der Befragten pro Alterstufe und Geschlecht bestimmen. Wenn wir den Allbus 2018 laden, haben wir ja einen Datensatz mit einer Zeile pro Person. Was wir jetzt aber benötigen ist eine Variante, in der wir den Datensatz sozusagen "zusammenschieben": wir brauchen jeweils eine Zeile pro Altersstufe und Geschlecht und eine Variable mit der Zahl der Befragten.
+Die grundsätzliche Funktion für die Bevölkerungspyramide ist ein Balkendiagramm mit `graph twoway bar , horizontal`. Die Länge der Balken soll jeweils durch die Anzahl der Fälle in jeder Altersstufe, getrennt nach Geschlecht, bestimmt werden. Dazu müssen wir also zunächst die Anzahl der Befragten pro Alterstufe und Geschlecht bestimmen. Wenn wir den Allbus 2018 laden, haben wir ja einen Datensatz mit einer Zeile pro Person. Was wir jetzt aber benötigen ist eine Variante, in der wir den Datensatz sozusagen "zusammenschieben": wir brauchen jeweils eine Zeile pro Altersstufe und Geschlecht und eine Variable mit der Zahl der Befragten.
 
 ```{r, echo =F}
 a18 <- haven::read_dta("../Allbus2018.dta")
@@ -400,19 +559,19 @@ Um verwirrung zu vermeiden, benennen wir `respid` in `total ` um:
 ```{stata, eval = F}
 rename respid Anzahl_Befragte
 ```
-Allerdings möchten wir jetzt die Angaben für Frauen und Männer in getrennte Variablen ablegen.[^048]
+Allerdings möchten wir jetzt die Angaben für Frauen und Männer in getrennte Variablen ablegen.[^049]
 ```{stata, eval = F}
 gen total_m = Anzahl_Befragte if sex == 1
 gen total_f = Anzahl_Befragte if sex == 2
 list in 1/10
 ```
-[^048]: Eine Abkürzung für diesen Schritt mit Hilfe von `separate` findet sich in Kapitel [11](#adva) 
+[^049]: Eine Abkürzung für diesen Schritt mit Hilfe von `separate` findet sich in Kapitel [11](#adva) 
 
 ```{r, echo =F}
 a18 %>% filter(age>0,sex>0) %>%  group_by(age,sex) %>% count(name = "total") %>% ungroup() %>% mutate(total_m = ifelse(sex == 1, total,"."),total_f = ifelse(sex == 2, total,".")) %>% slice(1:10) %>% data.frame(.)
 ```
 
-Jetzt können wir daraus ein Balkendiagramm erstellen:
+Jetzt können wir daraus ein Balkendiagramm erstellen, wobei wir zwei `twoway` kombinieren - wie schon beim Scatterplot:
 ```{stata, eval = F}
 twoway( bar total_m age, horizontal )(bar total_f age, horizontal)
 ```
@@ -453,25 +612,6 @@ scheme(plotplain) xtitle("{stSerif: Anzahl Befragte}") ytitle("{stSerif: Alter B
 knitr::include_graphics("04_pyramid_final.png")
 ```
 
-
-## Anhang
-
-
-### Aufbereitung für Boxplot {#aufb1}
-```{stata, eval = F, echo = T}
-cd ""
-use "Allbus_2018.dta", clear
-replace inc = . if inc < 0
-replace age = . if age < 0
-
-egen age_c = cut(age), at(20,35,50,65)
-lab def agec1 20 "20-34" 35 "35-49" 50 "50-64"
-lab val age_c agec1
-gen inc_m = inc if sex == 1
-gen inc_f = inc if sex == 2
-lab var inc_m "Männer"
-lab var inc_f "Frauen"
-```
 
 ### Boxplot  {#boxplot1}
 
@@ -533,4 +673,5 @@ ggplot(filter(ak,hs16>0), aes(x = 0, y = hs16)) +
 
 ```
 
-
+<!-- ##  Gruppierte Darstellungen  -->
+<!-- Neben `,by()` können wir in `graph box` auch  -->
