@@ -169,6 +169,7 @@ tabulate xr20 sex, col nofreq
 
 Für die **Spaltenprozente** werden die Werte in Bezug zu den Spaltensummen gesetzt. Also wird die Anzahl der 1x/Woche Internet nutzenden Frauen ins Verhältnis zur Zahl der befragten Frauen gesetzt: $\frac{\text{Anzahl 1x/Woche Internet nutzender Frauen}}{\text{Gesamtzahl der befragten Frauen}}$ - Interpretation: "2,65% der *befragten Frauen* nutzen einmal pro Woche das Internet" 
 
+**[Übung1](#tab)**
 
 ## Metrische Variablen beschreiben
 
@@ -277,6 +278,7 @@ Hier eine Übersicht der Kennzahlen:
 ```{r, ft.align = "center",message=F,warning=F, echo = F}
 library(kableExtra)
 opts <- options(knitr.kable.NA = "")
+
 readxl::read_xlsx("03_tabstat.xlsx",sheet = 1) %>% 
   kable() %>% 
   kable_styling(bootstrap_options = "condensed", full_width = F) %>% 
@@ -326,30 +328,6 @@ Wir sehen hier also, dass sowohl das arith. Mittel als auch der Median des Befra
 
 Eine andere Option ist es, auf den `if`-Befehl zurückzugreifen - siehe [hier](#if_vgl)
 
-
-### `tabulate` mit der Option `summarize()` 
-
-Wir können aber auch zwei Variablen für den Kennzahlenvergleich verwenden. Bspw. sind neben Ost-West-Vergleichen auch häufig Geschlechterunterschiede von Interesse. Stata stellt uns damit mit der `summarise`-Option eine einfache Möglichkeit zur Verfügung:
-
-```{stata tabsuF, eval = F}
-tab sex eastwest, summarize(age)
-```
-```{stata tabsuT, echo = F}
-set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-qui mvdecode age, mv(-32)
-tab sex eastwest, summarize(age)
-```
-
-Wir sehen hier, dass 1222 Männer aus den alten Bundesländern befragt wurden, die im Durchschnitt 50.5982 alt sind. Die Standardabweichung des Alters in dieser Gruppe beträgt 18.177659 Jahre. Außerdem wurden 539 Frauen aus den neuen Bundesländern befragt, die im arith. Mittel 54.58256 alt sind und deren Altersangaben eine Standardabweichung 16.720148 aufweisen.
-
-Je nach Präferenz können wir eine der drei Kennzahlen (Anzahl der Beobachtungen, arith. Mittel und Standardabw.) ausblenden in dem wir die entsprechende Option verwenden:
-
-+ `nofreq`               Häufigkeiten ausblenden
-+ `nomeans`              arith. Mittel ausblenden
-+ `nostandard`           Standardabw. ausblenden
-  
-`tab sex eastwest, summarize(age) nofreq` würde uns also nur die arith. Mittel und Standardabweichungen ausgeben.  
 
 
 
@@ -446,14 +424,71 @@ $\Rightarrow$ Für welches Geschlecht ist die Streuung also größer?[^034]
 
 ### Schiefe & Wölbung {#sk_kur}
 
-Skewness is a measure of the lack of symmetry of a distribution. If the distribution is symmetric, the coefficient of skewness is 0. If the coefficient is negative, the median is usually greater than the mean and the distribution is said to be skewed left. If the coefficient is positive, the median is usually less than the mean and the distribution is said to be skewed right. Kurtosis (from the Greek kyrtosis, meaning curvature) is a measure of peakedness of a distribution. The smaller the coefficient of kurtosis, the flatter the distribution. The normal distribution has a coefficient of kurtosis of 3 and provides a convenient benchmark.
+Die Schiefe (skewness) ist ein Maß für die Asymmetrie einer Verteilung. Bei einer symmetrischen Verteilung beträgt die Schiefe 0. Ein negativer Wert für die Schiefe deutet darauf hin, dass Median > Mean und Verteilung wird als links-schief/rechts-steil bezeichnet. Bei einem positiven Wert der Schiefe ist Median < Mean und die Verteilung ist rechts-schief/links-steil. 
+
+Die Wölbung (Kurtosis) ist ein Maß für die Steilheit bzw. "Spitzigkeit" einer Verteilung. Je kleiner der Wert der Kurtosis, desto desto flacher die Verteilung. Bspw. hat die Normalverteilung hat eine Kurtosis von 3.
+
+```{r skew_kurt_graph, echo=F, warning=F, message=F, out.height="75%", out.width="100%", fig.align="center"}
+d1 <-  readr::read_delim("D:/oCloud/RFS/allbus_kumuliert.csv", delim = ";", col_types = cols(.default = col_double())) %>% 
+  mutate_all(~ifelse(.<0,NA,.)) %>% 
+  mutate(across(everything(),~ifelse(.x<0,NA,.x))) %>% 
+  filter(year == 2004, inc <= 20000, !is.na(inc), sex == 1)
+  
+f_kurt1 <- moments::kurtosis(d1$inc[d1$sex==1])
+f_skew1 <- moments::skewness(d1$inc[d1$sex==1])
+library(paletteer)
+p1 <- ggplot(data = d1[d1$sex==1,], aes(x=inc)) +
+  geom_density(color = "#2297E6FF", fill = alpha("#2297E6FF",.1), size = .5,n=200) + 
+  theme_void(base_size = 7) +
+  labs(y = "", x = "", title = paste0("Schiefe = ",sprintf("%1.3f",f_skew1)," Wölbung = ", sprintf("%1.3f",f_kurt1))) +
+  theme(plot.title = element_text(hjust = 0.5),plot.subtitle = element_text(hjust = 0.5)) +
+  geom_segment(data = data.frame(inc = mean(d1$inc)),aes(x=inc,xend =inc,y=0,yend = 6e-04),  color = "#AF6125FF") +
+  geom_segment(data = data.frame(inc = median(d1$inc)),aes(x=inc,xend =inc,y=0,yend = 6e-04),color = "#172869")+
+  geom_label(data = data.frame(inc = mean(d1$inc),lab1 = "mean"),  aes(x=inc, y= 5e-04,label=lab1),size= 3.5,hjust=0,color = "#AF6125FF") +
+  geom_label(data = data.frame(inc = median(d1$inc),lab1="median"),aes(x=inc, y= 4e-04,label=lab1),size= 3.5,hjust=1,color = "#172869") +
+  expand_limits(x= -2000)
+
+d2 <- tibble(x = c(seq(0,4,.01),rep(4.4,90)) ) %>% mutate(educ = df(x, df1 = 300, df2 = 2)*-1)
+f_kurt2 <- moments::kurtosis(d2$educ)
+f_skew2 <- moments::skewness(d2$educ)
+p2 <- ggplot(data = d2, aes(x=educ)) +
+  geom_density(color = "#2297E6FF", fill = alpha("#2297E6FF",.1), size = .5) + 
+  theme_void(base_size = 7) +
+  labs(y = "", x = "", title = paste0("Schiefe = ",sprintf("%1.3f",f_skew2)," Wölbung = ", sprintf("%1.3f",f_kurt2))) +
+  theme(plot.title = element_text(hjust = 0.5),plot.subtitle = element_text(hjust = 0.5)) +
+  geom_segment(data = data.frame(educ = mean(d2$educ)),aes(x=educ,xend =educ,y=0,yend = 8),  color = "#AF6125FF") +
+  geom_segment(data = data.frame(educ = median(d2$educ)),aes(x=educ,xend =educ,y=0,yend = 8),color = "#172869")+
+  geom_label(data = data.frame(educ = mean(d2$educ),lab1 = "mean"),  aes(x=educ, y= 3,label=lab1),size= 3.5,hjust=1,color ="#AF6125FF") +
+  geom_label(data = data.frame(educ = median(d2$educ),lab1="median"),aes(x=educ, y= 4,label=lab1),size= 3.5,hjust=0,color = "#172869") +
+  expand_limits(x= .02)
+
+
+
+d3 <- tibble(educ = c(seq(0,4,.01),rep(2,20),rep(4.1,10)) ) 
+f_kurt3 <- moments::kurtosis(d3$educ)
+f_skew3 <- moments::skewness(d3$educ)
+p3 <- ggplot(data = d3, aes(x=educ)) +
+  geom_density(color = "#3397E6FF", fill = alpha("#3397E6FF",.1), size = .5) + 
+  theme_void(base_size = 7) +
+  labs(y = "", x = "", title = paste0("Schiefe = ",sprintf("%1.3f",f_skew3)," Wölbung = ", sprintf("%1.3f",f_kurt3))) +
+  theme(plot.title = element_text(hjust = 0.5),plot.subtitle = element_text(hjust = 0.5)) +
+  geom_segment(data = data.frame(educ = mean(d3$educ)),aes(x=educ,xend =educ,y=0,yend = 1),  color = "#AF6135FF") +
+  geom_segment(data = data.frame(educ = median(d3$educ)),aes(x=educ,xend =educ,y=0,yend =1),color = "#173869")+
+  geom_label(data = data.frame(educ = mean(d3$educ),lab1 = "mean"),  aes(x=educ, y= .35,label=lab1),size= 3.5,hjust=0,color ="#AF6135FF") +
+  geom_label(data = data.frame(educ = median(d3$educ),lab1="median"),aes(x=educ, y= .45,label=lab1),size= 3.5,hjust=1,color = "#173869")
+library(patchwork)
+p1 + p2 + p3 + plot_layout(nrow = 1)
+```
+
+
+In Stata bekommen wir die Schiefe und Wölbung einer Verteilung mit `summary varname,detail` angezeigt.
 
 
 ### Gini-Koeffizient
 
 Zur Beschreibung der (Ungleich-)Verteilung von metrischen Variablen, insbesondere bei Einkommens- und Vermögensdaten wird häufig der Gini-Koeffizient verwendet. Der Gini-Koeffizient beruht auf der Fläche zwischen der Lorenzkurve und der Gleichverteilung. Auf der x-Achse werden die kumulierten Perzentile der Befragten abgetragen, auf der y-Achse die Perzentile des HH-Einkommens:
 
-```{r dpi = 900, echo=F, warning=F, message=F, out.height="75%", out.width="75%", fig.align="center"}
+```{r gini_plot, echo=F, warning=F, message=F, out.height="75%", out.width="75%", fig.align="center"}
 gdf <- a18 %>% mutate(across(di05,~ifelse(.x<0,NA,.x)) ) %>%  na.omit() %>% 
   select(respid, di05) %>% arrange(di05) %>% 
   mutate(pct_id = 1:n()/n(),
@@ -533,36 +568,43 @@ $\Rightarrow$ *Wo sind die Haushaltseinkommen also ungleicher verteilt?*[^033]
 Anmerkung: hier wurden die Missings in `di05` mit `mvdecode di05, mv(-50 -32 -7)` ausgeschlossen.
 
 
-## Übungen
+## Übungen 
+
+### Übung 1 {#tab}
+
+(@) Wir interessieren uns für die Variable `gkpol`. 
 
 Laden Sie den Allbusdatensatz für 2018 `Allbus2018.dta` in Stata:
 ```{r einls, eval=F, echo = T}
 cd("...") # wo liegt der Datensatz?
 use " Allbus2018.dta"
 ```
+    + Lassen Sie sich eine Tabelle für `gkpol` anzeigen. Welche ist die häufigste Ausprägung?
+    + Hat die Variable fehlende Werte, die Sie ausschließen sollten? Falls ja, ersetzen Sie diese Werte mit `mvdecode` und lassen Sie sich die Tabelle erneut ausgeben.
+    + Wie viele Befragte leben in einem Ort mit höchstens 49.999 Einwohnern?
+    + Wie groß ist der Anteil der Befragten, die in einem Ort mit höchstens 99.999 Einwohnern leben?
+    + Wie groß ist der Anteil der Befragten, die in einem Ort mit *mindestens* 100.000 Einwohnern leben?
 
-(@) Wir interessieren uns für die Variable `gkpol`. 
+### Übung 2 {#met}  
 
-  + Lassen Sie sich eine Tabelle für `gkpol` anzeigen. Welche ist die häufigste Ausprägung?
-  + Hat die Variable fehlende Werte, die Sie ausschließen sollten? Falls ja, ersetzen Sie diese Werte mit `mvdecode` und lassen Sie sich die Tabelle erneut ausgeben.
-  + Wie viele Befragte leben in einem Ort mit höchstens 49.999 Einwohnern?
-  + Wie groß ist der Anteil der Befragten, die in einem Ort mit höchstens 99.999 Einwohnern leben?
-  + Wie groß ist der Anteil der Befragten, die in einem Ort mit *mindestens* 100.000 Einwohnern leben?
-  
+
+
+### Weitere Übungen
+
 (@) Erstellen Sie eine Häufigkeitstabelle für das Geburtsjahr der Befragten (`yborn`)!
-  + Müssen Sie die Variable erst klassieren um eine sinnvoll interpretierbare Tabelle zu erhalten? 
-  + Gibt es fehlende Werte, die Sie mit `mvdecode` überschreiben sollten?
-  + Verwenden Sie die Jahrzehntgrenzen ab 1910.
-  + Erstellen Sie eine Tabelle für die neu erstellte, kategorisierte Variable.
-  + Wie groß ist der Anteil der Befragten, die bis 1970 geboren wurden?
-  + Wie groß ist der Anteil der Befragten, die nach 1980 geboren wurden?
+    + Müssen Sie die Variable erst klassieren um eine sinnvoll interpretierbare Tabelle zu erhalten? 
+    + Gibt es fehlende Werte, die Sie mit `mvdecode` überschreiben sollten?
+    + Verwenden Sie die Jahrzehntgrenzen ab 1910.
+    + Erstellen Sie eine Tabelle für die neu erstellte, kategorisierte Variable.
+    + Wie groß ist der Anteil der Befragten, die bis 1970 geboren wurden?
+    + Wie groß ist der Anteil der Befragten, die nach 1980 geboren wurden?
   
 (@) Erstellen Sie eine Kontingenztabelle für `sex` und `educ`. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte auszuschließen.
-+ Erstellen Sie für die folgenden Fragen jeweils die passende Variante der Kontingenztabelle mit relativen Häufigkeiten als Zeilen- oder Spaltenprozenten. 
-+ Welcher Anteil der Befragten mit Fachhochschulreife ist männlich?
-+ Wie hoch ist der Anteil der Frauen an Befragten mit Hauptschulabschluss?
-+ Welcher Anteil der Frauen hat Abitur?
-+ Wie hoch ist der Anteil der Realschulabsolventen an allen befragten Männern?
+    + Erstellen Sie für die folgenden Fragen jeweils die passende Variante der Kontingenztabelle mit relativen Häufigkeiten als  Zeilen- oder Spaltenprozenten. 
+    + Welcher Anteil der Befragten mit Fachhochschulreife ist männlich?
+    + Wie hoch ist der Anteil der Frauen an Befragten mit Hauptschulabschluss?
+    + Welcher Anteil der Frauen hat Abitur?
+    + Wie hoch ist der Anteil der Realschulabsolventen an allen befragten Männern?
 
 
 
@@ -570,19 +612,18 @@ use " Allbus2018.dta"
 
 Für alle, die noch etwas mehr machen möchten: 
 
-Nutzen Sie den Allbus2018 und erstellen Sie eine Kontingenztabelle für `sex` und `gkpol`. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte mit  `mvdecode` auszuschließen.
+(@) Nutzen Sie den `Allbus2018.dta` und erstellen Sie eine Kontingenztabelle für `sex` und `gkpol`. Welche Merkmalskombination ist die häufigste? 
+    + Denken Sie daran, fehlende Werte mit  `mvdecode` auszuschließen.
+    + Erstellen Sie die Kontingenztabelle der beiden Variablen.
+    + Welcher Anteil der Befragten aus Städten mit über 500.000 Einwohnern ist weiblich?
+    + Wie hoch ist der Anteil der Männer an Befragten, die in Orten mit unter 2.000 Einwohnern leben?
+    + Welcher Anteil der Frauen lebt in Städten mit 50.000 bis 99.999 Einwohnern?
+    + Wie hoch ist der Anteil der Bewohner von Städten mit 20.000 bis 49.999 Einwohnern an allen befragten Männern?
 
-+ Erstellen Sie die Kontingenztabelle der beiden Variablen.
-+ Welcher Anteil der Befragten aus Städten mit über 500.000 Einwohnern ist weiblich?
-+ Wie hoch ist der Anteil der Männer an Befragten, die in Orten mit unter 2.000 Einwohnern leben?
-+ Welcher Anteil der Frauen lebt in Städten mit 50.000 bis 99.999 Einwohnern?
-+ Wie hoch ist der Anteil der Bewohner von Städten mit 20.000 bis 49.999 Einwohnern an allen befragten Männern?
-
-Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und analysieren Sie, wie sich die Anteile der geschiedenen Befragten über die Befragungsjahre verändert haben!
-
-+ Das Befragungsjahr finden Sie in der Variable `year`, `mstat` ist auch hier die Variable für den Familienstand.
-+ In welchem Jahr gab es den höchsten Anteil an geschiedenen Befragten?
-+ Aus welchem Jahr stammen die Angaben der meisten geschiedenen Befragten?
+(@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und analysieren Sie, wie sich die Anteile der geschiedenen Befragten über die Befragungsjahre verändert haben!
+    + Das Befragungsjahr finden Sie in der Variable `year`, `mstat` ist auch hier die Variable für den Familienstand.
+    + In welchem Jahr gab es den höchsten Anteil an geschiedenen Befragten?
+    + Aus welchem Jahr stammen die Angaben der meisten geschiedenen Befragten?
 
 <!-- Vereinfachen: tab , gen -->
 <!-- evtl. sogar Vorgriff auf collapse? -->
@@ -647,6 +688,32 @@ qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 qui mvdecode age, mv(-32)
 bys eastwest: summarize age 
 ```
+
+## Exkurs: Kennzahlvergleich mit `tabulate` und der Option `summarize()` 
+
+Wir können aber auch zwei Variablen für den Kennzahlenvergleich verwenden. Bspw. sind neben Ost-West-Vergleichen auch häufig Geschlechterunterschiede von Interesse. Stata stellt uns damit mit der `summarise`-Option eine einfache Möglichkeit zur Verfügung:
+
+```{stata tabsuF, eval = F}
+tab sex eastwest, summarize(age)
+```
+```{stata tabsuT, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode age, mv(-32)
+tab sex eastwest, summarize(age)
+```
+
+Wir sehen hier, dass 1222 Männer aus den alten Bundesländern befragt wurden, die im Durchschnitt 50.5982 alt sind. Die Standardabweichung des Alters in dieser Gruppe beträgt 18.177659 Jahre. Außerdem wurden 539 Frauen aus den neuen Bundesländern befragt, die im arith. Mittel 54.58256 alt sind und deren Altersangaben eine Standardabweichung 16.720148 aufweisen.
+
+Je nach Präferenz können wir eine der drei Kennzahlen (Anzahl der Beobachtungen, arith. Mittel und Standardabw.) ausblenden in dem wir die entsprechende Option verwenden:
+
++ `nofreq`               Häufigkeiten ausblenden
++ `nomeans`              arith. Mittel ausblenden
++ `nostandard`           Standardabw. ausblenden
+  
+`tab sex eastwest, summarize(age) nofreq` würde uns also nur die arith. Mittel und Standardabweichungen ausgeben.  
+
+
 
 
 
