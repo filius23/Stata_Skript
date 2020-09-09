@@ -285,6 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="zshg.html"><a href="zshg.html#anhang"><i class="fa fa-check"></i><b>6.5</b> Anhang</a><ul>
 <li class="chapter" data-level="6.5.1" data-path="zshg2.html"><a href="zshg2.html#lpattern"><i class="fa fa-check"></i><b>6.5.1</b> Optionen für <code>lpattern</code></a></li>
+<li class="chapter" data-level="6.5.2" data-path="zshg2.html"><a href="zshg2.html#scatterplot-für-kategoriale-merkmale"><i class="fa fa-check"></i><b>6.5.2</b> Scatterplot für kategoriale Merkmale</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a><ul>
@@ -598,6 +599,16 @@ KEINS VON BEIDEN |       274        433        187        159         46        
 <div id="lpattern" class="section level3">
 <h3><span class="header-section-number">6.5.1</span> Optionen für <code>lpattern</code></h3>
 <p><img src="06_lpattern.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="scatterplot-für-kategoriale-merkmale" class="section level3">
+<h3><span class="header-section-number">6.5.2</span> Scatterplot für kategoriale Merkmale</h3>
+<p>Scatterplots für kategoriale Merkmale sind oft wenig Aussagekräftig.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb35-1"><a href="zshg2.html#cb35-1"></a><span class="kw">twoway</span> <span class="kw">scatter</span> mi02 educ, <span class="kw">by</span>(sex) </span></code></pre></div>
+<p><img src="06_no_jitter.png" width="90%" height="90%" style="display: block; margin: auto;" /></p>
+<p>Eine Möglichkeit ist ein sog. Jitter, dazu hängen wir <code>jitter(5 5)</code> an einen <code>twoway scatter</code>:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="zshg2.html#cb36-1"></a><span class="kw">twoway</span> <span class="kw">scatter</span> mi02 educ, <span class="kw">by</span>(sex) jitter(5 5) <span class="co">///</span></span>
+<span id="cb36-2"><a href="zshg2.html#cb36-2"></a>  msize(vsmall) mcolor(<span class="bn">eggshell</span>) mlcolor(<span class="bn">black</span>) mlwidth(vthin) </span></code></pre></div>
+<p><img src="06_jitter.png" width="90%" height="90%" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>

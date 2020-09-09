@@ -374,4 +374,22 @@ knitr::include_graphics("06_cdb_hw01.png")
 knitr::include_graphics("06_lpattern.png")
 ```
 
+### Scatterplot für kategoriale Merkmale
 
+Scatterplots für kategoriale Merkmale sind oft wenig Aussagekräftig. 
+
+```{stata scatter_nojitter1, eval = F}
+twoway scatter mi02 educ, by(sex) 
+```
+```{r scatter_nojitter, echo = F,out.width = "90%",out.height="90%", fig.align="center"}
+knitr::include_graphics("06_no_jitter.png")
+```
+
+Eine Möglichkeit ist ein sog. Jitter, dazu hängen wir `jitter(5 5)` an einen `twoway scatter`:
+```{stata scatter_jitter1, eval = F}
+twoway scatter mi02 educ, by(sex) jitter(5 5) ///
+  msize(vsmall) mcolor(eggshell) mlcolor(black) mlwidth(vthin) 
+```
+```{r scatter_jitter, echo = F,out.width = "90%",out.height="90%", fig.align="center"}
+knitr::include_graphics("06_jitter.png")
+```
