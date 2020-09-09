@@ -120,7 +120,7 @@ graph twoway ///
 ```
 
 
-```{r scatter_lfit_fancy, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+```{r scatter_lfit_fancy, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
 knitr::include_graphics("06_scatter_lfit_fancy.png")
 ```
 
@@ -242,8 +242,8 @@ graph combine men women, rows(1) iscale(*.95) xsize(4) ysize(2)
 ```
 
 
-```{r mosaik_bysex_p,echo = F,out.width = "80%",out.height="80%", fig.align="center"}
-knitr::include_graphics("06_scatter_lfit_fancy.png")
+```{r mosaik_bysex_p,echo = F,out.width = "100%",out.height="100%", fig.align="center"}
+knitr::include_graphics("06_mosaik_combined.png")
 ```
 
 Hier noch eine Erklärung zu den Optionen in `graph combine`:

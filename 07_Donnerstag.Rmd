@@ -511,9 +511,9 @@ ggplot(data = data1, aes(x=z, y =nv_cumdens)) +
 dens1+cum1 + plot_layout(ncol = 2)
 ```
 
-Wir können mit `pnorm`  berechnen lassen, wie groß jeweils die Fläche *links* von einem bestimmten Punkt auf der x-Achsen ist. Dazu setzen wir den z-Wert als `q` ein:
-```{r}
-pnorm(q=-0.674)
+Wir können mit `normal`  berechnen lassen, wie groß jeweils die Fläche *links* von einem bestimmten Punkt auf der x-Achsen ist. Dazu setzen wir den z-Wert ein:
+```{stata}
+display normal(-0.674)
 ```
 Noch einmal zusammengefasst: 25% der Verteilung liegen links des z-Werts von -0.674. `z = -0.674` ist also die 1. Quartilsgrenze für eine Standardnormalverteilung. $\rightarrow$ 75% der Verteilung liegen rechts von `z = -0.674`.
 
@@ -547,8 +547,8 @@ nv_iq + dnorm1
 ```
 
 Diesen z-Wert von 2 können wir nun in die Verteilungsfunktion einsetzen:
-```{r}
-pnorm(q=2)
+```{stata}
+display normal(2)
 ```
 
 `r round(pnorm(q=2)*100,3)`% aller IQ-Werte sind also kleiner als 130. Daraus ergibt sich auch: $100\%-`r round(pnorm(q=2)*100,3)`\% =$ `r round(100-pnorm(q=2)*100,3)`% aller IQ-Werte sind *größer* als 130.
@@ -580,7 +580,7 @@ In der Praxis wird die Standardnormalverteilung aber nur selten genutzt, denn da
 
 Die t-Verteilung ähnelt der Standardnormalverteilung, beide haben einen Mittelwert von $\mu = 0$. Streng genommen gibt es jedoch nicht eine t-Verteilung, sondern viele - diese unterscheiden sich durch die sogenannten Freiheitsgrade. Dieser wird mit `df` ("degrees of freedom") abgekürzt und entspricht der "Stichprobengröße minus 1": $n-1$. Im Vergleich zur Standardnormalverteilung hat die t-Verteilung "breitere" Ränder, die sich aber bei steigender Stichprobengröße (höheren `df`) der Standardnormalverteilung annähern:
 
-```{r, out.height="50%", out.width="50%", fig.align='center', eval = F, echo = F}
+```{r,out.width="100%", fig.align='center', eval = F, echo = F}
 data1$t.var <- dt(x=data1$z,df =  2) # Dichtefunktion der t-Verteilung mit df=2
 data1$t.var10 <- dt(x=data1$z,df =  10) # Dichtefunktion der t-Verteilung mit df=10
 ggplot(data = data1, aes(x=z)) + 

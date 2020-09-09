@@ -533,14 +533,14 @@ Die <strong>Standardnormalverteilung</strong> hat einen Mittelwert von 0 und ein
 <!-- Die Dichtefunktion der Standardnormalverteilung können wir in Stata mit `dnorm` erzeugen: -->
 <p><img src="Stata_Skript_files/figure-html/w8_1-1.png" width="50%" height="50%" style="display: block; margin: auto;" /></p>
 <p>Wir können gut erkennen, dass es sich um eine symmetrische Verteilung handelt. Für die Normalverteilung gilt, dass die Fläche unterhalb der Dichtefunktion (also unter der Linie) immer 1 beträgt. Für die Standardnormalverteilung werden die x-Achsenwerte auch als z-Werte bezeichnet. Wenn wir vom Mittelwert aus jeweils bestimmte z-Werte nach rechts und links (also positiv und negativ) als Grenzen für Teilflächen einziehen, ergeben sich verschiedene Standardwerte:</p>
-<p><img src="Stata_Skript_files/figure-html/w8_2-1.png" width="95%" style="display: block; margin: auto;" /></p>
+<p><img src="Stata_Skript_files/figure-html/w8_2-1.png" width="100%" style="display: block; margin: auto;" /></p>
 <div id="verteilungsfunktion" class="section level4">
 <h4><span class="header-section-number">7.5.1.1</span> Verteilungsfunktion</h4>
 <p>Die Übersetzung des z-Werts (x-Achsenabschnitts) in die Flächengröße leistet die sog. Verteilungsfunktion. Diese gibt die <em>kumulierte</em> Fläche wieder. Vergleichen Sie die beiden y-Achsen: für <code>z</code> <span class="math inline">\(\rightarrow + \infty\)</span> (“ganz rechts”) nähert sich die Verteilungsfunktion 1 an:</p>
-<p><img src="Stata_Skript_files/figure-html/w8_3-1.png" width="70%" height="35%" style="display: block; margin: auto;" /></p>
-<p>Wir können mit <code>pnorm</code> berechnen lassen, wie groß jeweils die Fläche <em>links</em> von einem bestimmten Punkt auf der x-Achsen ist. Dazu setzen wir den z-Wert als <code>q</code> ein:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="inf1.html#cb47-1"></a><span class="kw">pnorm</span>(<span class="dt">q=</span><span class="op">-</span><span class="fl">0.674</span>)</span></code></pre></div>
-<pre><code>[1] 0.2501557</code></pre>
+<p><img src="Stata_Skript_files/figure-html/w8_3-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Wir können mit <code>normal</code> berechnen lassen, wie groß jeweils die Fläche <em>links</em> von einem bestimmten Punkt auf der x-Achsen ist. Dazu setzen wir den z-Wert ein:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb47-1"><a href="inf1.html#cb47-1"></a><span class="kw">display</span> <span class="fu">normal</span>(-0.674)</span></code></pre></div>
+<pre><code>.25015566</code></pre>
 <p>Noch einmal zusammengefasst: 25% der Verteilung liegen links des z-Werts von -0.674. <code>z = -0.674</code> ist also die 1. Quartilsgrenze für eine Standardnormalverteilung. <span class="math inline">\(\rightarrow\)</span> 75% der Verteilung liegen rechts von <code>z = -0.674</code>.</p>
 <p><strong>Warum ist das interessant?</strong> Wir können damit für normalverteilte Merkmale und Kennzahlen (und das sind viele) Aussagen mit Blick auf eine Grundgesamtheit treffen, indem wir den interessierenden Wert <em>standardisieren</em>.</p>
 </div>
@@ -550,8 +550,8 @@ Die <strong>Standardnormalverteilung</strong> hat einen Mittelwert von 0 und ein
 <span class="math display">\[z=\frac{x-\mu}{\sigma}\]</span> Also setzen wir ein und erhalten <span class="math inline">\(\frac{130-100}{15} = 2\)</span>:
 <img src="Stata_Skript_files/figure-html/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>Diesen z-Wert von 2 können wir nun in die Verteilungsfunktion einsetzen:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="inf1.html#cb49-1"></a><span class="kw">pnorm</span>(<span class="dt">q=</span><span class="dv">2</span>)</span></code></pre></div>
-<pre><code>[1] 0.9772499</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb49-1"><a href="inf1.html#cb49-1"></a><span class="kw">display</span> <span class="fu">normal</span>(2)</span></code></pre></div>
+<pre><code>.97724987</code></pre>
 <p>97.725% aller IQ-Werte sind also kleiner als 130. Daraus ergibt sich auch: <span class="math inline">\(100\%-97.725\% =\)</span> 2.275% aller IQ-Werte sind <em>größer</em> als 130.</p>
 <p>Wir können auch umgekehrt fragen, welcher IQ-Wert nötig ist, um zu den höchsten 1% zu gehören. Dazu formen wir die Standardisierungsformel zu <span class="math inline">\(\mu+z\times\sigma\)</span> um. <span class="math inline">\(\mu\)</span>=100,<span class="math inline">\(\sigma\)</span> = 15 ergeben sich aus der IQ-Definition. Den z-Wert für das 99%-Quantil bekommen wir mit <code>qnorm(p=99)</code>:</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="inf1.html#cb51-1"></a><span class="kw">qnorm</span>(<span class="dt">p =</span> <span class="fl">0.99</span>)</span></code></pre></div>

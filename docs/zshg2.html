@@ -287,7 +287,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5.1" data-path="zshg2.html"><a href="zshg2.html#lpattern"><i class="fa fa-check"></i><b>6.5.1</b> Optionen für <code>lpattern</code></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a></li>
+<li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a><ul>
+<li class="chapter" data-level="7.1" data-path="inf1.html"><a href="inf1.html#inferenz"><i class="fa fa-check"></i><b>7.1</b> Inferenz</a></li>
+<li class="chapter" data-level="7.2" data-path="inf1.html"><a href="inf1.html#parametrische-ki-schätzung"><i class="fa fa-check"></i><b>7.2</b> Parametrische KI-Schätzung</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="inf1.html"><a href="inf1.html#t-z-wert"><i class="fa fa-check"></i><b>7.2.1</b> t-/z-Wert</a></li>
+<li class="chapter" data-level="7.2.2" data-path="inf1.html"><a href="inf1.html#standardfehler"><i class="fa fa-check"></i><b>7.2.2</b> Standardfehler</a></li>
+<li class="chapter" data-level="7.2.3" data-path="inf1.html"><a href="inf1.html#kis-berechnen"><i class="fa fa-check"></i><b>7.2.3</b> KIs berechnen</a></li>
+<li class="chapter" data-level="7.2.4" data-path="inf1.html"><a href="inf1.html#mean"><i class="fa fa-check"></i><b>7.2.4</b> <code>mean</code></a></li>
+<li class="chapter" data-level="7.2.5" data-path="inf1.html"><a href="inf1.html#vergleich"><i class="fa fa-check"></i><b>7.2.5</b> Vergleich</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="inf1.html"><a href="inf1.html#bootstrapping"><i class="fa fa-check"></i><b>7.3</b> Bootstrapping</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="inf1.html"><a href="inf1.html#normale-approximation"><i class="fa fa-check"></i><b>7.3.1</b> Normale Approximation</a></li>
+<li class="chapter" data-level="7.3.2" data-path="inf1.html"><a href="inf1.html#perzentil"><i class="fa fa-check"></i><b>7.3.2</b> Perzentil</a></li>
+<li class="chapter" data-level="7.3.3" data-path="inf1.html"><a href="inf1.html#die-kis-im-vergleich"><i class="fa fa-check"></i><b>7.3.3</b> Die KIs im Vergleich</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="inf1.html"><a href="inf1.html#übungen-7"><i class="fa fa-check"></i><b>7.4</b> Übungen 7</a></li>
+<li class="chapter" data-level="7.5" data-path="inf1.html"><a href="inf1.html#anhang-kap7"><i class="fa fa-check"></i><b>7.5</b> Anhang Kap7</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="inf1.html"><a href="inf1.html#normalverteilung"><i class="fa fa-check"></i><b>7.5.1</b> Normalverteilung</a></li>
+<li class="chapter" data-level="7.5.2" data-path="inf1.html"><a href="inf1.html#student-t-verteilung"><i class="fa fa-check"></i><b>7.5.2</b> Student t-Verteilung</a></li>
+<li class="chapter" data-level="7.5.3" data-path="inf1.html"><a href="inf1.html#t-standardisierung"><i class="fa fa-check"></i><b>7.5.3</b> t-Standardisierung</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="inf2.html"><a href="inf2.html"><i class="fa fa-check"></i><b>8</b> Inferenzstatistik II</a></li>
 <li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Hypothesentests</a></li>
 <li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a></li>
@@ -394,7 +414,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-5"><a href="zshg2.html#cb13-5"></a>	<span class="dv">scheme</span>(plotplain) <span class="co">///</span></span>
 <span id="cb13-6"><a href="zshg2.html#cb13-6"></a>	<span class="bn">ytitle</span>(<span class="st">&quot;Body Mass Index (hs18)&quot;</span>) <span class="bn">xtitle</span>(<span class="st">&quot;Alter (age)&quot;</span>) <span class="co">///</span></span>
 <span id="cb13-7"><a href="zshg2.html#cb13-7"></a>	<span class="bn">legend</span>(lab(1 <span class="st">&quot;Body Mass Index&quot;</span>) lab(2 <span class="st">&quot;Lineare Regressionsgerade&quot;</span>))</span></code></pre></div>
-<p><img src="06_scatter_lfit_fancy.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p><img src="06_scatter_lfit_fancy.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
 <p>Wir sehen hier also, dass die berechneten Zusammenhänge erfreulicherweise nicht auf einzelne Ausreißer zurückzuführen sind.</p>
 <hr />
 <p><a href="zshg2.html#met_vgl">Übung 1</a></p>
@@ -456,7 +476,7 @@ Test of Ho: educ and mi02 are independent
 <span id="cb26-9"><a href="zshg2.html#cb26-9"></a>  <span class="bn">title</span>(<span class="st">&quot;Frauen&quot;</span>)</span>
 <span id="cb26-10"><a href="zshg2.html#cb26-10"></a></span>
 <span id="cb26-11"><a href="zshg2.html#cb26-11"></a><span class="kw">graph</span> <span class="bn">combine</span> men women, <span class="bn">rows</span>(1) iscale(*.95) <span class="bn">xsize</span>(4) <span class="bn">ysize</span>(2) </span></code></pre></div>
-<p><img src="06_scatter_lfit_fancy.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p><img src="06_mosaik_combined.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
 <p>Hier noch eine Erklärung zu den Optionen in <code>graph combine</code>:</p>
 <ul>
 <li><code>rows(1)</code> Anzahl der Zeilen</li>
