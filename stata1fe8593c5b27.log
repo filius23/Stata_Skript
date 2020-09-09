@@ -1,0 +1,22 @@
+
+
+Running D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Stata_Skript\profile.do ...
+
+
+. display invnormal(.025) // z-Wert aus Standard-NV
+-1.959964
+
+. display invttail(3,   .975)
+-3.1824463
+
+. display invttail(30,  .975)
+-2.0422725
+
+. display invttail(300, .975)
+-1.967903
+
+. display invttail(3000,.975)
+-1.9607551
+
+. 
+end of do-file

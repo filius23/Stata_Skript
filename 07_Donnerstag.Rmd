@@ -2,14 +2,643 @@
 
 ```{r setup7, echo = F, message=F, warning = F}
 .libPaths("D:/R-library4")
-knitr::opts_chunk$set(collapse = F)
 library(Statamarkdown)
+library(tidyverse)
+library(ggrepel)
+knitr::opts_chunk$set(collapse = F)
+ak <- readr::read_delim("D:/oCloud/RFS/allbus_kumuliert_1980-2018.csv", delim = ";", col_types = cols(.default = col_double())) %>% 
+  mutate_all( ~ifelse(.<0,NA,.))
+a14m <- filter(ak,year == 2014, sex == 1, !is.na(hs16) )  
 ```
 
-```{stata readinif1b, echo= F}
+Wir möchten auf Basis des Allbus von 2014 die durchschnittliche Körpergröße von Männern in Deutschland ermitteln. Dazu lesen wir zunächst den Datensatz ein und wählen dann nur die Angaben für das Jahr 2014 aus, die zugleich auch von Männern (`sex == 1`) sind. Um bei der weiteren Berechnung die Missings ignorieren zu können, filtern wir mit `hs16 > 0` zusätzlich nur nach den Beobachtungen nicht eine gültige Angabe für `hs16` haben:
+
+```{stata readin7, eval = F}
+cd ""
+use  "Allbus_1980-2018.dta",clear
+keep if year == 2014 & sex ==  1 & hs16 > 0
+```
+
+```{stata readin7b, echo= F}
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
-keep if year == 2012
-mvdecode age hs18, mv(-32 -13)
-rename hs18 bmi
+keep if year == 2014 & sex ==  1 & hs16 > 0
 ```
+
+
+## Inferenz
+
+Wenn wir jetzt die durchschnittliche Körpergröße berechnen, ist das zwar für die Stichprobe korrekt (und exakt):
+```{stata mean1, eval = F}
+tabstat hs16 , s(mean)
+```
+
+```{stata mean2, eval = F}
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep if year == 2012 & sex ==  1 & hs16 > 0
+tabstat hs16 , s(mean)
+```
+
+
+Allerdings ist sehr unwahrscheinlich, dass die durchschnittliche Körpergröße in Deutschland im Jahr 2014 genau `r mean(a14m$hs16)` cm betrug. Jedoch kann auf Basis des zentralen Grenzwertsatzes angenommen werden, dass bei genügend großer Fallzahl die Mittelwerte bei wiederholten SP normalverteilt sind.
+
+Somit können wir auf Basis einer Stichprobe das Konfidenzintervall einer Schätzung bestimmen, indem wir um den Punktschätzer (den Stichproben-Mittelwert, also die 178.71cm) mit Hilfe des eines geeigneten $t$-Werts und des Standardfehlers ($\frac{s}{\sqrt{n}}$[^11]) einen Wertebereich um den Mittelwert $\bar{x}$ konstruieren.
+
+[^11]: Also die Standardabweichung ($s$) dividiert durch die Wurzel der Stichprobengröße ($n$)
+
+$$\bar{x}\,\pm\,t\times\frac{s}{\sqrt{n}}$$
+
+## Parametrische KI-Schätzung
+### t-/z-Wert
+
+Das $t$ kommt dabei aus der Student-t-Verteilung bzw. als $z$-Wert aus der Standard-Normalverteilung. $t$ wählen wir dabei so, dass bei wiederholter Stichprobenziehung 95% der resultierenden KI den wahren Wert aus der Grundgesamtheit beinhalten würden:
+
+```{r, out.height="90%", out.width="90%", fig.align='center', echo=F}
+data1 <- data.frame(z = seq(-4,4,.01)) ## dataframe erstellen mit Zahlenfolge zwischen -4 & 4
+data1$t.var <- dt(x=data1$z,df =  9999) 
+
+
+ggplot(data = data1, aes(x=z, y =t.var)) + 
+  theme_minimal(base_size = 15) +
+  labs(y = "Häufigkeitsdichte", x = "t") +
+  geom_ribbon(data=filter(data1,z <= - 1.960201), aes(ymin=0, ymax = t.var), fill = "#F5CC71") + ## fläche links
+  geom_segment(data = data.frame(z = - 1.960201,y1 = dt(x=- 1.960201,df =  1757)) , 
+            aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .5, linetype = 2) + ## grenze links
+  geom_ribbon(data=filter(data1,z >=  1.960201), aes(ymin=0, ymax = t.var), fill = "#F5CC71") + ## fläche rechts
+  geom_segment(data = data.frame(z =  1.960201,y1 = dt(x= 1.960201,df =  1757)) , 
+            aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .5, linetype = 2) + ## grenze rechts
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+            aes(x=z,y=y1,xend = z, yend = 0), color = "grey50", size = .5, linetype = 3) + ## mittellinie
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+            aes(x=z,y=-0.0125,xend = -1.85, yend = -0.0125), color = "grey25", size = .5,
+            arrow = arrow(length = unit(0.5, "lines"), type = "closed")) + ## pfeil nach links
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+            aes(x=z,y=-0.0125,xend = 1.85, yend = -0.0125), color = "grey25", size = .5,
+            arrow = arrow(length = unit(0.5, "lines"), type = "closed")) + #pfeil nach rechts
+  geom_label(data=data.frame(z = 0 , y1 = -0.0125, lab1 = "+/- 1.96", t.var = 0),aes(label = lab1), size = 3.5 ) +
+  geom_line(color = "navy")  +   
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1))+
+  theme(aspect.ratio = 1, panel.grid = element_line(size = rel(.25))) +
+  geom_text(data=data.frame(z = c(-3,3), t.var = 0.015, label = rep(paste0(round(pt(q = -1.959964,df = 9999)*100,2),"%"),2) ), 
+                            aes(x = z, y = t.var, label = label),
+                            size = 3.25,vjust= 0, hjust = c(1,0))
+```
+Aufgrund der Symmetrie teilen wir die Irrtumswahrscheinlichkeit also auf jeweils 2,5% auf und können mit `invttail(df,p)` den entsprechenden $t$-Wert nachsehen. `invttail` kumuliert dabei von *rechts nach links*. Die gezeigte Verteilung unterstellt dabei eine Stichprobe von $n=10.000$:
+
++ bei welchem t-Wert liegen 2.5% *rechts* davon?
+```{stata invttail1}
+display invttail(9999,0.025) 
+```
++ bei welchem t-Wert liegen 2.5% *links* bzw. 97.5% rechts davon?
+```{stata invttail2}
+display invttail(9999,0.975) 
+```
+
+Für kleine Stichproben ist der t-Wert deutlich größer, um die zusätzliche Unsicherheit der Stichprobengröße zu berücksichtigen. Mit steigendem $n$ bzw. $df$ nähert sich der t-Wert dem z-Wert der Standard-NV an:
+
+```{stata invttail3}
+display invnormal(.025) // z-Wert aus Standard-NV
+```
+```{stata invttail31}
+display invttail(3,   .975)
+```
+```{stata invttail32}
+display invttail(30,  .975)
+```
+```{stata invttail33}
+display invttail(300, .975)
+```
+```{stata invttail34}
+display invttail(3000,.975)
+```
+
+Leider funktioniert `invnormal` umgekehrt von `invttail` und kumuliert von links nach rechts - wie man es erwarten würde....) `invnormal` zeigt also die Fläche *links*, `invttail` die Fläche *rechts* - daher entsprechen sich `invnormal(.025)` und `invttail(df,   .975)`
+
+Es gibt auch andere Varianten, zB. 90% oder 99%:
+```{stata invttail4}
+display invttail(9999,   .05)
+display invttail(9999,  .005)
+```
+
+
+
+```{r,  out.width = "90%",out.height= "90%", fig.align='center', echo=F}
+ki90 <- ggplot(data = data1, aes(x=z, y =t.var)) + 
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte", x = "t",title ="90% Konfidenzintervall") +
+  geom_ribbon(data=filter(data1,z <= qt(p = .05, df = 9999)), aes(ymin=0, ymax = t.var), fill = "#FCE8CE") + ## fläche links
+  geom_segment(data = data.frame(z = qt(p = .05, df = 9999),y1 = dt(x=- qt(p = .05, df = 9999),df =  1757)) , 
+               aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .5, linetype = 2) + ## grenze links
+  geom_ribbon(data=filter(data1,z >=  qt(p = .95, df = 9999)), aes(ymin=0, ymax = t.var), fill = "#FCE8CE") + ## fläche rechts
+  geom_segment(data = data.frame(z =  qt(p = .95, df = 9999),y1 = dt(x= qt(p = .05, df = 9999),df =  1757)) , 
+               aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .5, linetype = 2) + ## grenze rechts
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+               aes(x=z,y=y1,xend = z, yend = 0), color = "grey50", size = .5, linetype = 3) + ## mittellinie
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+               aes(x=z,y=-0.0125,xend = -1.64, yend = -0.0125), color = "grey25", size = .5,
+               arrow = arrow(length = unit(0.5, "lines"), type = "closed")) + ## pfeil nach links
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+               aes(x=z,y=-0.0125,xend = 1.64, yend = -0.0125), color = "grey25", size = .5,
+               arrow = arrow(length = unit(0.5, "lines"), type = "closed")) + #pfeil nach rechts
+  geom_label(data=data.frame(z = 0 , y1 = -0.0125, lab1 = paste0("+/- ",round(qt(p = .95, df = 9999),3)), t.var = 0),aes(label = lab1), size = 2.75 ) +
+  geom_line(color = "#263056")  +   
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1))+
+  theme(aspect.ratio = 1, panel.grid = element_line(size = rel(.25))) +
+  geom_text(data=data.frame(z = c(-3,3), t.var = 0.015, label = rep(paste0(round(pt(q = -1.645,df = 9999)*100,3),"%"),2) ), 
+            aes(x = z, y = t.var, label = label),
+            size = 3.25,vjust= 0, hjust = c(1,0))+
+  theme(plot.margin = margin(0, 0.1, 0, 0.1, "cm"), plot.title = element_text(hjust = .5))
+
+ki99 <- ggplot(data = data1, aes(x=z, y =t.var)) + 
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte", x = "t",title ="99% Konfidenzintervall") +
+  geom_ribbon(data=filter(data1,z <= qt(p = .005, df = 9999)), aes(ymin=0, ymax = t.var), fill = "#FFABC2") + ## fläche links
+  geom_segment(data = data.frame(z = qt(p = .005, df = 9999),y1 = dt(x=- qt(p = .005, df = 9999),df =  1757)) , 
+               aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .5, linetype = 2) + ## grenze links
+  geom_ribbon(data=filter(data1,z >=  qt(p = .995, df = 9999)), aes(ymin=0, ymax = t.var), fill = "#FFABC2") + ## fläche rechts
+  geom_segment(data = data.frame(z =  qt(p = .995, df = 9999),y1 = dt(x= qt(p = .005, df = 9999),df =  1757)) , 
+               aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .5, linetype = 2) + ## grenze rechts
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+               aes(x=z,y=y1,xend = z, yend = 0), color = "grey50", size = .5, linetype = 3) + ## mittellinie
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+               aes(x=z,y=-0.0125,xend = -2.55, yend = -0.0125), color = "grey25", size = .5,
+               arrow = arrow(length = unit(0.5, "lines"), type = "closed")) + ## pfeil nach links
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+               aes(x=z,y=-0.0125,xend = 2.55, yend = -0.0125), color = "grey25", size = .5,
+               arrow = arrow(length = unit(0.5, "lines"), type = "closed")) + #pfeil nach rechts
+  geom_label(data=data.frame(z = 0 , y1 = -0.0125, lab1 = paste0("+/- ",round(qt(p = .995, df = 9999),3)), t.var = 0),aes(label = lab1), size = 2.75 ) +
+  geom_line(color = "#263056")  +   
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1))+
+  theme(aspect.ratio = 1, panel.grid = element_line(size = rel(.25))) +
+  geom_text(data=data.frame(z = c(-3,3), t.var = 0.015, label = rep(paste0(round(pt(q = -2.576321,df = 9999)*100,3),"%"),2) ), 
+            aes(x = z, y = t.var, label = label),
+            size = 3.25,vjust= 0, hjust = c(1,0)) +
+  theme(plot.margin = margin(0, 0.1, 0, 0.1, "cm"), plot.title = element_text(hjust = .5))
+library(patchwork)
+ki90 + ki99
+```
+
+
+
+### Standardfehler
+
+Der zweite Bestandteil der Formel $\frac{s}{\sqrt{n}}$  ergibt sich aus den Stichprobenparametern: $s$ ist die Standardabweichung in der Stichprobe und $n$ ist die Stichprobengröße. Um diese nachzusehen, können wir mit `tabstat hs16, s(sd n)` die Standardabweichung sowie die Fallzahl (ohne Missings) ausgeben lassen. Da wir `mean` auch gleich benötigen, lassen wir uns das auch nochmal ausgeben:
+```{stata n, eval = F}
+tabstat hs16, s(mean sd n)
+```
+
+```{stata n2, echo = F}
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep if year == 2012 & sex ==  1 & hs16 > 0
+tabstat hs16, s(mean sd n)
+```
+
+```{stata t_val}
+display invttail( 1758-1,  .025)
+```
+
+### KIs berechnen
+Dann können wir für unsere Körpergrößenschätzung folgendes 95%-KI berechnen - zur Erinnerung die Formel:
+
+$$\bar{x}\,\pm\,t\times\frac{s}{\sqrt{n}}$$
+
+Untere 95%Grenze:
+```{stata ki_manual}
+dis 178.7179 - 1.9613151* 7.18002 / sqrt(1758)
+```
+Obere 95%-Grenze:
+```{stata ki_manual2}
+dis 178.7179 + 1.9613151* 7.18002 / sqrt(1758)
+```
+
+Für das 90%-KI würde sich entsprechend ergeben:
+```{stata invttail90}
+display invttail( 1758-1,  .05)
+```
+
+Untere 90%-Grenze:
+```{stata ki_manual90}
+dis 178.7179 - 1.6457213* 7.18002 / sqrt(1758)
+```
+Obere 90%-Grenze:
+```{stata ki_manual902}
+dis 178.7179 + 1.6457213* 7.18002 / sqrt(1758)
+```
+
+### `mean`
+Die gute Nachricht: Stata macht das mit `mean` automatisch für uns:
+```{stata mean, eval = F}
+mean hs16 // Standard ist 95%
+```
+```{stata mean2x, echo = F}
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep if year == 2012 & sex ==  1 & hs16 > 0
+mean hs16 // Standard ist 95%
+```
+
+```{stata mean3, eval = F}
+mean hs16,level(90) // mit level(90) kann das 90%-KI angefordert werden
+```
+```{stata mean4, echo = F}
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep if year == 2012 & sex ==  1 & hs16 > 0
+mean hs16,level(90) 
+```
+
+### Vergleich 
+```{r, echo = F,out.width = "70%",fig.height=2, fig.align='center', warning=F, message=F}
+dfx <- data.frame(
+    type = factor(c("99% KI", "95% KI", "90% KI"), levels = c("99% KI", "95% KI", "90% KI")),
+    m = rep(mean(a14m$hs16),3),
+    cil = c(
+      mean(a14m$hs16) - qt(p=.995,df = nrow(a14m)-1)*sd(a14m$hs16)/sqrt(nrow(a14m)),
+      mean(a14m$hs16) - qt(p=.975,df = nrow(a14m)-1)*sd(a14m$hs16)/sqrt(nrow(a14m)),
+      mean(a14m$hs16) - qt(p=.95, df = nrow(a14m)-1)*sd(a14m$hs16)/sqrt(nrow(a14m))),
+    ciu = c(
+      mean(a14m$hs16) + qt(p=.995,df = nrow(a14m)-1)*sd(a14m$hs16)/sqrt(nrow(a14m)),
+      mean(a14m$hs16) + qt(p=.975,df = nrow(a14m)-1)*sd(a14m$hs16)/sqrt(nrow(a14m)),
+      mean(a14m$hs16) + qt(p=.95, df = nrow(a14m)-1)*sd(a14m$hs16)/sqrt(nrow(a14m)))
+    ) 
+ggplot(data =dfx , aes(x = type, y =m )) +
+  geom_errorbar(aes( ymin = cil, ymax = ciu), width  = .45, size  = .5,
+       fill = "#1f1f4f", color = "#1f1f4f") +
+  geom_point(size = 3, shape = 21,
+       fill = "#8f8fa7",color = "#1f1f4f") + 
+  coord_flip() +
+  theme_minimal(base_size = 11) +
+  theme(
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        ## panel.border = element_rect(color = "grey25"),
+        plot.background = element_rect(color = NA),
+        aspect.ratio = .15) +
+  labs(y= "Körpergröße (in cm)") +
+  ylim(177.5,180) + 
+  theme(plot.margin = margin(0, 0.1, 0, 0.1, "cm"))
+```
+
+
+
+## Bootstrapping
+Bootstrapping beruht auf der Idee, wiederholt Stichproben *B* aus der Stichprobe zu ziehen und aus dieser *B* die Parameter zu berechnen. In R können Stichproben mit `sample(x = Ausgangssample,  size = SP-Größe, replace = mit oder ohne Zurücklegen)` ziehen:
+
+### Normale Approximation
+Analog zur vorhin gezeigten parametrischen Methode können wir das KI dann als $mean\,\pm t * sd$ berechnen:
+```{r}
+mean(a14m$hs16) - 1.96*sd(means)
+mean(a14m$hs16) + 1.96*sd(means)
+```
+
+### Perzentil
+Oder wir berechnen einfach die Perzentilgrenzen auf Basis der gebootstrapten arith. Mittelwerte:
+```{r}
+quantile(means, probs = c(0.025, 0.975))
+```
+
+### Die KIs im Vergleich
+
+Hier ein graphischer Vergleich der verschiedenen KI-Berechnungsmethoden:
+```{r, echo = F, out.width = "70%",fig.height=2.5, fig.align='center', warning=F, message=F}
+dfx <- data.frame(
+    type = factor(c("Param. 95% KI", "Bootstrap Approx", "Bootstrap Perzentil"), levels = c("Param. 95% KI", "Bootstrap Approx", "Bootstrap Perzentil")),
+    mean1 = rep(mean(a14m$hs16),3),
+    cil = c(mean(a14m$hs16) - 1.96*sd(a14m$hs16)/sqrt(nrow(a14m)),
+            mean(means) - 1.96*sd(means),
+            quantile(means, probs = c(0.025))),
+    ciu = c(mean(a14m$hs16) + 1.96*sd(a14m$hs16)/sqrt(nrow(a14m)),
+            mean(means) + 1.96*sd(means),
+            quantile(means, probs = c(0.975)))
+     ) 
+
+ggplot(data =dfx , aes(x = mean1, y =type )) +
+  geom_errorbarh(aes( xmin = cil, xmax = ciu,color = type), height  = .25, size  = .5) +
+  geom_point(size = 3, shape = 21, aes(fill = type)
+             ## ,fill = "#8f8fa7"
+             ,color = "grey25"
+             ) + 
+  theme_minimal(base_size = 11) +
+  theme(
+        panel.grid.minor.y = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        ## panel.border = element_rect(color = "grey25"),
+        plot.background = element_rect(color = NA),
+        aspect.ratio = .2) +
+  labs(x= "Körpergröße (in cm)") +
+  scale_fill_manual(values = c("#a9a9a9","#94b9db","#3f6798"), guide = F) +
+  scale_color_manual(values = c("#a9a9a9","#94b9db","#3f6798"), guide = F) +
+  xlim(178,179.5) + 
+  theme(plot.margin = margin(0, 0.1, 0, 0.1, "cm"))
+```
+
+
+
+
+\newpage
+
+
+## Übungen 7
+
+(@) Berechnen Sie den Punktschätzer für die Körpergröße (`hs16`) von Frauen (`sex == 2`) in Deutschland 2014!
+  + Lesen Sie dazu den kumulierten Allbus (`Allbus_1980-2018.dta`) ein
+  + Behalten Sie nur die nicht-fehlenden Angaben zur Körpergröße (`hs16`>0) für Frauen (`sex == 2`) aus dem Jahr 2014 im Speicher. Die Zahl der enthaltenen Zeilen entspricht der Zahl der Fälle für die weiteren Berechnungen ($n$).
+  + Berechnen Sie den Punktschätzer für die durchschnittliche Körpergröße von Frauen in Deutschland 2014!
+  
+(@) Berechnen Sie das 95%- Konfidenzintervall für diese Punktschätzung nach der parametrischen Methode! 
+  + Wie hoch ist die untere Grenze für das Konfidenzintervall?
+  + Wie hoch ist die obere Grenze für das Konfidenzintervall?
+  + Wie sind die Grenzen für das 99%-KI?
+  
+(@) Berechnen Sie das Konfidenzintervall mit Hilfe des Bootstrapping-Verfahrens! (Für die Ergebnisse aus der Lösung verwenden Sie `set.seed(1212)`)
+  + Erstellen Sie die Funktion zur wiederholten Berechnung von SP-Mittelwerten wie oben gezeigt (Sie müssen an der Funktion nichts anpassen, außer die Stichprobengröße  n (`size`) an die Zahl der Beobachtungen)
+  + Berechnen Sie das Konfidenzintervall mit der Approximationsmethode
+  + Berechnen Sie das Konfidenzintervall als Perzentil
+  
+(@) Berechnen Sie den Punktschätzer und die Konfidenzintervalle für das Einkommen von in Vollzeit erwerbstätigen Männern aus dem Jahr 2016
+
+  + Lesen Sie dazu den kumulierten Allbus (`Allbus_1980-2018.dta`) ein
+  + Überschreiben Sie die fehlenden Werte für `inc` mit `.` 
+  + Behalten Sie nur die nicht-fehlenden Angaben zum Einkommen (`inc`) für in Vollzeit erwerbstätige Männer aus dem Jahr 2016 im Speicher. Die Erwerbstätigkeit der Befragten wird in `work` erfasst, `work == 1` steht für in Vollzeit Erwerbstätige.
+  + Berechnen Sie den Punktschätzer für das durchschnittliche Einkommen von in Vollzeit erwerbstätigen Männern in Deutschland 2016!
+  + Berechnen Sie die Konfidenzintervalle nach der parametrischen und bootstrap Methode (Für die Ergebnisse aus der Lösung verwenden Sie `set.seed(1212)`)
+    + 95% KI
+    + 99% KI
+    
+    
+## Anhang Kap7
+
+### Normalverteilung 
+
+Eine bedeutende statistische Verteilung in der angewandten Inferenzstatistik ist die Normalverteilung. Sie ist bestimmt durch zwei Parameter: das arithmetische Mittel ($\mu$) und die Standardabweichung ($\sigma$) und wird daher auch so dargestellt:
+
+$$N(\mu,\sigma)$$
+Die **Standardnormalverteilung** hat einen Mittelwert von 0 und eine Standardabweichung von 1:
+
+$$N(0,1)$$
+
+<!-- Die Dichtefunktion der Standardnormalverteilung können wir in Stata mit `dnorm` erzeugen: -->
+
+```{r w8_1, out.height="50%", out.width="50%", fig.align='center', echo = F}
+data1 <- data.frame(z = seq(-4,4,.01)) # dataframe erstellen mit Zahlenfolge zwischen -4 & 4
+data1$nv.var <- dnorm(x=data1$z,mean = 0 ,sd =  1) # Dichtefunktion der Std-NV
+library(ggplot2)
+ggplot(data = data1, aes(x=z, y =nv.var)) + 
+  geom_line(color = "midnightblue", alpha = .4, size = 1)  +   
+  theme_minimal() + labs(y = "Häufigkeitsdichte")
+```
+
+Wir können gut erkennen, dass es sich um eine symmetrische Verteilung handelt. Für die Normalverteilung gilt, dass die Fläche unterhalb der Dichtefunktion (also unter der Linie) immer 1 beträgt. Für die Standardnormalverteilung werden die x-Achsenwerte auch als z-Werte bezeichnet. Wenn wir vom Mittelwert aus jeweils bestimmte z-Werte nach rechts und links (also positiv und negativ) als Grenzen für Teilflächen einziehen, ergeben sich verschiedene Standardwerte:
+
+```{r w8_2, echo =F, warning=F,message=F,out.width="100%", fig.align="center"}
+nv1 <- 
+ggplot(data = data1, aes(x=z, y =nv.var)) + 
+  geom_line(color = "midnightblue", alpha = .4, size = .65)  +   
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte", title = "Vollständige Fläche") +
+  geom_segment(aes(xend = z, yend = 0), color = "#5b7ab0" ) +
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1))+
+  geom_label(data= data.frame(z = 0, y = .2, label = "100%"),aes(x=z,y=y,label=label),direction = "y", size = 2)+
+  theme(aspect.ratio = .6, text = element_text(size = 6),  plot.title = element_text(size = rel(1.25),hjust = .5) ,
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank())
+nv2 <-
+ggplot(data = data1, aes(x=z, y =nv.var)) + 
+  geom_line(color = "midnightblue", alpha = .4, size = .65)  +   
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte", title = "+/- 3 Standardabweichungen") +
+  geom_segment(data=filter(data1,z > -3, z <3), aes(xend = z, yend = 0), color = "#516d9e" ) +
+  geom_label(data= data.frame(z = 0, y = .2, label = "99,7%"),aes(x=z,y=y,label=label),direction = "y", size = 2) +
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1))+
+  theme(aspect.ratio = .6, text = element_text(size = 6),  plot.title = element_text(size = rel(1.25),hjust = .5) ,
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank())
+nv3 <-
+ggplot(data = data1, aes(x=z, y =nv.var)) + 
+  geom_line(color = "midnightblue", alpha = .4, size = .65)  +   
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte", title = "+/- 2 Standardabweichungen") +
+  geom_segment(data=filter(data1,z > -1.96, z <1.96), aes(xend = z, yend = 0), color = "#48618c" ) +
+  geom_label(data= data.frame(z = 0, y = .2, label = "95,4%"),aes(x=z,y=y,label=label),direction = "y", size = 2) +
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1))+
+  theme(aspect.ratio = .6, text = element_text(size = 6),  plot.title = element_text(size = rel(1.25),hjust = .5) ,
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank())
+
+nv4 <-
+ggplot(data = data1, aes(x=z, y =nv.var)) + 
+  geom_line(color = "midnightblue", alpha = .4, size = .65)  +   
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte", title = "+/- 1 Standardabweichung") +
+  geom_segment(data=filter(data1,z > -1, z <1), aes(xend = z, yend = 0), color = "#3f557b" ) +
+  geom_label(data= data.frame(z = 0, y = .2, label = "68,3%"),aes(x=z,y=y,label=label),direction = "y", size = 2) +
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1)) +
+  theme(aspect.ratio = .6, text = element_text(size = 6),  plot.title = element_text(size = rel(1.25),hjust = .5),
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank())
+nv95 <-
+ggplot(data = data1, aes(x=z, y =nv.var)) + 
+  geom_line(color = "midnightblue", alpha = .4, size = .65)  +   
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte", title = "+/- 1,96 Standardabweichungen") +
+  geom_segment(data=filter(data1,z > -1.96, z <1.96), aes(xend = z, yend = 0), color = "#7b94bf" ) +
+  geom_label(data= data.frame(z = 0, y = .2, label = "95%"),aes(x=z,y=y,label=label),direction = "y", size = 2) +
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1))+
+  theme(aspect.ratio = .6, text = element_text(size = 6),  plot.title = element_text(size = rel(1.25),hjust = .5) ,
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank())
+
+nv50 <- 
+ggplot(data = data1, aes(x=z, y =nv.var)) + 
+  geom_line(color = "midnightblue", alpha = .4, size = .65)  +   
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte", title = "Symmetrie") +
+  geom_segment(data=filter(data1,z <0), aes(xend = z, yend = 0), color = "#0A7EA2" ) +
+  geom_segment(data=filter(data1,z >0), aes(xend = z, yend = 0), color = "#FFD7AE" ) +
+  geom_label(data= data.frame(z = c(-1,1) , y = c(.1,.1), label = "50%"),aes(x=z,y=y,label=label),direction = "y", size = 2) +
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1)) +
+  theme(aspect.ratio = .6, text = element_text(size = 6),  plot.title = element_text(size = rel(1.25),hjust = .5),
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank())
+cowplot::plot_grid(nv1,nv2,nv3,nv4,nv50,nv95, nrow = 3, ncol = 2)  
+```
+
+#### Verteilungsfunktion
+
+Die Übersetzung des z-Werts (x-Achsenabschnitts) in die Flächengröße leistet die sog. Verteilungsfunktion. Diese gibt die *kumulierte* Fläche wieder. Vergleichen Sie die beiden y-Achsen: für `z` $\rightarrow + \infty$ ("ganz rechts") nähert sich die Verteilungsfunktion 1 an:
+
+```{r w8_3, echo =F, warning=F,message=F,out.width="100%", fig.align="center"}
+# 
+data1$nv_density <- dnorm(x=data1$z,mean = 0 ,sd =  1) # Dichtefunktion der Std-NV
+data1$nv_cumdens <- pnorm(q=data1$z,mean = 0 ,sd =  1) # kumulierte Dichtefunktion
+
+dens1 <- 
+          ggplot(data = data1, aes(x=z, y =nv_density)) + 
+            theme_minimal() +
+            labs(y = "Häufigkeitsdichte", title = "Dichtefunktion", subtitle = "z = -0.674") +
+            geom_ribbon(data=filter(data1,z <= -0.674), aes(ymin=0, ymax = nv_density), fill = "#aaaaaa", alpha = .35 ) +
+            geom_segment(data = data.frame(z = -0.674,y1 = dnorm(x=-0.674,mean = 0 ,sd =  1)) , 
+                      aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .5, linetype = 2) +
+            geom_line(color = "navy")  +   
+            scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1))+
+            theme(aspect.ratio = 1,
+                   panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank())
+
+breaks1 <- seq(0,1,.25)
+
+cum1 <- 
+ggplot(data = data1, aes(x=z, y =nv_cumdens)) + 
+  geom_line(color = "#d4ba55")  +   
+  theme_minimal() +
+  labs(y = "kumulierte Häufigkeitsdichte", title = "Verteilungsfunktion", subtitle = "z = -0.674") +
+  geom_segment(data = data.frame(z = -0.674,y1 = pnorm(q=-0.674,mean = 0 ,sd =  1)) , 
+            aes(x=z,yend=y1,xend = z, y = 0), color = "#404040", size = 0.5, 
+            arrow = arrow(length=unit(0.45,"lines"), ends = "last", type = "closed") ) +
+  geom_point(data = data.frame(z =-0.674,y1 =-0.005), aes(x=z,y=y1),color = "grey25", shape = 15,size = 1.75) +
+  geom_segment(data = data.frame(z = -0.674,y1 = pnorm(q=-0.674,mean = 0 ,sd =  1)) , 
+            aes(x=z,yend=y1,xend = -4, y = y1), color = "#404040", size = 0.5,
+            arrow = arrow(length=unit(0.45,"lines"), ends = "last", type = "closed") ) +
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1)) +
+  scale_y_continuous(breaks = breaks1, minor_breaks = seq(0,1,.125)) +
+  theme(aspect.ratio = 1,
+         panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank(),
+        axis.text.y= element_text(face=ifelse(breaks1  == .25,"bold", "plain"),
+                     color=ifelse(breaks1 == .25,"grey25", "black")
+                     ,size=ifelse(breaks1 == .25, 11, 9 )
+                     ))
+dens1+cum1 + plot_layout(ncol = 2)
+```
+
+Wir können mit `pnorm`  berechnen lassen, wie groß jeweils die Fläche *links* von einem bestimmten Punkt auf der x-Achsen ist. Dazu setzen wir den z-Wert als `q` ein:
+```{r}
+pnorm(q=-0.674)
+```
+Noch einmal zusammengefasst: 25% der Verteilung liegen links des z-Werts von -0.674. `z = -0.674` ist also die 1. Quartilsgrenze für eine Standardnormalverteilung. $\rightarrow$ 75% der Verteilung liegen rechts von `z = -0.674`.
+
+**Warum ist das interessant?** Wir können damit für normalverteilte Merkmale und Kennzahlen (und das sind viele) Aussagen mit Blick auf eine Grundgesamtheit treffen, indem wir den interessierenden Wert *standardisieren*.
+
+#### Standardisierung
+
+Ein klassisches Anwendungsbeispiel für eine Normalverteilung ist der Intelligenzquotient. Dessen Skala ist so definiert, dass sie einer Normalverteilung $NV(\mu=100,\sigma = 15)$ entspricht. Betrachten wir Person A mit einem IQ von 130. Wie viel Prozent der IQ-Werte liegen unter einem IQ von 130? Um diese Frage zu beantworten müssen wir den Wert z-Standardisieren entsprechend der folgenden Formel:
+$$z=\frac{x-\mu}{\sigma}$$ Also setzen wir ein und erhalten $\frac{130-100}{15} = 2$: 
+```{r, warning=F,message=F,fig.width=8,fig.height=3.5, fig.align="center", echo = F}
+data2 <- data.frame(iq = seq(50,150,1)) # dataframe mit Zahlenfolge
+data2$iq_density <- dnorm(x=data2$iq,mean = 100 ,sd =  15) # Dichtefunktion 
+##d4ba55
+
+
+nv_iq <- ggplot(data = data2, aes(x=iq, y = iq_density )) + 
+  geom_ribbon(data=filter(data2,iq <= 130), aes(ymin = 0, ymax = iq_density), fill = "#57B5ED" , alpha = .5 )+
+  geom_line(color = "#273253", size = .75, linetype = 1)  +   
+  theme_minimal() + labs(y = "Häufigkeitsdichte", x = "Intelligenzquotient", title = "IQ") +
+  theme(aspect.ratio = .5,
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank()) 
+dnorm1 <- ggplot(data = data1, aes(x=z, y = nv_density )) + 
+  geom_ribbon(data=filter(data1,z <= 2), aes(ymin = 0, ymax = nv_density), fill = "#ff8c69" , alpha = .5 )+
+  geom_line(color = "#35274A", size = .75)  +   
+  scale_y_continuous(breaks = seq(0,.4,.2)) +
+  theme_minimal() + labs(y = "Häufigkeitsdichte", x = "z-Wert", title = "Standard-NV") +
+  theme(aspect.ratio = .5,
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank()) 
+
+nv_iq + dnorm1
+```
+
+Diesen z-Wert von 2 können wir nun in die Verteilungsfunktion einsetzen:
+```{r}
+pnorm(q=2)
+```
+
+`r round(pnorm(q=2)*100,3)`% aller IQ-Werte sind also kleiner als 130. Daraus ergibt sich auch: $100\%-`r round(pnorm(q=2)*100,3)`\% =$ `r round(100-pnorm(q=2)*100,3)`% aller IQ-Werte sind *größer* als 130.
+
+Wir können auch umgekehrt fragen, welcher IQ-Wert nötig ist, um zu den höchsten 1% zu gehören. Dazu formen wir die Standardisierungsformel zu $\mu+z\times\sigma$ um. $\mu$=100,$\sigma$ = 15 ergeben sich aus der IQ-Definition. Den z-Wert für das 99%-Quantil bekommen wir mit `qnorm(p=99)`:
+```{r}
+qnorm(p = 0.99)
+100 + 2.326348*15 # rechnung per Hand
+qnorm(p = 0.99, mean = 100, sd = 15) # direkte Variante
+```
+
+Um beim IQ zu den Top 1% zu gehören, ist ein IQ von mindestens `r round(qnorm(p = 0.99, mean = 100, sd = 15),3)` nötig. Welcher IQ ist höchstens unter den niedrigsten 1%?
+```{r}
+qnorm(p = 0.01) # negativ! weil < mean! 
+100 + -2.326348*15 # per Hand
+qnorm(p = 0.01, mean = 100, sd = 15)
+```
+
+
+
+
+### Student t-Verteilung
+
+In der Praxis wird die Standardnormalverteilung aber nur selten genutzt, denn das oben gezeigte Vorgehen setzt voraus, dass die Standardabweichung in der Grundgesamtheit ($\sigma$) bekannt ist. Dies ist aber in der Regel nicht der Fall. Es ergeben sich zwei Möglichkeiten:  
+
++ Bei großen Stichproben kann die Standardabweichung der Stichprobe ($s$) als Schätzer für $\sigma$ verwendet werden (ab $n\geq30$)  
+
++ Verwendung der t-Verteilung, welche durch Freiheitsgrade die Stichprobengröße berücksichtigt
+
+Die t-Verteilung ähnelt der Standardnormalverteilung, beide haben einen Mittelwert von $\mu = 0$. Streng genommen gibt es jedoch nicht eine t-Verteilung, sondern viele - diese unterscheiden sich durch die sogenannten Freiheitsgrade. Dieser wird mit `df` ("degrees of freedom") abgekürzt und entspricht der "Stichprobengröße minus 1": $n-1$. Im Vergleich zur Standardnormalverteilung hat die t-Verteilung "breitere" Ränder, die sich aber bei steigender Stichprobengröße (höheren `df`) der Standardnormalverteilung annähern:
+
+```{r, out.height="50%", out.width="50%", fig.align='center', eval = F, echo = F}
+data1$t.var <- dt(x=data1$z,df =  2) # Dichtefunktion der t-Verteilung mit df=2
+data1$t.var10 <- dt(x=data1$z,df =  10) # Dichtefunktion der t-Verteilung mit df=10
+ggplot(data = data1, aes(x=z)) + 
+  geom_line(aes(y =nv.var),color =  "#3B64A1", size = .75)  +   
+  geom_line(aes(y =t.var), color =  "#3B414F",  size = .75)  +   
+  geom_line(aes(y =t.var10), color= "#B3875C", size = .75)  +  
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte")
+```
+
+```{r, out.height="60%", out.width="60%", fig.align='center', echo = F}
+data1$t.var <- dt(x=data1$z,df =  2) # Dichtefunktion der t-Verteilung mit df=2
+data1$t.var10 <- dt(x=data1$z,df =  10) # Dichtefunktion der t-Verteilung mit df=10
+data2 <- data1 %>% pivot_longer(cols = contains("var"),values_to = "nv",names_to = "Verteilung") %>% 
+  mutate(Verteilung = case_when(grepl("nv",Verteilung)~ "Standard-NV",
+                                grepl("t\\.var$",Verteilung)~ "Student-t mit df = 2",
+                                grepl("t\\.var10$",Verteilung)~ "Student-t mit df = 10")) 
+
+ggplot(data = data2, aes(x=z, color = Verteilung)) +   
+  geom_line(aes(y= nv), size = .75) +
+  scale_color_manual(values =c("#3B64A1","#3B414F","#B3875C"), name = "") +
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte", x = "") +
+  theme(legend.position = "top",
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank()) +
+  guides(colour = guide_legend(override.aes = list(shape = 15 ,size = 6) ,
+                               label.position ="right" , ncol = 3,reverse = T) )
+```
+Wir können also einfach die t-Verteilung verwenden und die Stichprobengröße angeben - für große Stichproben wird sich das Ergebnis an die Standardnormalverteilung annähern. Bei kleineren Stichproben sind wir auf der sicheren Seite. Im Grundsatz können wir also für alle (annähernd) normalverteilen Merkmale die t-Verteilung verwenden.
+ 
+Wie für die Standardnormalverteilung bekommen wir mit `pt` angegeben, wieviel % der Fläche links eines t-Werts ("z-Wert der t-Verteilung") liegen bei einer bestimmten Zahl von `df`:
+```{r}
+pt(q=1,df =  2)
+```
+Bei einer Stichprobengröße von 3 (`df`$+1$) liegen `r round(pt(q=1,df =  2)*100,2)`% links von einem t-Wert = 1.
+
+### t-Standardisierung
+
+Noch einmal zu unserem IQ-Beispiel: stellen wir uns vor, dass für den mittleren IQ ($\bar{IQ}$=100) und dessen Standardabweichung ($s$=15) auf einer Stichprobe von $n=15$ beruht. Wir würden uns wieder fragen, wie viel Prozent aller Personen in der Grundgesamtheit wohl einen IQ $\leq$ 130 haben. Zunächst verwenden wir wieder die Standardisierungsformel (diese ändert sich nicht im Vergleich zur Standard-NV):
+$$t=\frac{x-\bar{x}}{s}$$ 
+Also setzen wir ein und erhalten wie oben $\frac{130-100}{15} = 2$. 
+
+Der Hauptunterschied zum Vorgehen bei der Standardnormalverteilung ist jetzt, dass wir anstelle von `pnorm` jetzt eben `dt` mit der entsprechenden `df=n-1` verwenden:
+```{r}
+pt(q = 2,df =  14)
+```
+
+Basierend auf einer Stichprobe von 15 Personen mit einem Mittelwert von 100 und einer Standardabweichung von 15 sind also `r round(pt(q = 2,df =  14)*100,3)`% aller IQ-Werte kleiner als 130. Daraus ergibt sich auch: $100\%-`r round(pt(q = 2,df =  14)*100,3)`\% =$ `r round(100-pt(q = 2,df =  14)*100,3)`% aller IQ-Werte sind *größer* als 130.
+
+> Zum Vergleich: oben - auf Basis der Standard-NV - waren es `r round(pnorm(q=2)*100,3)`% 
+
+Auch hier können wir uns natürlich umgekehrt fragen, wie hoch der IQ sein muss um zu den Top 1% zu gehören. Dazu suchen wir erst den entsprechenden t-Wert und setzen dann wieder in die umgeformte Formel $\bar{x}+t\times s$ ein:
+```{r}
+qt(p=.99,df=14) 
+100 + 2.624494* 15
+```
+Hier gibt es keine direkte Option im R-Befehl wie bei der Standard-NV.
+
+Basierend auf einer Stichprobe von 15 Personen mit einem Mittelwert von 100 und einer Standardabweichung von 15 ist also ein IQ von `r round(100 +qt(p=.99,df=14)*15,3)` nötig, um zu den Top 1% zu gehören.
+
+> Zum Vergleich: oben - auf Basis der Standard-NV - waren es `r round(qnorm(p = 0.99, mean = 100, sd = 15),3)`.
