@@ -147,12 +147,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.6.3" data-path="Stata1.html"><a href="Stata1.html#list"><i class="fa fa-check"></i><b>1.6.3</b> <code>list</code></a></li>
 <li class="chapter" data-level="1.6.4" data-path="Stata1.html"><a href="Stata1.html#lookfor"><i class="fa fa-check"></i><b>1.6.4</b> <code>lookfor</code></a></li>
 </ul></li>
-<li class="chapter" data-level="1.7" data-path="Stata1.html"><a href="Stata1.html#if-bedingung---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>1.7</b> if Bedingung - nur manche Zeilen ansehen</a></li>
-<li class="chapter" data-level="1.8" data-path="Stata1.html"><a href="Stata1.html#U1"><i class="fa fa-check"></i><b>1.8</b> Übungen 1</a></li>
-<li class="chapter" data-level="1.9" data-path="Stata1.html"><a href="Stata1.html#profi-übungen-1"><i class="fa fa-check"></i><b>1.9</b> Profi-Übungen 1</a></li>
-<li class="chapter" data-level="1.10" data-path="Stata1.html"><a href="Stata1.html#anhang-1"><i class="fa fa-check"></i><b>1.10</b> Anhang 1</a><ul>
-<li class="chapter" data-level="1.10.1" data-path="Stata1.html"><a href="Stata1.html#var_types"><i class="fa fa-check"></i><b>1.10.1</b> Variablentypen</a></li>
-<li class="chapter" data-level="1.10.2" data-path="Stata1.html"><a href="Stata1.html#otherfmts"><i class="fa fa-check"></i><b>1.10.2</b> import anderer Dateiformate</a></li>
+<li class="chapter" data-level="1.7" data-path="Stata1.html"><a href="Stata1.html#löschen"><i class="fa fa-check"></i><b>1.7</b> löschen</a></li>
+<li class="chapter" data-level="1.8" data-path="Stata1.html"><a href="Stata1.html#if-bedingung---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>1.8</b> if Bedingung - nur manche Zeilen ansehen</a></li>
+<li class="chapter" data-level="1.9" data-path="Stata1.html"><a href="Stata1.html#U1"><i class="fa fa-check"></i><b>1.9</b> Übungen 1</a></li>
+<li class="chapter" data-level="1.10" data-path="Stata1.html"><a href="Stata1.html#profi-übungen-1"><i class="fa fa-check"></i><b>1.10</b> Profi-Übungen 1</a></li>
+<li class="chapter" data-level="1.11" data-path="Stata1.html"><a href="Stata1.html#anhang-1"><i class="fa fa-check"></i><b>1.11</b> Anhang 1</a><ul>
+<li class="chapter" data-level="1.11.1" data-path="Stata1.html"><a href="Stata1.html#var_types"><i class="fa fa-check"></i><b>1.11.1</b> Variablentypen</a></li>
+<li class="chapter" data-level="1.11.2" data-path="Stata1.html"><a href="Stata1.html#otherfmts"><i class="fa fa-check"></i><b>1.11.2</b> import anderer Dateiformate</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="Stata2.html"><a href="Stata2.html"><i class="fa fa-check"></i><b>2</b> Arbeiten mit Datensätzen in Stata</a><ul>
@@ -271,6 +272,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="zshg2.html"><a href="zshg2.html"><i class="fa fa-check"></i><b>6</b> Zusammenhänge 2</a><ul>
 <li class="chapter" data-level="6.1" data-path="zshg2.html"><a href="zshg2.html#zusammenhänge-vergleichen"><i class="fa fa-check"></i><b>6.1</b> Zusammenhänge vergleichen</a></li>
+<li class="chapter" data-level="6.2" data-path="zshg2.html"><a href="zshg2.html#zusammenhänge-visualisieren"><i class="fa fa-check"></i><b>6.2</b> Zusammenhänge visualisieren</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a></li>
 <li class="chapter" data-level="8" data-path="inf2.html"><a href="inf2.html"><i class="fa fa-check"></i><b>8</b> Inferenzstatistik II</a></li>
@@ -310,7 +312,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="zshg" class="section level1">
 <h1><span class="header-section-number">5</span> Zusammenhangsmaße</h1>
-<p>Zusammenhänge sind das Herz (fast) aller statistischer Analysen. Im Folgenden lernen wir die Berechnung einer Reihe von Kennzahlen kennen, welche den Zusammenhang zwischen zwei Variablen ausdrücken. Diese variieren zwischen 0 und 1 oder -1 und +1, der Abstand zur Null dient dabei als Indikator für die Stärke des Zusammenhangs:</p>
+<p>Zusammenhänge sind das Herz (fast) aller statistischer Analysen. Im Folgenden lernen wir die Berechnung einer Reihe von Kennzahlen kennen, welche den Zusammenhang zwischen zwei Variablen ausdrücken. Diese variieren zwischen 0 und 1 oder -1 und +1, der Abstand zur Null dient dabei als Indikator für die Stärke des Zusammenhangs - je größer der Abstand zur Null, desto stärker der Zusammenhang:</p>
 <table>
 <tbody>
 <tr class="odd">
@@ -345,27 +347,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 <div id="zshg_met" class="section level2">
 <h2><span class="header-section-number">5.1</span> Metrisch skalierte Variablen</h2>
-<p>Wir sehen uns den (möglichen) Zusammenhang zwischen dem Alter und dem BMI der Befragten an. Dazu schließen wir zunächst die Missings aus:</p>
+<p>Wir sehen uns den (möglichen) Zusammenhang zwischen dem Alter (<code>age</code>) und dem BMI (<code>hs18</code>) der Befragten an. Dazu schließen wir zunächst die Missings aus und wählen die Befragten aus dem Jahr 2012 aus:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="zshg.html#cb1-1"></a>cd <span class="st">&quot;&quot;</span></span>
 <span id="cb1-2"><a href="zshg.html#cb1-2"></a><span class="kw">use</span>  Allbus_1980-2018.dta   </span>
 <span id="cb1-3"><a href="zshg.html#cb1-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2012</span>
-<span id="cb1-4"><a href="zshg.html#cb1-4"></a><span class="kw">mvdecode</span> age bmi, mv(-32 -13)</span></code></pre></div>
+<span id="cb1-4"><a href="zshg.html#cb1-4"></a><span class="kw">mvdecode</span> age hs18, mv(-32 -13)</span></code></pre></div>
 <pre><code>(64681 observations deleted)
 
          age: 7 missing values generated
         hs18: 1859 missing values generated</code></pre>
 <div id="cor" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> Korrelationskoeffizient</h3>
-<p>Zur Bestimmung eines Zusammenhangs zwischen zwei metrischen Variablen empfiehlt sich der Korrelationskoeffizient nach Pearson. Dieser ist definiert als die Kovarianz dividiert durch die jeweiligen Standardabweichungen der beiden Variablen und liegt im Intervall [-1,1]. Die Standardabweichung hatten wir in Woche 5 kennengelernt, die Kovarianz erfasst die Lage der Datenpunkte relativ zu den Mittelwerten der beiden interessierenden Variablen (liegen Punkte &gt; <span class="math inline">\(\bar{x}\)</span> auch <span class="math inline">\(&gt;\bar{y}\)</span>?):</p>
+<p>Zur Bestimmung eines Zusammenhangs zwischen zwei metrischen Variablen empfiehlt sich der Korrelationskoeffizient nach Pearson. Dieser ist definiert als die Kovarianz dividiert durch die jeweiligen Standardabweichungen der beiden Variablen und liegt im Intervall [-1,1]. Die Standardabweichung hatten wir in Session 4 kennengelernt, die Kovarianz erfasst die Lage der Datenpunkte relativ zu den Mittelwerten der beiden interessierenden Variablen (liegen Punkte &gt; <span class="math inline">\(\bar{x}\)</span> auch <span class="math inline">\(&gt;\bar{y}\)</span>?):</p>
 <p><img src="Stata_Skript_files/figure-html/s07_15b-1.png" width="80%" height="80%" style="display: block; margin: auto;" />
 In Stata können wir den Korrelationskoeffizienten mit <code>corr</code> berechnen:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="zshg.html#cb3-1"></a><span class="fu">corr</span> age bmi</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="zshg.html#cb3-1"></a><span class="fu">corr</span> age hs18</span></code></pre></div>
 <pre><code>(obs=1620)
 
-             |      age      bmi
+             |      age     hs18
 -------------+------------------
          age |   1.0000
-         bmi |   0.2127   1.0000</code></pre>
+        hs18 |   0.2127   1.0000</code></pre>
 <p>Es handelt sich also um einen geringen Zusammenhang.</p>
 </div>
 <div id="regression" class="section level3">

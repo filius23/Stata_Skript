@@ -128,7 +128,15 @@ su age_diff
 
 ## egen {#egen}
 
-`egen` ist die Erweiterung von `gen` und gibt uns die Möglichkeit, eine ganze Reihe von Berechnungen durchzuführen.
+`egen` ist die Erweiterung von `gen` und gibt uns die Möglichkeit, eine ganze Reihe von Berechnungen durchzuführen. Hier einige hilfreiche Befehle:
+
++ Variable in Kategorien teilen mit `cut`, hier 18 bis <29, 30 bis <60 und 60 bis <80 (Werte <18 und >80 werden zu `.`)
+```{stata egen_c, eval = F}
+egen age_cat = cut(age), at(18 30 60 80) 
+```
+
+Eine vollständige Liste findet sich unter `help egen`.
+
 
 ## gruppierte Berechnungen
 

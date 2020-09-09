@@ -284,7 +284,7 @@ knitr::include_graphics( "04_scatter_text_fmts.png")
 
 Mehr dazu unter `help graph_text`
 
-Außerdem können wir mit der Option `size` die jeweilige Größe des Textes anpassen, dabei können wir die Größenangaben aus \@ref(Grafik Optionen) verwenden. Mit der Option `angle(90)` können wir außerdem den Text um 90 Grad (und natürlich um jeden beliebigen Wert durch entsprechende Angabe):
+Außerdem können wir mit der Option `size` die jeweilige Größe des Textes anpassen, dabei können wir die Größenangaben aus der [Palette](#msymbol_size_overview) verwenden. Mit der Option `angle(90)` können wir außerdem den Text um 90 Grad (und natürlich um jeden beliebigen Wert durch entsprechende Angabe):
 ```{stata, eval = F}
 graph twoway scatter inc age, ///
  title("Text1", size(vsmall)) ///

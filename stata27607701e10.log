@@ -1,0 +1,26 @@
+
+
+running D:\oCloud\Home-Cloud\Lehre\Methodenseminar\S
+> tata_Skript\profile.do ...
+
+
+. qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+
+. qui use  "Allbus_1980-2018.dta",clear
+
+. qui keep if year == 1990
+
+. qui mvdecode educ, mv(-9 6 7)
+
+. qui mvdecode mi02, mv(-9 -8 -7)
+
+. spearman educ mi02
+
+ Number of obs =    2889
+Spearman's rho =      -0.3749
+
+Test of Ho: educ and mi02 are independent
+    Prob > |t| =       0.0000
+
+. 
+end of do-file

@@ -16,7 +16,7 @@ path <- "D:/oCloud/RFS/"
 ak <- readr::read_delim(paste0(path,"allbus_kumuliert_1980-2018.csv"), delim = ";", col_types = cols(.default = col_double())) %>%   mutate_all(~ifelse(.<0,NA,.))
 ```
 
-Zusammenhänge sind das Herz (fast) aller statistischer Analysen. Im Folgenden lernen wir die Berechnung einer Reihe von Kennzahlen kennen, welche den Zusammenhang zwischen zwei Variablen ausdrücken. Diese variieren zwischen 0 und 1 oder -1 und +1, der Abstand zur Null dient dabei als Indikator für die Stärke des Zusammenhangs:
+Zusammenhänge sind das Herz (fast) aller statistischer Analysen. Im Folgenden lernen wir die Berechnung einer Reihe von Kennzahlen kennen, welche den Zusammenhang zwischen zwei Variablen ausdrücken. Diese variieren zwischen 0 und 1 oder -1 und +1, der Abstand zur Null dient dabei als Indikator für die Stärke des Zusammenhangs - je größer der Abstand zur Null, desto stärker der Zusammenhang:
 
 |  |  |
 |:----------|:---------------------------|
@@ -31,19 +31,18 @@ Zusammenhänge sind das Herz (fast) aller statistischer Analysen. Im Folgenden l
 
 ## Metrisch skalierte Variablen {#zshg_met}
 
-Wir sehen uns den (möglichen) Zusammenhang zwischen dem Alter und dem BMI der Befragten an. Dazu schließen wir zunächst die Missings aus:
+Wir sehen uns den (möglichen) Zusammenhang zwischen dem Alter (`age`) und dem BMI (`hs18`) der Befragten an. Dazu schließen wir zunächst die Missings aus und wählen die Befragten aus dem Jahr 2012 aus:
 ```{stata readin1, eval = F}
 cd ""
 use  Allbus_1980-2018.dta   
 keep if year == 2012
-mvdecode age bmi, mv(-32 -13)
+mvdecode age hs18, mv(-32 -13)
 ```
 ```{stata readin1b, echo= F}
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
 keep if year == 2012
 mvdecode age hs18, mv(-32 -13)
-rename hs18 bmi
 ```
 
 
@@ -54,7 +53,7 @@ a12$age[a12$age<0] <- NA
 ```
 
 ### Korrelationskoeffizient {#cor}
-Zur Bestimmung eines Zusammenhangs zwischen zwei metrischen Variablen empfiehlt sich der Korrelationskoeffizient nach Pearson. Dieser ist definiert als die Kovarianz dividiert durch die jeweiligen Standardabweichungen der beiden Variablen und liegt im Intervall [-1,1]. Die Standardabweichung hatten wir in Woche 5 kennengelernt, die Kovarianz erfasst die Lage der Datenpunkte relativ zu den Mittelwerten der beiden interessierenden Variablen (liegen Punkte > $\bar{x}$ auch $>\bar{y}$?):
+Zur Bestimmung eines Zusammenhangs zwischen zwei metrischen Variablen empfiehlt sich der Korrelationskoeffizient nach Pearson. Dieser ist definiert als die Kovarianz dividiert durch die jeweiligen Standardabweichungen der beiden Variablen und liegt im Intervall [-1,1]. Die Standardabweichung hatten wir in Session 4 kennengelernt, die Kovarianz erfasst die Lage der Datenpunkte relativ zu den Mittelwerten der beiden interessierenden Variablen (liegen Punkte > $\bar{x}$ auch $>\bar{y}$?):
 
 ```{r s07_15b, message=F, warning=F, out.height="80%", out.width="80%", echo=F,fig.align='center'}
 eq1 <-  substitute(italic(bar(x))) # formel erstellen
@@ -72,13 +71,13 @@ ggplot(a12, aes(x = age, y = hs18)) +
   ggthemes::theme_stata() +
   labs(title = "Alter & BMI der Befragten",
        caption = "Quelle: Allbus 2012",
-       y = "BMI",
-       x = "Alter")+
+       y = "BMI (hs18)",
+       x = "Alter (age)")+
   theme(aspect.ratio = 1)
 ```
 In Stata können wir den Korrelationskoeffizienten mit `corr` berechnen:
 ```{stata corr1,eval=F}
-corr age bmi
+corr age hs18
 ```
 ```{stata corr1b, echo =F}
 set linesize 90
@@ -86,8 +85,7 @@ qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
 qui keep if year == 2012
 qui mvdecode age hs18, mv(-32 -13)
-qui rename hs18 bmi
-corr age bmi
+corr age hs18
 ```
 
 Es handelt sich also um einen geringen Zusammenhang.
@@ -247,7 +245,7 @@ Wir sehen uns den Zusammenhang der Bildung der Befragten mit der Einstellung zum
 knitr::include_graphics("05_codebuch_mi02.png")
 ```
 
-Wir sehen uns den (möglichen) Zusammenhang zwischen diesen beiden Merkmalen an. Dazu definieren die negativen Ausprägungen sowie die Kategorien "noch Schüler" und "anderer Schulabschluss" als Missing, um eine klare ordinale Rangfolge für `educ` zu erhalten (je höher,desto höher der Bildungsabschluss):  
+Wir sehen uns den (möglichen) Zusammenhang zwischen diesen beiden Merkmalen an. Dazu definieren die negativen Ausprägungen sowie die Kategorien (`7`) "noch Schüler" und (`6`) "anderer Schulabschluss" als Missing, um eine klare ordinale Rangfolge für `educ` zu erhalten (je höher,desto höher der Bildungsabschluss). Wir sehen uns den Zusammenhang für das Jahr 1990 an:  
 
 ```{stata educF, eval = F}
 cd ""
@@ -496,14 +494,14 @@ qui mvdecode aq03 dh01 dh04, mv(-32 -9)
 tab aq03 dh04, chi wrap
 ```
 ### Cramer's $\upsilon$
-Auf Basis dieses $\chi^2$-Werts von `r round(as.numeric(tx$statistic),3)` können wir Cramer's $\upsilon$ berechnen. Dieses ist definiert als der Quotient aus dem $\chi^2$-Wert und der Fallzahl multipliziert mit dem Minimum der Zeilen- und Spaltenzahl. `n`, erkennen wir aus dem `Total` rechts unten in der Tabelle
+Auf Basis dieses $\chi^2$-Werts von `r round(as.numeric(tx$statistic),3)` können wir Cramer's $\upsilon$ berechnen. Dieses ist definiert als der Quotient aus dem $\chi^2$-Wert und der Fallzahl multipliziert mit dem Minimum der Zeilen- und Spaltenzahl. `n`, erkennen wir aus dem `Total` rechts unten in der Tabelle. Außerdem hat unsere Tabelle 4 Zeilen und 10 Spalten, dementsprechend entspricht das Minimum hier 4:
 
-$$ Cramer's\,\,\upsilon = \sqrt{\frac{\chi^2}{n*\,min(k-1,m-1)}}=\sqrt{\frac{157.1103}{3466*1}} = 0.2129061$$
+$$ Cramer's\,\,\upsilon = \sqrt{\frac{\chi^2}{n*\,min(k-1,m-1)}}=\sqrt{\frac{157.1103}{3466*(4-1)}} = 0.01510967$$
   
-Dieser Wert für Cramer's $\upsilon$ legt einen geringen Zusammenhang nahe.
+Dieser Wert für Cramer's $\upsilon$ legt einen praktisch keinen Zusammenhang nahe.
 
 ```{stata, vcalc, echo =T}
-dis sqrt(157.1103/(3466*1))
+dis sqrt(157.1103/(3466*3))
 ```
 
 ### $\phi$
