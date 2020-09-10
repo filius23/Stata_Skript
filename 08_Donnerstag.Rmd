@@ -2,7 +2,7 @@
 
 
 
-```{r setup7, include=F}
+```{r setup8, include=F}
 .libPaths("D:/R-library4") 
 library(tidyverse)
 library(ggplot2)
@@ -400,7 +400,7 @@ Für alle, die noch etwas mehr machen möchten:
 
 ## Hinweise
 ### Auswahl der in Vollzeit beschäftigten Befragten
-```{stata readin, eval = F}
+```{stata readin8auf, eval = F}
 // wo liegt der Datensatz?
 cd "..."
 // einlesen

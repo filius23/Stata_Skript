@@ -32,13 +32,13 @@ Zusammenhänge sind das Herz (fast) aller statistischer Analysen. Im Folgenden l
 ## Metrisch skalierte Variablen {#zshg_met}
 
 Wir sehen uns den (möglichen) Zusammenhang zwischen dem Alter (`age`) und dem BMI (`hs18`) der Befragten an. Dazu schließen wir zunächst die Missings aus und wählen die Befragten aus dem Jahr 2012 aus:
-```{stata readin1, eval = F}
+```{stata readin5, eval = F}
 cd ""
 use  Allbus_1980-2018.dta   
 keep if year == 2012
 mvdecode age hs18, mv(-32 -13)
 ```
-```{stata readin1b, echo= F}
+```{stata readin5b, echo= F}
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
 keep if year == 2012

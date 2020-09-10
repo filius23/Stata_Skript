@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="4.8 Optionen | GESIS Methodenseminar 2020" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
+
+
+<meta name="author" content="Andreas Filser" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020">
+
+<title>4.8 Optionen | GESIS Methodenseminar 2020</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#herzlich-willkommen">Herzlich Willkommen!</a></li>
+<li class="has-sub"><a href="1-Stata1.html#Stata1"><span class="toc-section-number">1</span> Einstieg in Stata</a><ul>
+<li><a href="1-1-taschenrechner.html#taschenrechner"><span class="toc-section-number">1.1</span> Taschenrechner</a></li>
+<li><a href="1-2-darstellung-in-diesem-skript.html#darstellung-in-diesem-skript"><span class="toc-section-number">1.2</span> Darstellung in diesem Skript</a></li>
+<li><a href="1-3-dofile-editor.html#dofile-editor"><span class="toc-section-number">1.3</span> DoFile Editor</a></li>
+<li><a href="1-4-datensätze-laden.html#datensätze-laden"><span class="toc-section-number">1.4</span> Datensätze laden</a></li>
+<li><a href="1-5-daten-codebücher-fragebogen.html#daten-codebücher-fragebogen"><span class="toc-section-number">1.5</span> Daten, Codebücher, Fragebogen</a></li>
+<li class="has-sub"><a href="1-6-überblicksbefehle.html#überblicksbefehle"><span class="toc-section-number">1.6</span> Überblicksbefehle</a><ul>
+<li><a href="1-6-überblicksbefehle.html#describe"><span class="toc-section-number">1.6.1</span> <code>describe</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#browse"><span class="toc-section-number">1.6.2</span> <code>browse</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#list"><span class="toc-section-number">1.6.3</span> <code>list</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#lookfor"><span class="toc-section-number">1.6.4</span> <code>lookfor</code></a></li>
+</ul></li>
+<li><a href="1-7-löschen.html#löschen"><span class="toc-section-number">1.7</span> löschen</a></li>
+<li><a href="1-8-if-bedingung-nur-manche-zeilen-ansehen.html#if-bedingung---nur-manche-zeilen-ansehen"><span class="toc-section-number">1.8</span> if Bedingung - nur manche Zeilen ansehen</a></li>
+<li><a href="1-9-U1.html#U1"><span class="toc-section-number">1.9</span> Übungen 1</a></li>
+<li><a href="1-10-profi-übungen-1.html#profi-übungen-1"><span class="toc-section-number">1.10</span> Profi-Übungen 1</a></li>
+<li class="has-sub"><a href="1-11-anhang-1.html#anhang-1"><span class="toc-section-number">1.11</span> Anhang 1</a><ul>
+<li><a href="1-11-anhang-1.html#var_types"><span class="toc-section-number">1.11.1</span> Variablentypen</a></li>
+<li><a href="1-11-anhang-1.html#otherfmts"><span class="toc-section-number">1.11.2</span> import anderer Dateiformate</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="2-Stata2.html#Stata2"><span class="toc-section-number">2</span> Arbeiten mit Datensätzen in Stata</a><ul>
+<li><a href="2-1-vorab-befehlsstruktur-hilfe.html#vorab-befehlsstruktur-hilfe"><span class="toc-section-number">2.1</span> Vorab: Befehlsstruktur &amp; Hilfe</a></li>
+<li><a href="2-2-auszählen-überblick-erhalten.html#auszählen-überblick-erhalten"><span class="toc-section-number">2.2</span> Auszählen &amp; Überblick erhalten</a></li>
+<li><a href="2-3-neue-variablen-erstellen.html#neue-variablen-erstellen"><span class="toc-section-number">2.3</span> Neue Variablen erstellen</a></li>
+<li><a href="2-4-bestehende-variablen-verändern.html#bestehende-variablen-verändern"><span class="toc-section-number">2.4</span> Bestehende Variablen verändern</a></li>
+<li><a href="2-5-gen-ist-gut-kontrolle-ist-besser.html#gen-ist-gut-kontrolle-ist-besser"><span class="toc-section-number">2.5</span> gen ist gut, Kontrolle ist besser</a></li>
+<li><a href="2-6-fehlende-werte.html#fehlende-werte"><span class="toc-section-number">2.6</span> Fehlende Werte</a></li>
+<li><a href="2-7-if-bedingungen-und-fehlende-werte.html#if-bedingungen-und-fehlende-werte"><span class="toc-section-number">2.7</span> if Bedingungen und fehlende Werte</a></li>
+<li><a href="2-8-keep-drop.html#keep-drop"><span class="toc-section-number">2.8</span> keep &amp; drop</a></li>
+<li><a href="2-9-labels-und-if-bedingungen.html#labels-und-if-bedingungen"><span class="toc-section-number">2.9</span> Labels und if-Bedingungen</a></li>
+<li><a href="2-10-nochmal-von-vorne-daten-neu-laden.html#nochmal-von-vorne-daten-neu-laden"><span class="toc-section-number">2.10</span> Nochmal von vorne: Daten neu laden</a></li>
+<li><a href="2-11-speichern.html#speichern"><span class="toc-section-number">2.11</span> Speichern</a></li>
+<li><a href="2-12-übungen-2.html#übungen-2"><span class="toc-section-number">2.12</span> Übungen 2</a></li>
+<li><a href="2-13-profi-übungen-2.html#profi-übungen-2"><span class="toc-section-number">2.13</span> Profi-Übungen 2</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-desc1.html#desc1"><span class="toc-section-number">3</span> Deskriptive Statistik</a><ul>
+<li class="has-sub"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#kategoriale-merkmale-mit-tabulate-beschreiben"><span class="toc-section-number">3.1</span> Kategoriale Merkmale mit <code>tabulate</code> beschreiben</a><ul>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#zwei-variablen-eine-tabelle-kontingenztabellen"><span class="toc-section-number">3.1.1</span> Zwei Variablen, eine Tabelle: Kontingenztabellen</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#in-prozent-relative-häufigkeiten"><span class="toc-section-number">3.1.2</span> In Prozent: Relative Häufigkeiten</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#pro-gruppe-1-zeilenprozente"><span class="toc-section-number">3.1.3</span> pro Gruppe 1: Zeilenprozente</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#pro-gruppe-2-spaltenprozente"><span class="toc-section-number">3.1.4</span> pro Gruppe 2: Spaltenprozente</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-2-metrische-variablen-beschreiben.html#metrische-variablen-beschreiben"><span class="toc-section-number">3.2</span> Metrische Variablen beschreiben</a><ul>
+<li><a href="3-2-metrische-variablen-beschreiben.html#summarize"><span class="toc-section-number">3.2.1</span> <code>summarize</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#tabstat"><span class="toc-section-number">3.2.2</span> <code>tabstat</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#by_vgl"><span class="toc-section-number">3.2.3</span> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#streu"><span class="toc-section-number">3.2.4</span> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#gini-koeffizient"><span class="toc-section-number">3.2.5</span> Gini-Koeffizient</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-3-übungen-3.html#übungen-3"><span class="toc-section-number">3.3</span> Übungen 3</a><ul>
+<li><a href="3-3-übungen-3.html#tab"><span class="toc-section-number">3.3.1</span> Übung 3-1</a></li>
+<li><a href="3-3-übungen-3.html#met"><span class="toc-section-number">3.3.2</span> Übung 3-2</a></li>
+<li><a href="3-3-übungen-3.html#weitere-übungen-3"><span class="toc-section-number">3.3.3</span> Weitere Übungen 3</a></li>
+</ul></li>
+<li><a href="3-4-profi-übungen-3.html#profi-übungen-3"><span class="toc-section-number">3.4</span> Profi-Übungen 3</a></li>
+<li class="has-sub"><a href="3-5-anhang-kap-3.html#anhang-kap-3"><span class="toc-section-number">3.5</span> Anhang Kap 3</a><ul>
+<li><a href="3-5-anhang-kap-3.html#vlabel"><span class="toc-section-number">3.5.1</span> labels vergeben</a></li>
+<li><a href="3-5-anhang-kap-3.html#variance"><span class="toc-section-number">3.5.2</span> Varianz erklärt</a></li>
+<li><a href="3-5-anhang-kap-3.html#sk_kur"><span class="toc-section-number">3.5.3</span> Schiefe &amp; Wölbung</a></li>
+<li><a href="3-5-anhang-kap-3.html#bys_su"><span class="toc-section-number">3.5.4</span> Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+<li><a href="3-5-anhang-kap-3.html#if_vgl"><span class="toc-section-number">3.5.5</span> Kennzahlvergleiche mit <code>if</code></a></li>
+<li><a href="3-5-anhang-kap-3.html#kennzahlvergleich-mit-tabulate-und-der-option-summarize"><span class="toc-section-number">3.5.6</span> Kennzahlvergleich mit <code>tabulate</code> und der Option <code>summarize()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="4-dataviz.html#dataviz"><span class="toc-section-number">4</span> Datenvisualisierung in Stata</a><ul>
+<li class="has-sub"><a href="4-1-visualisierung-einer-variable.html#visualisierung-einer-variable"><span class="toc-section-number">4.1</span> Visualisierung einer Variable</a><ul>
+<li><a href="4-1-visualisierung-einer-variable.html#metrische-variablen"><span class="toc-section-number">4.1.1</span> metrische Variablen</a></li>
+<li><a href="4-1-visualisierung-einer-variable.html#bar_col"><span class="toc-section-number">4.1.2</span> Kategoriale Variablen</a></li>
+</ul></li>
+<li><a href="4-2-verteilungen-vergleichen-mit-facetten.html#verteilungen-vergleichen-mit-facetten"><span class="toc-section-number">4.2</span> Verteilungen vergleichen mit Facetten</a></li>
+<li class="has-sub"><a href="4-3-bivar-plot.html#bivar_plot"><span class="toc-section-number">4.3</span> Gemeinsame Verteilung zweier Variablen</a><ul>
+<li><a href="4-3-bivar-plot.html#mosaikplot"><span class="toc-section-number">4.3.1</span> Mosaikplot</a></li>
+<li><a href="4-3-bivar-plot.html#streudiagramm"><span class="toc-section-number">4.3.2</span> Streudiagramm</a></li>
+</ul></li>
+<li><a href="4-4-weitere-twoway-grafiken.html#weitere-twoway-grafiken"><span class="toc-section-number">4.4</span> Weitere <code>twoway</code> Grafiken</a></li>
+<li><a href="4-5-twoway-comb.html#twoway_comb"><span class="toc-section-number">4.5</span> Kombinieren von zwei twoway-Grafiken</a></li>
+<li><a href="4-6-gruppierte-boxplots.html#gruppierte-boxplots"><span class="toc-section-number">4.6</span> Gruppierte Boxplots</a></li>
+<li class="has-sub"><a href="4-7-übungen-4.html#übungen-4"><span class="toc-section-number">4.7</span> Übungen 4</a><ul>
+<li><a href="4-7-übungen-4.html#plt1"><span class="toc-section-number">4.7.1</span> Übung 4-1</a></li>
+<li><a href="4-7-übungen-4.html#plt2"><span class="toc-section-number">4.7.2</span> Übung 4-2</a></li>
+<li><a href="4-7-übungen-4.html#weitere-übungen-kap4"><span class="toc-section-number">4.7.3</span> Weitere Übungen Kap4</a></li>
+</ul></li>
+<li class="has-sub"><a href="4-8-optionen.html#optionen"><span class="toc-section-number">4.8</span> Optionen</a><ul>
+<li><a href="4-8-optionen.html#title"><span class="toc-section-number">4.8.1</span> Titel</a></li>
+<li><a href="4-8-optionen.html#achsenbeschriftung"><span class="toc-section-number">4.8.2</span> Achsenbeschriftung</a></li>
+<li><a href="4-8-optionen.html#text-einfügen"><span class="toc-section-number">4.8.3</span> Text einfügen</a></li>
+<li><a href="4-8-optionen.html#font"><span class="toc-section-number">4.8.4</span> Schriftart &amp; Textgröße</a></li>
+<li><a href="4-8-optionen.html#legend"><span class="toc-section-number">4.8.5</span> Legende</a></li>
+<li><a href="4-8-optionen.html#mark"><span class="toc-section-number">4.8.6</span> Marker</a></li>
+<li><a href="4-8-optionen.html#color"><span class="toc-section-number">4.8.7</span> Farben</a></li>
+<li><a href="4-8-optionen.html#vorlagen"><span class="toc-section-number">4.8.8</span> Vorlagen</a></li>
+</ul></li>
+<li class="has-sub"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#anhang-beispiele-zum-selbst-anpassen"><span class="toc-section-number">4.9</span> Anhang &amp; Beispiele zum selbst anpassen</a><ul>
+<li><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#boxplot"><span class="toc-section-number">4.9.1</span> Boxplot</a></li>
+<li><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#scatterplot"><span class="toc-section-number">4.9.2</span> Scatterplot</a></li>
+<li><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#pyramid"><span class="toc-section-number">4.9.3</span> Bevölkerungspyramide</a></li>
+<li><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#boxplot1"><span class="toc-section-number">4.9.4</span> Boxplot</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="5-zshg.html#zshg"><span class="toc-section-number">5</span> Zusammenhangsmaße</a><ul>
+<li class="has-sub"><a href="5-1-zshg-met.html#zshg_met"><span class="toc-section-number">5.1</span> Metrisch skalierte Variablen</a><ul>
+<li><a href="5-1-zshg-met.html#cor"><span class="toc-section-number">5.1.1</span> Korrelationskoeffizient</a></li>
+<li><a href="5-1-zshg-met.html#regression"><span class="toc-section-number">5.1.2</span> Regression</a></li>
+<li><a href="5-1-zshg-met.html#vorhergesagte-werte"><span class="toc-section-number">5.1.3</span> vorhergesagte Werte</a></li>
+</ul></li>
+<li class="has-sub"><a href="5-2-zshg-ord.html#zshg_ord"><span class="toc-section-number">5.2</span> Ordinal skalierte Merkmale</a><ul>
+<li><a href="5-2-zshg-ord.html#spear"><span class="toc-section-number">5.2.1</span> Spearman- Rangkorrelation</a></li>
+<li><a href="5-2-zshg-ord.html#tau"><span class="toc-section-number">5.2.2</span> Konkordanzmaße</a></li>
+</ul></li>
+<li class="has-sub"><a href="5-3-zshg-nom.html#zshg_nom"><span class="toc-section-number">5.3</span> Nominal skalierte Variablen</a><ul>
+<li><a href="5-3-zshg-nom.html#OR"><span class="toc-section-number">5.3.1</span> Odds Ratio</a></li>
+<li><a href="5-3-zshg-nom.html#chi2"><span class="toc-section-number">5.3.2</span> Chi²-basierte Maße</a></li>
+<li><a href="5-3-zshg-nom.html#cramers-upsilon"><span class="toc-section-number">5.3.3</span> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+<li><a href="5-3-zshg-nom.html#phi"><span class="toc-section-number">5.3.4</span> <span class="math inline">\(\phi\)</span></a></li>
+</ul></li>
+<li><a href="5-4-welches-maß-richtig.html#welches-maß-richtig"><span class="toc-section-number">5.4</span> Welches Maß richtig?</a></li>
+<li class="has-sub"><a href="5-5-übungen-5.html#übungen-5"><span class="toc-section-number">5.5</span> Übungen 5</a><ul>
+<li><a href="5-5-übungen-5.html#auf_met"><span class="toc-section-number">5.5.1</span> Übung 5-1</a></li>
+<li><a href="5-5-übungen-5.html#auf_ord"><span class="toc-section-number">5.5.2</span> Übung 5-2</a></li>
+<li><a href="5-5-übungen-5.html#auf_nom"><span class="toc-section-number">5.5.3</span> Übung 5-3</a></li>
+<li><a href="5-5-übungen-5.html#weitere-übungen-5"><span class="toc-section-number">5.5.4</span> Weitere Übungen 5</a></li>
+</ul></li>
+<li><a href="5-6-profi-übungen-5.html#profi-übungen-5"><span class="toc-section-number">5.6</span> Profi-Übungen 5</a></li>
+<li class="has-sub"><a href="5-7-anhang.html#anhang"><span class="toc-section-number">5.7</span> Anhang</a><ul>
+<li><a href="5-7-anhang.html#reg"><span class="toc-section-number">5.7.1</span> Idee einer Regression</a></li>
+<li><a href="5-7-anhang.html#resid"><span class="toc-section-number">5.7.2</span> Residuen</a></li>
+<li><a href="5-7-anhang.html#quad_res"><span class="toc-section-number">5.7.3</span> Quadrierte Residuen</a></li>
+<li><a href="5-7-anhang.html#interpretation-der-regression"><span class="toc-section-number">5.7.4</span> Interpretation der Regression</a></li>
+<li><a href="5-7-anhang.html#reg_pred"><span class="toc-section-number">5.7.5</span> Vorhergesagte Werte</a></li>
+<li><a href="5-7-anhang.html#resid2"><span class="toc-section-number">5.7.6</span> Residuen Teil 2</a></li>
+<li><a href="5-7-anhang.html#r2"><span class="toc-section-number">5.7.7</span> Modellgüte</a></li>
+<li><a href="5-7-anhang.html#indiff"><span class="toc-section-number">5.7.8</span> Indifferenztabelle</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="6-zshg2.html#zshg2"><span class="toc-section-number">6</span> Zusammenhänge 2</a><ul>
+<li><a href="6-1-zusammenhänge-vergleichen.html#zusammenhänge-vergleichen"><span class="toc-section-number">6.1</span> Zusammenhänge vergleichen</a></li>
+<li><a href="6-2-zusammenhänge-visualisieren.html#zusammenhänge-visualisieren"><span class="toc-section-number">6.2</span> Zusammenhänge visualisieren</a></li>
+<li class="has-sub"><a href="6-3-kategoriale-zusammenhänge.html#kategoriale-zusammenhänge"><span class="toc-section-number">6.3</span> Kategoriale Zusammenhänge</a><ul>
+<li><a href="6-3-kategoriale-zusammenhänge.html#ordinale-zusammenhangsmaße-vergleichen"><span class="toc-section-number">6.3.1</span> Ordinale Zusammenhangsmaße vergleichen</a></li>
+<li><a href="6-3-kategoriale-zusammenhänge.html#vergleich-visualisieren"><span class="toc-section-number">6.3.2</span> Vergleich visualisieren</a></li>
+<li><a href="6-3-kategoriale-zusammenhänge.html#nominale-zusammenhangsmaße-vergleichen"><span class="toc-section-number">6.3.3</span> Nominale Zusammenhangsmaße vergleichen</a></li>
+</ul></li>
+<li class="has-sub"><a href="6-4-übungen-6.html#übungen-6"><span class="toc-section-number">6.4</span> Übungen 6</a><ul>
+<li><a href="6-4-übungen-6.html#met_vgl"><span class="toc-section-number">6.4.1</span> Übung 6-1</a></li>
+<li><a href="6-4-übungen-6.html#ord_vgl"><span class="toc-section-number">6.4.2</span> Übung 6-2</a></li>
+<li><a href="6-4-übungen-6.html#nom_vgl"><span class="toc-section-number">6.4.3</span> Übung 6-3</a></li>
+<li><a href="6-4-übungen-6.html#weitere-übungen-kap-6"><span class="toc-section-number">6.4.4</span> Weitere Übungen Kap 6</a></li>
+</ul></li>
+<li class="has-sub"><a href="5-7-anhang.html#anhang"><span class="toc-section-number">6.5</span> Anhang</a><ul>
+<li><a href="6-5-anhang.html#lpattern"><span class="toc-section-number">6.5.1</span> Optionen für <code>lpattern</code></a></li>
+<li><a href="6-5-anhang.html#scatterplot-für-kategoriale-merkmale"><span class="toc-section-number">6.5.2</span> Scatterplot für kategoriale Merkmale</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="7-inf1.html#inf1"><span class="toc-section-number">7</span> Inferenzstatistik I</a><ul>
+<li><a href="7-1-inferenz.html#inferenz"><span class="toc-section-number">7.1</span> Inferenz</a></li>
+<li class="has-sub"><a href="7-2-parametrische-ki-schätzung.html#parametrische-ki-schätzung"><span class="toc-section-number">7.2</span> Parametrische KI-Schätzung</a><ul>
+<li><a href="7-2-parametrische-ki-schätzung.html#t-z-wert"><span class="toc-section-number">7.2.1</span> t-/z-Wert</a></li>
+<li><a href="7-2-parametrische-ki-schätzung.html#standardfehler"><span class="toc-section-number">7.2.2</span> Standardfehler</a></li>
+<li><a href="7-2-parametrische-ki-schätzung.html#kis-berechnen"><span class="toc-section-number">7.2.3</span> KIs berechnen</a></li>
+<li><a href="7-2-parametrische-ki-schätzung.html#mean"><span class="toc-section-number">7.2.4</span> <code>mean</code></a></li>
+<li><a href="7-2-parametrische-ki-schätzung.html#vergleich"><span class="toc-section-number">7.2.5</span> Vergleich</a></li>
+</ul></li>
+<li><a href="7-3-bootstrapping.html#bootstrapping"><span class="toc-section-number">7.3</span> Bootstrapping</a></li>
+<li><a href="7-4-übungen-7.html#übungen-7"><span class="toc-section-number">7.4</span> Übungen 7</a></li>
+<li class="has-sub"><a href="7-5-anhang-kap7.html#anhang-kap7"><span class="toc-section-number">7.5</span> Anhang Kap7</a><ul>
+<li><a href="7-5-anhang-kap7.html#normalverteilung"><span class="toc-section-number">7.5.1</span> Normalverteilung</a></li>
+<li><a href="7-5-anhang-kap7.html#student-t-verteilung"><span class="toc-section-number">7.5.2</span> Student t-Verteilung</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="8-inf2.html#inf2"><span class="toc-section-number">8</span> t-Tests</a><ul>
+<li><a href="8-1-hypothesentests.html#hypothesentests"><span class="toc-section-number">8.1</span> Hypothesentests</a></li>
+<li class="has-sub"><a href="8-2-t-test.html#t-test"><span class="toc-section-number">8.2</span> t-Test</a><ul>
+<li><a href="8-2-t-test.html#beiseitiger-t-test"><span class="toc-section-number">8.2.1</span> beiseitiger t-Test</a></li>
+<li><a href="8-2-t-test.html#linksseitiger-t-test"><span class="toc-section-number">8.2.2</span> linksseitiger t-Test</a></li>
+<li><a href="8-2-t-test.html#rechtsseitiger-t-test"><span class="toc-section-number">8.2.3</span> rechtsseitiger t-Test</a></li>
+</ul></li>
+<li><a href="8-3-übungen-8.html#übungen-8"><span class="toc-section-number">8.3</span> Übungen 8</a></li>
+<li><a href="8-4-profi-übungen-8.html#profi-übungen-8"><span class="toc-section-number">8.4</span> Profi-Übungen 8</a></li>
+<li class="has-sub"><a href="8-5-hinweise.html#hinweise"><span class="toc-section-number">8.5</span> Hinweise</a><ul>
+<li><a href="8-5-hinweise.html#auswahl-der-in-vollzeit-beschäftigten-befragten"><span class="toc-section-number">8.5.1</span> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
+</ul></li>
+</ul></li>
+<li><a href="9-hypo.html#hypo"><span class="toc-section-number">9</span> Hypothesentests</a></li>
+<li><a href="10-export1.html#export1"><span class="toc-section-number">10</span> Ergebnisexport &amp; weitere Tipps</a></li>
+<li class="has-sub"><a href="11-adva.html#adva"><span class="toc-section-number">11</span> Fortgeschrittene Themen</a><ul>
+<li><a href="11-1-wertelabels.html#wertelabels"><span class="toc-section-number">11.1</span> Wertelabels</a></li>
+<li><a href="11-2-sortieren.html#sortieren"><span class="toc-section-number">11.2</span> sortieren</a></li>
+<li><a href="11-3-informationen-aus-mehreren-variablen.html#informationen-aus-mehreren-variablen"><span class="toc-section-number">11.3</span> Informationen aus mehreren Variablen</a></li>
+<li><a href="11-4-egen.html#egen"><span class="toc-section-number">11.4</span> egen</a></li>
+<li><a href="11-5-gruppierte-berechnungen.html#gruppierte-berechnungen"><span class="toc-section-number">11.5</span> gruppierte Berechnungen</a></li>
+<li><a href="11-6-sep1.html#sep1"><span class="toc-section-number">11.6</span> Subgruppen-Variablen erstellen mit <code>separate</code></a></li>
+<li><a href="11-7-collapse.html#collapse"><span class="toc-section-number">11.7</span> collapse</a></li>
+<li><a href="11-8-indikatoren-umdrehen.html#indikatoren-umdrehen"><span class="toc-section-number">11.8</span> Indikatoren umdrehen</a></li>
+<li><a href="11-9-informationen-aus-mehreren-datensätzen.html#informationen-aus-mehreren-datensätzen"><span class="toc-section-number">11.9</span> Informationen aus mehreren Datensätzen</a></li>
+<li><a href="11-10-arbeiten-mit-textvariablen.html#arbeiten-mit-textvariablen"><span class="toc-section-number">11.10</span> Arbeiten mit Textvariablen</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="optionen" class="section level2">
+<h2><span class="header-section-number">4.8</span> Optionen</h2>
+<p>Diese grundlegenden Darstellungen können mit Hilfe einer ganzen Reihe an Optionen angepasst werden. Auch hier beschränken wir uns auf die wesentlichsten Optionen. Bei konkreten Fragen hilft oftmals auch eine Google-Suche nach: “stata graph text smaller” o.ä.</p>
+<div id="title" class="section level3">
+<h3><span class="header-section-number">4.8.1</span> Titel</h3>
+<p>Eine klare Beschriftung ist zentraler Bestandteil jeder Datenvisualisierung. Folgende Überschriften stehen uns dazu zur Verfügung:</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb170-1"><a href="4-8-optionen.html#cb170-1"></a><span class="kw">graph</span> ...., <span class="bn">title</span>(<span class="st">&quot;Titel&quot;</span>) <span class="bn">subtitle</span>(<span class="st">&quot;Untertitel&quot;</span>) <span class="bn">xtitle</span>(<span class="st">&quot;x-Achsentitel&quot;</span>) <span class="bn">ytitle</span>(<span class="st">&quot;y-Achsentitel&quot;</span>) <span class="bn">caption</span>(<span class="st">&quot;Bildunterschrift&quot;</span>)</span></code></pre></div>
+<p><img src="04_scatter_title.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Weitere Optionen unter <code>help title_options</code>.</p>
+</div>
+<div id="achsenbeschriftung" class="section level3">
+<h3><span class="header-section-number">4.8.2</span> Achsenbeschriftung</h3>
+<p>Außerdem können wir die Achsenbeschriftungen verändern - hier ein Beispiel für die x-Achse<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a></p>
+<ul>
+<li><code>xscale(range(0 100))</code> <span class="math inline">\(\rightarrow\)</span> x-Achse auf 0-100 ausdehnen</li>
+<li><code>xtick(0 (10) 100 )</code> <span class="math inline">\(\rightarrow\)</span> an allen Zehner-Grenzen zwischen 0 und 100, <code>0(10)100</code> ist die Abkürzung für <code>0,10,20,30,40,50,60,70,80,90,100</code></li>
+<li><code>xlabel(0 "Null" 10 "zehn" 20 (10) 100)</code> <span class="math inline">\(\rightarrow\)</span> Beschriftung der “ticks”</li>
+</ul>
+<div class="sourceCode" id="cb171"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb171-1"><a href="4-8-optionen.html#cb171-1"></a><span class="kw">graph</span> .... , <span class="bn">xscale</span>(<span class="kw">range</span>(0 100)) xtick(0 (10) 100 )` <span class="kw">xlabel</span>(0 <span class="st">&quot;Null&quot;</span> 10 <span class="st">&quot;zehn&quot;</span> 20 (10) 100) </span></code></pre></div>
+<p><img src="04_scatter_axis.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Mehr Optionen finden sich unter <code>help axis_label_options</code>. Bspw. kann man mit <code>xlabel(..., alternate)</code> die Achsenlabels nach oben und unten verschieben.</p>
+</div>
+<div id="text-einfügen" class="section level3">
+<h3><span class="header-section-number">4.8.3</span> Text einfügen</h3>
+<p>Wir können mit <code>text()</code> auch ein Text auf der Grafik positionieren - wie geben erst die y-Koordinate, dann die x-Koordinate an und dann den gewünschten Text:</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb172-1"><a href="4-8-optionen.html#cb172-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="kw">scatter</span> inc age, <span class="bn">text</span>(17500 80 <span class="st">&quot;text&quot;</span>)</span></code></pre></div>
+<p><img src="04_scatter_text.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="font" class="section level3">
+<h3><span class="header-section-number">4.8.4</span> Schriftart &amp; Textgröße</h3>
+<p>Eine Reihe an Schriftarten stehen für Textangaben zur Verfügung:</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb173-1"><a href="4-8-optionen.html#cb173-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="kw">scatter</span> inc age, <span class="co">///</span></span>
+<span id="cb173-2"><a href="4-8-optionen.html#cb173-2"></a><span class="bn">title</span>(<span class="st">&quot;{stSerif:Einkommen {bf:fett} {it:kursiv}}&quot;</span>) <span class="co">///</span></span>
+<span id="cb173-3"><a href="4-8-optionen.html#cb173-3"></a>  <span class="bn">subtitle</span>(<span class="st">&quot;Text{superscript:hochgestellt}{subscript:tiefgestellt}&quot;</span>) <span class="co">/// </span></span>
+<span id="cb173-4"><a href="4-8-optionen.html#cb173-4"></a>  <span class="bn">xtitle</span>(<span class="st">&quot;Alter {it:age}&quot;</span>) <span class="bn">ytitle</span>(<span class="st">&quot;{stMono:Einkommen}&quot;</span>) <span class="co">///</span></span>
+<span id="cb173-5"><a href="4-8-optionen.html#cb173-5"></a>  <span class="kw">xlabel</span>(0 <span class="st">&quot; {stMono:Null}&quot;</span> 10 <span class="st">&quot;{bf:zehn}&quot;</span> 20 (10) 100) <span class="co">///</span></span>
+<span id="cb173-6"><a href="4-8-optionen.html#cb173-6"></a>  <span class="bn">text</span>(15000 20 <span class="st">&quot;Hier ein Symbol: {&amp;Omega}&quot;</span>) <span class="bn">xscale</span>(<span class="kw">range</span>(0 100))</span></code></pre></div>
+<p><img src="04_scatter_text_fmts.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Mehr dazu unter <code>help graph_text</code></p>
+<p>Außerdem können wir mit der Option <code>size</code> die jeweilige Größe des Textes anpassen, dabei können wir die Größenangaben aus der <a href="#msymbol_size_overview">Palette</a> verwenden. Mit der Option <code>angle(90)</code> können wir außerdem den Text um 90 Grad (und natürlich um jeden beliebigen Wert durch entsprechende Angabe):</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb174-1"><a href="4-8-optionen.html#cb174-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="kw">scatter</span> inc age, <span class="co">///</span></span>
+<span id="cb174-2"><a href="4-8-optionen.html#cb174-2"></a> <span class="bn">title</span>(<span class="st">&quot;Text1&quot;</span>, <span class="kw">size</span>(vsmall)) <span class="co">///</span></span>
+<span id="cb174-3"><a href="4-8-optionen.html#cb174-3"></a> <span class="bn">subtitle</span>(<span class="st">&quot;Untertitel&quot;</span>,<span class="kw">size</span>(large)) <span class="co">/// </span></span>
+<span id="cb174-4"><a href="4-8-optionen.html#cb174-4"></a>  <span class="bn">xtitle</span>(<span class="st">&quot;Alter&quot;</span>,<span class="kw">size</span>(small)) <span class="bn">ytitle</span>(<span class="st">&quot;{stMono:Einkommen}&quot;</span>,<span class="kw">size</span>(vhuge)) <span class="co">///</span></span>
+<span id="cb174-5"><a href="4-8-optionen.html#cb174-5"></a>  <span class="kw">xlabel</span>(0 <span class="st">&quot; {stMono:Null}&quot;</span> 10 <span class="st">&quot;{bf:zehn}&quot;</span> 20 (10) 100 , <span class="bn">labsize</span>(tiny) angle(90))</span></code></pre></div>
+<p><img src="04_scatter_text_size.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Wenn die Option <a href="4-1-visualisierung-einer-variable.html#bar_col"><code>over</code></a> verwendet wird, dann müssen die Textoptionen in <code>over</code> angegeben werden:</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb175-1"><a href="4-8-optionen.html#cb175-1"></a><span class="kw">graph</span> <span class="bn">bar</span> (<span class="fu">count</span>) respid, <span class="co">/// </span></span>
+<span id="cb175-2"><a href="4-8-optionen.html#cb175-2"></a>  <span class="bn">over</span>(gkpol,<span class="kw">label</span>(<span class="bn">labsize</span>(small) angle(90)))</span></code></pre></div>
+<p><img src="04_scatter_text_over.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="legend" class="section level3">
+<h3><span class="header-section-number">4.8.5</span> Legende</h3>
+<p>Oben hatten wir gesehen, dass die automatische Legende nicht unbedingt aussagekräftig ist. Mit der Option <code>legend</code> können wir die Legende beschriften und einen Titel vergeben:</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb176-1"><a href="4-8-optionen.html#cb176-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> inc age <span class="kw">if</span> sex==1) (<span class="kw">scatter</span> inc age <span class="kw">if</span> sex==2), <span class="co">///</span></span>
+<span id="cb176-2"><a href="4-8-optionen.html#cb176-2"></a>  <span class="bn">legend</span>(lab(1 <span class="st">&quot;Männer&quot;</span>) lab(2 <span class="st">&quot;Frauen&quot;</span>) <span class="bn">title</span>(<span class="st">&quot;Geschlecht&quot;</span>))</span></code></pre></div>
+<p><img src="04_scatter_bysex_legend.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Mit der Option <code>pos</code> können wir außerdem die Position der Legende anpassen - wir geben dabei eine Zahl zwischen 0 und 12 an. Die Werte 1-12 entsprechen die Stunden auf einer Uhr, 0 setzt die Legende in die Mitte der Grafik.</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb177-1"><a href="4-8-optionen.html#cb177-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> inc age <span class="kw">if</span> sex==1) (<span class="kw">scatter</span> inc age <span class="kw">if</span> sex==2), <span class="co">///</span></span>
+<span id="cb177-2"><a href="4-8-optionen.html#cb177-2"></a>  <span class="bn">legend</span>(lab(1 <span class="st">&quot;Männer&quot;</span>) lab(2 <span class="st">&quot;Frauen&quot;</span>) <span class="bn">title</span>(<span class="st">&quot;Geschlecht&quot;</span>) pos(9))</span></code></pre></div>
+<p><img src="04_scatter_bysex_legend_pos.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Weitere Optionen und Beispiele unter <code>help legend_options</code>. Mit <code>legend(off)</code> kann die Legende auch ausgeblendet werden.</p>
+</div>
+<div id="mark" class="section level3">
+<h3><span class="header-section-number">4.8.6</span> Marker</h3>
+<p>Im Stata-Jargon werden die Punkte “marker” genannt. Deren Aussehen können wir mit entsprechenden Optionen ebenfalls verändern. Zum einen können wir mit <code>msymbol</code> die Form des Markers verändern, mit <code>msize</code> können wir die Größe und mit <code>mcolor</code> die Farbe anpassen:</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb178-1"><a href="4-8-optionen.html#cb178-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="kw">scatter</span> inc age, <span class="bn">msymbol</span>(D) msize(small) mcolor(<span class="bn">sand</span>)</span></code></pre></div>
+<img src="04_msym_size.png" width="80%" height="80%" style="display: block; margin: auto;" />
+Dabei können wir aus einer Reihe an Formen, Größen und Farben wählen:
+<div class="figure" style="text-align: center">
+<img src="04_msymbol.png" alt="Marker Optionen" width="60%" height="80%" /><img src="04_msize.png" alt="Marker Optionen" width="60%" height="80%" /><img src="04_mcolor.png" alt="Marker Optionen" width="60%" height="80%" />
+<p class="caption">
+(#fig:msymbol_size_overview)Marker Optionen
+</p>
+</div>
+<p>In unserem Beispiel vorhin hatten wir die Farben der marker aber genutzt, um die Angaben für Männer und Frauen zu unterscheiden. Hier geben wir dann <code>mcolor</code> etc. jeweils innerhalb der Klammern an:</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb179-1"><a href="4-8-optionen.html#cb179-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="co">/// </span></span>
+<span id="cb179-2"><a href="4-8-optionen.html#cb179-2"></a>  (<span class="kw">scatter</span> inc age <span class="kw">if</span> sex==1, mcolor(<span class="bn">orange</span>) msize(small)) <span class="co">///</span></span>
+<span id="cb179-3"><a href="4-8-optionen.html#cb179-3"></a>  (<span class="kw">scatter</span> inc age <span class="kw">if</span> sex==2, mcolor(<span class="bn">sand</span>) <span class="bn">msymbol</span>(D) msize(small)), <span class="co">///</span></span>
+<span id="cb179-4"><a href="4-8-optionen.html#cb179-4"></a>  <span class="bn">legend</span>(lab(1 <span class="st">&quot;Männer&quot;</span>) lab(2 <span class="st">&quot;Frauen&quot;</span>)) </span></code></pre></div>
+<p><img src="04_mcolor_sex.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Mit <code>mlcolor</code> und <code>mlwidth</code> können wir jedem marker die Farbe und Dicke<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a> der Umrandung angeben:</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb180-1"><a href="4-8-optionen.html#cb180-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="co">/// </span></span>
+<span id="cb180-2"><a href="4-8-optionen.html#cb180-2"></a>  (<span class="kw">scatter</span> inc age <span class="kw">if</span> sex==1, mcolor(<span class="bn">orange</span>) msize(small) mlcolor(gs3) mlwidth(vthin)) <span class="co">///</span></span>
+<span id="cb180-3"><a href="4-8-optionen.html#cb180-3"></a>  (<span class="kw">scatter</span> inc age <span class="kw">if</span> sex==2, mcolor(<span class="bn">sand</span>) <span class="bn">msymbol</span>(D) msize(small) mlcolor(gs3) mlwidth(vvthin)), <span class="co">///</span></span>
+<span id="cb180-4"><a href="4-8-optionen.html#cb180-4"></a>  <span class="bn">legend</span>(lab(1 <span class="st">&quot;Männer&quot;</span>) lab(2 <span class="st">&quot;Frauen&quot;</span>)) </span></code></pre></div>
+<p><img src="04_ml_sex.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="color" class="section level3">
+<h3><span class="header-section-number">4.8.7</span> Farben</h3>
+<p>Obwohl es um Darstellungen geht, haben wir noch sehr wenig über Farben gesprochen. Neben den oben gezeigten vordefinierten Farben können wir auch Farben als RGB-Codes<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> angeben und so Farben eigenen Paletten verwenden:</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb181-1"><a href="4-8-optionen.html#cb181-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="co">/// </span></span>
+<span id="cb181-2"><a href="4-8-optionen.html#cb181-2"></a>  (<span class="kw">scatter</span> inc age <span class="kw">if</span> sex==1, mcolor(<span class="st">&quot;91	37 97&quot;</span>) msize(small)) <span class="co">///</span></span>
+<span id="cb181-3"><a href="4-8-optionen.html#cb181-3"></a>  (<span class="kw">scatter</span> inc age <span class="kw">if</span> sex==2, mcolor(<span class="st">&quot;150 196 134&quot;</span>) <span class="bn">msymbol</span>(D)), <span class="co">///</span></span>
+<span id="cb181-4"><a href="4-8-optionen.html#cb181-4"></a>  <span class="bn">legend</span>(lab(1 <span class="st">&quot;Männer&quot;</span>) lab(2 <span class="st">&quot;Frauen&quot;</span>))</span></code></pre></div>
+<p><img src="04_col_scatter.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Außerdem können wir mit <code>plotregion(fcolor( ))</code> und <code>graphregion(fcolor( ))</code> die Hintergrundfarben der Grafik und des Koordinatenbereichs anpassen. Mit <code>region(fcolor( ))</code> können wir die den Hintergrund der Legende verändern.</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb182-1"><a href="4-8-optionen.html#cb182-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="co">///</span></span>
+<span id="cb182-2"><a href="4-8-optionen.html#cb182-2"></a>  (<span class="kw">scatter</span> inc age <span class="kw">if</span> sex==1, mcolor(<span class="st">&quot;91	37 97&quot;</span>) msize(small)) <span class="co">///</span></span>
+<span id="cb182-3"><a href="4-8-optionen.html#cb182-3"></a>  (<span class="kw">scatter</span> inc age <span class="kw">if</span> sex==2, mcolor(<span class="st">&quot;150 196 134&quot;</span>) <span class="bn">msymbol</span>(D)), <span class="co">///</span></span>
+<span id="cb182-4"><a href="4-8-optionen.html#cb182-4"></a>  <span class="bn">legend</span>(lab(1 <span class="st">&quot;Männer&quot;</span>) lab(2 <span class="st">&quot;Frauen&quot;</span>) region(fcolor(<span class="kw">red</span>))) <span class="co">///</span></span>
+<span id="cb182-5"><a href="4-8-optionen.html#cb182-5"></a>  <span class="bn">plotregion</span>(fcolor(<span class="bn">eltblue</span>)) graphregion(fcolor(<span class="bn">olive_teal</span>))</span></code></pre></div>
+<p><img src="04_bg_col.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Farbpaletten sind ein Thema für sich und was gut aussieht ist natürlich subjektiv…. (das letzte Beispiel wohl eher nicht). Allerdings gibt es einige Leitlinien, siehe <a href="https://blog.datawrapper.de/beautifulcolors/">hier</a>. Es gibt zahlreiche Möglichkeiten selbst zu erstellen: zB. mit <a href="https://color.adobe.com/create/color-wheel">Adobe Color</a> oder <a href="https://paletton.com/">Paletton</a>. Außerdem gibt es unzählige Quellen für Farbpaletten: <a href="https://www.instagram.com/colours.cafe/">Instagram</a> oder <a href="https://colorbrewer2.org">ColorBrewer</a></p>
+<div id="boxplots-anpassen" class="section level4">
+<h4><span class="header-section-number">4.8.7.1</span> Boxplots anpassen</h4>
+<p>Die Farben in Boxplots können wir mit <code>box</code> anpassen - bei mehreren Boxen geben wir zuerst eine Zahl an, auf welche Box sich die Optionen beziehen sollen. Die Ausreißer können wir mit <code>marker</code> berarbeiten:</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb183-1"><a href="4-8-optionen.html#cb183-1"></a><span class="kw">graph</span> box inc1 inc2 , <span class="co">///</span></span>
+<span id="cb183-2"><a href="4-8-optionen.html#cb183-2"></a>	box(1, <span class="kw">color</span>(<span class="st">&quot;orange&quot;</span>) blcolor(<span class="bn">black</span>)) marker(1, mcolor(<span class="st">&quot;purple&quot;</span>)  <span class="bn">msymbol</span>(<span class="st">&quot;Dh&quot;</span>) ) <span class="co">///</span></span>
+<span id="cb183-3"><a href="4-8-optionen.html#cb183-3"></a>	box(2, <span class="kw">color</span>(<span class="st">&quot;159 97 184&quot;</span>) blcolor(<span class="bn">navy</span>)) marker(2, mcolor(<span class="st">&quot;gs45&quot;</span>)  <span class="bn">msymbol</span>(<span class="st">&quot;Sh&quot;</span>) ) </span></code></pre></div>
+<p><img src="04_box_col.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="balkensäulendigramme-anpassen" class="section level4">
+<h4><span class="header-section-number">4.8.7.2</span> Balken/Säulendigramme anpassen</h4>
+<p>Für Balkendiagramme ist <code>bar()</code> die richtige Option. Mit <code>fcolor</code> können wir die Flächenfarbe anpassen, mit <code>color</code> die Umrandung.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb184-1"><a href="4-8-optionen.html#cb184-1"></a><span class="kw">graph</span> <span class="bn">bar</span> (<span class="fu">count</span>) respid, <span class="bn">over</span>(eastwest) <span class="bn">bar</span>(1,fcolor(<span class="bn">orange</span>) <span class="kw">color</span>(gs4))</span></code></pre></div>
+<p><img src="04_bar_col.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Leider ist die unterschiedliche Einfärbung von Balken etwas komplizierter, hierzu müssen wir erst mit <code>collapse</code> den Datensatz umformen. Siehe <a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#pyramid">hier</a>.</p>
+</div>
+</div>
+<div id="vorlagen" class="section level3">
+<h3><span class="header-section-number">4.8.8</span> Vorlagen</h3>
+<p>Eine Alternative ist auf Grafik-Schemata zuzückzugreifen. Beispielsweise wird mit <code>, scheme(sj)</code> die Grafik nach den Vorlage des Stata Journals erstellt:</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb185-1"><a href="4-8-optionen.html#cb185-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="kw">scatter</span> inc age , <span class="dv">scheme</span>(sj)</span></code></pre></div>
+<p><img src="04_sjtheme.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Mit <code>graph query, schemes</code> wird eine Liste der verfügbaren Schemata angezeigt.</p>
+<p>Weitere Optionen bieten zB die <a href="https://www.stata-journal.com/article.html?article=gr0070">blindschemes</a> von Daniel Bischof. Diese müssen zunächst mit <code>ssc install blindschemes</code> installiert werden und stehen dann zur Verfügung, zB</p>
+<p>Hier noch ein Beispiel mit <code>plotplain</code> aus <code>blindschemes</code>:</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb186-1"><a href="4-8-optionen.html#cb186-1"></a><span class="kw">ssc</span> install blindschemes</span>
+<span id="cb186-2"><a href="4-8-optionen.html#cb186-2"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="kw">scatter</span> inc age, <span class="dv">scheme</span>(plotplain) </span></code></pre></div>
+<p><img src="04_plotplain_theme.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="9">
+<li id="fn9"><p>für die y-Achse funktionert das genauso, lediglich mit <code>yticks</code> usw.<a href="4-8-optionen.html#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>Zur Auswahl stehen: <code>vthin</code>,<code>thin</code>,<code>medthin</code>,<code>medium</code>,<code>medthick</code>,<code>thick</code>,<code>vthick</code>,<code>vvthick</code>,<code>vvvthick</code><a href="4-8-optionen.html#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>RGB steht dabei als Abkürzung für die Anteile der Grundfarben Rot, Grün und Blau an der Mischfarbe.<a href="4-8-optionen.html#fnref11" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<p style="text-align: center;">
+<a href="4-7-übungen-4.html"><button class="btn btn-default">Previous</button></a>
+<a href="4-9-anhang-beispiele-zum-selbst-anpassen.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

@@ -13,7 +13,7 @@ use  Allbus_1980-2018.dta
 keep if year == 2012
 mvdecode age hs18, mv(-32 -13)
 ```
-```{stata readin1b, echo= F}
+```{stata readin71b, echo= F}
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
 keep if year == 2012
@@ -154,11 +154,11 @@ spearman educ mi02 if sex== 1
 ```
 
 
-```{stata spearmF, eval = F}
+```{stata spearm2F, eval = F}
 spearman educ mi02 if sex == 2
 ```
 
-```{stata spearmFT, echo = F}
+```{stata spearm2FT, echo = F}
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
 qui keep if year == 1990
@@ -210,10 +210,10 @@ tab educ mi02 if sex == 1, gamma nofreq
 ```
 
 
-```{stata tauF, eval = F}
+```{stata tau2F, eval = F}
 tab educ mi02 if sex == 2, gamma nofreq
 ```
-```{stata tauF2, echo = F}
+```{stata tau2F2, echo = F}
 set linesize 90
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear

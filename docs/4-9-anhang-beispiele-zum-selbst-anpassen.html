@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="4.9 Anhang &amp; Beispiele zum selbst anpassen | GESIS Methodenseminar 2020" />
+<meta property="og:type" content="book" />
+
+
+<meta property="og:description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
+
+
+<meta name="author" content="Andreas Filser" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+
+<meta name="description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020">
+
+<title>4.9 Anhang &amp; Beispiele zum selbst anpassen | GESIS Methodenseminar 2020</title>
+
+<script src="libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li><a href="index.html#herzlich-willkommen">Herzlich Willkommen!</a></li>
+<li class="has-sub"><a href="1-Stata1.html#Stata1"><span class="toc-section-number">1</span> Einstieg in Stata</a><ul>
+<li><a href="1-1-taschenrechner.html#taschenrechner"><span class="toc-section-number">1.1</span> Taschenrechner</a></li>
+<li><a href="1-2-darstellung-in-diesem-skript.html#darstellung-in-diesem-skript"><span class="toc-section-number">1.2</span> Darstellung in diesem Skript</a></li>
+<li><a href="1-3-dofile-editor.html#dofile-editor"><span class="toc-section-number">1.3</span> DoFile Editor</a></li>
+<li><a href="1-4-datensätze-laden.html#datensätze-laden"><span class="toc-section-number">1.4</span> Datensätze laden</a></li>
+<li><a href="1-5-daten-codebücher-fragebogen.html#daten-codebücher-fragebogen"><span class="toc-section-number">1.5</span> Daten, Codebücher, Fragebogen</a></li>
+<li class="has-sub"><a href="1-6-überblicksbefehle.html#überblicksbefehle"><span class="toc-section-number">1.6</span> Überblicksbefehle</a><ul>
+<li><a href="1-6-überblicksbefehle.html#describe"><span class="toc-section-number">1.6.1</span> <code>describe</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#browse"><span class="toc-section-number">1.6.2</span> <code>browse</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#list"><span class="toc-section-number">1.6.3</span> <code>list</code></a></li>
+<li><a href="1-6-überblicksbefehle.html#lookfor"><span class="toc-section-number">1.6.4</span> <code>lookfor</code></a></li>
+</ul></li>
+<li><a href="1-7-löschen.html#löschen"><span class="toc-section-number">1.7</span> löschen</a></li>
+<li><a href="1-8-if-bedingung-nur-manche-zeilen-ansehen.html#if-bedingung---nur-manche-zeilen-ansehen"><span class="toc-section-number">1.8</span> if Bedingung - nur manche Zeilen ansehen</a></li>
+<li><a href="1-9-U1.html#U1"><span class="toc-section-number">1.9</span> Übungen 1</a></li>
+<li><a href="1-10-profi-übungen-1.html#profi-übungen-1"><span class="toc-section-number">1.10</span> Profi-Übungen 1</a></li>
+<li class="has-sub"><a href="1-11-anhang-1.html#anhang-1"><span class="toc-section-number">1.11</span> Anhang 1</a><ul>
+<li><a href="1-11-anhang-1.html#var_types"><span class="toc-section-number">1.11.1</span> Variablentypen</a></li>
+<li><a href="1-11-anhang-1.html#otherfmts"><span class="toc-section-number">1.11.2</span> import anderer Dateiformate</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="2-Stata2.html#Stata2"><span class="toc-section-number">2</span> Arbeiten mit Datensätzen in Stata</a><ul>
+<li><a href="2-1-vorab-befehlsstruktur-hilfe.html#vorab-befehlsstruktur-hilfe"><span class="toc-section-number">2.1</span> Vorab: Befehlsstruktur &amp; Hilfe</a></li>
+<li><a href="2-2-auszählen-überblick-erhalten.html#auszählen-überblick-erhalten"><span class="toc-section-number">2.2</span> Auszählen &amp; Überblick erhalten</a></li>
+<li><a href="2-3-neue-variablen-erstellen.html#neue-variablen-erstellen"><span class="toc-section-number">2.3</span> Neue Variablen erstellen</a></li>
+<li><a href="2-4-bestehende-variablen-verändern.html#bestehende-variablen-verändern"><span class="toc-section-number">2.4</span> Bestehende Variablen verändern</a></li>
+<li><a href="2-5-gen-ist-gut-kontrolle-ist-besser.html#gen-ist-gut-kontrolle-ist-besser"><span class="toc-section-number">2.5</span> gen ist gut, Kontrolle ist besser</a></li>
+<li><a href="2-6-fehlende-werte.html#fehlende-werte"><span class="toc-section-number">2.6</span> Fehlende Werte</a></li>
+<li><a href="2-7-if-bedingungen-und-fehlende-werte.html#if-bedingungen-und-fehlende-werte"><span class="toc-section-number">2.7</span> if Bedingungen und fehlende Werte</a></li>
+<li><a href="2-8-keep-drop.html#keep-drop"><span class="toc-section-number">2.8</span> keep &amp; drop</a></li>
+<li><a href="2-9-labels-und-if-bedingungen.html#labels-und-if-bedingungen"><span class="toc-section-number">2.9</span> Labels und if-Bedingungen</a></li>
+<li><a href="2-10-nochmal-von-vorne-daten-neu-laden.html#nochmal-von-vorne-daten-neu-laden"><span class="toc-section-number">2.10</span> Nochmal von vorne: Daten neu laden</a></li>
+<li><a href="2-11-speichern.html#speichern"><span class="toc-section-number">2.11</span> Speichern</a></li>
+<li><a href="2-12-übungen-2.html#übungen-2"><span class="toc-section-number">2.12</span> Übungen 2</a></li>
+<li><a href="2-13-profi-übungen-2.html#profi-übungen-2"><span class="toc-section-number">2.13</span> Profi-Übungen 2</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-desc1.html#desc1"><span class="toc-section-number">3</span> Deskriptive Statistik</a><ul>
+<li class="has-sub"><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#kategoriale-merkmale-mit-tabulate-beschreiben"><span class="toc-section-number">3.1</span> Kategoriale Merkmale mit <code>tabulate</code> beschreiben</a><ul>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#zwei-variablen-eine-tabelle-kontingenztabellen"><span class="toc-section-number">3.1.1</span> Zwei Variablen, eine Tabelle: Kontingenztabellen</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#in-prozent-relative-häufigkeiten"><span class="toc-section-number">3.1.2</span> In Prozent: Relative Häufigkeiten</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#pro-gruppe-1-zeilenprozente"><span class="toc-section-number">3.1.3</span> pro Gruppe 1: Zeilenprozente</a></li>
+<li><a href="3-1-kategoriale-merkmale-mit-tabulate-beschreiben.html#pro-gruppe-2-spaltenprozente"><span class="toc-section-number">3.1.4</span> pro Gruppe 2: Spaltenprozente</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-2-metrische-variablen-beschreiben.html#metrische-variablen-beschreiben"><span class="toc-section-number">3.2</span> Metrische Variablen beschreiben</a><ul>
+<li><a href="3-2-metrische-variablen-beschreiben.html#summarize"><span class="toc-section-number">3.2.1</span> <code>summarize</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#tabstat"><span class="toc-section-number">3.2.2</span> <code>tabstat</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#by_vgl"><span class="toc-section-number">3.2.3</span> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#streu"><span class="toc-section-number">3.2.4</span> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
+<li><a href="3-2-metrische-variablen-beschreiben.html#gini-koeffizient"><span class="toc-section-number">3.2.5</span> Gini-Koeffizient</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-3-übungen-3.html#übungen-3"><span class="toc-section-number">3.3</span> Übungen 3</a><ul>
+<li><a href="3-3-übungen-3.html#tab"><span class="toc-section-number">3.3.1</span> Übung 3-1</a></li>
+<li><a href="3-3-übungen-3.html#met"><span class="toc-section-number">3.3.2</span> Übung 3-2</a></li>
+<li><a href="3-3-übungen-3.html#weitere-übungen-3"><span class="toc-section-number">3.3.3</span> Weitere Übungen 3</a></li>
+</ul></li>
+<li><a href="3-4-profi-übungen-3.html#profi-übungen-3"><span class="toc-section-number">3.4</span> Profi-Übungen 3</a></li>
+<li class="has-sub"><a href="3-5-anhang-kap-3.html#anhang-kap-3"><span class="toc-section-number">3.5</span> Anhang Kap 3</a><ul>
+<li><a href="3-5-anhang-kap-3.html#vlabel"><span class="toc-section-number">3.5.1</span> labels vergeben</a></li>
+<li><a href="3-5-anhang-kap-3.html#variance"><span class="toc-section-number">3.5.2</span> Varianz erklärt</a></li>
+<li><a href="3-5-anhang-kap-3.html#sk_kur"><span class="toc-section-number">3.5.3</span> Schiefe &amp; Wölbung</a></li>
+<li><a href="3-5-anhang-kap-3.html#bys_su"><span class="toc-section-number">3.5.4</span> Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+<li><a href="3-5-anhang-kap-3.html#if_vgl"><span class="toc-section-number">3.5.5</span> Kennzahlvergleiche mit <code>if</code></a></li>
+<li><a href="3-5-anhang-kap-3.html#kennzahlvergleich-mit-tabulate-und-der-option-summarize"><span class="toc-section-number">3.5.6</span> Kennzahlvergleich mit <code>tabulate</code> und der Option <code>summarize()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="4-dataviz.html#dataviz"><span class="toc-section-number">4</span> Datenvisualisierung in Stata</a><ul>
+<li class="has-sub"><a href="4-1-visualisierung-einer-variable.html#visualisierung-einer-variable"><span class="toc-section-number">4.1</span> Visualisierung einer Variable</a><ul>
+<li><a href="4-1-visualisierung-einer-variable.html#metrische-variablen"><span class="toc-section-number">4.1.1</span> metrische Variablen</a></li>
+<li><a href="4-1-visualisierung-einer-variable.html#bar_col"><span class="toc-section-number">4.1.2</span> Kategoriale Variablen</a></li>
+</ul></li>
+<li><a href="4-2-verteilungen-vergleichen-mit-facetten.html#verteilungen-vergleichen-mit-facetten"><span class="toc-section-number">4.2</span> Verteilungen vergleichen mit Facetten</a></li>
+<li class="has-sub"><a href="4-3-bivar-plot.html#bivar_plot"><span class="toc-section-number">4.3</span> Gemeinsame Verteilung zweier Variablen</a><ul>
+<li><a href="4-3-bivar-plot.html#mosaikplot"><span class="toc-section-number">4.3.1</span> Mosaikplot</a></li>
+<li><a href="4-3-bivar-plot.html#streudiagramm"><span class="toc-section-number">4.3.2</span> Streudiagramm</a></li>
+</ul></li>
+<li><a href="4-4-weitere-twoway-grafiken.html#weitere-twoway-grafiken"><span class="toc-section-number">4.4</span> Weitere <code>twoway</code> Grafiken</a></li>
+<li><a href="4-5-twoway-comb.html#twoway_comb"><span class="toc-section-number">4.5</span> Kombinieren von zwei twoway-Grafiken</a></li>
+<li><a href="4-6-gruppierte-boxplots.html#gruppierte-boxplots"><span class="toc-section-number">4.6</span> Gruppierte Boxplots</a></li>
+<li class="has-sub"><a href="4-7-übungen-4.html#übungen-4"><span class="toc-section-number">4.7</span> Übungen 4</a><ul>
+<li><a href="4-7-übungen-4.html#plt1"><span class="toc-section-number">4.7.1</span> Übung 4-1</a></li>
+<li><a href="4-7-übungen-4.html#plt2"><span class="toc-section-number">4.7.2</span> Übung 4-2</a></li>
+<li><a href="4-7-übungen-4.html#weitere-übungen-kap4"><span class="toc-section-number">4.7.3</span> Weitere Übungen Kap4</a></li>
+</ul></li>
+<li class="has-sub"><a href="4-8-optionen.html#optionen"><span class="toc-section-number">4.8</span> Optionen</a><ul>
+<li><a href="4-8-optionen.html#title"><span class="toc-section-number">4.8.1</span> Titel</a></li>
+<li><a href="4-8-optionen.html#achsenbeschriftung"><span class="toc-section-number">4.8.2</span> Achsenbeschriftung</a></li>
+<li><a href="4-8-optionen.html#text-einfügen"><span class="toc-section-number">4.8.3</span> Text einfügen</a></li>
+<li><a href="4-8-optionen.html#font"><span class="toc-section-number">4.8.4</span> Schriftart &amp; Textgröße</a></li>
+<li><a href="4-8-optionen.html#legend"><span class="toc-section-number">4.8.5</span> Legende</a></li>
+<li><a href="4-8-optionen.html#mark"><span class="toc-section-number">4.8.6</span> Marker</a></li>
+<li><a href="4-8-optionen.html#color"><span class="toc-section-number">4.8.7</span> Farben</a></li>
+<li><a href="4-8-optionen.html#vorlagen"><span class="toc-section-number">4.8.8</span> Vorlagen</a></li>
+</ul></li>
+<li class="has-sub"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#anhang-beispiele-zum-selbst-anpassen"><span class="toc-section-number">4.9</span> Anhang &amp; Beispiele zum selbst anpassen</a><ul>
+<li><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#boxplot"><span class="toc-section-number">4.9.1</span> Boxplot</a></li>
+<li><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#scatterplot"><span class="toc-section-number">4.9.2</span> Scatterplot</a></li>
+<li><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#pyramid"><span class="toc-section-number">4.9.3</span> Bevölkerungspyramide</a></li>
+<li><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#boxplot1"><span class="toc-section-number">4.9.4</span> Boxplot</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="5-zshg.html#zshg"><span class="toc-section-number">5</span> Zusammenhangsmaße</a><ul>
+<li class="has-sub"><a href="5-1-zshg-met.html#zshg_met"><span class="toc-section-number">5.1</span> Metrisch skalierte Variablen</a><ul>
+<li><a href="5-1-zshg-met.html#cor"><span class="toc-section-number">5.1.1</span> Korrelationskoeffizient</a></li>
+<li><a href="5-1-zshg-met.html#regression"><span class="toc-section-number">5.1.2</span> Regression</a></li>
+<li><a href="5-1-zshg-met.html#vorhergesagte-werte"><span class="toc-section-number">5.1.3</span> vorhergesagte Werte</a></li>
+</ul></li>
+<li class="has-sub"><a href="5-2-zshg-ord.html#zshg_ord"><span class="toc-section-number">5.2</span> Ordinal skalierte Merkmale</a><ul>
+<li><a href="5-2-zshg-ord.html#spear"><span class="toc-section-number">5.2.1</span> Spearman- Rangkorrelation</a></li>
+<li><a href="5-2-zshg-ord.html#tau"><span class="toc-section-number">5.2.2</span> Konkordanzmaße</a></li>
+</ul></li>
+<li class="has-sub"><a href="5-3-zshg-nom.html#zshg_nom"><span class="toc-section-number">5.3</span> Nominal skalierte Variablen</a><ul>
+<li><a href="5-3-zshg-nom.html#OR"><span class="toc-section-number">5.3.1</span> Odds Ratio</a></li>
+<li><a href="5-3-zshg-nom.html#chi2"><span class="toc-section-number">5.3.2</span> Chi²-basierte Maße</a></li>
+<li><a href="5-3-zshg-nom.html#cramers-upsilon"><span class="toc-section-number">5.3.3</span> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+<li><a href="5-3-zshg-nom.html#phi"><span class="toc-section-number">5.3.4</span> <span class="math inline">\(\phi\)</span></a></li>
+</ul></li>
+<li><a href="5-4-welches-maß-richtig.html#welches-maß-richtig"><span class="toc-section-number">5.4</span> Welches Maß richtig?</a></li>
+<li class="has-sub"><a href="5-5-übungen-5.html#übungen-5"><span class="toc-section-number">5.5</span> Übungen 5</a><ul>
+<li><a href="5-5-übungen-5.html#auf_met"><span class="toc-section-number">5.5.1</span> Übung 5-1</a></li>
+<li><a href="5-5-übungen-5.html#auf_ord"><span class="toc-section-number">5.5.2</span> Übung 5-2</a></li>
+<li><a href="5-5-übungen-5.html#auf_nom"><span class="toc-section-number">5.5.3</span> Übung 5-3</a></li>
+<li><a href="5-5-übungen-5.html#weitere-übungen-5"><span class="toc-section-number">5.5.4</span> Weitere Übungen 5</a></li>
+</ul></li>
+<li><a href="5-6-profi-übungen-5.html#profi-übungen-5"><span class="toc-section-number">5.6</span> Profi-Übungen 5</a></li>
+<li class="has-sub"><a href="5-7-anhang.html#anhang"><span class="toc-section-number">5.7</span> Anhang</a><ul>
+<li><a href="5-7-anhang.html#reg"><span class="toc-section-number">5.7.1</span> Idee einer Regression</a></li>
+<li><a href="5-7-anhang.html#resid"><span class="toc-section-number">5.7.2</span> Residuen</a></li>
+<li><a href="5-7-anhang.html#quad_res"><span class="toc-section-number">5.7.3</span> Quadrierte Residuen</a></li>
+<li><a href="5-7-anhang.html#interpretation-der-regression"><span class="toc-section-number">5.7.4</span> Interpretation der Regression</a></li>
+<li><a href="5-7-anhang.html#reg_pred"><span class="toc-section-number">5.7.5</span> Vorhergesagte Werte</a></li>
+<li><a href="5-7-anhang.html#resid2"><span class="toc-section-number">5.7.6</span> Residuen Teil 2</a></li>
+<li><a href="5-7-anhang.html#r2"><span class="toc-section-number">5.7.7</span> Modellgüte</a></li>
+<li><a href="5-7-anhang.html#indiff"><span class="toc-section-number">5.7.8</span> Indifferenztabelle</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="6-zshg2.html#zshg2"><span class="toc-section-number">6</span> Zusammenhänge 2</a><ul>
+<li><a href="6-1-zusammenhänge-vergleichen.html#zusammenhänge-vergleichen"><span class="toc-section-number">6.1</span> Zusammenhänge vergleichen</a></li>
+<li><a href="6-2-zusammenhänge-visualisieren.html#zusammenhänge-visualisieren"><span class="toc-section-number">6.2</span> Zusammenhänge visualisieren</a></li>
+<li class="has-sub"><a href="6-3-kategoriale-zusammenhänge.html#kategoriale-zusammenhänge"><span class="toc-section-number">6.3</span> Kategoriale Zusammenhänge</a><ul>
+<li><a href="6-3-kategoriale-zusammenhänge.html#ordinale-zusammenhangsmaße-vergleichen"><span class="toc-section-number">6.3.1</span> Ordinale Zusammenhangsmaße vergleichen</a></li>
+<li><a href="6-3-kategoriale-zusammenhänge.html#vergleich-visualisieren"><span class="toc-section-number">6.3.2</span> Vergleich visualisieren</a></li>
+<li><a href="6-3-kategoriale-zusammenhänge.html#nominale-zusammenhangsmaße-vergleichen"><span class="toc-section-number">6.3.3</span> Nominale Zusammenhangsmaße vergleichen</a></li>
+</ul></li>
+<li class="has-sub"><a href="6-4-übungen-6.html#übungen-6"><span class="toc-section-number">6.4</span> Übungen 6</a><ul>
+<li><a href="6-4-übungen-6.html#met_vgl"><span class="toc-section-number">6.4.1</span> Übung 6-1</a></li>
+<li><a href="6-4-übungen-6.html#ord_vgl"><span class="toc-section-number">6.4.2</span> Übung 6-2</a></li>
+<li><a href="6-4-übungen-6.html#nom_vgl"><span class="toc-section-number">6.4.3</span> Übung 6-3</a></li>
+<li><a href="6-4-übungen-6.html#weitere-übungen-kap-6"><span class="toc-section-number">6.4.4</span> Weitere Übungen Kap 6</a></li>
+</ul></li>
+<li class="has-sub"><a href="5-7-anhang.html#anhang"><span class="toc-section-number">6.5</span> Anhang</a><ul>
+<li><a href="6-5-anhang.html#lpattern"><span class="toc-section-number">6.5.1</span> Optionen für <code>lpattern</code></a></li>
+<li><a href="6-5-anhang.html#scatterplot-für-kategoriale-merkmale"><span class="toc-section-number">6.5.2</span> Scatterplot für kategoriale Merkmale</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="7-inf1.html#inf1"><span class="toc-section-number">7</span> Inferenzstatistik I</a><ul>
+<li><a href="7-1-inferenz.html#inferenz"><span class="toc-section-number">7.1</span> Inferenz</a></li>
+<li class="has-sub"><a href="7-2-parametrische-ki-schätzung.html#parametrische-ki-schätzung"><span class="toc-section-number">7.2</span> Parametrische KI-Schätzung</a><ul>
+<li><a href="7-2-parametrische-ki-schätzung.html#t-z-wert"><span class="toc-section-number">7.2.1</span> t-/z-Wert</a></li>
+<li><a href="7-2-parametrische-ki-schätzung.html#standardfehler"><span class="toc-section-number">7.2.2</span> Standardfehler</a></li>
+<li><a href="7-2-parametrische-ki-schätzung.html#kis-berechnen"><span class="toc-section-number">7.2.3</span> KIs berechnen</a></li>
+<li><a href="7-2-parametrische-ki-schätzung.html#mean"><span class="toc-section-number">7.2.4</span> <code>mean</code></a></li>
+<li><a href="7-2-parametrische-ki-schätzung.html#vergleich"><span class="toc-section-number">7.2.5</span> Vergleich</a></li>
+</ul></li>
+<li><a href="7-3-bootstrapping.html#bootstrapping"><span class="toc-section-number">7.3</span> Bootstrapping</a></li>
+<li><a href="7-4-übungen-7.html#übungen-7"><span class="toc-section-number">7.4</span> Übungen 7</a></li>
+<li class="has-sub"><a href="7-5-anhang-kap7.html#anhang-kap7"><span class="toc-section-number">7.5</span> Anhang Kap7</a><ul>
+<li><a href="7-5-anhang-kap7.html#normalverteilung"><span class="toc-section-number">7.5.1</span> Normalverteilung</a></li>
+<li><a href="7-5-anhang-kap7.html#student-t-verteilung"><span class="toc-section-number">7.5.2</span> Student t-Verteilung</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="8-inf2.html#inf2"><span class="toc-section-number">8</span> t-Tests</a><ul>
+<li><a href="8-1-hypothesentests.html#hypothesentests"><span class="toc-section-number">8.1</span> Hypothesentests</a></li>
+<li class="has-sub"><a href="8-2-t-test.html#t-test"><span class="toc-section-number">8.2</span> t-Test</a><ul>
+<li><a href="8-2-t-test.html#beiseitiger-t-test"><span class="toc-section-number">8.2.1</span> beiseitiger t-Test</a></li>
+<li><a href="8-2-t-test.html#linksseitiger-t-test"><span class="toc-section-number">8.2.2</span> linksseitiger t-Test</a></li>
+<li><a href="8-2-t-test.html#rechtsseitiger-t-test"><span class="toc-section-number">8.2.3</span> rechtsseitiger t-Test</a></li>
+</ul></li>
+<li><a href="8-3-übungen-8.html#übungen-8"><span class="toc-section-number">8.3</span> Übungen 8</a></li>
+<li><a href="8-4-profi-übungen-8.html#profi-übungen-8"><span class="toc-section-number">8.4</span> Profi-Übungen 8</a></li>
+<li class="has-sub"><a href="8-5-hinweise.html#hinweise"><span class="toc-section-number">8.5</span> Hinweise</a><ul>
+<li><a href="8-5-hinweise.html#auswahl-der-in-vollzeit-beschäftigten-befragten"><span class="toc-section-number">8.5.1</span> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
+</ul></li>
+</ul></li>
+<li><a href="9-hypo.html#hypo"><span class="toc-section-number">9</span> Hypothesentests</a></li>
+<li><a href="10-export1.html#export1"><span class="toc-section-number">10</span> Ergebnisexport &amp; weitere Tipps</a></li>
+<li class="has-sub"><a href="11-adva.html#adva"><span class="toc-section-number">11</span> Fortgeschrittene Themen</a><ul>
+<li><a href="11-1-wertelabels.html#wertelabels"><span class="toc-section-number">11.1</span> Wertelabels</a></li>
+<li><a href="11-2-sortieren.html#sortieren"><span class="toc-section-number">11.2</span> sortieren</a></li>
+<li><a href="11-3-informationen-aus-mehreren-variablen.html#informationen-aus-mehreren-variablen"><span class="toc-section-number">11.3</span> Informationen aus mehreren Variablen</a></li>
+<li><a href="11-4-egen.html#egen"><span class="toc-section-number">11.4</span> egen</a></li>
+<li><a href="11-5-gruppierte-berechnungen.html#gruppierte-berechnungen"><span class="toc-section-number">11.5</span> gruppierte Berechnungen</a></li>
+<li><a href="11-6-sep1.html#sep1"><span class="toc-section-number">11.6</span> Subgruppen-Variablen erstellen mit <code>separate</code></a></li>
+<li><a href="11-7-collapse.html#collapse"><span class="toc-section-number">11.7</span> collapse</a></li>
+<li><a href="11-8-indikatoren-umdrehen.html#indikatoren-umdrehen"><span class="toc-section-number">11.8</span> Indikatoren umdrehen</a></li>
+<li><a href="11-9-informationen-aus-mehreren-datensätzen.html#informationen-aus-mehreren-datensätzen"><span class="toc-section-number">11.9</span> Informationen aus mehreren Datensätzen</a></li>
+<li><a href="11-10-arbeiten-mit-textvariablen.html#arbeiten-mit-textvariablen"><span class="toc-section-number">11.10</span> Arbeiten mit Textvariablen</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="anhang-beispiele-zum-selbst-anpassen" class="section level2">
+<h2><span class="header-section-number">4.9</span> Anhang &amp; Beispiele zum selbst anpassen</h2>
+<p>Im Folgenden finden sich nun einige Beispiele mit (sehr) vielen Optionen als Vorlage für eigene Anpassungen. Trial &amp; error wärmstens empfohlen!</p>
+<div id="boxplot" class="section level3">
+<h3><span class="header-section-number">4.9.1</span> Boxplot</h3>
+<p>Wie oben gezeigt, muss für gruppierte Boxplots (hier nach Geschlecht) muss die dargestellte Variable zunächst aufgesplittet werden:</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb187-1"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb187-2"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb187-3"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-3"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt; 0</span>
+<span id="cb187-4"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-4"></a><span class="kw">replace</span> age = . <span class="kw">if</span> age &lt; 0</span>
+<span id="cb187-5"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-5"></a></span>
+<span id="cb187-6"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-6"></a><span class="kw">egen</span> age_c = <span class="fu">cut</span>(age), <span class="fu">at</span>(20,35,50,65) <span class="co">// Alter in Gruppen</span></span>
+<span id="cb187-7"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-7"></a>lab def agec1 20 <span class="st">&quot;20-34&quot;</span> 35 <span class="st">&quot;35-49&quot;</span> 50 <span class="st">&quot;50-64&quot;</span> <span class="co">// Gruppen labeln</span></span>
+<span id="cb187-8"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-8"></a>lab val age_c agec1</span>
+<span id="cb187-9"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-9"></a><span class="co">// Einkommen in Männer und Frauen splitten:</span></span>
+<span id="cb187-10"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-10"></a><span class="kw">gen</span> inc_m = inc <span class="kw">if</span> sex == 1</span>
+<span id="cb187-11"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-11"></a><span class="kw">gen</span> inc_f = inc <span class="kw">if</span> sex == 2</span>
+<span id="cb187-12"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-12"></a>lab <span class="kw">var</span> inc_m <span class="st">&quot;Männer&quot;</span></span>
+<span id="cb187-13"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb187-13"></a>lab <span class="kw">var</span> inc_f <span class="st">&quot;Frauen&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb188-1"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb188-1"></a><span class="kw">graph</span> box inc inc_f, <span class="bn">over</span>(age_c) <span class="co">///</span></span>
+<span id="cb188-2"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb188-2"></a><span class="dv">scheme</span>(lean1) <span class="co">///</span></span>
+<span id="cb188-3"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb188-3"></a>box(1, <span class="kw">color</span>(<span class="st">&quot;0 41 93&quot;</span>)) marker(1, mcolor(<span class="st">&quot;0 41 93&quot;</span>)  <span class="bn">msymbol</span>(<span class="st">&quot;o&quot;</span>) ) medline(lcolor(<span class="st">&quot;204 175 105&quot;</span>)) <span class="co">/// optionen box1</span></span>
+<span id="cb188-4"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb188-4"></a>box(2, <span class="kw">color</span>(<span class="st">&quot;146 143 107&quot;</span>)) marker(2, mcolor(<span class="st">&quot;146 143 107&quot;</span>)  <span class="bn">msymbol</span>(<span class="st">&quot;o&quot;</span>) ) <span class="co">/// box2 anpassen</span></span>
+<span id="cb188-5"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb188-5"></a><span class="bn">legend</span>(<span class="bn">cols</span>(2) pos(12) region(fcolor(<span class="st">&quot;249 247 241&quot;</span>) lcolor(<span class="st">&quot;16 74 138&quot;</span>)))  <span class="co">/// Legende</span></span>
+<span id="cb188-6"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb188-6"></a><span class="bn">ytitle</span>(<span class="st">&quot;{stSerif:Einkommen}{superscript:2018}&quot;</span>) b1title(<span class="st">&quot;Alter&quot;</span>) <span class="co">/// Achsenbeschriftung</span></span>
+<span id="cb188-7"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb188-7"></a><span class="bn">title</span>(<span class="st">&quot;Einkommen&quot;</span>) <span class="bn">caption</span>(<span class="st">&quot;{bf:Quelle}: Allbus 2018 {it:eigene Berechnungen}&quot;</span>,<span class="bn">position</span>(5)) <span class="co">/// titel usw.</span></span>
+<span id="cb188-8"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb188-8"></a><span class="bn">plotregion</span>(fcolor(<span class="st">&quot;252 251 248&quot;</span>)) graphregion(fcolor(<span class="st">&quot;249 247 241&quot;</span>)) <span class="co">// Hintergrundfarben</span></span></code></pre></div>
+<p><img src="04_boxplot.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="scatterplot" class="section level3">
+<h3><span class="header-section-number">4.9.2</span> Scatterplot</h3>
+<p>Hier ein angepasster Scatterplot, welcher aus drei überlagerten <a href="4-5-twoway-comb.html#twoway_comb"><code>scatter</code></a> besteht:</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb189-1"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb189-1"></a><span class="kw">webuse</span> bpwide, <span class="kw">clear</span></span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb190-1"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb190-1"></a><span class="kw">graph</span> <span class="kw">twoway</span>  <span class="co">///</span></span>
+<span id="cb190-2"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb190-2"></a>( <span class="kw">scatter</span> bp_before bp_after <span class="kw">if</span> agegrp == 1, mc(<span class="st">&quot;0 62 81&quot;</span>) <span class="bn">msymbol</span>(o) ) <span class="co">/// Altersgruppe 1 -&gt; dunkle Punkte</span></span>
+<span id="cb190-3"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb190-3"></a>( <span class="kw">scatter</span> bp_before bp_after <span class="kw">if</span> agegrp == 2, mc(<span class="st">&quot;0 125 186&quot;</span>) <span class="bn">msymbol</span>(<span class="kw">d</span>)  ) <span class="co">/// Altersgruppe 2 -&gt; blaue Rhomben</span></span>
+<span id="cb190-4"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb190-4"></a>( <span class="kw">scatter</span> bp_before bp_after <span class="kw">if</span> agegrp == 3, mc(<span class="st">&quot;214 210 196&quot;</span>) <span class="bn">msymbol</span>(<span class="fu">s</span>)  ) <span class="co">/// Altersgruppe 3 -&gt; Vierecke</span></span>
+<span id="cb190-5"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb190-5"></a>, <span class="dv">scheme</span>(lean2) <span class="co">/// Schema</span></span>
+<span id="cb190-6"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb190-6"></a><span class="bn">legend</span>(lab(1 <span class="st">&quot;30-45&quot;</span>) lab(2 <span class="st">&quot;{stMono:46-59}&quot;</span>) lab(3 <span class="st">&quot;60+&quot;</span>) lcolor(<span class="st">&quot;16 74 138&quot;</span>) region(fcolor(<span class="st">&quot;249 247 241&quot;</span>) lcolor(<span class="st">&quot;16 74 138&quot;</span>)) pos(6) <span class="bn">cols</span>(3)  )  <span class="co">/// legende -&gt; 3 Spalten</span></span>
+<span id="cb190-7"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb190-7"></a><span class="bn">xtitle</span>(<span class="st">&quot;{stSerif:Blutdruck nachher}&quot;</span>) <span class="bn">ytitle</span>(<span class="st">&quot;{stMono:Blutdruck vorher}&quot;</span>) <span class="co">/// Achsenbeschriftung</span></span>
+<span id="cb190-8"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb190-8"></a><span class="bn">text</span>(185 172 <span class="st">&quot;Ein Text&quot;</span> <span class="st">&quot;über {stSerif: 2} Zeilen&quot;</span>) <span class="bn">title</span>(<span class="st">&quot;{&amp;Delta}p={stSerif:R}*V&quot;</span>) <span class="co">// Textfeld einfügen</span></span></code></pre></div>
+<p><img src="04_scatter_manyopts.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="pyramid" class="section level3">
+<h3><span class="header-section-number">4.9.3</span> Bevölkerungspyramide</h3>
+<p>Häufig ist die größte Herausforderung, die Daten so umzustellen, dass sie zum gewünschten <code>graph</code>-Befehl passen. Ein Beispiel ist die Erstellung einer Bevölkerungspyramide aus den Allbusdaten:</p>
+<p><img src="04_pyramid.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
+<p>Auch diese Bevölkerungspyramide lässt sich als Stata-Grafik erstellen. Allerdings müssen dazu einige Zwischenschritte durchlaufen, die fortgeschrittene Datenaufbereitung mit <code>collapse</code> voraussetzen. Außerdem könnte ein Teil der Aufbereitung mit <code>separate</code> abgekürzt werden. Mehr Informationen dazu finden sich am Ende dieses Skripts in Kapitel <a href="11-adva.html#adva">11</a>.</p>
+<p>Die grundsätzliche Funktion für die Bevölkerungspyramide ist ein Balkendiagramm mit <code>graph twoway bar , horizontal</code>. Die Länge der Balken soll jeweils durch die Anzahl der Fälle in jeder Altersstufe, getrennt nach Geschlecht, bestimmt werden. Dazu müssen wir also zunächst die Anzahl der Befragten pro Alterstufe und Geschlecht bestimmen. Wenn wir den Allbus 2018 laden, haben wir ja einen Datensatz mit einer Zeile pro Person. Was wir jetzt aber benötigen ist eine Variante, in der wir den Datensatz sozusagen “zusammenschieben”: wir brauchen jeweils eine Zeile pro Altersstufe und Geschlecht und eine Variable mit der Zahl der Befragten.</p>
+<pre><code>##   age sex Anzahl_Befragte
+## 1  18   1              15
+## 2  18   2              11
+## 3  19   1              22
+## 4  19   2              15
+## 5  20   1              18
+## 6  20   2              16</code></pre>
+<p>Um dorthin zu kommen, steht uns der <code>collapse</code>-Befehl zur Verfügung:</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb192-1"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb192-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb192-2"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb192-2"></a><span class="kw">use</span> <span class="st">&quot;Allbus_2018.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb192-3"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb192-3"></a><span class="kw">tab</span> agec</span>
+<span id="cb192-4"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb192-4"></a><span class="kw">keep</span> <span class="kw">if</span> sex &gt; 0</span>
+<span id="cb192-5"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb192-5"></a><span class="kw">keep</span> <span class="kw">if</span> agec &gt; 0</span>
+<span id="cb192-6"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb192-6"></a><span class="kw">collapse</span> (<span class="fu">count</span>) respid , <span class="kw">by</span>(sex age)</span>
+<span id="cb192-7"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb192-7"></a><span class="ot">list</span> <span class="kw">in</span> 1/8</span></code></pre></div>
+<p>Unter respid ist jetzt die Zahl der Befragten in der jeweiligen Kombination aus <code>age</code> und <code>sex</code> abgelegt:</p>
+<pre><code>##   age sex respid
+## 1  18   1     15
+## 2  18   2     11
+## 3  19   1     22
+## 4  19   2     15
+## 5  20   1     18
+## 6  20   2     16
+## 7  21   1     21
+## 8  21   2     13</code></pre>
+<p>Um verwirrung zu vermeiden, benennen wir <code>respid</code> in <code>total</code> um:</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb194-1"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb194-1"></a><span class="kw">rename</span> respid Anzahl_Befragte</span></code></pre></div>
+<p>Allerdings möchten wir jetzt die Angaben für Frauen und Männer in getrennte Variablen ablegen.<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a></p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb195-1"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb195-1"></a><span class="kw">gen</span> total_m = Anzahl_Befragte <span class="kw">if</span> sex == 1</span>
+<span id="cb195-2"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb195-2"></a><span class="kw">gen</span> total_f = Anzahl_Befragte <span class="kw">if</span> sex == 2</span>
+<span id="cb195-3"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb195-3"></a><span class="ot">list</span> <span class="kw">in</span> 1/10</span></code></pre></div>
+<pre><code>##    age sex total total_m total_f
+## 1   18   1    15      15       .
+## 2   18   2    11       .      11
+## 3   19   1    22      22       .
+## 4   19   2    15       .      15
+## 5   20   1    18      18       .
+## 6   20   2    16       .      16
+## 7   21   1    21      21       .
+## 8   21   2    13       .      13
+## 9   22   1    18      18       .
+## 10  22   2    15       .      15</code></pre>
+<p>Jetzt können wir daraus ein Balkendiagramm erstellen, wobei wir zwei <code>twoway</code> kombinieren - wie schon beim Scatterplot:</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb197-1"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb197-1"></a><span class="kw">twoway</span>( <span class="bn">bar</span> total_m age, horizontal )(<span class="bn">bar</span> total_f age, horizontal)</span></code></pre></div>
+<p><img src="04_pyramid001.png" width="60%" height="60%" style="display: block; margin: auto;" />
+Was hier noch fehlt ist, die Umorientierung der Zahlen für die Männer “nach links”. Dazu multiplizieren wir <code>total_m</code> mit <code>-1</code>:</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb198-1"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb198-1"></a><span class="kw">gen</span> neg_total_m = -total_m</span></code></pre></div>
+<p>Damit dann verwenden wir <code>neg_total_m</code> für die Balken der Männer:</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb199-1"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb199-1"></a><span class="kw">twoway</span>( <span class="bn">bar</span> neg_total_m age, horizontal )(<span class="bn">bar</span> total_f age, horizontal)</span></code></pre></div>
+<p><img src="04_pyramid002.png" width="60%" height="60%" style="display: block; margin: auto;" />
+Mit <code>xlabel</code> und <code>legend</code>noch einige Anpassungen, außerdem können wir mit <code>text</code> noch Beschriftungen hinzufügen:</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb200-1"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb200-1"></a><span class="kw">twoway</span>( <span class="bn">bar</span> neg_total_m age, horizontal )(<span class="bn">bar</span> total_f age, horizontal) ,<span class="kw">xlabel</span>( -40 <span class="st">&quot;40&quot;</span> -30 <span class="st">&quot;30&quot;</span> -20 <span class="st">&quot;20&quot;</span> -10 <span class="st">&quot;10&quot;</span> 0 10(10)40 ) <span class="bn">legend</span>(<span class="kw">off</span>) <span class="bn">text</span>(100 -8 <span class="st">&quot;Männer&quot;</span>) <span class="bn">text</span>(100 8 <span class="st">&quot;Frauen&quot;</span>)</span></code></pre></div>
+<p><img src="04_pyramid.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
+<p>Anpassung der Farbe, des Schemas, …:</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb201-1"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb201-1"></a><span class="kw">twoway</span> <span class="co">///</span></span>
+<span id="cb201-2"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb201-2"></a>(<span class="bn">bar</span> neg_total_m age, horizontal fcolor(<span class="st">&quot;60 117 153&quot;</span>)) <span class="co">///</span></span>
+<span id="cb201-3"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb201-3"></a>(<span class="bn">bar</span> total_f age, horizontal fcolor(<span class="st">&quot;201 255 247&quot;</span>)) , <span class="co">/// </span></span>
+<span id="cb201-4"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb201-4"></a><span class="kw">xlabel</span>( -40 <span class="st">&quot;40&quot;</span> -30 <span class="st">&quot;30&quot;</span> -20 <span class="st">&quot;20&quot;</span> -10 <span class="st">&quot;10&quot;</span> 0 10(10)40 ) <span class="co">///</span></span>
+<span id="cb201-5"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb201-5"></a><span class="bn">legend</span>(<span class="kw">off</span>) <span class="bn">text</span>(100 -8 <span class="st">&quot;Männer&quot;</span>) <span class="bn">text</span>(100 8 <span class="st">&quot;Frauen&quot;</span>) <span class="co">///</span></span>
+<span id="cb201-6"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb201-6"></a><span class="bn">xscale</span>(<span class="kw">range</span>(0 50)) xtick(-50 (10) 50 ) <span class="co">///</span></span>
+<span id="cb201-7"><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#cb201-7"></a><span class="dv">scheme</span>(plotplain) <span class="bn">xtitle</span>(<span class="st">&quot;{stSerif: Anzahl Befragte}&quot;</span>) <span class="bn">ytitle</span>(<span class="st">&quot;{stSerif: Alter Befragte(r)}&quot;</span>)</span></code></pre></div>
+<p><img src="04_pyramid_final.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="boxplot1" class="section level3">
+<h3><span class="header-section-number">4.9.4</span> Boxplot</h3>
+<p>Definition der Bestandteile eines Boxplots:</p>
+<ul>
+<li>ggf. Ausreißer</li>
+<li>unterer Whisker: <code>q1 - 1.5* IQR</code></li>
+<li>untere Grenze: 1. Quartil</li>
+<li>mittlere Linie: Median</li>
+<li>obere Grenze: 3. Quartil</li>
+<li>oberer Whisker: <code>q3 + 1.5* IQR</code></li>
+<li>ggf. Ausreißer</li>
+</ul>
+<p>Die Box enthält also die zentralen 50% des Wertebereichs.
+<img src="Stata_Skript_files/figure-html/boxplot1-1.png" width="75%" height="75%" style="display: block; margin: auto;" /></p>
+<!-- ##  Gruppierte Darstellungen  -->
+<!-- Neben `,by()` können wir in `graph box` auch  -->
+
+</div>
+</div>
+<!-- </div> -->
+<div class="footnotes">
+<hr />
+<ol start="12">
+<li id="fn12"><p>Eine Abkürzung für diesen Schritt mit Hilfe von <code>separate</code> findet sich in Kapitel <a href="11-adva.html#adva">11</a><a href="4-9-anhang-beispiele-zum-selbst-anpassen.html#fnref12" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<p style="text-align: center;">
+<a href="4-8-optionen.html"><button class="btn btn-default">Previous</button></a>
+<a href="5-zshg.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>
