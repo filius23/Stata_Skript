@@ -84,7 +84,7 @@ ggplot(data = data1, aes(x=z, y =t.var)) +
                             aes(x = z, y = t.var, label = label),
                             size = 3.25,vjust= 0, hjust = c(1,0))
 ```
-Aufgrund der Symmetrie teilen wir die Irrtumswahrscheinlichkeit also auf jeweils 2,5% auf und können mit `invttail(df,p)` den entsprechenden $t$-Wert nachsehen. `invttail` kumuliert dabei von *rechts nach links*. Die gezeigte Verteilung unterstellt dabei eine Stichprobe von $n=10.000$:
+Aufgrund der Symmetrie teilen wir die Irrtumswahrscheinlichkeit also auf jeweils 2,5% auf und können mit `invttail(df,p)` den entsprechenden $t$-Wert nachsehen, wobei `df` = $n-1$ und p die Irrtumswahrscheinlichkeit bezeichnet. `invttail` kumuliert dabei von *rechts nach links*. Die gezeigte Verteilung unterstellt dabei eine Stichprobe von $n=10.000$:
 
 + bei welchem t-Wert liegen 2.5% *rechts* davon?
 ```{stata invttail1}
@@ -287,64 +287,44 @@ ggplot(data =dfx , aes(x = type, y =m )) +
 
 
 ## Bootstrapping
-Bootstrapping beruht auf der Idee, wiederholt Stichproben *B* aus der Stichprobe zu ziehen und aus dieser *B* die Parameter zu berechnen. In R können Stichproben mit `sample(x = Ausgangssample,  size = SP-Größe, replace = mit oder ohne Zurücklegen)` ziehen:
+Bootstrapping beruht auf der Idee, wiederholt Stichproben *B* aus der Stichprobe zu ziehen und aus dieser *B* die Parameter zu berechnen. Für das Bootstrapping ziehen wir wiederholt SP *mit Zurücklegen* der gleichen Größe wie die Ausgangs-SP, also hier n = `r length(a14m$hs16)` und berechnen anschließend das arith. Mittel für diese simulierte Stichprobe. Diesen Vorgang wiederholen wir x Male und berechnen für die so gesammelten Mittelwerte aus den simulierten Stichproben die Standardabweichung. Analog zur vorhin gezeigten parametrischen Methode können wir das KI dann als $mean\,\pm t * sd()$ berechnen:
 
-### Normale Approximation
-Analog zur vorhin gezeigten parametrischen Methode können wir das KI dann als $mean\,\pm t * sd$ berechnen:
-```{r}
-mean(a14m$hs16) - 1.96*sd(means)
-mean(a14m$hs16) + 1.96*sd(means)
+
+In Stata ist dieser Prozess sehr einfach mit dem Befehl `bootstrap` zu erledigen. Wir geben dabei an, welche Kennzahl wir berechnen möchten (`r(mean)` für das arith. Mittel) und mit `reps` die Anzahl der Wiederholungen. Mit `summarize hs16` legen wir zudem fest, welchen Befehl Stata auf die wiederholten Stichproben anwenden soll - bootstrapping ist für eine ganze Reihe an Funktionen verfügbar. Hier möchten wir ja aber das arith. Mittel, demensprechend geben wir hier `summarize` mit den gewünschten Variable an.
+
+Da es sich hier um einen Zufallsprozess handelt, wird das Ergebnis von Mal zu Mal schwanken - für Demonstrationszwecke setze ich hier mit `set seed` die Zufallsauswahl fix, um ein reproduzierbares Ergebnis zu erhalten. 
+
+```{stata boot1, eval = F}
+set seed 1212
+bootstrap r(mean), reps(2000): summarize hs16
 ```
 
-### Perzentil
-Oder wir berechnen einfach die Perzentilgrenzen auf Basis der gebootstrapten arith. Mittelwerte:
-```{r}
-quantile(means, probs = c(0.025, 0.975))
+```{stata boot1R, echo = F}
+set linesize 200
+qui use  "D:/oCloud/Home-Cloud/Lehre/Methodenseminar/Allbus_1980-2018.dta"
+qui keep if year == 2014 & sex ==  1 & hs16 > 0
+set seed 1212
+bootstrap r(mean), reps(2000): summarize hs16
 ```
 
-### Die KIs im Vergleich
+Auf diese Weise erhalten wir ein 95% Konfidenzintervall  von 178.3822 - 179.0536. Zum Vergleich, die parametrische Methode auf Basis der t-Verteilung ergab  177.7317 - 178.7054. 
 
-Hier ein graphischer Vergleich der verschiedenen KI-Berechnungsmethoden:
-```{r, echo = F, out.width = "70%",fig.height=2.5, fig.align='center', warning=F, message=F}
-dfx <- data.frame(
-    type = factor(c("Param. 95% KI", "Bootstrap Approx", "Bootstrap Perzentil"), levels = c("Param. 95% KI", "Bootstrap Approx", "Bootstrap Perzentil")),
-    mean1 = rep(mean(a14m$hs16),3),
-    cil = c(mean(a14m$hs16) - 1.96*sd(a14m$hs16)/sqrt(nrow(a14m)),
-            mean(means) - 1.96*sd(means),
-            quantile(means, probs = c(0.025))),
-    ciu = c(mean(a14m$hs16) + 1.96*sd(a14m$hs16)/sqrt(nrow(a14m)),
-            mean(means) + 1.96*sd(means),
-            quantile(means, probs = c(0.975)))
-     ) 
-
-ggplot(data =dfx , aes(x = mean1, y =type )) +
-  geom_errorbarh(aes( xmin = cil, xmax = ciu,color = type), height  = .25, size  = .5) +
-  geom_point(size = 3, shape = 21, aes(fill = type)
-             ## ,fill = "#8f8fa7"
-             ,color = "grey25"
-             ) + 
-  theme_minimal(base_size = 11) +
-  theme(
-        panel.grid.minor.y = element_blank(),
-        panel.grid.minor.x = element_blank(),
-        axis.title.y = element_blank(),
-        axis.line.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        ## panel.border = element_rect(color = "grey25"),
-        plot.background = element_rect(color = NA),
-        aspect.ratio = .2) +
-  labs(x= "Körpergröße (in cm)") +
-  scale_fill_manual(values = c("#a9a9a9","#94b9db","#3f6798"), guide = F) +
-  scale_color_manual(values = c("#a9a9a9","#94b9db","#3f6798"), guide = F) +
-  xlim(178,179.5) + 
-  theme(plot.margin = margin(0, 0.1, 0, 0.1, "cm"))
+Auch hier können wir mit `level(90)` das 90%-KI berechnen lassen. Mit `nodots` können wir den Output etwas übersichtlicher machen:
+```{stata boot2, eval = F}
+set seed 1212
+bootstrap r(mean),nodots reps(100): summarize hs16,  level(90)      
+```
+```{stata boot2R, echo = F}
+set linesize 200
+qui use  "D:/oCloud/Home-Cloud/Lehre/Methodenseminar/Allbus_1980-2018.dta"
+qui keep if year == 2014 & sex ==  1 & hs16 > 0
+set seed 1212
+bootstrap r(mean),nodots reps(2000): summarize hs16, level(90) 
 ```
 
+Zum Vergleich: oben mit der t-Verteilung kamen wir auf 177.8101 - 178.627.
 
-
-
-\newpage
-
+*Anmerkung: die Warnmeldung können wir hier ignorieren. Stata warnt uns, dass hier basierend auf allen Fällen im Speicher gebootstrapped wird. Das wäre ein Problem, wenn wir nicht oben nur die hier gewünschten Beobachtungen behalten hätten. Wir hatten ja nur nicht-fehlende Angaben von Männern aus dem Jahr 2014 behalten.*
 
 ## Übungen 7
 
@@ -358,12 +338,10 @@ ggplot(data =dfx , aes(x = mean1, y =type )) +
   + Wie hoch ist die obere Grenze für das Konfidenzintervall?
   + Wie sind die Grenzen für das 99%-KI?
   
-(@) Berechnen Sie das Konfidenzintervall mit Hilfe des Bootstrapping-Verfahrens! (Für die Ergebnisse aus der Lösung verwenden Sie `set.seed(1212)`)
-  + Erstellen Sie die Funktion zur wiederholten Berechnung von SP-Mittelwerten wie oben gezeigt (Sie müssen an der Funktion nichts anpassen, außer die Stichprobengröße  n (`size`) an die Zahl der Beobachtungen)
-  + Berechnen Sie das Konfidenzintervall mit der Approximationsmethode
-  + Berechnen Sie das Konfidenzintervall als Perzentil
+(@) Berechnen Sie das Konfidenzintervall mit Hilfe des Bootstrapping-Verfahrens! (Für die Ergebnisse aus der Lösung verwenden Sie `set seed 1212`)
+  + Berechnen Sie auch hier das 95%- und 99%-Konfidenzintervall.
   
-(@) Berechnen Sie den Punktschätzer und die Konfidenzintervalle für das Einkommen von in Vollzeit erwerbstätigen Männern aus dem Jahr 2016
+(@) Berechnen Sie den Punktschätzer und die Konfidenzintervalle für das Einkommen von in Vollzeit erwerbstätigen Männern aus dem Jahr 2016!
 
   + Lesen Sie dazu den kumulierten Allbus (`Allbus_1980-2018.dta`) ein
   + Überschreiben Sie die fehlenden Werte für `inc` mit `.` 
@@ -512,7 +490,7 @@ dens1+cum1 + plot_layout(ncol = 2)
 ```
 
 Wir können mit `normal`  berechnen lassen, wie groß jeweils die Fläche *links* von einem bestimmten Punkt auf der x-Achsen ist. Dazu setzen wir den z-Wert ein:
-```{stata}
+```{stata normal1}
 display normal(-0.674)
 ```
 Noch einmal zusammengefasst: 25% der Verteilung liegen links des z-Werts von -0.674. `z = -0.674` ist also die 1. Quartilsgrenze für eine Standardnormalverteilung. $\rightarrow$ 75% der Verteilung liegen rechts von `z = -0.674`.
@@ -547,27 +525,82 @@ nv_iq + dnorm1
 ```
 
 Diesen z-Wert von 2 können wir nun in die Verteilungsfunktion einsetzen:
-```{stata}
+```{stata z2}
 display normal(2)
 ```
 
 `r round(pnorm(q=2)*100,3)`% aller IQ-Werte sind also kleiner als 130. Daraus ergibt sich auch: $100\%-`r round(pnorm(q=2)*100,3)`\% =$ `r round(100-pnorm(q=2)*100,3)`% aller IQ-Werte sind *größer* als 130.
 
-Wir können auch umgekehrt fragen, welcher IQ-Wert nötig ist, um zu den höchsten 1% zu gehören. Dazu formen wir die Standardisierungsformel zu $\mu+z\times\sigma$ um. $\mu$=100,$\sigma$ = 15 ergeben sich aus der IQ-Definition. Den z-Wert für das 99%-Quantil bekommen wir mit `qnorm(p=99)`:
-```{r}
-qnorm(p = 0.99)
-100 + 2.326348*15 # rechnung per Hand
-qnorm(p = 0.99, mean = 100, sd = 15) # direkte Variante
+Wir können auch umgekehrt fragen, welcher IQ-Wert nötig ist, um zu den höchsten 1% zu gehören. Dazu formen wir die Standardisierungsformel zu $\mu+z\times\sigma$ um. $\mu$=100,$\sigma$ = 15 ergeben sich aus der IQ-Definition. Den z-Wert für das 99%-Quantil bekommen wir mit `invnormal(.99)`:
+```{stata top1}
+display invnormal(.99)
+```
+```{stata topbound}
+display 100 + 2.3263479*15 
 ```
 
-Um beim IQ zu den Top 1% zu gehören, ist ein IQ von mindestens `r round(qnorm(p = 0.99, mean = 100, sd = 15),3)` nötig. Welcher IQ ist höchstens unter den niedrigsten 1%?
-```{r}
-qnorm(p = 0.01) # negativ! weil < mean! 
-100 + -2.326348*15 # per Hand
-qnorm(p = 0.01, mean = 100, sd = 15)
+Um beim IQ zu den Top 1% zu gehören, ist ein IQ von mindestens `r round(qnorm(p = 0.99, mean = 100, sd = 15),3)` nötig. 
+
+
+```{r, warning=F,message=F,fig.width=8,fig.height=3.5, fig.align="center", echo = F}
+data2 <- data.frame(iq = seq(50,150,1)) # dataframe mit Zahlenfolge
+data2$iq_density <- dnorm(x=data2$iq,mean = 100 ,sd =  15) # Dichtefunktion 
+##d4ba55
+
+
+nv_iq2 <- ggplot(data = data2, aes(x=iq, y = iq_density )) + 
+  geom_ribbon(data=filter(data2,iq >= qnorm(p = 0.99, mean = 100, sd = 15)), aes(ymin = 0, ymax = iq_density),fill= "#57B5ED" , alpha = .5 ) +
+  geom_line(color = "#273253", size = .75, linetype = 1)  +   
+  geom_text(data=filter(data2,iq == 135), aes(x = iq, y = .0075, label = iq)) +
+  theme_minimal() + labs(y = "Häufigkeitsdichte", x = "Intelligenzquotient", title = "IQ") +
+  theme(aspect.ratio = .5,
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank()) 
+
+dnorm2 <- ggplot(data = data1, aes(x=z, y = nv.var )) + 
+  geom_ribbon(data=filter(data1,z >=qnorm(p = 0.99)), aes(ymin = 0, ymax = nv.var),fill = "#ff8c69" , alpha = .5 )+
+  geom_line(color = "#35274A", size = .75)  +   
+  geom_text(data=filter(data1,between(z,qnorm(p = 0.9899),qnorm(p = 0.9901) ) ), aes(x = z, y = .1, label = z)) +
+  scale_y_continuous(breaks = seq(0,.4,.2)) +
+  theme_minimal() + labs(y = "Häufigkeitsdichte", x = "z-Wert",title="Standard-NV") +
+  theme(aspect.ratio = .5,
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank()) 
+
+nv_iq2 + dnorm2 
 ```
 
 
+
+Welcher IQ ist höchstens unter den niedrigsten 1%?
+```{stata bottom1}
+display invnormal(.01) 
+```
+Dieser Wert ist negativ weil wir uns links vom Mittelwert befinden!
+
+```{stata low1}
+display 100 + -2.326348*15
+```
+
+```{r, warning=F,message=F,fig.width=8,fig.height=3.5, fig.align="center", echo = F}
+nv_iq3 <- ggplot(data = data2, aes(x=iq, y = iq_density )) + 
+  geom_ribbon(data=filter(data2,iq <= qnorm(p = 0.01, mean = 100, sd = 15)), aes(ymin = 0, ymax = iq_density),fill= "#57B5ED" , alpha = .5 ) +
+  geom_line(color = "#273253", size = .75, linetype = 1)  +   
+  geom_text(data=filter(data2,iq == 65), aes(x = iq, y = .0075, label = iq)) +
+  theme_minimal() + labs(y = "Häufigkeitsdichte", x = "Intelligenzquotient", title = "IQ") +
+  theme(aspect.ratio = .5,
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank()) 
+
+dnorm3 <- 
+  ggplot(data = data1, aes(x=z, y = nv.var )) + 
+  geom_ribbon(data=filter(data1,z <=qnorm(p = 0.01)), aes(ymin = 0, ymax = nv.var), fill = "#B1934AFF" , alpha = .5 )+
+  geom_line(color = "#394165FF", size = .75)  +   
+  geom_text(data=filter(data1,between(z,qnorm(p = 0.0099),qnorm(p = 0.0101) ) ), aes(x = z, y = .1, label = z)) +
+  scale_y_continuous(breaks = seq(0,.4,.2)) +
+  theme_minimal() + labs(y = "Häufigkeitsdichte", x = "z-Wert") +
+  theme(aspect.ratio = .5,
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank()) 
+
+nv_iq3 + dnorm3 
+```
 
 
 ### Student t-Verteilung
@@ -580,18 +613,8 @@ In der Praxis wird die Standardnormalverteilung aber nur selten genutzt, denn da
 
 Die t-Verteilung ähnelt der Standardnormalverteilung, beide haben einen Mittelwert von $\mu = 0$. Streng genommen gibt es jedoch nicht eine t-Verteilung, sondern viele - diese unterscheiden sich durch die sogenannten Freiheitsgrade. Dieser wird mit `df` ("degrees of freedom") abgekürzt und entspricht der "Stichprobengröße minus 1": $n-1$. Im Vergleich zur Standardnormalverteilung hat die t-Verteilung "breitere" Ränder, die sich aber bei steigender Stichprobengröße (höheren `df`) der Standardnormalverteilung annähern:
 
-```{r,out.width="100%", fig.align='center', eval = F, echo = F}
-data1$t.var <- dt(x=data1$z,df =  2) # Dichtefunktion der t-Verteilung mit df=2
-data1$t.var10 <- dt(x=data1$z,df =  10) # Dichtefunktion der t-Verteilung mit df=10
-ggplot(data = data1, aes(x=z)) + 
-  geom_line(aes(y =nv.var),color =  "#3B64A1", size = .75)  +   
-  geom_line(aes(y =t.var), color =  "#3B414F",  size = .75)  +   
-  geom_line(aes(y =t.var10), color= "#B3875C", size = .75)  +  
-  theme_minimal() +
-  labs(y = "Häufigkeitsdichte")
-```
 
-```{r, out.height="60%", out.width="60%", fig.align='center', echo = F}
+```{r, out.width="100%", fig.align='center', echo = F}
 data1$t.var <- dt(x=data1$z,df =  2) # Dichtefunktion der t-Verteilung mit df=2
 data1$t.var10 <- dt(x=data1$z,df =  10) # Dichtefunktion der t-Verteilung mit df=10
 data2 <- data1 %>% pivot_longer(cols = contains("var"),values_to = "nv",names_to = "Verteilung") %>% 
@@ -602,7 +625,7 @@ data2 <- data1 %>% pivot_longer(cols = contains("var"),values_to = "nv",names_to
 ggplot(data = data2, aes(x=z, color = Verteilung)) +   
   geom_line(aes(y= nv), size = .75) +
   scale_color_manual(values =c("#3B64A1","#3B414F","#B3875C"), name = "") +
-  theme_minimal() +
+  theme_minimal(base_size = 11) +
   labs(y = "Häufigkeitsdichte", x = "") +
   theme(legend.position = "top",
         panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank()) +
@@ -611,34 +634,59 @@ ggplot(data = data2, aes(x=z, color = Verteilung)) +
 ```
 Wir können also einfach die t-Verteilung verwenden und die Stichprobengröße angeben - für große Stichproben wird sich das Ergebnis an die Standardnormalverteilung annähern. Bei kleineren Stichproben sind wir auf der sicheren Seite. Im Grundsatz können wir also für alle (annähernd) normalverteilen Merkmale die t-Verteilung verwenden.
  
-Wie für die Standardnormalverteilung bekommen wir mit `pt` angegeben, wieviel % der Fläche links eines t-Werts ("z-Wert der t-Verteilung") liegen bei einer bestimmten Zahl von `df`:
-```{r}
-pt(q=1,df =  2)
+Wie für die Standardnormalverteilung bekommen wir mit `ttail` angegeben, wieviel % der Fläche *rechts* eines t-Werts ("z-Wert der t-Verteilung") liegen bei einer bestimmten Zahl von `df`:
+```{stata ttailx}
+display ttail(2,1)
+```
+Für die Fläche links davon rechnen wir folglich `1-ttail`:
+```{stata ttailx2}
+display 1- ttail(2,1)
 ```
 Bei einer Stichprobengröße von 3 (`df`$+1$) liegen `r round(pt(q=1,df =  2)*100,2)`% links von einem t-Wert = 1.
 
-### t-Standardisierung
+#### t-Standardisierung
 
 Noch einmal zu unserem IQ-Beispiel: stellen wir uns vor, dass für den mittleren IQ ($\bar{IQ}$=100) und dessen Standardabweichung ($s$=15) auf einer Stichprobe von $n=15$ beruht. Wir würden uns wieder fragen, wie viel Prozent aller Personen in der Grundgesamtheit wohl einen IQ $\leq$ 130 haben. Zunächst verwenden wir wieder die Standardisierungsformel (diese ändert sich nicht im Vergleich zur Standard-NV):
 $$t=\frac{x-\bar{x}}{s}$$ 
 Also setzen wir ein und erhalten wie oben $\frac{130-100}{15} = 2$. 
 
-Der Hauptunterschied zum Vorgehen bei der Standardnormalverteilung ist jetzt, dass wir anstelle von `pnorm` jetzt eben `dt` mit der entsprechenden `df=n-1` verwenden:
-```{r}
-pt(q = 2,df =  14)
+Der Hauptunterschied zum Vorgehen bei der Standardnormalverteilung ist jetzt, dass wir anstelle von `invnormal` jetzt eben `1-ttail` mit der entsprechenden `df=n-1` verwenden:
+```{stata ttail2}
+dis 1-ttail(14,2)
 ```
 
 Basierend auf einer Stichprobe von 15 Personen mit einem Mittelwert von 100 und einer Standardabweichung von 15 sind also `r round(pt(q = 2,df =  14)*100,3)`% aller IQ-Werte kleiner als 130. Daraus ergibt sich auch: $100\%-`r round(pt(q = 2,df =  14)*100,3)`\% =$ `r round(100-pt(q = 2,df =  14)*100,3)`% aller IQ-Werte sind *größer* als 130.
 
 > Zum Vergleich: oben - auf Basis der Standard-NV - waren es `r round(pnorm(q=2)*100,3)`% 
 
-Auch hier können wir uns natürlich umgekehrt fragen, wie hoch der IQ sein muss um zu den Top 1% zu gehören. Dazu suchen wir erst den entsprechenden t-Wert und setzen dann wieder in die umgeformte Formel $\bar{x}+t\times s$ ein:
-```{r}
-qt(p=.99,df=14) 
-100 + 2.624494* 15
+Auch hier können wir uns natürlich umgekehrt fragen, wie hoch der IQ sein muss um zu den Top 1% zu gehören. Dazu suchen wir erst mit `invttail` den entsprechenden t-Wert und setzen dann wieder in die umgeformte Formel $\bar{x}+t\times s$ ein:
+```{stata invtt1}
+dis invttail(14,.99)
 ```
-Hier gibt es keine direkte Option im R-Befehl wie bei der Standard-NV.
+
+Da wir die obere/rechte Grenze suchen, verwenden wir +2.6244941:
+```{stata invtt2}
+display 100 + 2.6244941* 15
+```
 
 Basierend auf einer Stichprobe von 15 Personen mit einem Mittelwert von 100 und einer Standardabweichung von 15 ist also ein IQ von `r round(100 +qt(p=.99,df=14)*15,3)` nötig, um zu den Top 1% zu gehören.
 
 > Zum Vergleich: oben - auf Basis der Standard-NV - waren es `r round(qnorm(p = 0.99, mean = 100, sd = 15),3)`.
+
+```{r,out.width="100%", fig.align='center', echo = F}
+data1$t.var <- dt(x=data1$z,df =  2) # Dichtefunktion der t-Verteilung mit df=2
+data1$t.var14 <- dt(x=data1$z,df =  14) # Dichtefunktion der t-Verteilung mit df=14
+
+
+ggplot(data = data1, aes(x=z, y = t.var14 )) + 
+  geom_ribbon(data=filter(data1,z >= qt(p=.99,df=14)), aes(ymin = 0, ymax = t.var14), fill = "#B1934AFF" , alpha = .5 )+
+  geom_line(color = "#394165FF", size = .75)  +   
+  geom_text(data=filter(data1,between(z,qt(p=.9899,df=14),qt(p=.9901,df=14) ) ), aes(x = z, y = .05, label = z)) +
+  scale_y_continuous(breaks = seq(0,.4,.2)) +
+  theme_minimal() + labs(y = "Häufigkeitsdichte", x = "t-Wert", title = "t-Verteilung mit df = 14") +
+  theme(aspect.ratio = .5,
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank()) 
+```
+
+
+
