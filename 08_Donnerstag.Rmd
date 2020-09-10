@@ -171,7 +171,7 @@ In der Wissenschaft hat sich als Konvention etabliert, von einem signifikanten U
 
 [^1]: [Failing Grade: 89% of Introduction-to-Psychology Textbooks That Define or Explain Statistical Significance Do So Incorrectly. Advances in Methods and Practices in Psychological Science, 2515245919858072.](https://doi.org/10.1177/2515245919858072)
 
-### beiseitiger t-Test
+### beiseitiger t-Test {#ttest1}
 
 Ein **beid**seitiger Test testet die $H_0$ im Vergleich zur folgenden Aussage der $H_A$: "die wahren Mietausgaben der Studierenden in Oldenburg sind *ungleich* 320 Euro". Dazu formalisieren wir zunächst die $H_0$ und $H_A$:
 
@@ -337,7 +337,7 @@ ttest miete==320
 [Übung 1](#tvsmu)
 ***
 
-## Mittelwertvergleiche mit dem t-Test
+## Mittelwertvergleiche mit dem t-Test {#mittelwertttest}
 
 Diese Testlogik können wir auch dazu verwenden, Kennzahlen für verschiedene Gruppen zu vergleichen. 
 
@@ -481,6 +481,8 @@ gen height_sample =  rnormal(170,9.26)
  + Berechnen Sie den t-Wert und die Irrtumswahrscheinlichkeit, mit der die $H_0$ verworfen werden kann
  + Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?
  + Wenn Sie die vorherige Fragestellung mit einer gerichteten Hypothese: "sind Menschen im Mittel signifikant größer als 172cm?" untersuchen würden - was würde sich ändern?     
+ 
+[Zurück](#ttest1)
 
 ## Übungen 8-2 {#tgroup}
 
@@ -492,7 +494,12 @@ gen height_sample =  rnormal(170,9.26)
   + Führen Sie den entsprechenden Test durch!
   + Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?
 
+[Zurück](#mittelwertttest)
+
 ## Übung 8-3 {#tpaired}
+
+
+
 
 ## weitere Übungen Kap 8
 (@) Sie erheben erneut eine Stichprobe mit 50 Personen und erhalten einen Mittelwert von 173cm und eine Standardabweichung von 6.15.

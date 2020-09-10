@@ -306,11 +306,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8" data-path="inf2.html"><a href="inf2.html"><i class="fa fa-check"></i><b>8</b> t-Tests</a><ul>
 <li class="chapter" data-level="8.1" data-path="inf2.html"><a href="inf2.html#t-test-per-hand-und-in-stata"><i class="fa fa-check"></i><b>8.1</b> t-Test per Hand und in Stata</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="inf2.html"><a href="inf2.html#beiseitiger-t-test"><i class="fa fa-check"></i><b>8.1.1</b> beiseitiger t-Test</a></li>
+<li class="chapter" data-level="8.1.1" data-path="inf2.html"><a href="inf2.html#ttest1"><i class="fa fa-check"></i><b>8.1.1</b> beiseitiger t-Test</a></li>
 <li class="chapter" data-level="8.1.2" data-path="inf2.html"><a href="inf2.html#linksseitiger-t-test"><i class="fa fa-check"></i><b>8.1.2</b> linksseitiger t-Test</a></li>
 <li class="chapter" data-level="8.1.3" data-path="inf2.html"><a href="inf2.html#rechtsseitiger-t-test"><i class="fa fa-check"></i><b>8.1.3</b> rechtsseitiger t-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="inf2.html"><a href="inf2.html#mittelwertvergleiche-mit-dem-t-test"><i class="fa fa-check"></i><b>8.2</b> Mittelwertvergleiche mit dem t-Test</a><ul>
+<li class="chapter" data-level="8.2" data-path="inf2.html"><a href="inf2.html#mittelwertttest"><i class="fa fa-check"></i><b>8.2</b> Mittelwertvergleiche mit dem t-Test</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="inf2.html"><a href="inf2.html#unverbundener-t-test"><i class="fa fa-check"></i><b>8.2.1</b> Unverbundener t-Test</a></li>
 <li class="chapter" data-level="8.2.2" data-path="inf2.html"><a href="inf2.html#verbundener-t-test"><i class="fa fa-check"></i><b>8.2.2</b> Verbundener t-Test</a></li>
 </ul></li>
@@ -426,7 +426,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <blockquote>
 <p><em>Assuming that the null hypothesis is true and the study is repeated an infinite number times by drawing random samples from the same populations(s), less than 5% of these results will be more extreme than the current result.</em><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 </blockquote>
-<div id="beiseitiger-t-test" class="section level3">
+<div id="ttest1" class="section level3">
 <h3><span class="header-section-number">8.1.1</span> beiseitiger t-Test</h3>
 <p>Ein <strong>beid</strong>seitiger Test testet die <span class="math inline">\(H_0\)</span> im Vergleich zur folgenden Aussage der <span class="math inline">\(H_A\)</span>: “die wahren Mietausgaben der Studierenden in Oldenburg sind <em>ungleich</em> 320 Euro”. Dazu formalisieren wir zunächst die <span class="math inline">\(H_0\)</span> und <span class="math inline">\(H_A\)</span>:</p>
 <p><span class="math inline">\(H_0: \mu = 320 Euro \qquad H_A: \mu \neq 320 Euro\)</span></p>
@@ -499,7 +499,7 @@ Ho: mean = 320                                   degrees of freedom =       39
 ***</p>
 </div>
 </div>
-<div id="mittelwertvergleiche-mit-dem-t-test" class="section level2">
+<div id="mittelwertttest" class="section level2">
 <h2><span class="header-section-number">8.2</span> Mittelwertvergleiche mit dem t-Test</h2>
 <p>Diese Testlogik können wir auch dazu verwenden, Kennzahlen für verschiedene Gruppen zu vergleichen.</p>
 <div id="unverbundener-t-test" class="section level3">
@@ -627,6 +627,7 @@ Hier könnten wir dann mit <code>ttest</code>
 <li>Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?</li>
 <li>Wenn Sie die vorherige Fragestellung mit einer gerichteten Hypothese: “sind Menschen im Mittel signifikant größer als 172cm?” untersuchen würden - was würde sich ändern?</li>
 </ul>
+<p><a href="inf2.html#ttest1">Zurück</a></p>
 </div>
 <div id="tgroup" class="section level2">
 <h2><span class="header-section-number">8.5</span> Übungen 8-2</h2>
@@ -641,6 +642,7 @@ Hier könnten wir dann mit <code>ttest</code>
 <li>Führen Sie den entsprechenden Test durch!</li>
 <li>Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?</li>
 </ul>
+<p><a href="inf2.html#mittelwertttest">Zurück</a></p>
 </div>
 <div id="tpaired" class="section level2">
 <h2><span class="header-section-number">8.6</span> Übung 8-3</h2>
