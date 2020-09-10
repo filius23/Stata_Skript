@@ -581,7 +581,7 @@ tab age_cat
 
 ### Varianz erklärt {#variance}
 Die häufigste Kennzahl zur Beschreibung von Streuung ist aber die **Varianz**. Die Varianz ist definiert als die durchschnittliche quadrierte Abweichung vom arith. Mittel: $$var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}$$    
-[Was bedeutet diese Formel?](#variance)    
+
 
 Schauen wir erst in den Zähler des Bruchs: $(x_{i}-\bar{x})^2$
 Es geht also um die Abstände der einzelnen Datenpunkte ($x_{i}$) zum arithmetischen Mittel ($\bar{x}$) - mathematisch die Differenz zwischen den einzelnen Datenpunkten $x_{i}-\bar{x}$ - hier eingezeichnet als gestrichelte Linien:
@@ -610,6 +610,8 @@ a18 %>%
 Für Punkte, die über dem arith. Mittel liegen, erhalten wir für die Differenz einen positiven Wert (wir ziehen ja jeweils das arith. Mittel vom Wert für den Datenpunkt ab). Für Punkte mit Werten, die kleiner als das arith. Mittel sind, erhalten wir einen negativen Wert.     
 Würden wir die Abstände (gestrichelten Linien) einfach aufsummieren, erhielten wir als Ergebnis immer Null! Das arithmetische Mittel liegt ja per Definition immer genau "in der Mitte": die Abstände nach oben sind in der Summe genauso groß wie die Abstände nach unten. Daher wird zunächst jeder Abstand quadriert: $(\bar{x} - x_{i})^2$   
 Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert ($\sum_{i=1}^{n}$) und dann durch die Anzahl der Beobachtungen geteilt werden ($\frac{}{n}$)- zusammengefasst hier nochmal die Formel:  $$var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}$$
+
+[Zurück zu Streuungsmaße](#streu)    
 
 ### Schiefe & Wölbung {#sk_kur}
 

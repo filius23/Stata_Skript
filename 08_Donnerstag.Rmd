@@ -63,7 +63,7 @@ end
 tabstat miete, s(mean sd)
 ```
 
-Die Antworten haben also ein arithmetisches Mittel von 305 Euro und eine Standardabweichung von 53.5 Euro. Der *Punktschätzer* aus der Stichprobe legt uns also nahe, dass die Mieten in Oldenburg in der Tat unter 320 EUR liegen. Wie wir letzte Woche gesehen haben, sollten wir uns nicht allein auf den Punktschätzer verlassen, sondern auch die Streuung in der Stichprobe mitberücksichtigen. Dies leisten die Hypothesentests. Dabei werden immer zwei sich widersprechende Hypothesen formuliert, die sog. $H_0$ - die Nullhypothese und die $H_A$ - die Alternativhypothese. Die $H_0$ beschreibt dabei immer den bisherigen Kenntnisstand und die $H_A$ formuliert die zu testende Aussage. Die Hypothesen unterscheiden sich dann je nachdem ob wir einen gerichteten oder einen ungerichteten Test durchführen: 
+Die Antworten haben also ein arithmetisches Mittel von 305 Euro und eine Standardabweichung von 52.05 Euro. Der *Punktschätzer* aus der Stichprobe legt uns also nahe, dass die Mieten in Oldenburg in der Tat unter 320 EUR liegen. Wie wir letzte Woche gesehen haben, sollten wir uns nicht allein auf den Punktschätzer verlassen, sondern auch die Streuung in der Stichprobe mitberücksichtigen. Dies leisten die Hypothesentests. Dabei werden immer zwei sich widersprechende Hypothesen formuliert, die sog. $H_0$ - die Nullhypothese und die $H_A$ - die Alternativhypothese. Die $H_0$ beschreibt dabei immer den bisherigen Kenntnisstand und die $H_A$ formuliert die zu testende Aussage. Die Hypothesen unterscheiden sich dann je nachdem ob wir einen gerichteten oder einen ungerichteten Test durchführen: 
 
 Zunächst müssen wir uns entscheiden ob wir eine gerichtete oder ungerichtete Hypothese testen möchten:    
 
@@ -244,7 +244,7 @@ end
 ttest miete==320
 ```
 
-Hier werden auch gleich die Ergebnisse für den linksseitigen und rechtsseitigen Test angezeigt. Diese sehen uns noch
+Hier werden auch gleich die Ergebnisse für den linksseitigen und rechtsseitigen Test angezeigt. Diese sehen uns noch genauer an:
 
 
 ### linksseitiger t-Test
@@ -396,29 +396,72 @@ Da der p-Wert für den beiseitigen Test (unter `Ha: diff != 0`) deutlich unter 0
 Für einen rechtsseitigen Test achten wir auf `Ha: diff > 0`- Männer sind also signifikant *größer* als Frauen.
 Für einen linksseitigen Test ist hingegen `Ha: diff < 0` ausschlaggebend: Männer sind also nicht signifikant *kleiner* als Frauen.
 
+***
+
+[Übung2](#tgroup)
+
+***
+
 ### Verbundener t-Test
 
-Möchten wir Werte vergleichen, welche in einer Verbindung zueinander stehen, ist der verbundene t-Test die richtige Wahl. Beispiele für verbundene Stichproben
-Das obige Beispiel 
+Möchten wir Werte vergleichen, welche in einer Verbindung zueinander stehen, ist der verbundene t-Test die richtige Wahl. Beispiele für verbundene Stichproben sind beispielsweise experimentelle Untersuchungen, welche Daten vor und nach einer Maßnahme/Treatment/Intervention messen. Anschließend soll anhand des Vergleichs der Ergebnisse und die Wirkung der Maßnahme evaluiert werden. Hier sind die Messwerte aus den beiden Gruppen ("vorher" und "nachher") miteinander *verbunden* - bspw. wird eine Person mit Bluthochdruck auch nach der Maßnahme in der Tendenz einen höheren Blutdruck haben als eine Person, welche bereits zuvor einen niedrigeren Blutdruck hatte.
+
+Ein fiktionales Beispiel:
+
+```{stata , eval = F}
+webuse bpwide
+browse bp_before bp_after 
+```
 
 
-## Varianten für `ttest`
+```{r bpwide_shot, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
+knitr::include_graphics("08_bpwide.png")
+```
 
-Außerdem gibt es zwei Aspekte, anhand derer sich t-Tests allgemein unterscheiden:
+Diese vorher/nachher Werte können wir jetzt mit einem verbundenen t-Test vergleichen:
+```{stata, eval = F}
+ttest bp_before==bp_after
+```
+
+```{stata, echo = F}
+set linesize 200
+qui webuse bpwide
+ttest bp_before==bp_after
+```
+
+Auch hier sehen wir wieder die Ergebnisse für einen links- (` Ha: mean(diff) < 0 `) beid- (`Ha: mean(diff) != 0`) und rechtsseitigen (`Ha: mean(diff) > 0`) Test. Wir erkennen aus den Ergebnissen, dass der Blutdruck der Patient\*innen:
+
+  + nach dem Treatment nicht signifikant höher ist - linksseitiger Test (*bp_before < bp_after*), linke Spalte
+  + sich vor und nach dem Treatment signifikant unterscheidet - beiseitiger Test (*bp_before != bp_after*), mittlere Spalte
+  + nach dem Treatment signifikant niedriger ist - rechtsseitiger Test (*bp_before > bp_after*), rechte Spalte
+
+    
+***
+
+[Übung3](#tpaired)
+
+***
+
+
+## Übersicht zu Varianten für `ttest`
+
+Für alle `ttest`-Varianten können wir mit `, level(..)` auch ein anderes Signifikanzniveau wählen. Standardmäßig wird $\alpha=0,05\%$ verwendet.
+
++ Vergleich zu einem Referenzwert: `ttest testvariable == referenzwert`
+
+Für Mittelwertvergleich gibt es insgesamt zwei Aspekte, anhand derer sich t-Tests allgemein unterscheiden:
 
 + Die Varianz der Messwerte in den verglichenen Gruppen ist ...
   + gleich: $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` 
   + verschieden: $\Rightarrow$ `ttest testvariable, by(gruppenvariable) unequal` (wie oben)
-  
+
+
 + 	Verbundene oder unverbundene Stichprobe?
   +  Sind die einzelnen Messwerte voneinander unabhängig? D.h. ein Messwert steht in keinem direkten Zusammenhang mit einem anderen $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` für eine unverbundene Stichprobe (mit ggf. `unequal`)
-  +  Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen $\Rightarrow$ Werte für beide Variablen sollten "nebeneinander" abgelegt sein (*wide*-Format)
-```{r bpwide_shot, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
-knitr::include_graphics("08_bpwide.png")
-```
+  +  Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen $\Rightarrow$ Werte für beide Variablen sollten "nebeneinander" abgelegt sein (*wide*-Format), dann kann mit `ttest vorher==nachher` ein verbundener `ttest` durchgeführt werden.
+
   Hier könnten wir dann mit `ttest `
   `paired = T` für eine verbundene Stichprobe, zB. ähneln sich bei wiederholten Messungen die Messwerte für die gleiche Person (Vorher-/Nachhermessungen)
-    
 
 
 
@@ -441,14 +484,15 @@ gen height_sample =  rnormal(170,9.26)
 
 ## Übungen 8-2 {#tgroup}
 
-(@) Haben Haustierbesitzer\*innen ein höheres Einkommen als Nicht-Haustierbesitzer? 
-  + Verwenden Sie den Datensatz aus Aufgabe 1.
+(@) Haben Befragte aus den alten Bundesländern ein höheres Einkommen als Befragte aus den alten Bundesländern? 
+  + Verwenden Sie den Allbus 2018 und behalten Sie nur in Vollzeit beschäftigten Befragten (`work == 1`), die ein Einkommen größer als 0 angeben (`inc > 0`) im Speicher ([Tipp](#vollz))
+  + Verwenden Sie `gen` und `log`, um aus `inc` das logarithmierte Einkommen `log_inc` zu erstellen. ([Tipp](#vollz))
   + Wie lauten die Hypothesen zu dieser Fragestellung?
-  + Auf Basis der Ergebnisse aus Aufgabe 1: müssen Sie `var.equal = T` oder `var.equal = F` setzen?
+  + Müssen Sie `unequal` setzen?
   + Führen Sie den entsprechenden Test durch!
   + Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?
 
-
+## Übung 8-3 {#tpaired}
 
 ## weitere Übungen Kap 8
 (@) Sie erheben erneut eine Stichprobe mit 50 Personen und erhalten einen Mittelwert von 173cm und eine Standardabweichung von 6.15.
@@ -466,8 +510,9 @@ gen height_sample2 =  rnormal(173,6.15)
 
 (@) Die Schätzung eines Experten ergab, dass das mittlere logarithmierte Einkommen von Vollzeiterwerbstätigen in Deutschland für das Jahr 2018 bei 7,6 log(EUR) liegt.[^072] Sie vermuten, dass sich die wahren Werte davon signifikant unterscheiden. Überprüfen Sie diese These! (*Berechnen Sie die p-Werte jeweils mit `ttest` und per Hand!*)
 
-  + Laden Sie den kumulierten Allbus (`Allbus_1980-2018.dta`).  Wählen Sie alle Befagten für das Jahr 2018 aus, die Vollzeit arbeiten (`work == 1`) und ein Einkommen größer als 0 EUR angeben. (siehe *Hinweise* am Ende) 
+  + Laden Sie den kumulierten Allbus (`Allbus_1980-2018.dta`).  Wählen Sie alle Befagten für das Jahr 2018 aus, die Vollzeit arbeiten (`work == 1`) und ein Einkommen größer als 0 EUR angeben. ([Tipp](#vollz)) 
   + Denken Sie daran, die Missings mit `.` zu überschreiben! (Siehe Hinweise für Hilfe beim Einlesen und Aufbereiten des Datensatzes!)
+  + Verwenden Sie `gen` und `log`, um aus `inc` das logarithmierte Einkommen `log_inc` zu erstellen. ([Tipp](#vollz))
   + Vergleichen Sie die Angaben des logarithmierten Einkommens der Befragten (`log_inc`) mit der Aussage des Experten.
   + Formulieren Sie die Hypothesen!
   + Führen Sie den passenden Test durch!
@@ -496,7 +541,8 @@ Für alle, die noch etwas mehr machen möchten:
 
 
 ## Hinweise
-### Auswahl der in Vollzeit beschäftigten Befragten
+
+### Auswahl der in Vollzeit beschäftigten Befragten {#vollz}
 ```{stata readin8auf, eval = F}
 // wo liegt der Datensatz?
 cd "..."

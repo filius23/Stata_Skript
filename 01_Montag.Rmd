@@ -99,8 +99,6 @@ Wir haben zwei Möglichkeiten zu das aktuelle Arbeitsverzeichnis überprüfen: w
 knitr::include_graphics("01_Stata_directory.png")
 ```
 
-
-
 Wir können diese beiden Schritte natürlich auch einfach kombinieren und den gesamten Pfad nach `use` angeben:
 ```{stata readin2, eval = F}
 use "C:/Users/Andreas/Dokumente/Statistik/Allbus2018.dta"
