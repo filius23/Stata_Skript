@@ -1,1 +1,123 @@
-# Hypothesentests {#hypo}
+# Weitere Hypothesentests {#hypo}
+
+## Vergleich von Varianzen mit dem F-Test
+
+Um die Varianzen zweier Stichproben zu überprüfen, steht uns der F-Test zur Verfügung - in R mit `var.test()`. Der F-Test hat einige Voraussetzungen: 
+
++	Die Variablen sind (mind.) intervallskaliert 
++	Die Variablen sind in der Grundgesamtheit (annähernd) normalverteilt
++	Die zu vergleichenden Gruppen sind voneinander unabhängig (unverbundene Stichproben)
+
+Getestet wird beim F-Test die Hypothese, dass die Varianzen zweier Grundgesamtheiten gleich oder ungleich (zweiseitiger Test) sind bzw. dass die Varianz der einen Grundgesamtheit größer ist als die der anderen (einseitiger Test).
+
+Es gibt also auch hier wieder gerichtete und ungerichtete Hypothesen. Da allerdings die F-Verteilung nicht symmetrisch ist, wird nur rechtsseitig getestet. Daher sollte beim Test die größere Varianz immer im Zähler stehen.
+
+  + ungerichtete/beidseitige Hypothese:  
+  
+  $\qquad H_0: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} = 1 \qquad H_A: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} \neq 1 \qquad \qquad \Rightarrow H_A:\;\sigma^{2}_{1} \neq \sigma^{2}_{2}$  
+  
+  + rechtsseitige Hypothese: 
+  
+  $\qquad H_0: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} \leqslant 1 \qquad H_A: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} > 1 \qquad \qquad \Rightarrow H_A:\;\sigma^{2}_{1}>\sigma^{2}_{2}$  
+
+Wie schon beim t-Test geht es bei den Hypothesen um die Grundgesamtheit. Daher wird hier der griechische Buchstabe für die Varianz, $\sigma^2$, verwendet. Da wir i.d.R. keine Angabe zur Varianz der Grundgesamtheiten vorliegen haben, wird beim F-Test auf die Stichprobenvarianzen ($s^2$) zurückgegriffen. Der Quotient der Varianzen ist F-verteilt. Somit berechnet sich die F-Statistik aus dem Quotienten der beiden Stichprobenvarianzen, wobei - nochmal - die größere Varianz im Zähler steht:
+$$F = \frac{s^{2}_{1}}{s^{2}_{2}}$$
+Im konkreten Fall ist also $s^{2}_{Maenner}$ der Schätzer für $\sigma^{2}_{Manner}$  und  $s^{2}_{Frauen}$  der Schätzer für die $\sigma^{2}_{Frauen}$. Wir berechnen also zunächst die Stichprobenvarianzen mit Hilfe von `var()` und sehen, dass $s^{2}_{M} > s^{2}_{F}$, $s^{2}_{M}$ sollte also im den Zähler für $s^2_1$ eingesetzt werden.
+```{r}
+var(a14gr$hs16[a14gr$sex==1]) # Männer
+var(a14gr$hs16[a14gr$sex==2]) # Frauen
+```
+
+In `var.test()` geben wir zunächst die Werte für Gruppe 1 (mit dem dem größeren $s^2$) und dann für Gruppe 2 (mit dem dem kleineren $s^2$) an. Gruppe 1 sind in unserem Beispiel die Männer, Gruppe die weiblichen Befragten. Ein beidseitiger Test führt zu folgendem Ergebnis:
+
+
+### beidseitiger F-Test
+```{r}
+var.test(a14gr$hs16[a14gr$sex==1], # Werte für Gruppe 1
+         a14gr$hs16[a14gr$sex==2], # Werte für Gruppe 2
+         alternative = "two.sided") # beiseitige Hypothese
+```
+Da der p-Wert deutlich unter 0,05 liegt wird die $H_0$ verworfen und wir gehen von ungleichen Varianzen bei den Körpergrößen von Männern und Frauen aus.  
+
+### rechtsseitiger F-Test
+```{r}
+var.test(a14gr$hs16[a14gr$sex==1], # Werte für Gruppe 1
+         a14gr$hs16[a14gr$sex==2], # Werte für Gruppe 2
+         alternative = "greater") # rechtsseitige Hypothese
+```
+Mit einem p-Wert von `r sprintf("%1.7f",var.test(hs16 ~ sex, data = a14gr,alternative = "greater")$p.value)` kann die $H_0: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} \leqslant 1$ verworfen werden. D.h. die Varianz der Körpergröße von Männern ist signifikant größer als die Varianz der Körpergröße bei Frauen.
+
+\newpage
+ 
+## Proportionen und Häufigkeiten
+
+### Binomialtest
+
+Für dichtome abhängige Variablen eignet sich der Binomialtest. Wir können mit dem Binomialtest testen, ob ein Anteil eines Merkmals sich signifikant von einem Wert unterscheidet. Dieser Anteil wird als $\pi$ bezeichnet und beschreibt Auftrittswahrscheinlichkeit des interessierenden Merkmals in der Grundgesamtheit. In R können wir den Binomialtest mit `binom.test` aufrufen.
+Auch hier gibt es wieder gerichtete und ungerichtete Hypothesen:  
+
+  + ungerichtete/beidseitige Hypothese: 
+  
+  $H_0: \pi = p \qquad H_A: \pi \neq p$  
+  
+  + linksseitige Hypothese:  
+  
+  $H_0: \pi \geqslant p \qquad H_A: \pi < p$  
+  
+  + rechtssseitige Hypothese:   
+  $H_0: \pi \leqslant p \qquad H_A: \pi > p$  
+
+
+Wir könnten uns zB. fragen ob der Anteil der Befragten ohne Haustier im Allbus 2014 sich von $67\%$ unterscheidet. Dazu wählen wir zunächst alle Befragten des Allbus 2014 aus, welche die Frage nach den Haustieren (`aq03`) beantwortet haben (`aq < 0` sind missings, daher verwenden wir schlicht `aq03 > 0`):
+```{r}
+a14ht <- ak[ak$year == 2014 & ak$aq03 > 0,]
+# 1-3 steht für Hund oder/und Katze, 4 für kein Haustier:
+a14ht$pet <- ifelse(a14ht$aq03 < 4, 1,0)
+t1 <- table(a14ht$pet)
+t1
+binom.test(x = t1,
+           p = .67,
+           alternative = "two.sided")
+```
+Wir können hier die $H_0: \pi = .67$ nicht verwerfen, da der p-Wert größer 0,05 ist. Der Anteil der Befragten ohne Haustier unterscheidet sich also nicht signifikant von $67\%$.
+
+Auch hier können die einseitigen Alternativen dann wieder mit `alternative = "less"` und `alternative = "greater"` ausgewählt werden.
+
+
+### Chi²-Test
+
+Häufig ist aber auch für dichtome Merkmale von Interesse, ob sich die Auftrittswahrscheinlichkeit zwischen zwei Gruppen unterscheidet. Hierfür eignet sich der $\chi^{2}$-Test. Der $\chi^{2}$-Test testet, ob sich die beobachteten absoluten Häufigkeiten signifikant von den absoluten Häufigkeiten unterscheiden, die wir erwarten würden wenn beide Merkmale unabhängig voneinander sind. Die Differenz zwischen der beobachteten und der erwarteten absoluten Häufigkeit ergibt den $\chi^{2}$-Wert. Ist $\chi^{2} \approx 0$, dann können wir davon ausgehen, dass die beiden Merkmale unabhängig voneinander sind. Ist $\chi^{2}$ aber größer Null, so gehen wir von einem Zusammenhang aus. Beim $\chi^{2}$-Test geht die $H_0$ davon aus, dass es keinen Zusammenhang gibt. Die $H_{A}$ besagt hingegen, dass einen Zusammenhang zwischen den beiden untersuchten Merkmalen besteht.
+
+$H_{0}: \chi^2 = 0 \qquad H_A: \chi^2 > 0$
+
+In R erstellen wir zunächst eine Kreuztabelle und wenden darauf den `chisq.test` an. Beispielsweise könnten wir untersuchen, ob es einen Zusammenhang zwischen dem Geschlecht der Befragten und dem Haustierbesitz gibt:
+
+```{r}
+table(a14ht$sex, a14ht$pet)
+t <- table(a14ht$sex, a14ht$pet)
+chisq.test(t)
+```
+Da der p-Wert deutlich unter 0,05 liegt, können wir davon ausgehen, dass es in der Grundgesamtheit einen Zusammenhang zwischen dem Geschlecht der Befragten und dem Haustierbesitz gibt.
+
+
+## Überblick
+
+In allen Testbefehlen (außer `chisq.test`) können beidseitige (`alternative = "two.sided"`), linksseitige (`alternative = "less"`) oder rechtsseitige (`alternative = "greater"`) untersucht werden. 
+
++ Mittelwertvergleich: `t.test()`
+  + arith. Mittel in mind. intervallskalierten und (annähernd) normalverteilten Variablen vergleichen    
+
+    + Vergleich zu behauptetem Mittelwert: `t.test(x = stichprobenwerte, mu = Testwert, alternative = ...)`   
+      
+    
+    + Vergleich zwischen zwei Gruppen: `t.test(x = stichprobenwerte Gruppe1, y = stichprobenwerte Gruppe2, alternative = ...)` und folgende Optionen/Entscheidungen:
+      + unverbundene (`paired = F`) oder verbundene (`paired = T`) Stichprobe
+      + Varianz in beiden Gruppen ungleich (`var.equal = F`) oder gleich (`var.equal = T`)   
+
++ Varianzvergleich: `var.test(Werte Gruppe1, Werte Gruppe 2, alternative = ...)`
+  + Unterscheidet sich die Varianz zwischen zwei Gruppen?    
+
++ Anteile vergleichen:
+  + mit einem behaupteten Wert: `binom.test(x = Tabelle mit Werten,p = behaupteter Anteil , alternative = ...)`  
+  
+  + zwischen Gruppen: Kreuztabelle erstellen und mit `chisq.test(Kreuztabelle)` Unabhängigkeit testen

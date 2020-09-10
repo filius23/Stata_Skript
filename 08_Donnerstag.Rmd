@@ -1,7 +1,5 @@
 # t-Tests {#inf2}
 
-
-
 ```{r setup8, include=F}
 .libPaths("D:/R-library4") 
 library(tidyverse)
@@ -14,9 +12,7 @@ knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 knitr::opts_chunk$set(collapse = F)
 ```
 
-Vergangene Woche hatten wir aus Stichproben Aussagen über Parameter in einer Grundgesamtheit getroffen. Eigentliches Ziel statistischer Auswertungen ist aber häufig, Entscheidungen über die Richtigkeit einer allgemeinen Hypothese zu treffen.
-
-## Hypothesentests
+Vergangene Session hatten wir aus Stichproben Aussagen über Parameter in einer Grundgesamtheit getroffen. Eigentliches Ziel statistischer Auswertungen ist aber häufig, Entscheidungen über allgemeine Hypothesen zu treffen.
 
 Ausgangsszenario: wir betrachten ein (annähernd) normal-verteiltes Merkmal und möchten durch eine Stichprobe überprüfen, ob der Mittelwert mit unserer Vermutung übereinstimmt bzw. größer/kleiner ist. Testen wir auf Übereinstimmung, verwenden wir einen sog. beidseitigen Test, bei einem einseitigen Test testen wir ob der Stichprobenwert signifikant größer bzw. kleiner als der vermutete Populationswert ist.
 
@@ -165,7 +161,7 @@ left + right +
 plot_layout(ncol = 2)
 ```
 
-## t-Test 
+## t-Test per Hand und in Stata
 
 Wir berechnen also den t-Wert und gleichen diesen dann mit `ttail` mit der kumulierten Verteilung der t-Verteilung ab. Das Ergebnis von `ttail` gibt uns dann an, mit welcher Irrtumswahrscheinlichkeit wir die $H_0$ verwerfen können. Anders formuliert: wie wahrscheinlich ist es, das $\bar{x}$ in einer Stichprobe zu erhalten obwohl $\mu_0$ in der Grundgesamtheit richtig ist?
 
@@ -336,7 +332,97 @@ input miete
 end
 ttest miete==320
 ```
-## Übungen 8
+
+***
+[Übung 1](#tvsmu)
+***
+
+## Mittelwertvergleiche mit dem t-Test
+
+Diese Testlogik können wir auch dazu verwenden, Kennzahlen für verschiedene Gruppen zu vergleichen. 
+
+### Unverbundener t-Test
+Eine häufige Frage zielt darauf ab zu analysieren, ob sich die Durchschnittswerte eines Merkmals zwischen zwei Gruppen unterscheiden. Wir hatten bereits gesehen, dass wir zB. auf  Basis des Allbus von 2014 die durchschnittliche Körpergröße von Männern und Frauen in Deutschland vergleichen können. Dazu lesen wir zunächst den Datensatz ein und wählen dann nur die Angaben für das Jahr 2014 aus, die für `hs16` nicht missing, also `>0` sind:
+```{stata, eval = F}
+cd "..."
+use Allbus_1980-2018.dta, clear
+keep  if year == 2014 & hs16>0
+```
+
+Auch für Gruppenvergleich müssen zunächst Hypothesen aufgestellt werden. 
+
++ Für einen beidseitigen Test ist die Alternativhypothese, dass es einen Gruppenunterschied gibt:  
+
+    $H_0: \mu_1 - \mu_2 = 0 \qquad H_A: \mu_1 - \mu_2 \neq 0$
+ 
++ Ein linksseitiger Test hätte entsprechend die Alternativhypothese, dass der Gruppenunterschied *kleiner* als 0 ist:  
+
+    $H_0: \mu_1 - \mu_2 \geqslant 0 \qquad H_A: \mu_1 - \mu_2 < 0$
+
++ Ein rechtssseitiger Test hätte entsprechend die Alternativhypothese, dass der Gruppenunterschied *größer* als 0 ist:  
+
+    $H_0: \mu_1 - \mu_2 \leqslant 0 \qquad H_A: \mu_1 - \mu_2 > 0$
+
+
+
+Wir vergleichen nun die Körpergrößen für Frauen und Männer im Allbus 2014 mit Hilfe folgender Hypothesen:
+
++ ungerichtete Hypothese: $H_0: size_{m} - size_{f} = 0 \qquad H_A: size_{m} - size_{f} \neq 0$
++ linksseitige Hypothese: $H_0: size_{m} - size_{f} \geqslant 0 \qquad H_A: size_{m} - size_{f} < 0$
++ rechtsseitige Hypothese: $H_0: size_{m} - size_{f} \leqslant 0 \qquad H_A: size_{m} - size_{f} > 0$
+
+
+Wenn wir nun die beiden Mittelwerte für Männer und Frauen vergleichen, bezieht sich das natürlich wieder nur auf die *Punkt*schätzer für die Stichprobe:
+```{stata, eval = F}
+tabstat hs16,s(mean) by(sex) // Körpergröße nach Geschlecht
+```
+
+```{stata}
+dis 178.7179 - 165.8881
+```
+
+Aber ist diese, in der Stichprobe festgestellte Differenz auch bezogen auf die **Grundgesamtheit** von Bedeutung? Dazu greifen wieder auf den `ttest` zurück, aber hier geben wir anstelle von `== XYZ` mit `by(sex)` die Gruppenvariable an:
+```{stata, eval = F}
+ttest hs16, by(sex) unequal
+```
+```{stata, echo=F}
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+keep  if year == 2014 & hs16>0
+ttest hs16, by(sex) unequal
+```
+
+Da der p-Wert für den beiseitigen Test (unter `Ha: diff != 0`) deutlich unter 0,05 liegt, können wir hier die $H_0$ verwerfen und gehen von signifikanten Größenunterschieden aus.  
+Für einen rechtsseitigen Test achten wir auf `Ha: diff > 0`- Männer sind also signifikant *größer* als Frauen.
+Für einen linksseitigen Test ist hingegen `Ha: diff < 0` ausschlaggebend: Männer sind also nicht signifikant *kleiner* als Frauen.
+
+### Verbundener t-Test
+
+Möchten wir Werte vergleichen, welche in einer Verbindung zueinander stehen, ist der verbundene t-Test die richtige Wahl. Beispiele für verbundene Stichproben
+Das obige Beispiel 
+
+
+## Varianten für `ttest`
+
+Außerdem gibt es zwei Aspekte, anhand derer sich t-Tests allgemein unterscheiden:
+
++ Die Varianz der Messwerte in den verglichenen Gruppen ist ...
+  + gleich: $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` 
+  + verschieden: $\Rightarrow$ `ttest testvariable, by(gruppenvariable) unequal` (wie oben)
+  
++ 	Verbundene oder unverbundene Stichprobe?
+  +  Sind die einzelnen Messwerte voneinander unabhängig? D.h. ein Messwert steht in keinem direkten Zusammenhang mit einem anderen $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` für eine unverbundene Stichprobe (mit ggf. `unequal`)
+  +  Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen $\Rightarrow$ Werte für beide Variablen sollten "nebeneinander" abgelegt sein (*wide*-Format)
+```{r bpwide_shot, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
+knitr::include_graphics("08_bpwide.png")
+```
+  Hier könnten wir dann mit `ttest `
+  `paired = T` für eine verbundene Stichprobe, zB. ähneln sich bei wiederholten Messungen die Messwerte für die gleiche Person (Vorher-/Nachhermessungen)
+    
+
+
+
+## Übungen 8-1 {#tvsmu}
 
 (Nutzen Sie für die Aufgaben 1 & 2 jeweils die Methode "per Hand" als auch `ttest()`, um beide Berechnungswege zu verstehen)
 
@@ -351,9 +437,20 @@ gen height_sample =  rnormal(170,9.26)
  + Wie lauten die Hypothesen?
  + Berechnen Sie den t-Wert und die Irrtumswahrscheinlichkeit, mit der die $H_0$ verworfen werden kann
  + Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?
+ + Wenn Sie die vorherige Fragestellung mit einer gerichteten Hypothese: "sind Menschen im Mittel signifikant größer als 172cm?" untersuchen würden - was würde sich ändern?     
 
-(@) Wenn Sie die vorherige Fragestellung mit einer gerichteten Hypothese: "sind Menschen im Mittel signifikant größer als 172cm?" untersuchen würden - was würde sich ändern?     
+## Übungen 8-2 {#tgroup}
 
+(@) Haben Haustierbesitzer\*innen ein höheres Einkommen als Nicht-Haustierbesitzer? 
+  + Verwenden Sie den Datensatz aus Aufgabe 1.
+  + Wie lauten die Hypothesen zu dieser Fragestellung?
+  + Auf Basis der Ergebnisse aus Aufgabe 1: müssen Sie `var.equal = T` oder `var.equal = F` setzen?
+  + Führen Sie den entsprechenden Test durch!
+  + Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?
+
+
+
+## weitere Übungen Kap 8
 (@) Sie erheben erneut eine Stichprobe mit 50 Personen und erhalten einen Mittelwert von 173cm und eine Standardabweichung von 6.15.
 
 + Wie hoch ist die Irrtumswahrscheinlichkeit für die Hypothese, dass der wahre Wert der Körpergröße in der Grundpopulation größer als 172cm ist? Stellen Sie die passenden formalen Hypothesen auf!

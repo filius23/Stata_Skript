@@ -15,7 +15,7 @@ a18 <- readstata13::read.dta13("../Allbus2018.dta",convert.factors = F)
 
 In der vorherigen Sitzungen hatten wir gesehen, wie wir Datensätze importieren und damit arbeiten. In dieser Session werden wir sehen, wie wir uns mit Tabellen einen Überblick über die Informationen in einem Datensatz verschaffen können. Wir werden auch in dieser Session mit dem Allbus 2018 arbeiten. Zunächst müssen wir dazu die Daten wieder einlesen:
 ```{r W04_1, eval=F, echo = T}
-cd ("...") # wo liegt der Datensatz?
+cd ("...") // wo liegt der Datensatz?
 use "Allbus2018.dta"
 ```
 

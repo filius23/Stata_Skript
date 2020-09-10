@@ -50,7 +50,6 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -355,48 +354,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="zshg2" class="section level1">
 <h1><span class="header-section-number">6</span> Zusammenhänge 2</h1>
 <p>Wir betrachten nochmal das Beispiel aus der vorherigen Session:</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb277-1"><a href="zshg2.html#cb277-1"></a>cd <span class="st">&quot;&quot;</span></span>
-<span id="cb277-2"><a href="zshg2.html#cb277-2"></a><span class="kw">use</span>  Allbus_1980-2018.dta   </span>
-<span id="cb277-3"><a href="zshg2.html#cb277-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2012</span>
-<span id="cb277-4"><a href="zshg2.html#cb277-4"></a><span class="kw">mvdecode</span> age hs18, mv(-32 -13)</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-
-
-
-(64681 observations deleted)
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="zshg2.html#cb1-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb1-2"><a href="zshg2.html#cb1-2"></a><span class="kw">use</span>  Allbus_1980-2018.dta   </span>
+<span id="cb1-3"><a href="zshg2.html#cb1-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2012</span>
+<span id="cb1-4"><a href="zshg2.html#cb1-4"></a><span class="kw">mvdecode</span> age hs18, mv(-32 -13)</span></code></pre></div>
+<pre><code>(64,681 observations deleted)
 
          age: 7 missing values generated
         hs18: 1859 missing values generated</code></pre>
 <div id="zusammenhänge-vergleichen" class="section level2">
 <h2><span class="header-section-number">6.1</span> Zusammenhänge vergleichen</h2>
 <p>Wir können die Zusammenhangsmaße auch jeweils nur für Subgruppen berechnen, indem wir mit <code>if</code> entsprechende Bedingungen anhängen. So könnten wir zB. analysieren ob der Zusammenhang zwischen dem BMI (<code>hs18</code>) und <code>age</code> für Frauen oder Männer stärker ist, indem wir an alle Variablen jeweils <code>if sex ==1</code> zur Auswahl der männlichen Befragten bzw. <code>if sex ==2</code> für Frauen anhängen:</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb279-1"><a href="zshg2.html#cb279-1"></a><span class="fu">corr</span> age hs18 <span class="kw">if</span> sex == 1</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-
-
-
-
-
-(obs=834)
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="zshg2.html#cb3-1"></a><span class="fu">corr</span> age hs18 <span class="kw">if</span> sex == 1</span></code></pre></div>
+<pre><code>(obs=834)
 
              |      age     hs18
 -------------+------------------
          age |   1.0000
         hs18 |   0.2120   1.0000</code></pre>
-<div class="sourceCode" id="cb281"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb281-1"><a href="zshg2.html#cb281-1"></a><span class="fu">corr</span> age hs18 <span class="kw">if</span> sex == 2</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-
-
-
-
-
-(obs=786)
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="zshg2.html#cb5-1"></a><span class="fu">corr</span> age hs18 <span class="kw">if</span> sex == 2</span></code></pre></div>
+<pre><code>(obs=786)
 
              |      age     hs18
 -------------+------------------
@@ -404,62 +381,26 @@ r(198);
         hs18 |   0.2251   1.0000</code></pre>
 <p>Der Zusammenhang zwischen Alter und BMI ist bei Frauen also (etwas) stärker als bei Männern.</p>
 <p>Ebenso können wir <code>if</code> auch für die Regressionsbefehle verwenden:</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb283-1"><a href="zshg2.html#cb283-1"></a><span class="kw">reg</span> age hs18 <span class="kw">if</span> sex == 1, <span class="kw">noheader</span></span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
+<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="zshg2.html#cb7-1"></a><span class="kw">reg</span> age hs18 <span class="kw">if</span> sex == 1, <span class="kw">noheader</span></span></code></pre></div>
+<pre><code>(64,681 observations deleted)
 
 
+------------------------------------------------------------------------------
+         age |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        hs18 |   .9419718   .1505245     6.26   0.000     .6465194    1.237424
+       _cons |   24.20641   4.054094     5.97   0.000     16.24896    32.16386
+------------------------------------------------------------------------------</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="zshg2.html#cb9-1"></a><span class="kw">reg</span> age hs18 <span class="kw">if</span> sex == 2, <span class="kw">noheader</span></span></code></pre></div>
+<pre><code>(64,681 observations deleted)
 
 
-(64681 observations deleted)
-
-
-----------------------------------------------------
-&gt; --------------------------
-         age |      Coef.   Std. Err.      t    P&gt;|t
-&gt; |                                                 
-&gt;       [95% Con                                    
-&gt;               f. Interval]
--------------+--------------------------------------
-&gt; --------------------------
-        hs18 |   .9419718   .1505245     6.26   0.00
-&gt; 0                                                 
-&gt;       .6465194                                    
-&gt;                   1.237424
-       _cons |   24.20641   4.054094     5.97   0.00
-&gt; 0                                                 
-&gt;       16.24896                                    
-&gt;                   32.16386
-----------------------------------------------------
-&gt; --------------------------</code></pre>
-<div class="sourceCode" id="cb285"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb285-1"><a href="zshg2.html#cb285-1"></a><span class="kw">reg</span> age hs18 <span class="kw">if</span> sex == 2, <span class="kw">noheader</span></span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-
-
-
-(64681 observations deleted)
-
-
-----------------------------------------------------
-&gt; --------------------------
-         age |      Coef.   Std. Err.      t    P&gt;|t
-&gt; |                                                 
-&gt;       [95% Con                                    
-&gt;               f. Interval]
--------------+--------------------------------------
-&gt; --------------------------
-        hs18 |   .7281134   .1125398     6.47   0.00
-&gt; 0                                                 
-&gt;       .5071984                                    
-&gt;                   .9490285
-       _cons |   31.43834   2.925676    10.75   0.00
-&gt; 0                                                 
-&gt;       25.69526                                    
-&gt;                   37.18143
-----------------------------------------------------
-&gt; --------------------------</code></pre>
+------------------------------------------------------------------------------
+         age |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        hs18 |   .7281134   .1125398     6.47   0.000     .5071984    .9490285
+       _cons |   31.43834   2.925676    10.75   0.000     25.69526    37.18143
+------------------------------------------------------------------------------</code></pre>
 <p>Während bei Männern also mit einem zusätzlichen Lebensjahr ein um <code>0.9419718</code> höherer BMI einher geht, hat die entsprechende Regressionsgerade bei Frauen eine Steigung von <code>0.7281134</code>.</p>
 </div>
 <div id="zusammenhänge-visualisieren" class="section level2">
@@ -468,19 +409,19 @@ r(198);
 <p><img src="06_regressionfail.png" width="70%" height="70%" style="display: block; margin: auto;" />
 <a href="https://twitter.com/JeanetBentzen/status/1299070496059928576">Quelle</a></p>
 <p>In für metrische Zusammenhänge hilft ein Scatterplot, zusätzlich können wir mit <code>lfit</code> die Regressionsgerade einzeichnen lassen. Dazu nutzen wir die in Kap4 gezeigte Funktion der aufeinander gelegten <code>twoway</code> Grafiken:</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb287-1"><a href="zshg2.html#cb287-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> hs18 age) (<span class="kw">lfit</span> hs18 age)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="zshg2.html#cb11-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> hs18 age) (<span class="kw">lfit</span> hs18 age)</span></code></pre></div>
 <p><img src="06_scatter_lfit.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
 <p>Auch hier können wir dann mit <code>by(sex)</code> zwei Facetten erstellen um so den Vergleich des Zusammenhangs bei Männern und Frauen auch grafisch nachzuvollziehen:</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb288-1"><a href="zshg2.html#cb288-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> hs18 age) (<span class="kw">lfit</span> hs18 age), <span class="kw">by</span>(sex)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb12-1"><a href="zshg2.html#cb12-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> (<span class="kw">scatter</span> hs18 age) (<span class="kw">lfit</span> hs18 age), <span class="kw">by</span>(sex)</span></code></pre></div>
 <p><img src="06_scatter_lfit_bysex.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
 <p>Auch hier können wir einige Anpassungen vornehmen - die Farbe und den Stil der Geraden können wir <code>lcolor</code> und <code>lpattern</code> anpassen. Weitere Optionen für <code>lpattern</code> gibt es <a href="zshg2.html#lpattern">hier</a>.</p>
-<div class="sourceCode" id="cb289"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb289-1"><a href="zshg2.html#cb289-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="co">///</span></span>
-<span id="cb289-2"><a href="zshg2.html#cb289-2"></a>	(<span class="kw">scatter</span> hs18 age, <span class="kw">color</span>(<span class="st">&quot;224 182 168&quot;</span>) msize(vsmall) <span class="bn">msymbol</span>(<span class="kw">d</span>)) <span class="co">///</span></span>
-<span id="cb289-3"><a href="zshg2.html#cb289-3"></a>	(<span class="kw">lfit</span> hs18 age, lcolor(<span class="st">&quot;41 48 78&quot;</span>) lpattern(solid) ) <span class="co">/// </span></span>
-<span id="cb289-4"><a href="zshg2.html#cb289-4"></a>	, <span class="kw">by</span>(sex,<span class="bn">title</span>(<span class="st">&quot;Alter &amp; Body Mass Index&quot;</span>) <span class="kw">note</span>(<span class="st">&quot;&quot;</span>)) <span class="co">///</span></span>
-<span id="cb289-5"><a href="zshg2.html#cb289-5"></a>	<span class="dv">scheme</span>(plotplain) <span class="co">///</span></span>
-<span id="cb289-6"><a href="zshg2.html#cb289-6"></a>	<span class="bn">ytitle</span>(<span class="st">&quot;Body Mass Index (hs18)&quot;</span>) <span class="bn">xtitle</span>(<span class="st">&quot;Alter (age)&quot;</span>) <span class="co">///</span></span>
-<span id="cb289-7"><a href="zshg2.html#cb289-7"></a>	<span class="bn">legend</span>(lab(1 <span class="st">&quot;Body Mass Index&quot;</span>) lab(2 <span class="st">&quot;Lineare Regressionsgerade&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="zshg2.html#cb13-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="co">///</span></span>
+<span id="cb13-2"><a href="zshg2.html#cb13-2"></a>	(<span class="kw">scatter</span> hs18 age, <span class="kw">color</span>(<span class="st">&quot;224 182 168&quot;</span>) msize(vsmall) <span class="bn">msymbol</span>(<span class="kw">d</span>)) <span class="co">///</span></span>
+<span id="cb13-3"><a href="zshg2.html#cb13-3"></a>	(<span class="kw">lfit</span> hs18 age, lcolor(<span class="st">&quot;41 48 78&quot;</span>) lpattern(solid) ) <span class="co">/// </span></span>
+<span id="cb13-4"><a href="zshg2.html#cb13-4"></a>	, <span class="kw">by</span>(sex,<span class="bn">title</span>(<span class="st">&quot;Alter &amp; Body Mass Index&quot;</span>) <span class="kw">note</span>(<span class="st">&quot;&quot;</span>)) <span class="co">///</span></span>
+<span id="cb13-5"><a href="zshg2.html#cb13-5"></a>	<span class="dv">scheme</span>(plotplain) <span class="co">///</span></span>
+<span id="cb13-6"><a href="zshg2.html#cb13-6"></a>	<span class="bn">ytitle</span>(<span class="st">&quot;Body Mass Index (hs18)&quot;</span>) <span class="bn">xtitle</span>(<span class="st">&quot;Alter (age)&quot;</span>) <span class="co">///</span></span>
+<span id="cb13-7"><a href="zshg2.html#cb13-7"></a>	<span class="bn">legend</span>(lab(1 <span class="st">&quot;Body Mass Index&quot;</span>) lab(2 <span class="st">&quot;Lineare Regressionsgerade&quot;</span>))</span></code></pre></div>
 <p><img src="06_scatter_lfit_fancy.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
 <p>Wir sehen hier also, dass die berechneten Zusammenhänge erfreulicherweise nicht auf einzelne Ausreißer zurückzuführen sind.</p>
 <hr />
@@ -492,53 +433,22 @@ r(198);
 <p>Auch die Zusammenhangsmaße für kategoriale und nominale Variablen können wir mit <code>if</code> vergleichen. Auch hier nochmal die Beispiele aus Kapitel 5:</p>
 <div id="ordinale-zusammenhangsmaße-vergleichen" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Ordinale Zusammenhangsmaße vergleichen</h3>
-<div class="sourceCode" id="cb290"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb290-1"><a href="zshg2.html#cb290-1"></a><span class="kw">spearman</span> educ mi02 <span class="kw">if</span> sex == 1</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-
-
-
-
-
-
-
- Number of obs =    1404
+<div class="sourceCode" id="cb14"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb14-1"><a href="zshg2.html#cb14-1"></a><span class="kw">spearman</span> educ mi02 <span class="kw">if</span> sex == 1</span></code></pre></div>
+<pre><code> Number of obs =    1404
 Spearman&#39;s rho =      -0.3463
 
 Test of Ho: educ and mi02 are independent
     Prob &gt; |t| =       0.0000</code></pre>
-<div class="sourceCode" id="cb292"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb292-1"><a href="zshg2.html#cb292-1"></a><span class="kw">spearman</span> educ mi02 <span class="kw">if</span> sex == 2</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-
-
-
-
-
-
-
- Number of obs =    1485
+<div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="zshg2.html#cb16-1"></a><span class="kw">spearman</span> educ mi02 <span class="kw">if</span> sex == 2</span></code></pre></div>
+<pre><code> Number of obs =    1485
 Spearman&#39;s rho =      -0.4027
 
 Test of Ho: educ and mi02 are independent
     Prob &gt; |t| =       0.0000</code></pre>
 <p>Wir finden also bei Frauen mit <code>-0.4027</code> einen stärkeren (negativen) Zusammenhang zwischen der Schulbildung der Einstellung zum Zuzug von Asylsuchenden als bei Männern mit <code>-0.3463</code>: eine höhere Schulbildung geht bei Frauen stärker mit einer positiveren Haltung gegenüber dem Zuzug von Asylsuchenden einher als bei Männern.</p>
 <p>Dieses Bild setzt sich auch bei Kendall’s <span class="math inline">\(\tau\)</span> und Goodman &amp; Kruskal’s <span class="math inline">\(\gamma\)</span> fort:</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb294-1"><a href="zshg2.html#cb294-1"></a><span class="kw">ktau</span> educ mi02 <span class="kw">if</span> sex == 1</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-
-
-
-
-
-
-
-
-  Number of obs =    1404
+<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="zshg2.html#cb18-1"></a><span class="kw">ktau</span> educ mi02 <span class="kw">if</span> sex == 1</span></code></pre></div>
+<pre><code>  Number of obs =    1404
 Kendall&#39;s tau-a =      -0.1980
 Kendall&#39;s tau-b =      -0.3091
 Kendall&#39;s score = -194980
@@ -546,19 +456,8 @@ Kendall&#39;s score = -194980
 
 Test of Ho: educ and mi02 are independent
      Prob &gt; |z| =       0.0000  (continuity corrected)</code></pre>
-<div class="sourceCode" id="cb296"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb296-1"><a href="zshg2.html#cb296-1"></a><span class="kw">ktau</span> educ mi02 <span class="kw">if</span> sex == 2</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-
-
-
-
-
-
-
-
-  Number of obs =    1485
+<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="zshg2.html#cb20-1"></a><span class="kw">ktau</span> educ mi02 <span class="kw">if</span> sex == 2</span></code></pre></div>
+<pre><code>  Number of obs =    1485
 Kendall&#39;s tau-a =      -0.2315
 Kendall&#39;s tau-b =      -0.3611
 Kendall&#39;s score = -255096
@@ -566,31 +465,25 @@ Kendall&#39;s score = -255096
 
 Test of Ho: educ and mi02 are independent
      Prob &gt; |z| =       0.0000  (continuity corrected)</code></pre>
-<div class="sourceCode" id="cb298"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb298-1"><a href="zshg2.html#cb298-1"></a><span class="kw">tab</span> educ mi02 <span class="kw">if</span> sex == 1, <span class="kw">gamma</span> nofreq</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-                    gamma =  -0.4714  ASE = 0.031</code></pre>
-<div class="sourceCode" id="cb300"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb300-1"><a href="zshg2.html#cb300-1"></a><span class="kw">tab</span> educ mi02 <span class="kw">if</span> sex == 2, <span class="kw">gamma</span> nofreq</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-                    gamma =  -0.5437  ASE = 0.028</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="zshg2.html#cb22-1"></a><span class="kw">tab</span> educ mi02 <span class="kw">if</span> sex == 1, <span class="kw">gamma</span> nofreq</span></code></pre></div>
+<pre><code>                    gamma =  -0.4714  ASE = 0.031</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="zshg2.html#cb24-1"></a><span class="kw">tab</span> educ mi02 <span class="kw">if</span> sex == 2, <span class="kw">gamma</span> nofreq</span></code></pre></div>
+<pre><code>                    gamma =  -0.5437  ASE = 0.028</code></pre>
 </div>
 <div id="vergleich-visualisieren" class="section level3">
 <h3><span class="header-section-number">6.3.2</span> Vergleich visualisieren</h3>
 <p>Zu grafischen Untersuchung empfiehlt ein Mosaikplot (<code>spineplot</code>) - leider funktioniert <code>by(sex)</code> hier nicht. Um trotzdem eine sodass wir zwei separate Grafiken erstellen und diese dann mit <code>graph combine</code> kombinieren können. Dazu geben wir jeweils mit <code>names()</code> einen Namen für die Grafik um sie dann in <code>graph combine</code> wieder aufzurufen:</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb302-1"><a href="zshg2.html#cb302-1"></a>spineplot educ mi02 <span class="kw">if</span> sex == 1, <span class="bn">name</span>(<span class="st">&quot;men&quot;</span>, <span class="kw">replace</span>)   <span class="co">///</span></span>
-<span id="cb302-2"><a href="zshg2.html#cb302-2"></a>  <span class="bn">legend</span>(pos(6) <span class="kw">size</span>(vsmall) <span class="bn">rows</span>(2)) <span class="co">/// legende in zwei Zeilen unten anzeigen</span></span>
-<span id="cb302-3"><a href="zshg2.html#cb302-3"></a>  <span class="kw">xlabel</span>(,<span class="bn">labsize</span>(small) axis(2) ) <span class="co">/// x-Achsenbeschriftung unten klein</span></span>
-<span id="cb302-4"><a href="zshg2.html#cb302-4"></a>  <span class="bn">title</span>(<span class="st">&quot;Männer&quot;</span>) <span class="co">// Titel</span></span>
-<span id="cb302-5"><a href="zshg2.html#cb302-5"></a></span>
-<span id="cb302-6"><a href="zshg2.html#cb302-6"></a>spineplot educ mi02 <span class="kw">if</span> sex == 2, <span class="bn">name</span>(<span class="st">&quot;women&quot;</span>, <span class="kw">replace</span>) <span class="co">///</span></span>
-<span id="cb302-7"><a href="zshg2.html#cb302-7"></a>  <span class="bn">legend</span>(pos(6) <span class="kw">size</span>(vsmall) <span class="bn">rows</span>(2)) <span class="co">///</span></span>
-<span id="cb302-8"><a href="zshg2.html#cb302-8"></a>  <span class="kw">xlabel</span>(,<span class="bn">labsize</span>(small) axis(2) ) <span class="co">///</span></span>
-<span id="cb302-9"><a href="zshg2.html#cb302-9"></a>  <span class="bn">title</span>(<span class="st">&quot;Frauen&quot;</span>)</span>
-<span id="cb302-10"><a href="zshg2.html#cb302-10"></a></span>
-<span id="cb302-11"><a href="zshg2.html#cb302-11"></a><span class="kw">graph</span> <span class="bn">combine</span> men women, <span class="bn">rows</span>(1) iscale(*.95) <span class="bn">xsize</span>(4) <span class="bn">ysize</span>(2) </span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="zshg2.html#cb26-1"></a>spineplot educ mi02 <span class="kw">if</span> sex == 1, <span class="bn">name</span>(<span class="st">&quot;men&quot;</span>, <span class="kw">replace</span>)   <span class="co">///</span></span>
+<span id="cb26-2"><a href="zshg2.html#cb26-2"></a>  <span class="bn">legend</span>(pos(6) <span class="kw">size</span>(vsmall) <span class="bn">rows</span>(2)) <span class="co">/// legende in zwei Zeilen unten anzeigen</span></span>
+<span id="cb26-3"><a href="zshg2.html#cb26-3"></a>  <span class="kw">xlabel</span>(,<span class="bn">labsize</span>(small) axis(2) ) <span class="co">/// x-Achsenbeschriftung unten klein</span></span>
+<span id="cb26-4"><a href="zshg2.html#cb26-4"></a>  <span class="bn">title</span>(<span class="st">&quot;Männer&quot;</span>) <span class="co">// Titel</span></span>
+<span id="cb26-5"><a href="zshg2.html#cb26-5"></a></span>
+<span id="cb26-6"><a href="zshg2.html#cb26-6"></a>spineplot educ mi02 <span class="kw">if</span> sex == 2, <span class="bn">name</span>(<span class="st">&quot;women&quot;</span>, <span class="kw">replace</span>) <span class="co">///</span></span>
+<span id="cb26-7"><a href="zshg2.html#cb26-7"></a>  <span class="bn">legend</span>(pos(6) <span class="kw">size</span>(vsmall) <span class="bn">rows</span>(2)) <span class="co">///</span></span>
+<span id="cb26-8"><a href="zshg2.html#cb26-8"></a>  <span class="kw">xlabel</span>(,<span class="bn">labsize</span>(small) axis(2) ) <span class="co">///</span></span>
+<span id="cb26-9"><a href="zshg2.html#cb26-9"></a>  <span class="bn">title</span>(<span class="st">&quot;Frauen&quot;</span>)</span>
+<span id="cb26-10"><a href="zshg2.html#cb26-10"></a></span>
+<span id="cb26-11"><a href="zshg2.html#cb26-11"></a><span class="kw">graph</span> <span class="bn">combine</span> men women, <span class="bn">rows</span>(1) iscale(*.95) <span class="bn">xsize</span>(4) <span class="bn">ysize</span>(2) </span></code></pre></div>
 <p><img src="06_mosaik_combined.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
 <p>Hier noch eine Erklärung zu den Optionen in <code>graph combine</code>:</p>
 <ul>
@@ -605,15 +498,12 @@ r(198);
 <div id="nominale-zusammenhangsmaße-vergleichen" class="section level3">
 <h3><span class="header-section-number">6.3.3</span> Nominale Zusammenhangsmaße vergleichen</h3>
 <p>Ebenso können wir auch nominale Maße vergleichen, indem wir zur Berechnung der Odds Ratios und <span class="math inline">\(\chi^2\)</span> separate Tabellen für Männer und Frauen verwenden. Wir sehen uns nochmal die Haushaltsgröße und den Haustierbesitz an:</p>
-<div class="sourceCode" id="cb303"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb303-1"><a href="zshg2.html#cb303-1"></a>cd <span class="st">&quot;&quot;</span></span>
-<span id="cb303-2"><a href="zshg2.html#cb303-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_1980-2018.dta&quot;</span>,<span class="kw">clear</span></span>
-<span id="cb303-3"><a href="zshg2.html#cb303-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2014 &amp; dh01 &gt; 0 &amp; dh04 &gt; 0 &amp; aq03 &gt; 0</span>
-<span id="cb303-4"><a href="zshg2.html#cb303-4"></a><span class="kw">gen</span> aq03b = (aq03 == 4) <span class="co">// Dummy: Haustier ja (0) oder nein (1)</span></span>
-<span id="cb303-5"><a href="zshg2.html#cb303-5"></a><span class="kw">tab</span> aq03b dh04 <span class="kw">if</span> sex == 1, chi</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-           |                              ANZAHL DER HAUSHALTSPERSONEN
+<div class="sourceCode" id="cb27"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb27-1"><a href="zshg2.html#cb27-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb27-2"><a href="zshg2.html#cb27-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_1980-2018.dta&quot;</span>,<span class="kw">clear</span></span>
+<span id="cb27-3"><a href="zshg2.html#cb27-3"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2014 &amp; dh01 &gt; 0 &amp; dh04 &gt; 0 &amp; aq03 &gt; 0</span>
+<span id="cb27-4"><a href="zshg2.html#cb27-4"></a><span class="kw">gen</span> aq03b = (aq03 == 4) <span class="co">// Dummy: Haustier ja (0) oder nein (1)</span></span>
+<span id="cb27-5"><a href="zshg2.html#cb27-5"></a><span class="kw">tab</span> aq03b dh04 <span class="kw">if</span> sex == 1, chi</span></code></pre></div>
+<pre><code>           |                              ANZAHL DER HAUSHALTSPERSONEN
      aq03b |         1          2          3          4          5          6          7         10 |     Total
 -----------+----------------------------------------------------------------------------------------+----------
          0 |        42        225        121         66         34          8          2          1 |       499 
@@ -623,24 +513,10 @@ r(198);
 
           Pearson chi2(7) =  76.7064   Pr = 0.000</code></pre>
 <p><span class="math display">\[\upsilon_{M} = \sqrt{\frac{\chi^2}{n*\,min(k-1,m-1)}}=\sqrt{\frac{76.7064}{1748}} = 0.20948122\]</span></p>
-<div class="sourceCode" id="cb305"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb305-1"><a href="zshg2.html#cb305-1"></a>dis <span class="fu">sqrt</span>(76.7064/1748)</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-
-.20948122</code></pre>
-<div class="sourceCode" id="cb307"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb307-1"><a href="zshg2.html#cb307-1"></a><span class="kw">tab</span> aq03b dh04 <span class="kw">if</span> sex == 2, chi</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-
-
-
-
-
-
-
- HUND ODER KATZE |                              ANZAHL DER HAUSHALTSPERSONEN
+<div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="zshg2.html#cb29-1"></a>dis <span class="fu">sqrt</span>(76.7064/1748)</span></code></pre></div>
+<pre><code>.20948122</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb31-1"><a href="zshg2.html#cb31-1"></a><span class="kw">tab</span> aq03b dh04 <span class="kw">if</span> sex == 2, chi</span></code></pre></div>
+<pre><code> HUND ODER KATZE |                              ANZAHL DER HAUSHALTSPERSONEN
     IM HAUSHALT? |         1          2          3          4          5          6          7          8 |     Total
 -----------------+----------------------------------------------------------------------------------------+----------
             HUND |        24         69         44         50         15          1          2          0 |       205 
@@ -652,12 +528,8 @@ KEINS VON BEIDEN |       274        433        187        159         46        
 
          Pearson chi2(21) =  70.0439   Pr = 0.000</code></pre>
 <p><span class="math display">\[\upsilon_{F} = \sqrt{\frac{\chi^2}{n*\,min(k-1,m-1)}}=\sqrt{\frac{70.0439}{1698*3}} = 0.3517847\]</span></p>
-<div class="sourceCode" id="cb309"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb309-1"><a href="zshg2.html#cb309-1"></a>dis <span class="fu">sqrt</span>( 70.0439/1698*3 )</span></code></pre></div>
-<pre><code> &#39;200set&#39; found where integer expected
-r(198);
-
-
-.3517847</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="zshg2.html#cb33-1"></a>dis <span class="fu">sqrt</span>( 70.0439/1698*3 )</span></code></pre></div>
+<pre><code>.3517847</code></pre>
 <p>Der Zusammenhang zwischen Haustierbesitz und 1-Personenhaushalten ist also bei Frauen stärker als bei Männern - während bei Männern nur ein geringer Zusammenhang besteht, ist dieser bei Frauen mit 0.35 schon als mittlerer Zusammenhang zu bezeichnen (siehe Kap5).</p>
 <hr />
 <p><a href="zshg2.html#nom_vgl">Übung 3</a></p>
@@ -738,11 +610,11 @@ r(198);
 <div id="scatterplot-für-kategoriale-merkmale" class="section level3">
 <h3><span class="header-section-number">6.5.2</span> Scatterplot für kategoriale Merkmale</h3>
 <p>Scatterplots für kategoriale Merkmale sind oft wenig Aussagekräftig.</p>
-<div class="sourceCode" id="cb311"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb311-1"><a href="zshg2.html#cb311-1"></a><span class="kw">twoway</span> <span class="kw">scatter</span> mi02 educ, <span class="kw">by</span>(sex) </span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb35-1"><a href="zshg2.html#cb35-1"></a><span class="kw">twoway</span> <span class="kw">scatter</span> mi02 educ, <span class="kw">by</span>(sex) </span></code></pre></div>
 <p><img src="06_no_jitter.png" width="90%" height="90%" style="display: block; margin: auto;" /></p>
 <p>Eine Möglichkeit ist ein sog. Jitter, dazu hängen wir <code>jitter(5 5)</code> an einen <code>twoway scatter</code>:</p>
-<div class="sourceCode" id="cb312"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb312-1"><a href="zshg2.html#cb312-1"></a><span class="kw">twoway</span> <span class="kw">scatter</span> mi02 educ, <span class="kw">by</span>(sex) jitter(5 5) <span class="co">///</span></span>
-<span id="cb312-2"><a href="zshg2.html#cb312-2"></a>  msize(vsmall) mcolor(<span class="bn">eggshell</span>) mlcolor(<span class="bn">black</span>) mlwidth(vthin) </span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="zshg2.html#cb36-1"></a><span class="kw">twoway</span> <span class="kw">scatter</span> mi02 educ, <span class="kw">by</span>(sex) jitter(5 5) <span class="co">///</span></span>
+<span id="cb36-2"><a href="zshg2.html#cb36-2"></a>  msize(vsmall) mcolor(<span class="bn">eggshell</span>) mlcolor(<span class="bn">black</span>) mlwidth(vthin) </span></code></pre></div>
 <p><img src="06_jitter.png" width="90%" height="90%" style="display: block; margin: auto;" /></p>
 
 </div>
