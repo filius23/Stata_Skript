@@ -1,8 +1,23 @@
 # Weitere Hypothesentests {#hypo}
 
+```{r setup9, include=F}
+.libPaths("D:/R-library4") 
+library(tidyverse)
+library(ggplot2)
+library(LaCroixColoR)
+library(patchwork)
+library(Statamarkdown)
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+knitr::opts_chunk$set(collapse = F)
+
+ak <- readr::read_delim("D:/oCloud/RFS/allbus_kumuliert_1980-2018.csv", delim = ";", col_types = cols(.default = col_double())) 
+a14gr <- filter(ak, year == 2014, hs16>0 )
+```
+
 ## Vergleich von Varianzen mit dem F-Test
 
-Um die Varianzen zweier Stichproben zu überprüfen, steht uns der F-Test zur Verfügung - in R mit `var.test()`. Der F-Test hat einige Voraussetzungen: 
+Um die Varianzen zweier Stichproben zu überprüfen, steht uns der F-Test zur Verfügung - in Stata mit `sdtest`. Der F-Test hat einige Voraussetzungen: 
 
 +	Die Variablen sind (mind.) intervallskaliert 
 +	Die Variablen sind in der Grundgesamtheit (annähernd) normalverteilt
@@ -22,32 +37,42 @@ Es gibt also auch hier wieder gerichtete und ungerichtete Hypothesen. Da allerdi
 
 Wie schon beim t-Test geht es bei den Hypothesen um die Grundgesamtheit. Daher wird hier der griechische Buchstabe für die Varianz, $\sigma^2$, verwendet. Da wir i.d.R. keine Angabe zur Varianz der Grundgesamtheiten vorliegen haben, wird beim F-Test auf die Stichprobenvarianzen ($s^2$) zurückgegriffen. Der Quotient der Varianzen ist F-verteilt. Somit berechnet sich die F-Statistik aus dem Quotienten der beiden Stichprobenvarianzen, wobei – nochmal – die größere Varianz im Zähler steht:
 $$F = \frac{s^{2}_{1}}{s^{2}_{2}}$$
-Im konkreten Fall ist also $s^{2}_{Maenner}$ der Schätzer für $\sigma^{2}_{Manner}$  und  $s^{2}_{Frauen}$  der Schätzer für die $\sigma^{2}_{Frauen}$. Wir berechnen also zunächst die Stichprobenvarianzen mit Hilfe von `var()` und sehen, dass $s^{2}_{M} > s^{2}_{F}$, $s^{2}_{M}$ sollte also im den Zähler für $s^2_1$ eingesetzt werden.
-```{r}
-var(a14gr$hs16[a14gr$sex==1]) # Männer
-var(a14gr$hs16[a14gr$sex==2]) # Frauen
+Wir kommen nochmal auf das Beispiel der Körpergrößen aus dem Allbus 2014 aus Session 8 zurück:
+
+```{stata readin8, eval = F}
+cd "..."
+use  "Allbus_1980-2018.dta",clear
+keep  if year == 2014 & hs16 > 0
 ```
 
-In `var.test()` geben wir zunächst die Werte für Gruppe 1 (mit dem dem größeren $s^2$) und dann für Gruppe 2 (mit dem dem kleineren $s^2$) an. Gruppe 1 sind in unserem Beispiel die Männer, Gruppe die weiblichen Befragten. Ein beidseitiger Test führt zu folgendem Ergebnis:
+Im konkreten Fall ist also $s^{2}_{Maenner}$ der Schätzer für $\sigma^{2}_{Manner}$  und  $s^{2}_{Frauen}$  der Schätzer für die $\sigma^{2}_{Frauen}$. Wir berechnen also zunächst die Stichprobenvarianzen:
 
-
-### beidseitiger F-Test
-```{r}
-var.test(a14gr$hs16[a14gr$sex==1], # Werte für Gruppe 1
-         a14gr$hs16[a14gr$sex==2], # Werte für Gruppe 2
-         alternative = "two.sided") # beiseitige Hypothese
+```{stata ftest1, eval = F}
+tabstat hs16, by(sex)
 ```
-Da der p-Wert deutlich unter 0,05 liegt wird die $H_0$ verworfen und wir gehen von ungleichen Varianzen bei den Körpergrößen von Männern und Frauen aus.  
 
-### rechtsseitiger F-Test
-```{r}
-var.test(a14gr$hs16[a14gr$sex==1], # Werte für Gruppe 1
-         a14gr$hs16[a14gr$sex==2], # Werte für Gruppe 2
-         alternative = "greater") # rechtsseitige Hypothese
+```{stata ftest2, echo = F}
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep  if year == 2014 & hs16>0
+tabstat hs16, by(sex)
 ```
-Mit einem p-Wert von `r sprintf("%1.7f",var.test(hs16 ~ sex, data = a14gr,alternative = "greater")$p.value)` kann die $H_0: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} \leqslant 1$ verworfen werden. D.h. die Varianz der Körpergröße von Männern ist signifikant größer als die Varianz der Körpergröße bei Frauen.
 
-\newpage
+
+In `sdtest()` geben wir zunächst die zu testende Variable an, dann die Gruppierungsvariable:
+```{stata ftest3, eval = F}
+sdtest hs16, by(sex)
+```
+```{stata ftest4, echo = F}
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep  if year == 2014 & hs16>0
+sdtest hs16, by(sex)
+```
+Da der p-Wert für den beidseitigen Test (mittlere Spalte, unter `Ha: ratio != 1`) deutlich unter 0,05 liegt wird die $H_0$ verworfen und wir gehen von ungleichen Varianzen bei den Körpergrößen von Männern und Frauen aus.  
+
+Außerdem kann die $H_0: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} \leqslant 1$ verworfen werden (letzte Spalte, unter `Ha: ratio > 1`). D.h. die Varianz der Körpergröße von Männern ist signifikant größer als die Varianz der Körpergröße bei Frauen.
+
  
 ## Proportionen und Häufigkeiten
 
@@ -68,20 +93,39 @@ Auch hier gibt es wieder gerichtete und ungerichtete Hypothesen:
   $H_0: \pi \leqslant p \qquad H_A: \pi > p$  
 
 
-Wir könnten uns zB. fragen ob der Anteil der Befragten ohne Haustier im Allbus 2014 sich von $67\%$ unterscheidet. Dazu wählen wir zunächst alle Befragten des Allbus 2014 aus, welche die Frage nach den Haustieren (`aq03`) beantwortet haben (`aq < 0` sind missings, daher verwenden wir schlicht `aq03 > 0`):
-```{r}
-a14ht <- ak[ak$year == 2014 & ak$aq03 > 0,]
-# 1-3 steht für Hund oder/und Katze, 4 für kein Haustier:
-a14ht$pet <- ifelse(a14ht$aq03 < 4, 1,0)
-t1 <- table(a14ht$pet)
-t1
-binom.test(x = t1,
-           p = .67,
-           alternative = "two.sided")
+Wir könnten uns zB. fragen ob der Anteil der Befragten ohne Haustier im Allbus 2014 sich von $67\%$ unterscheidet. Dazu wählen wir zunächst alle Befragten des Allbus 2014 aus, welche die Frage nach den Haustieren (`aq03`) beantwortet haben (`aq < 0` sind missings, daher verwenden wir schlicht `aq03 > 0`). Dazu erstellen wir aus `aq03` noch eine Dummyvariable, welche 1 für das interessierende Merkmal (kein Haustierbesitz) und 0 in allen anderen Fällen annimmt:
+```{stata, eval = F}
+cd ""
+use  "Allbus_1980-2018.dta",clear
+keep  if year == 2014 & aq03>0
+gen pet = (aq03 == 4)
+tab aq03 pet
 ```
-Wir können hier die $H_0: \pi = .67$ nicht verwerfen, da der p-Wert größer 0,05 ist. Der Anteil der Befragten ohne Haustier unterscheidet sich also nicht signifikant von $67\%$.
 
-Auch hier können die einseitigen Alternativen dann wieder mit `alternative = "less"` und `alternative = "greater"` ausgewählt werden.
+```{stata, echo = F}
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep  if year == 2014 & aq03>0
+gen pet = (aq03 == 4)
+tab aq03 pet
+```
+
+Mit ` bitest` können wir dann den Binomialtest durchführen, dieser test immer auf :
+```{stata btest1, eval = F}
+bitest pet == .67
+```
+
+
+```{stata btest2, echo = F}
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep  if year == 2014 & aq03>0
+qui gen pet = (aq03 == 4)
+bitest pet == .67
+```
+Der rechtsseitige Test (erste Zeile) ergibt, dass der Anteil der Befragten ohne Haustier signifikant größer als 67% ist.
+Der linksseitige Test (zweite Zeile) ergibt, dass der Anteil der Befragten ohne Haustier nicht signifikant kleiner als 67% ist.
+Außerdem können wir auf Basis des beidseitigen Tests (letzte Zeile) die $H_0: \pi = .67$ nicht verwerfen, da der p-Wert größer 0,05 ist. Der Anteil der Befragten ohne Haustier unterscheidet sich also nicht signifikant von 67\%.
 
 
 ### Chi²-Test
@@ -90,34 +134,47 @@ Häufig ist aber auch für dichtome Merkmale von Interesse, ob sich die Auftritt
 
 $H_{0}: \chi^2 = 0 \qquad H_A: \chi^2 > 0$
 
-In R erstellen wir zunächst eine Kreuztabelle und wenden darauf den `chisq.test` an. Beispielsweise könnten wir untersuchen, ob es einen Zusammenhang zwischen dem Geschlecht der Befragten und dem Haustierbesitz gibt:
+Den $\chi^2$-Test erhalten wir, indem wir mit `tabulate` eine Kontingenztabelle erstellen und die Option `chi` angeben. Beispielsweise könnten wir untersuchen, ob es einen Zusammenhang zwischen dem Geschlecht der Befragten und dem Haustierbesitz gibt:
 
-```{r}
-table(a14ht$sex, a14ht$pet)
-t <- table(a14ht$sex, a14ht$pet)
-chisq.test(t)
+
+```{stata chi_test2, eval = F}
+tab sex pet, chi
 ```
+
+```{stata chi_test3, echo = F}
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep  if year == 2014 & aq03>0
+qui gen pet = (aq03 == 4)
+tab aq03 pet, chi
+```
+
+
 Da der p-Wert deutlich unter 0,05 liegt, können wir davon ausgehen, dass es in der Grundgesamtheit einen Zusammenhang zwischen dem Geschlecht der Befragten und dem Haustierbesitz gibt.
 
 
 ## Überblick
 
-In allen Testbefehlen (außer `chisq.test`) können beidseitige (`alternative = "two.sided"`), linksseitige (`alternative = "less"`) oder rechtsseitige (`alternative = "greater"`) untersucht werden. 
+In allen Tests (außer $\chi^2$) können beidseitige, linksseitige oder rechtsseitige Hypothesen untersucht werden. 
 
-+ Mittelwertvergleich: `t.test()`
-  + arith. Mittel in mind. intervallskalierten und (annähernd) normalverteilten Variablen vergleichen    
++ Mittelwertvergleich: `ttest`
+  + Vergleich zu einem Referenzwert: `ttest testvariable == referenzwert`
 
-    + Vergleich zu behauptetem Mittelwert: `t.test(x = stichprobenwerte, mu = Testwert, alternative = ...)`   
-      
+  Zudem gibt es bein Mittelwertvergleichen insgesamt zwei Aspekte, anhand derer sich t-Tests allgemein unterscheiden:
+
+  + Die Varianz der Messwerte in den verglichenen Gruppen ist ...
+    + gleich: $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` 
+    + verschieden: $\Rightarrow$ `ttest testvariable, by(gruppenvariable) unequal` 
     
-    + Vergleich zwischen zwei Gruppen: `t.test(x = stichprobenwerte Gruppe1, y = stichprobenwerte Gruppe2, alternative = ...)` und folgende Optionen/Entscheidungen:
-      + unverbundene (`paired = F`) oder verbundene (`paired = T`) Stichprobe
-      + Varianz in beiden Gruppen ungleich (`var.equal = F`) oder gleich (`var.equal = T`)   
+  + Verbundene oder unverbundene Stichprobe?
+    +  Sind die einzelnen Messwerte voneinander unabhängig? D.h. ein Messwert steht in keinem direkten Zusammenhang mit einem anderen $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` für eine unverbundene Stichprobe (mit ggf. `unequal`)
+    +  Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen $\Rightarrow$ Werte für beide Variablen sollten "nebeneinander" abgelegt sein (*wide*-Format), dann kann mit `ttest vorher==nachher` ein verbundener `ttest` durchgeführt werden.
 
-+ Varianzvergleich: `var.test(Werte Gruppe1, Werte Gruppe 2, alternative = ...)`
-  + Unterscheidet sich die Varianz zwischen zwei Gruppen?    
++ Varianzvergleich,unterscheidet sich die Varianz zwischen zwei Gruppen?
+  + `sdtest testvariable, by(gruppenvariable)`
+
 
 + Anteile vergleichen:
-  + mit einem behaupteten Wert: `binom.test(x = Tabelle mit Werten,p = behaupteter Anteil , alternative = ...)`  
+  + mit einem behaupteten Wert: `bitest testvariable == referenzwert`  
   
-  + zwischen Gruppen: Kreuztabelle erstellen und mit `chisq.test(Kreuztabelle)` Unabhängigkeit testen
+  + zwischen Gruppen: Kreuztabelle erstellen und mit `tab var1 var2, chi` Unabhängigkeit testen

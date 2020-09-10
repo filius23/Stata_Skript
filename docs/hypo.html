@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9 Hypothesentests | GESIS Methodenseminar 2020</title>
+  <title>9 Weitere Hypothesentests | GESIS Methodenseminar 2020</title>
   <meta name="description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9 Hypothesentests | GESIS Methodenseminar 2020" />
+  <meta property="og:title" content="9 Weitere Hypothesentests | GESIS Methodenseminar 2020" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9 Hypothesentests | GESIS Methodenseminar 2020" />
+  <meta name="twitter:title" content="9 Weitere Hypothesentests | GESIS Methodenseminar 2020" />
   
   <meta name="twitter:description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
   
@@ -50,7 +50,6 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -306,19 +305,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="inf2.html"><a href="inf2.html"><i class="fa fa-check"></i><b>8</b> t-Tests</a><ul>
-<li class="chapter" data-level="8.1" data-path="inf2.html"><a href="inf2.html#hypothesentests"><i class="fa fa-check"></i><b>8.1</b> Hypothesentests</a></li>
-<li class="chapter" data-level="8.2" data-path="inf2.html"><a href="inf2.html#t-test"><i class="fa fa-check"></i><b>8.2</b> t-Test</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="inf2.html"><a href="inf2.html#beiseitiger-t-test"><i class="fa fa-check"></i><b>8.2.1</b> beiseitiger t-Test</a></li>
-<li class="chapter" data-level="8.2.2" data-path="inf2.html"><a href="inf2.html#linksseitiger-t-test"><i class="fa fa-check"></i><b>8.2.2</b> linksseitiger t-Test</a></li>
-<li class="chapter" data-level="8.2.3" data-path="inf2.html"><a href="inf2.html#rechtsseitiger-t-test"><i class="fa fa-check"></i><b>8.2.3</b> rechtsseitiger t-Test</a></li>
+<li class="chapter" data-level="8.1" data-path="inf2.html"><a href="inf2.html#t-test-per-hand-und-in-stata"><i class="fa fa-check"></i><b>8.1</b> t-Test per Hand und in Stata</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="inf2.html"><a href="inf2.html#ttest1"><i class="fa fa-check"></i><b>8.1.1</b> beiseitiger t-Test</a></li>
+<li class="chapter" data-level="8.1.2" data-path="inf2.html"><a href="inf2.html#linksseitiger-t-test"><i class="fa fa-check"></i><b>8.1.2</b> linksseitiger t-Test</a></li>
+<li class="chapter" data-level="8.1.3" data-path="inf2.html"><a href="inf2.html#rechtsseitiger-t-test"><i class="fa fa-check"></i><b>8.1.3</b> rechtsseitiger t-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="inf2.html"><a href="inf2.html#übungen-8"><i class="fa fa-check"></i><b>8.3</b> Übungen 8</a></li>
-<li class="chapter" data-level="8.4" data-path="inf2.html"><a href="inf2.html#profi-übungen-8"><i class="fa fa-check"></i><b>8.4</b> Profi-Übungen 8</a></li>
-<li class="chapter" data-level="8.5" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>8.5</b> Hinweise</a><ul>
-<li class="chapter" data-level="8.5.1" data-path="inf2.html"><a href="inf2.html#auswahl-der-in-vollzeit-beschäftigten-befragten"><i class="fa fa-check"></i><b>8.5.1</b> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
+<li class="chapter" data-level="8.2" data-path="inf2.html"><a href="inf2.html#mittelwertttest"><i class="fa fa-check"></i><b>8.2</b> Mittelwertvergleiche mit dem t-Test</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="inf2.html"><a href="inf2.html#unverbundener-t-test"><i class="fa fa-check"></i><b>8.2.1</b> Unverbundener t-Test</a></li>
+<li class="chapter" data-level="8.2.2" data-path="inf2.html"><a href="inf2.html#verbundener-t-test"><i class="fa fa-check"></i><b>8.2.2</b> Verbundener t-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="inf2.html"><a href="inf2.html#übersicht-zu-varianten-für-ttest"><i class="fa fa-check"></i><b>8.3</b> Übersicht zu Varianten für <code>ttest</code></a></li>
+<li class="chapter" data-level="8.4" data-path="inf2.html"><a href="inf2.html#tvsmu"><i class="fa fa-check"></i><b>8.4</b> Übungen 8-1</a></li>
+<li class="chapter" data-level="8.5" data-path="inf2.html"><a href="inf2.html#tgroup"><i class="fa fa-check"></i><b>8.5</b> Übungen 8-2</a></li>
+<li class="chapter" data-level="8.6" data-path="inf2.html"><a href="inf2.html#tpaired"><i class="fa fa-check"></i><b>8.6</b> Übung 8-3</a></li>
+<li class="chapter" data-level="8.7" data-path="inf2.html"><a href="inf2.html#weitere-übungen-kap-8"><i class="fa fa-check"></i><b>8.7</b> weitere Übungen Kap 8</a></li>
+<li class="chapter" data-level="8.8" data-path="inf2.html"><a href="inf2.html#profi-übungen-8"><i class="fa fa-check"></i><b>8.8</b> Profi-Übungen 8</a></li>
+<li class="chapter" data-level="8.9" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>8.9</b> Hinweise</a><ul>
+<li class="chapter" data-level="8.9.1" data-path="inf2.html"><a href="inf2.html#vollz"><i class="fa fa-check"></i><b>8.9.1</b> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Hypothesentests</a></li>
+<li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Weitere Hypothesentests</a><ul>
+<li class="chapter" data-level="9.1" data-path="hypo.html"><a href="hypo.html#vergleich-von-varianzen-mit-dem-f-test"><i class="fa fa-check"></i><b>9.1</b> Vergleich von Varianzen mit dem F-Test</a></li>
+<li class="chapter" data-level="9.2" data-path="hypo.html"><a href="hypo.html#proportionen-und-häufigkeiten"><i class="fa fa-check"></i><b>9.2</b> Proportionen und Häufigkeiten</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="hypo.html"><a href="hypo.html#binomialtest"><i class="fa fa-check"></i><b>9.2.1</b> Binomialtest</a></li>
+<li class="chapter" data-level="9.2.2" data-path="hypo.html"><a href="hypo.html#chi²-test"><i class="fa fa-check"></i><b>9.2.2</b> Chi²-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="hypo.html"><a href="hypo.html#überblick"><i class="fa fa-check"></i><b>9.3</b> Überblick</a></li>
+</ul></li>
 <li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a></li>
 <li class="chapter" data-level="11" data-path="adva.html"><a href="adva.html"><i class="fa fa-check"></i><b>11</b> Fortgeschrittene Themen</a><ul>
 <li class="chapter" data-level="11.1" data-path="adva.html"><a href="adva.html#wertelabels"><i class="fa fa-check"></i><b>11.1</b> Wertelabels</a></li>
@@ -353,8 +366,161 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="hypo" class="section level1">
-<h1><span class="header-section-number">9</span> Hypothesentests</h1>
+<h1><span class="header-section-number">9</span> Weitere Hypothesentests</h1>
+<div id="vergleich-von-varianzen-mit-dem-f-test" class="section level2">
+<h2><span class="header-section-number">9.1</span> Vergleich von Varianzen mit dem F-Test</h2>
+<p>Um die Varianzen zweier Stichproben zu überprüfen, steht uns der F-Test zur Verfügung - in Stata mit <code>sdtest</code>. Der F-Test hat einige Voraussetzungen:</p>
+<ul>
+<li>Die Variablen sind (mind.) intervallskaliert</li>
+<li>Die Variablen sind in der Grundgesamtheit (annähernd) normalverteilt</li>
+<li>Die zu vergleichenden Gruppen sind voneinander unabhängig (unverbundene Stichproben)</li>
+</ul>
+<p>Getestet wird beim F-Test die Hypothese, dass die Varianzen zweier Grundgesamtheiten gleich oder ungleich (zweiseitiger Test) sind bzw. dass die Varianz der einen Grundgesamtheit größer ist als die der anderen (einseitiger Test).</p>
+<p>Es gibt also auch hier wieder gerichtete und ungerichtete Hypothesen. Da allerdings die F-Verteilung nicht symmetrisch ist, wird nur rechtsseitig getestet. Daher sollte beim Test die größere Varianz immer im Zähler stehen.</p>
+<ul>
+<li>ungerichtete/beidseitige Hypothese:</li>
+</ul>
+<p><span class="math inline">\(\qquad H_0: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} = 1 \qquad H_A: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} \neq 1 \qquad \qquad \Rightarrow H_A:\;\sigma^{2}_{1} \neq \sigma^{2}_{2}\)</span></p>
+<ul>
+<li>rechtsseitige Hypothese:</li>
+</ul>
+<p><span class="math inline">\(\qquad H_0: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} \leqslant 1 \qquad H_A: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} &gt; 1 \qquad \qquad \Rightarrow H_A:\;\sigma^{2}_{1}&gt;\sigma^{2}_{2}\)</span></p>
+<p>Wie schon beim t-Test geht es bei den Hypothesen um die Grundgesamtheit. Daher wird hier der griechische Buchstabe für die Varianz, <span class="math inline">\(\sigma^2\)</span>, verwendet. Da wir i.d.R. keine Angabe zur Varianz der Grundgesamtheiten vorliegen haben, wird beim F-Test auf die Stichprobenvarianzen (<span class="math inline">\(s^2\)</span>) zurückgegriffen. Der Quotient der Varianzen ist F-verteilt. Somit berechnet sich die F-Statistik aus dem Quotienten der beiden Stichprobenvarianzen, wobei – nochmal – die größere Varianz im Zähler steht:
+<span class="math display">\[F = \frac{s^{2}_{1}}{s^{2}_{2}}\]</span>
+Wir kommen nochmal auf das Beispiel der Körpergrößen aus dem Allbus 2014 aus Session 8 zurück:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="hypo.html#cb1-1"></a>cd <span class="st">&quot;...&quot;</span></span>
+<span id="cb1-2"><a href="hypo.html#cb1-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_1980-2018.dta&quot;</span>,<span class="kw">clear</span></span>
+<span id="cb1-3"><a href="hypo.html#cb1-3"></a><span class="kw">keep</span>  <span class="kw">if</span> <span class="fu">year</span> == 2014 &amp; hs16 &gt; 0</span></code></pre></div>
+<p>Im konkreten Fall ist also <span class="math inline">\(s^{2}_{Maenner}\)</span> der Schätzer für <span class="math inline">\(\sigma^{2}_{Manner}\)</span> und <span class="math inline">\(s^{2}_{Frauen}\)</span> der Schätzer für die <span class="math inline">\(\sigma^{2}_{Frauen}\)</span>. Wir berechnen also zunächst die Stichprobenvarianzen:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="hypo.html#cb2-1"></a><span class="kw">tabstat</span> hs16, <span class="kw">by</span>(sex)</span></code></pre></div>
+<pre><code>Summary for variables: hs16
+     by categories of: sex (GESCHLECHT, BEFRAGTE(R))
 
+   sex |      mean
+-------+----------
+  MANN |  178.7179
+  FRAU |  165.8881
+-------+----------
+ Total |  172.3974
+------------------</code></pre>
+<p>In <code>sdtest()</code> geben wir zunächst die zu testende Variable an, dann die Gruppierungsvariable:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="hypo.html#cb4-1"></a><span class="kw">sdtest</span> hs16, <span class="kw">by</span>(sex)</span></code></pre></div>
+<pre><code>Variance ratio test
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+    MANN |    1758    178.7179    .1712443     7.18002     178.382    179.0537
+    FRAU |    1707    165.8881     .157618    6.512124     165.579    166.1973
+---------+--------------------------------------------------------------------
+combined |    3465    172.3974    .1595336    9.390824    172.0846    172.7102
+------------------------------------------------------------------------------
+    ratio = sd(MANN) / sd(FRAU)                                   f =   1.2156
+Ho: ratio = 1                                  degrees of freedom = 1757, 1706
+
+    Ha: ratio &lt; 1               Ha: ratio != 1                 Ha: ratio &gt; 1
+  Pr(F &lt; f) = 1.0000         2*Pr(F &gt; f) = 0.0000           Pr(F &gt; f) = 0.0000</code></pre>
+<p>Da der p-Wert für den beidseitigen Test (mittlere Spalte, unter <code>Ha: ratio != 1</code>) deutlich unter 0,05 liegt wird die <span class="math inline">\(H_0\)</span> verworfen und wir gehen von ungleichen Varianzen bei den Körpergrößen von Männern und Frauen aus.</p>
+<p>Außerdem kann die <span class="math inline">\(H_0: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} \leqslant 1\)</span> verworfen werden (letzte Spalte, unter <code>Ha: ratio &gt; 1</code>). D.h. die Varianz der Körpergröße von Männern ist signifikant größer als die Varianz der Körpergröße bei Frauen.</p>
+</div>
+<div id="proportionen-und-häufigkeiten" class="section level2">
+<h2><span class="header-section-number">9.2</span> Proportionen und Häufigkeiten</h2>
+<div id="binomialtest" class="section level3">
+<h3><span class="header-section-number">9.2.1</span> Binomialtest</h3>
+<p>Für dichtome abhängige Variablen eignet sich der Binomialtest. Wir können mit dem Binomialtest testen, ob ein Anteil eines Merkmals sich signifikant von einem Wert unterscheidet. Dieser Anteil wird als <span class="math inline">\(\pi\)</span> bezeichnet und beschreibt Auftrittswahrscheinlichkeit des interessierenden Merkmals in der Grundgesamtheit. In R können wir den Binomialtest mit <code>binom.test</code> aufrufen.
+Auch hier gibt es wieder gerichtete und ungerichtete Hypothesen:</p>
+<ul>
+<li>ungerichtete/beidseitige Hypothese:</li>
+</ul>
+<p><span class="math inline">\(H_0: \pi = p \qquad H_A: \pi \neq p\)</span></p>
+<ul>
+<li>linksseitige Hypothese:</li>
+</ul>
+<p><span class="math inline">\(H_0: \pi \geqslant p \qquad H_A: \pi &lt; p\)</span></p>
+<ul>
+<li>rechtssseitige Hypothese:<br />
+<span class="math inline">\(H_0: \pi \leqslant p \qquad H_A: \pi &gt; p\)</span></li>
+</ul>
+<p>Wir könnten uns zB. fragen ob der Anteil der Befragten ohne Haustier im Allbus 2014 sich von <span class="math inline">\(67\%\)</span> unterscheidet. Dazu wählen wir zunächst alle Befragten des Allbus 2014 aus, welche die Frage nach den Haustieren (<code>aq03</code>) beantwortet haben (<code>aq &lt; 0</code> sind missings, daher verwenden wir schlicht <code>aq03 &gt; 0</code>). Dazu erstellen wir aus <code>aq03</code> noch eine Dummyvariable, welche 1 für das interessierende Merkmal (kein Haustierbesitz) und 0 in allen anderen Fällen annimmt:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="hypo.html#cb6-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb6-2"><a href="hypo.html#cb6-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_1980-2018.dta&quot;</span>,<span class="kw">clear</span></span>
+<span id="cb6-3"><a href="hypo.html#cb6-3"></a><span class="kw">keep</span>  <span class="kw">if</span> <span class="fu">year</span> == 2014 &amp; aq03&gt;0</span>
+<span id="cb6-4"><a href="hypo.html#cb6-4"></a><span class="kw">gen</span> pet = (aq03 == 4)</span>
+<span id="cb6-5"><a href="hypo.html#cb6-5"></a><span class="kw">tab</span> aq03 pet</span></code></pre></div>
+<pre><code> HUND ODER KATZE |          pet
+    IM HAUSHALT? |         0          1 |     Total
+-----------------+----------------------+----------
+            HUND |       397          0 |       397 
+           KATZE |       569          0 |       569 
+          BEIDES |       127          0 |       127 
+KEINS VON BEIDEN |         0      2,374 |     2,374 
+-----------------+----------------------+----------
+           Total |     1,093      2,374 |     3,467 </code></pre>
+<p>Mit <code>bitest</code> können wir dann den Binomialtest durchführen, dieser test immer auf :</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="hypo.html#cb8-1"></a><span class="kw">bitest</span> pet == .67</span></code></pre></div>
+<pre><code>    Variable |        N   Observed k   Expected k   Assumed p   Observed p
+-------------+------------------------------------------------------------
+         pet |     3467       2374      2322.89       0.67000      0.68474
+
+  Pr(k &gt;= 2374)              = 0.033408  (one-sided test)
+  Pr(k &lt;= 2374)              = 0.969210  (one-sided test)
+  Pr(k &lt;= 2271 or k &gt;= 2374) = 0.065472  (two-sided test)</code></pre>
+<p>Der rechtsseitige Test (erste Zeile) ergibt, dass der Anteil der Befragten ohne Haustier signifikant größer als 67% ist.
+Der linksseitige Test (zweite Zeile) ergibt, dass der Anteil der Befragten ohne Haustier nicht signifikant kleiner als 67% ist.
+Außerdem können wir auf Basis des beidseitigen Tests (letzte Zeile) die <span class="math inline">\(H_0: \pi = .67\)</span> nicht verwerfen, da der p-Wert größer 0,05 ist. Der Anteil der Befragten ohne Haustier unterscheidet sich also nicht signifikant von 67%.</p>
+</div>
+<div id="chi²-test" class="section level3">
+<h3><span class="header-section-number">9.2.2</span> Chi²-Test</h3>
+<p>Häufig ist aber auch für dichtome Merkmale von Interesse, ob sich die Auftrittswahrscheinlichkeit zwischen zwei Gruppen unterscheidet. Hierfür eignet sich der <span class="math inline">\(\chi^{2}\)</span>-Test. Der <span class="math inline">\(\chi^{2}\)</span>-Test testet, ob sich die beobachteten absoluten Häufigkeiten signifikant von den absoluten Häufigkeiten unterscheiden, die wir erwarten würden wenn beide Merkmale unabhängig voneinander sind. Die Differenz zwischen der beobachteten und der erwarteten absoluten Häufigkeit ergibt den <span class="math inline">\(\chi^{2}\)</span>-Wert. Ist <span class="math inline">\(\chi^{2} \approx 0\)</span>, dann können wir davon ausgehen, dass die beiden Merkmale unabhängig voneinander sind. Ist <span class="math inline">\(\chi^{2}\)</span> aber größer Null, so gehen wir von einem Zusammenhang aus. Beim <span class="math inline">\(\chi^{2}\)</span>-Test geht die <span class="math inline">\(H_0\)</span> davon aus, dass es keinen Zusammenhang gibt. Die <span class="math inline">\(H_{A}\)</span> besagt hingegen, dass einen Zusammenhang zwischen den beiden untersuchten Merkmalen besteht.</p>
+<p><span class="math inline">\(H_{0}: \chi^2 = 0 \qquad H_A: \chi^2 &gt; 0\)</span></p>
+<p>Den <span class="math inline">\(\chi^2\)</span>-Test erhalten wir, indem wir mit <code>tabulate</code> eine Kontingenztabelle erstellen und die Option <code>chi</code> angeben. Beispielsweise könnten wir untersuchen, ob es einen Zusammenhang zwischen dem Geschlecht der Befragten und dem Haustierbesitz gibt:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="hypo.html#cb10-1"></a><span class="kw">tab</span> sex pet, chi</span></code></pre></div>
+<pre><code> HUND ODER KATZE |          pet
+    IM HAUSHALT? |         0          1 |     Total
+-----------------+----------------------+----------
+            HUND |       397          0 |       397 
+           KATZE |       569          0 |       569 
+          BEIDES |       127          0 |       127 
+KEINS VON BEIDEN |         0      2,374 |     2,374 
+-----------------+----------------------+----------
+           Total |     1,093      2,374 |     3,467 
+
+          Pearson chi2(3) =  3.5e+03   Pr = 0.000</code></pre>
+<p>Da der p-Wert deutlich unter 0,05 liegt, können wir davon ausgehen, dass es in der Grundgesamtheit einen Zusammenhang zwischen dem Geschlecht der Befragten und dem Haustierbesitz gibt.</p>
+</div>
+</div>
+<div id="überblick" class="section level2">
+<h2><span class="header-section-number">9.3</span> Überblick</h2>
+<p>In allen Tests (außer <span class="math inline">\(\chi^2\)</span>) können beidseitige, linksseitige oder rechtsseitige Hypothesen untersucht werden.</p>
+<ul>
+<li><p>Mittelwertvergleich: <code>ttest</code></p>
+<ul>
+<li>Vergleich zu einem Referenzwert: <code>ttest testvariable == referenzwert</code></li>
+</ul>
+<p>Zudem gibt es bein Mittelwertvergleichen insgesamt zwei Aspekte, anhand derer sich t-Tests allgemein unterscheiden:</p>
+<ul>
+<li>Die Varianz der Messwerte in den verglichenen Gruppen ist …
+<ul>
+<li>gleich: <span class="math inline">\(\Rightarrow\)</span> <code>ttest testvariable, by(gruppenvariable)</code></li>
+<li>verschieden: <span class="math inline">\(\Rightarrow\)</span> <code>ttest testvariable, by(gruppenvariable) unequal</code></li>
+</ul></li>
+<li>Verbundene oder unverbundene Stichprobe?
+<ul>
+<li>Sind die einzelnen Messwerte voneinander unabhängig? D.h. ein Messwert steht in keinem direkten Zusammenhang mit einem anderen <span class="math inline">\(\Rightarrow\)</span> <code>ttest testvariable, by(gruppenvariable)</code> für eine unverbundene Stichprobe (mit ggf. <code>unequal</code>)</li>
+<li>Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen <span class="math inline">\(\Rightarrow\)</span> Werte für beide Variablen sollten “nebeneinander” abgelegt sein (<em>wide</em>-Format), dann kann mit <code>ttest vorher==nachher</code> ein verbundener <code>ttest</code> durchgeführt werden.</li>
+</ul></li>
+</ul></li>
+<li><p>Varianzvergleich,unterscheidet sich die Varianz zwischen zwei Gruppen?</p>
+<ul>
+<li><code>sdtest testvariable, by(gruppenvariable)</code></li>
+</ul></li>
+<li><p>Anteile vergleichen:</p>
+<ul>
+<li><p>mit einem behaupteten Wert: <code>bitest testvariable == referenzwert</code></p></li>
+<li><p>zwischen Gruppen: Kreuztabelle erstellen und mit <code>tab var1 var2, chi</code> Unabhängigkeit testen</p></li>
+</ul></li>
+</ul>
+
+</div>
 </div>
             </section>
 
