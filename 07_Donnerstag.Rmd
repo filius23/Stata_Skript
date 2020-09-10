@@ -5,6 +5,8 @@
 library(Statamarkdown)
 library(tidyverse)
 library(ggrepel)
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 knitr::opts_chunk$set(collapse = F)
 ak <- readr::read_delim("D:/oCloud/RFS/allbus_kumuliert_1980-2018.csv", delim = ";", col_types = cols(.default = col_double())) %>% 
   mutate_all( ~ifelse(.<0,NA,.))
@@ -287,7 +289,8 @@ ggplot(data =dfx , aes(x = type, y =m )) +
 
 
 ## Bootstrapping
-Bootstrapping beruht auf der Idee, wiederholt Stichproben *B* aus der Stichprobe zu ziehen und aus dieser *B* die Parameter zu berechnen. Für das Bootstrapping ziehen wir wiederholt SP *mit Zurücklegen* der gleichen Größe wie die Ausgangs-SP, also hier n = `r length(a14m$hs16)` und berechnen anschließend das arith. Mittel für diese simulierte Stichprobe. Diesen Vorgang wiederholen wir x Male und berechnen für die so gesammelten Mittelwerte aus den simulierten Stichproben die Standardabweichung. Analog zur vorhin gezeigten parametrischen Methode können wir das KI dann als $mean\,\pm t * sd()$ berechnen:
+
+Bootstrapping ([Mehr zB hier](https://statisticsbyjim.com/hypothesis-testing/bootstrapping/)) beruht auf der Idee, wiederholt Stichproben *B* aus der Stichprobe zu ziehen und aus dieser *B* die Parameter zu berechnen. Für das Bootstrapping ziehen wir wiederholt SP *mit Zurücklegen* der gleichen Größe wie die Ausgangs-SP, also hier n = `r length(a14m$hs16)` und berechnen anschließend das arith. Mittel für diese simulierte Stichprobe. Diesen Vorgang wiederholen wir x Male und berechnen für die so gesammelten Mittelwerte aus den simulierten Stichproben die Standardabweichung. Analog zur vorhin gezeigten parametrischen Methode können wir das KI dann als $mean\,\pm t * sd()$ berechnen:
 
 
 In Stata ist dieser Prozess sehr einfach mit dem Befehl `bootstrap` zu erledigen. Wir geben dabei an, welche Kennzahl wir berechnen möchten (`r(mean)` für das arith. Mittel) und mit `reps` die Anzahl der Wiederholungen. Mit `summarize hs16` legen wir zudem fest, welchen Befehl Stata auf die wiederholten Stichproben anwenden soll - bootstrapping ist für eine ganze Reihe an Funktionen verfügbar. Hier möchten wir ja aber das arith. Mittel, demensprechend geben wir hier `summarize` mit den gewünschten Variable an.

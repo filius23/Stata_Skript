@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>8 Inferenzstatistik II | GESIS Methodenseminar 2020</title>
+  <title>8 t-Tests | GESIS Methodenseminar 2020</title>
   <meta name="description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="8 Inferenzstatistik II | GESIS Methodenseminar 2020" />
+  <meta property="og:title" content="8 t-Tests | GESIS Methodenseminar 2020" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="8 Inferenzstatistik II | GESIS Methodenseminar 2020" />
+  <meta name="twitter:title" content="8 t-Tests | GESIS Methodenseminar 2020" />
   
   <meta name="twitter:description" content="Dies ist das Begleitskript für die Stata-Übungen zum GESIS Methodenseminar 2020" />
   
@@ -50,7 +50,6 @@
 
 
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
 <style type="text/css">
@@ -147,12 +146,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.6.3" data-path="Stata1.html"><a href="Stata1.html#list"><i class="fa fa-check"></i><b>1.6.3</b> <code>list</code></a></li>
 <li class="chapter" data-level="1.6.4" data-path="Stata1.html"><a href="Stata1.html#lookfor"><i class="fa fa-check"></i><b>1.6.4</b> <code>lookfor</code></a></li>
 </ul></li>
-<li class="chapter" data-level="1.7" data-path="Stata1.html"><a href="Stata1.html#if-bedingung---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>1.7</b> if Bedingung - nur manche Zeilen ansehen</a></li>
-<li class="chapter" data-level="1.8" data-path="Stata1.html"><a href="Stata1.html#U1"><i class="fa fa-check"></i><b>1.8</b> Übungen 1</a></li>
-<li class="chapter" data-level="1.9" data-path="Stata1.html"><a href="Stata1.html#profi-übungen-1"><i class="fa fa-check"></i><b>1.9</b> Profi-Übungen 1</a></li>
-<li class="chapter" data-level="1.10" data-path="Stata1.html"><a href="Stata1.html#anhang-1"><i class="fa fa-check"></i><b>1.10</b> Anhang 1</a><ul>
-<li class="chapter" data-level="1.10.1" data-path="Stata1.html"><a href="Stata1.html#var_types"><i class="fa fa-check"></i><b>1.10.1</b> Variablentypen</a></li>
-<li class="chapter" data-level="1.10.2" data-path="Stata1.html"><a href="Stata1.html#otherfmts"><i class="fa fa-check"></i><b>1.10.2</b> import anderer Dateiformate</a></li>
+<li class="chapter" data-level="1.7" data-path="Stata1.html"><a href="Stata1.html#löschen"><i class="fa fa-check"></i><b>1.7</b> löschen</a></li>
+<li class="chapter" data-level="1.8" data-path="Stata1.html"><a href="Stata1.html#if-bedingung---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>1.8</b> if Bedingung - nur manche Zeilen ansehen</a></li>
+<li class="chapter" data-level="1.9" data-path="Stata1.html"><a href="Stata1.html#U1"><i class="fa fa-check"></i><b>1.9</b> Übungen 1</a></li>
+<li class="chapter" data-level="1.10" data-path="Stata1.html"><a href="Stata1.html#profi-übungen-1"><i class="fa fa-check"></i><b>1.10</b> Profi-Übungen 1</a></li>
+<li class="chapter" data-level="1.11" data-path="Stata1.html"><a href="Stata1.html#anhang-1"><i class="fa fa-check"></i><b>1.11</b> Anhang 1</a><ul>
+<li class="chapter" data-level="1.11.1" data-path="Stata1.html"><a href="Stata1.html#var_types"><i class="fa fa-check"></i><b>1.11.1</b> Variablentypen</a></li>
+<li class="chapter" data-level="1.11.2" data-path="Stata1.html"><a href="Stata1.html#otherfmts"><i class="fa fa-check"></i><b>1.11.2</b> import anderer Dateiformate</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="Stata2.html"><a href="Stata2.html"><i class="fa fa-check"></i><b>2</b> Arbeiten mit Datensätzen in Stata</a><ul>
@@ -202,35 +202,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="dataviz.html"><a href="dataviz.html"><i class="fa fa-check"></i><b>4</b> Datenvisualisierung in Stata</a><ul>
 <li class="chapter" data-level="4.1" data-path="dataviz.html"><a href="dataviz.html#visualisierung-einer-variable"><i class="fa fa-check"></i><b>4.1</b> Visualisierung einer Variable</a><ul>
 <li class="chapter" data-level="4.1.1" data-path="dataviz.html"><a href="dataviz.html#metrische-variablen"><i class="fa fa-check"></i><b>4.1.1</b> metrische Variablen</a></li>
-<li class="chapter" data-level="4.1.2" data-path="dataviz.html"><a href="dataviz.html#kategoriale-variablen"><i class="fa fa-check"></i><b>4.1.2</b> Kategoriale Variablen</a></li>
+<li class="chapter" data-level="4.1.2" data-path="dataviz.html"><a href="dataviz.html#bar_col"><i class="fa fa-check"></i><b>4.1.2</b> Kategoriale Variablen</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="dataviz.html"><a href="dataviz.html#verteilungen-vergleichen-mit-facetten"><i class="fa fa-check"></i><b>4.2</b> Verteilungen vergleichen mit Facetten</a></li>
-<li class="chapter" data-level="4.3" data-path="dataviz.html"><a href="dataviz.html#gemeinsame-verteilung-zweier-variablen"><i class="fa fa-check"></i><b>4.3</b> Gemeinsame Verteilung zweier Variablen</a><ul>
+<li class="chapter" data-level="4.3" data-path="dataviz.html"><a href="dataviz.html#bivar_plot"><i class="fa fa-check"></i><b>4.3</b> Gemeinsame Verteilung zweier Variablen</a><ul>
 <li class="chapter" data-level="4.3.1" data-path="dataviz.html"><a href="dataviz.html#mosaikplot"><i class="fa fa-check"></i><b>4.3.1</b> Mosaikplot</a></li>
 <li class="chapter" data-level="4.3.2" data-path="dataviz.html"><a href="dataviz.html#streudiagramm"><i class="fa fa-check"></i><b>4.3.2</b> Streudiagramm</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4" data-path="dataviz.html"><a href="dataviz.html#weitere-twoway-grafiken"><i class="fa fa-check"></i><b>4.4</b> Weitere <code>twoway</code> Grafiken</a></li>
-<li class="chapter" data-level="4.5" data-path="dataviz.html"><a href="dataviz.html#kombinieren-von-zwei-twoway-grafiken"><i class="fa fa-check"></i><b>4.5</b> Kombinieren von zwei twoway-Grafiken</a></li>
-<li class="chapter" data-level="4.6" data-path="dataviz.html"><a href="dataviz.html#übungen-4"><i class="fa fa-check"></i><b>4.6</b> Übungen 4</a></li>
-<li class="chapter" data-level="4.7" data-path="dataviz.html"><a href="dataviz.html#optionen"><i class="fa fa-check"></i><b>4.7</b> Optionen</a><ul>
-<li class="chapter" data-level="4.7.1" data-path="dataviz.html"><a href="dataviz.html#titel"><i class="fa fa-check"></i><b>4.7.1</b> Titel</a></li>
-<li class="chapter" data-level="4.7.2" data-path="dataviz.html"><a href="dataviz.html#achsenbeschriftung"><i class="fa fa-check"></i><b>4.7.2</b> Achsenbeschriftung</a></li>
-<li class="chapter" data-level="4.7.3" data-path="dataviz.html"><a href="dataviz.html#text-einfügen"><i class="fa fa-check"></i><b>4.7.3</b> Text einfügen</a></li>
-<li class="chapter" data-level="4.7.4" data-path="dataviz.html"><a href="dataviz.html#schriftart"><i class="fa fa-check"></i><b>4.7.4</b> Schriftart</a></li>
-<li class="chapter" data-level="4.7.5" data-path="dataviz.html"><a href="dataviz.html#legend"><i class="fa fa-check"></i><b>4.7.5</b> Legende</a></li>
-<li class="chapter" data-level="4.7.6" data-path="dataviz.html"><a href="dataviz.html#marker"><i class="fa fa-check"></i><b>4.7.6</b> Marker</a></li>
-<li class="chapter" data-level="4.7.7" data-path="dataviz.html"><a href="dataviz.html#farben"><i class="fa fa-check"></i><b>4.7.7</b> Farben</a></li>
-<li class="chapter" data-level="4.7.8" data-path="dataviz.html"><a href="dataviz.html#vorlagen"><i class="fa fa-check"></i><b>4.7.8</b> Vorlagen</a></li>
+<li class="chapter" data-level="4.5" data-path="dataviz.html"><a href="dataviz.html#twoway_comb"><i class="fa fa-check"></i><b>4.5</b> Kombinieren von zwei twoway-Grafiken</a></li>
+<li class="chapter" data-level="4.6" data-path="dataviz.html"><a href="dataviz.html#gruppierte-boxplots"><i class="fa fa-check"></i><b>4.6</b> Gruppierte Boxplots</a></li>
+<li class="chapter" data-level="4.7" data-path="dataviz.html"><a href="dataviz.html#übungen-4"><i class="fa fa-check"></i><b>4.7</b> Übungen 4</a><ul>
+<li class="chapter" data-level="4.7.1" data-path="dataviz.html"><a href="dataviz.html#plt1"><i class="fa fa-check"></i><b>4.7.1</b> Übung 4-1</a></li>
+<li class="chapter" data-level="4.7.2" data-path="dataviz.html"><a href="dataviz.html#plt2"><i class="fa fa-check"></i><b>4.7.2</b> Übung 4-2</a></li>
+<li class="chapter" data-level="4.7.3" data-path="dataviz.html"><a href="dataviz.html#weitere-übungen-kap4"><i class="fa fa-check"></i><b>4.7.3</b> Weitere Übungen Kap4</a></li>
 </ul></li>
-<li class="chapter" data-level="4.8" data-path="dataviz.html"><a href="dataviz.html#gruppierte-darstellungen"><i class="fa fa-check"></i><b>4.8</b> Gruppierte Darstellungen</a></li>
-<li class="chapter" data-level="4.9" data-path="dataviz.html"><a href="dataviz.html#beispiele-zum-selbst-anpassen"><i class="fa fa-check"></i><b>4.9</b> Beispiele zum selbst anpassen</a><ul>
+<li class="chapter" data-level="4.8" data-path="dataviz.html"><a href="dataviz.html#optionen"><i class="fa fa-check"></i><b>4.8</b> Optionen</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="dataviz.html"><a href="dataviz.html#title"><i class="fa fa-check"></i><b>4.8.1</b> Titel</a></li>
+<li class="chapter" data-level="4.8.2" data-path="dataviz.html"><a href="dataviz.html#achsenbeschriftung"><i class="fa fa-check"></i><b>4.8.2</b> Achsenbeschriftung</a></li>
+<li class="chapter" data-level="4.8.3" data-path="dataviz.html"><a href="dataviz.html#text-einfügen"><i class="fa fa-check"></i><b>4.8.3</b> Text einfügen</a></li>
+<li class="chapter" data-level="4.8.4" data-path="dataviz.html"><a href="dataviz.html#font"><i class="fa fa-check"></i><b>4.8.4</b> Schriftart &amp; Textgröße</a></li>
+<li class="chapter" data-level="4.8.5" data-path="dataviz.html"><a href="dataviz.html#legend"><i class="fa fa-check"></i><b>4.8.5</b> Legende</a></li>
+<li class="chapter" data-level="4.8.6" data-path="dataviz.html"><a href="dataviz.html#mark"><i class="fa fa-check"></i><b>4.8.6</b> Marker</a></li>
+<li class="chapter" data-level="4.8.7" data-path="dataviz.html"><a href="dataviz.html#color"><i class="fa fa-check"></i><b>4.8.7</b> Farben</a></li>
+<li class="chapter" data-level="4.8.8" data-path="dataviz.html"><a href="dataviz.html#vorlagen"><i class="fa fa-check"></i><b>4.8.8</b> Vorlagen</a></li>
+</ul></li>
+<li class="chapter" data-level="4.9" data-path="dataviz.html"><a href="dataviz.html#anhang-beispiele-zum-selbst-anpassen"><i class="fa fa-check"></i><b>4.9</b> Anhang &amp; Beispiele zum selbst anpassen</a><ul>
 <li class="chapter" data-level="4.9.1" data-path="dataviz.html"><a href="dataviz.html#boxplot"><i class="fa fa-check"></i><b>4.9.1</b> Boxplot</a></li>
 <li class="chapter" data-level="4.9.2" data-path="dataviz.html"><a href="dataviz.html#scatterplot"><i class="fa fa-check"></i><b>4.9.2</b> Scatterplot</a></li>
-<li class="chapter" data-level="4.9.3" data-path="dataviz.html"><a href="dataviz.html#bevölkerungspyramide"><i class="fa fa-check"></i><b>4.9.3</b> Bevölkerungspyramide</a></li>
-</ul></li>
-<li class="chapter" data-level="4.10" data-path="dataviz.html"><a href="dataviz.html#anhang"><i class="fa fa-check"></i><b>4.10</b> Anhang</a><ul>
-<li class="chapter" data-level="4.10.1" data-path="dataviz.html"><a href="dataviz.html#aufb1"><i class="fa fa-check"></i><b>4.10.1</b> Aufbereitung für Boxplot</a></li>
-<li class="chapter" data-level="4.10.2" data-path="dataviz.html"><a href="dataviz.html#boxplot1"><i class="fa fa-check"></i><b>4.10.2</b> Boxplot</a></li>
+<li class="chapter" data-level="4.9.3" data-path="dataviz.html"><a href="dataviz.html#pyramid"><i class="fa fa-check"></i><b>4.9.3</b> Bevölkerungspyramide</a></li>
+<li class="chapter" data-level="4.9.4" data-path="dataviz.html"><a href="dataviz.html#boxplot1"><i class="fa fa-check"></i><b>4.9.4</b> Boxplot</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="zshg.html"><a href="zshg.html"><i class="fa fa-check"></i><b>5</b> Zusammenhangsmaße</a><ul>
@@ -250,14 +251,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3.4" data-path="zshg.html"><a href="zshg.html#phi"><i class="fa fa-check"></i><b>5.3.4</b> <span class="math inline">\(\phi\)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="5.4" data-path="zshg.html"><a href="zshg.html#welches-maß-richtig"><i class="fa fa-check"></i><b>5.4</b> Welches Maß richtig?</a></li>
-<li class="chapter" data-level="5.5" data-path="zshg.html"><a href="zshg.html#übungen"><i class="fa fa-check"></i><b>5.5</b> Übungen</a><ul>
+<li class="chapter" data-level="5.5" data-path="zshg.html"><a href="zshg.html#übungen-5"><i class="fa fa-check"></i><b>5.5</b> Übungen 5</a><ul>
 <li class="chapter" data-level="5.5.1" data-path="zshg.html"><a href="zshg.html#auf_met"><i class="fa fa-check"></i><b>5.5.1</b> Übung 5-1</a></li>
 <li class="chapter" data-level="5.5.2" data-path="zshg.html"><a href="zshg.html#auf_ord"><i class="fa fa-check"></i><b>5.5.2</b> Übung 5-2</a></li>
 <li class="chapter" data-level="5.5.3" data-path="zshg.html"><a href="zshg.html#auf_nom"><i class="fa fa-check"></i><b>5.5.3</b> Übung 5-3</a></li>
 <li class="chapter" data-level="5.5.4" data-path="zshg.html"><a href="zshg.html#weitere-übungen-5"><i class="fa fa-check"></i><b>5.5.4</b> Weitere Übungen 5</a></li>
 </ul></li>
 <li class="chapter" data-level="5.6" data-path="zshg.html"><a href="zshg.html#profi-übungen-5"><i class="fa fa-check"></i><b>5.6</b> Profi-Übungen 5</a></li>
-<li class="chapter" data-level="5.7" data-path="dataviz.html"><a href="dataviz.html#anhang"><i class="fa fa-check"></i><b>5.7</b> Anhang</a><ul>
+<li class="chapter" data-level="5.7" data-path="zshg.html"><a href="zshg.html#anhang"><i class="fa fa-check"></i><b>5.7</b> Anhang</a><ul>
 <li class="chapter" data-level="5.7.1" data-path="zshg.html"><a href="zshg.html#reg"><i class="fa fa-check"></i><b>5.7.1</b> Idee einer Regression</a></li>
 <li class="chapter" data-level="5.7.2" data-path="zshg.html"><a href="zshg.html#resid"><i class="fa fa-check"></i><b>5.7.2</b> Residuen</a></li>
 <li class="chapter" data-level="5.7.3" data-path="zshg.html"><a href="zshg.html#quad_res"><i class="fa fa-check"></i><b>5.7.3</b> Quadrierte Residuen</a></li>
@@ -270,23 +271,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="zshg2.html"><a href="zshg2.html"><i class="fa fa-check"></i><b>6</b> Zusammenhänge 2</a><ul>
 <li class="chapter" data-level="6.1" data-path="zshg2.html"><a href="zshg2.html#zusammenhänge-vergleichen"><i class="fa fa-check"></i><b>6.1</b> Zusammenhänge vergleichen</a></li>
+<li class="chapter" data-level="6.2" data-path="zshg2.html"><a href="zshg2.html#zusammenhänge-visualisieren"><i class="fa fa-check"></i><b>6.2</b> Zusammenhänge visualisieren</a></li>
+<li class="chapter" data-level="6.3" data-path="zshg2.html"><a href="zshg2.html#kategoriale-zusammenhänge"><i class="fa fa-check"></i><b>6.3</b> Kategoriale Zusammenhänge</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="zshg2.html"><a href="zshg2.html#ordinale-zusammenhangsmaße-vergleichen"><i class="fa fa-check"></i><b>6.3.1</b> Ordinale Zusammenhangsmaße vergleichen</a></li>
+<li class="chapter" data-level="6.3.2" data-path="zshg2.html"><a href="zshg2.html#vergleich-visualisieren"><i class="fa fa-check"></i><b>6.3.2</b> Vergleich visualisieren</a></li>
+<li class="chapter" data-level="6.3.3" data-path="zshg2.html"><a href="zshg2.html#nominale-zusammenhangsmaße-vergleichen"><i class="fa fa-check"></i><b>6.3.3</b> Nominale Zusammenhangsmaße vergleichen</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a></li>
-<li class="chapter" data-level="8" data-path="inf2.html"><a href="inf2.html"><i class="fa fa-check"></i><b>8</b> Inferenzstatistik II</a></li>
+<li class="chapter" data-level="6.4" data-path="zshg2.html"><a href="zshg2.html#übungen-6"><i class="fa fa-check"></i><b>6.4</b> Übungen 6</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="zshg2.html"><a href="zshg2.html#met_vgl"><i class="fa fa-check"></i><b>6.4.1</b> Übung 6-1</a></li>
+<li class="chapter" data-level="6.4.2" data-path="zshg2.html"><a href="zshg2.html#ord_vgl"><i class="fa fa-check"></i><b>6.4.2</b> Übung 6-2</a></li>
+<li class="chapter" data-level="6.4.3" data-path="zshg2.html"><a href="zshg2.html#nom_vgl"><i class="fa fa-check"></i><b>6.4.3</b> Übung 6-3</a></li>
+<li class="chapter" data-level="6.4.4" data-path="zshg2.html"><a href="zshg2.html#weitere-übungen-kap-6"><i class="fa fa-check"></i><b>6.4.4</b> Weitere Übungen Kap 6</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="zshg.html"><a href="zshg.html#anhang"><i class="fa fa-check"></i><b>6.5</b> Anhang</a><ul>
+<li class="chapter" data-level="6.5.1" data-path="zshg2.html"><a href="zshg2.html#lpattern"><i class="fa fa-check"></i><b>6.5.1</b> Optionen für <code>lpattern</code></a></li>
+<li class="chapter" data-level="6.5.2" data-path="zshg2.html"><a href="zshg2.html#scatterplot-für-kategoriale-merkmale"><i class="fa fa-check"></i><b>6.5.2</b> Scatterplot für kategoriale Merkmale</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a><ul>
+<li class="chapter" data-level="7.1" data-path="inf1.html"><a href="inf1.html#inferenz"><i class="fa fa-check"></i><b>7.1</b> Inferenz</a></li>
+<li class="chapter" data-level="7.2" data-path="inf1.html"><a href="inf1.html#parametrische-ki-schätzung"><i class="fa fa-check"></i><b>7.2</b> Parametrische KI-Schätzung</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="inf1.html"><a href="inf1.html#t-z-wert"><i class="fa fa-check"></i><b>7.2.1</b> t-/z-Wert</a></li>
+<li class="chapter" data-level="7.2.2" data-path="inf1.html"><a href="inf1.html#standardfehler"><i class="fa fa-check"></i><b>7.2.2</b> Standardfehler</a></li>
+<li class="chapter" data-level="7.2.3" data-path="inf1.html"><a href="inf1.html#kis-berechnen"><i class="fa fa-check"></i><b>7.2.3</b> KIs berechnen</a></li>
+<li class="chapter" data-level="7.2.4" data-path="inf1.html"><a href="inf1.html#mean"><i class="fa fa-check"></i><b>7.2.4</b> <code>mean</code></a></li>
+<li class="chapter" data-level="7.2.5" data-path="inf1.html"><a href="inf1.html#vergleich"><i class="fa fa-check"></i><b>7.2.5</b> Vergleich</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="inf1.html"><a href="inf1.html#bootstrapping"><i class="fa fa-check"></i><b>7.3</b> Bootstrapping</a></li>
+<li class="chapter" data-level="7.4" data-path="inf1.html"><a href="inf1.html#übungen-7"><i class="fa fa-check"></i><b>7.4</b> Übungen 7</a></li>
+<li class="chapter" data-level="7.5" data-path="inf1.html"><a href="inf1.html#anhang-kap7"><i class="fa fa-check"></i><b>7.5</b> Anhang Kap7</a><ul>
+<li class="chapter" data-level="7.5.1" data-path="inf1.html"><a href="inf1.html#normalverteilung"><i class="fa fa-check"></i><b>7.5.1</b> Normalverteilung</a></li>
+<li class="chapter" data-level="7.5.2" data-path="inf1.html"><a href="inf1.html#student-t-verteilung"><i class="fa fa-check"></i><b>7.5.2</b> Student t-Verteilung</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="inf2.html"><a href="inf2.html"><i class="fa fa-check"></i><b>8</b> t-Tests</a><ul>
+<li class="chapter" data-level="8.1" data-path="inf2.html"><a href="inf2.html#hypothesentests"><i class="fa fa-check"></i><b>8.1</b> Hypothesentests</a></li>
+<li class="chapter" data-level="8.2" data-path="inf2.html"><a href="inf2.html#t-test"><i class="fa fa-check"></i><b>8.2</b> t-Test</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="inf2.html"><a href="inf2.html#beiseitiger-t-test"><i class="fa fa-check"></i><b>8.2.1</b> beiseitiger t-Test</a></li>
+<li class="chapter" data-level="8.2.2" data-path="inf2.html"><a href="inf2.html#linksseitiger-t-test"><i class="fa fa-check"></i><b>8.2.2</b> linksseitiger t-Test</a></li>
+<li class="chapter" data-level="8.2.3" data-path="inf2.html"><a href="inf2.html#rechtsseitiger-t-test"><i class="fa fa-check"></i><b>8.2.3</b> rechtsseitiger t-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="inf2.html"><a href="inf2.html#übungen-8"><i class="fa fa-check"></i><b>8.3</b> Übungen 8</a></li>
+<li class="chapter" data-level="8.4" data-path="inf2.html"><a href="inf2.html#profi-übungen-8"><i class="fa fa-check"></i><b>8.4</b> Profi-Übungen 8</a></li>
+<li class="chapter" data-level="8.5" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>8.5</b> Hinweise</a><ul>
+<li class="chapter" data-level="8.5.1" data-path="inf2.html"><a href="inf2.html#auswahl-der-in-vollzeit-beschäftigten-befragten"><i class="fa fa-check"></i><b>8.5.1</b> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Hypothesentests</a></li>
 <li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a></li>
 <li class="chapter" data-level="11" data-path="adva.html"><a href="adva.html"><i class="fa fa-check"></i><b>11</b> Fortgeschrittene Themen</a><ul>
 <li class="chapter" data-level="11.1" data-path="adva.html"><a href="adva.html#wertelabels"><i class="fa fa-check"></i><b>11.1</b> Wertelabels</a></li>
 <li class="chapter" data-level="11.2" data-path="adva.html"><a href="adva.html#sortieren"><i class="fa fa-check"></i><b>11.2</b> sortieren</a></li>
-<li class="chapter" data-level="11.3" data-path="adva.html"><a href="adva.html#missings-unterscheiden"><i class="fa fa-check"></i><b>11.3</b> missings unterscheiden</a></li>
-<li class="chapter" data-level="11.4" data-path="adva.html"><a href="adva.html#indikatoren-umdrehen"><i class="fa fa-check"></i><b>11.4</b> Indikatoren umdrehen</a></li>
-<li class="chapter" data-level="11.5" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-variablen"><i class="fa fa-check"></i><b>11.5</b> Informationen aus mehreren Variablen</a></li>
-<li class="chapter" data-level="11.6" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-datensätzen"><i class="fa fa-check"></i><b>11.6</b> Informationen aus mehreren Datensätzen</a></li>
-<li class="chapter" data-level="11.7" data-path="adva.html"><a href="adva.html#arbeiten-mit-textvariablen"><i class="fa fa-check"></i><b>11.7</b> Arbeiten mit Textvariablen</a></li>
-<li class="chapter" data-level="11.8" data-path="adva.html"><a href="adva.html#egen"><i class="fa fa-check"></i><b>11.8</b> egen</a></li>
-<li class="chapter" data-level="11.9" data-path="adva.html"><a href="adva.html#sep1"><i class="fa fa-check"></i><b>11.9</b> Subgruppen-Variablen erstellen mit <code>separate</code></a></li>
-<li class="chapter" data-level="11.10" data-path="adva.html"><a href="adva.html#gruppierte-berechnungen"><i class="fa fa-check"></i><b>11.10</b> gruppierte Berechnungen</a></li>
-<li class="chapter" data-level="11.11" data-path="adva.html"><a href="adva.html#collapse"><i class="fa fa-check"></i><b>11.11</b> collapse</a></li>
+<li class="chapter" data-level="11.3" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-variablen"><i class="fa fa-check"></i><b>11.3</b> Informationen aus mehreren Variablen</a></li>
+<li class="chapter" data-level="11.4" data-path="adva.html"><a href="adva.html#egen"><i class="fa fa-check"></i><b>11.4</b> egen</a></li>
+<li class="chapter" data-level="11.5" data-path="adva.html"><a href="adva.html#gruppierte-berechnungen"><i class="fa fa-check"></i><b>11.5</b> gruppierte Berechnungen</a></li>
+<li class="chapter" data-level="11.6" data-path="adva.html"><a href="adva.html#sep1"><i class="fa fa-check"></i><b>11.6</b> Subgruppen-Variablen erstellen mit <code>separate</code></a></li>
+<li class="chapter" data-level="11.7" data-path="adva.html"><a href="adva.html#collapse"><i class="fa fa-check"></i><b>11.7</b> collapse</a></li>
+<li class="chapter" data-level="11.8" data-path="adva.html"><a href="adva.html#indikatoren-umdrehen"><i class="fa fa-check"></i><b>11.8</b> Indikatoren umdrehen</a></li>
+<li class="chapter" data-level="11.9" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-datensätzen"><i class="fa fa-check"></i><b>11.9</b> Informationen aus mehreren Datensätzen</a></li>
+<li class="chapter" data-level="11.10" data-path="adva.html"><a href="adva.html#arbeiten-mit-textvariablen"><i class="fa fa-check"></i><b>11.10</b> Arbeiten mit Textvariablen</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -309,8 +352,263 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="inf2" class="section level1">
-<h1><span class="header-section-number">8</span> Inferenzstatistik II</h1>
+<h1><span class="header-section-number">8</span> t-Tests</h1>
+<p>Vergangene Woche hatten wir aus Stichproben Aussagen über Parameter in einer Grundgesamtheit getroffen. Eigentliches Ziel statistischer Auswertungen ist aber häufig, Entscheidungen über die Richtigkeit einer allgemeinen Hypothese zu treffen.</p>
+<div id="hypothesentests" class="section level2">
+<h2><span class="header-section-number">8.1</span> Hypothesentests</h2>
+<p>Ausgangsszenario: wir betrachten ein (annähernd) normal-verteiltes Merkmal und möchten durch eine Stichprobe überprüfen, ob der Mittelwert mit unserer Vermutung übereinstimmt bzw. größer/kleiner ist. Testen wir auf Übereinstimmung, verwenden wir einen sog. beidseitigen Test, bei einem einseitigen Test testen wir ob der Stichprobenwert signifikant größer bzw. kleiner als der vermutete Populationswert ist.</p>
+<p>Wir möchten einen Hypothesentest zu den durchschnittlichen Mietkosten von Studierenden in Oldenburg durchführen. Eine Zeitung behauptet, Studierende würden im Schnitt 320 Euro für Miete ausgeben. Wir machen eine Umfrage unter 40 Studierenden und kommen auf folgende Werte:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="inf2.html#cb1-1"></a>input miete</span>
+<span id="cb1-2"><a href="inf2.html#cb1-2"></a>301</span>
+<span id="cb1-3"><a href="inf2.html#cb1-3"></a>291</span>
+<span id="cb1-4"><a href="inf2.html#cb1-4"></a>304</span>
+<span id="cb1-5"><a href="inf2.html#cb1-5"></a>324</span>
+<span id="cb1-6"><a href="inf2.html#cb1-6"></a>356</span>
+<span id="cb1-7"><a href="inf2.html#cb1-7"></a>384</span>
+<span id="cb1-8"><a href="inf2.html#cb1-8"></a>407</span>
+<span id="cb1-9"><a href="inf2.html#cb1-9"></a>306</span>
+<span id="cb1-10"><a href="inf2.html#cb1-10"></a>310</span>
+<span id="cb1-11"><a href="inf2.html#cb1-11"></a>230</span>
+<span id="cb1-12"><a href="inf2.html#cb1-12"></a>307</span>
+<span id="cb1-13"><a href="inf2.html#cb1-13"></a>252</span>
+<span id="cb1-14"><a href="inf2.html#cb1-14"></a>306</span>
+<span id="cb1-15"><a href="inf2.html#cb1-15"></a>355</span>
+<span id="cb1-16"><a href="inf2.html#cb1-16"></a>194</span>
+<span id="cb1-17"><a href="inf2.html#cb1-17"></a>320</span>
+<span id="cb1-18"><a href="inf2.html#cb1-18"></a>233</span>
+<span id="cb1-19"><a href="inf2.html#cb1-19"></a>265</span>
+<span id="cb1-20"><a href="inf2.html#cb1-20"></a>214</span>
+<span id="cb1-21"><a href="inf2.html#cb1-21"></a>319</span>
+<span id="cb1-22"><a href="inf2.html#cb1-22"></a>320</span>
+<span id="cb1-23"><a href="inf2.html#cb1-23"></a>256</span>
+<span id="cb1-24"><a href="inf2.html#cb1-24"></a>234</span>
+<span id="cb1-25"><a href="inf2.html#cb1-25"></a>346</span>
+<span id="cb1-26"><a href="inf2.html#cb1-26"></a>223</span>
+<span id="cb1-27"><a href="inf2.html#cb1-27"></a>344</span>
+<span id="cb1-28"><a href="inf2.html#cb1-28"></a>294</span>
+<span id="cb1-29"><a href="inf2.html#cb1-29"></a>253</span>
+<span id="cb1-30"><a href="inf2.html#cb1-30"></a>383</span>
+<span id="cb1-31"><a href="inf2.html#cb1-31"></a>360</span>
+<span id="cb1-32"><a href="inf2.html#cb1-32"></a>305</span>
+<span id="cb1-33"><a href="inf2.html#cb1-33"></a>378</span>
+<span id="cb1-34"><a href="inf2.html#cb1-34"></a>270</span>
+<span id="cb1-35"><a href="inf2.html#cb1-35"></a>327</span>
+<span id="cb1-36"><a href="inf2.html#cb1-36"></a>360</span>
+<span id="cb1-37"><a href="inf2.html#cb1-37"></a>310</span>
+<span id="cb1-38"><a href="inf2.html#cb1-38"></a>345</span>
+<span id="cb1-39"><a href="inf2.html#cb1-39"></a>300</span>
+<span id="cb1-40"><a href="inf2.html#cb1-40"></a>361</span>
+<span id="cb1-41"><a href="inf2.html#cb1-41"></a>253</span>
+<span id="cb1-42"><a href="inf2.html#cb1-42"></a><span class="kw">end</span></span>
+<span id="cb1-43"><a href="inf2.html#cb1-43"></a><span class="kw">tabstat</span> miete, <span class="fu">s</span>(<span class="kw">mean</span> <span class="fu">sd</span>)</span></code></pre></div>
+<pre><code>          miete
 
+    variable |      mean        sd
+-------------+--------------------
+       miete |       305  52.05323
+----------------------------------</code></pre>
+<p>Die Antworten haben also ein arithmetisches Mittel von 305 Euro und eine Standardabweichung von 53.5 Euro. Der <em>Punktschätzer</em> aus der Stichprobe legt uns also nahe, dass die Mieten in Oldenburg in der Tat unter 320 EUR liegen. Wie wir letzte Woche gesehen haben, sollten wir uns nicht allein auf den Punktschätzer verlassen, sondern auch die Streuung in der Stichprobe mitberücksichtigen. Dies leisten die Hypothesentests. Dabei werden immer zwei sich widersprechende Hypothesen formuliert, die sog. <span class="math inline">\(H_0\)</span> - die Nullhypothese und die <span class="math inline">\(H_A\)</span> - die Alternativhypothese. Die <span class="math inline">\(H_0\)</span> beschreibt dabei immer den bisherigen Kenntnisstand und die <span class="math inline">\(H_A\)</span> formuliert die zu testende Aussage. Die Hypothesen unterscheiden sich dann je nachdem ob wir einen gerichteten oder einen ungerichteten Test durchführen:</p>
+<p>Zunächst müssen wir uns entscheiden ob wir eine gerichtete oder ungerichtete Hypothese testen möchten:</p>
+<ul>
+<li>ungerichtete Hypothese: “die wahren Mietausgaben der Studierenden in Oldenburg sind ungleich 320 Euro”</li>
+<li>gerichtete Hypothese: “die wahren Mietausgaben der Studierenden in Oldenburg sind <strong>kleiner</strong>/<strong>größer</strong> als 320 Euro”</li>
+</ul>
+<p>Formal werden die Hypothesen dann wie folgt festgehalten:</p>
+<ul>
+<li>ungerichtete Hypothesen: <span class="math inline">\(H_0: \mu = 320 Euro\)</span> und <span class="math inline">\(H_A: \mu \neq 320 Euro\)</span><br />
+</li>
+<li>gerichtete Hypothesen:
+<ul>
+<li>rechtsseitig <span class="math inline">\(H_0: \mu \leqslant 320 Euro\)</span> und <span class="math inline">\(H_A: \mu &gt; 320 Euro\)</span><br />
+<span class="math inline">\(\Rightarrow\)</span> die <span class="math inline">\(H_A\)</span> hält fest, dass der wahre Wert <strong>größer</strong> als der Wert aus der <span class="math inline">\(H_0\)</span> ist</li>
+<li>linksseitig <span class="math inline">\(H_0: \mu \geqslant 320 Euro\)</span> und <span class="math inline">\(H_A: \mu &lt; 320 Euro\)</span><br />
+<span class="math inline">\(\Rightarrow\)</span> die <span class="math inline">\(H_A\)</span> hält fest, dass der wahre Wert <strong>kleiner</strong> als der Wert aus der <span class="math inline">\(H_0\)</span> ist</li>
+</ul></li>
+</ul>
+<p>Die grundlegende Idee des Hypothesentests ist, dass wir uns nur dann für die Alternativhypothese entscheiden, wenn wir eine ausreichend große Abweichung von dem in der <span class="math inline">\(H_0\)</span> postulierten Wert feststellen. Dazu berechnen wir den <span class="math inline">\(t\)</span>-Wert für den SP-Mittelwert entsprechend der Formel von letzter Woche:</p>
+<p><span class="math display">\[t = \frac{\bar{x}-\mu_{0}}{\frac{\sigma}{\sqrt{n}}} = \frac{\bar{x}-\mu_{0}}{\frac{s_{x}}{\sqrt{n}}}\]</span>
+<img src="Stata_Skript_files/figure-html/unnamed-chunk-1-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="t-test" class="section level2">
+<h2><span class="header-section-number">8.2</span> t-Test</h2>
+<p>Wir berechnen also den t-Wert und gleichen diesen dann mit <code>ttail</code> mit der kumulierten Verteilung der t-Verteilung ab. Das Ergebnis von <code>ttail</code> gibt uns dann an, mit welcher Irrtumswahrscheinlichkeit wir die <span class="math inline">\(H_0\)</span> verwerfen können. Anders formuliert: wie wahrscheinlich ist es, das <span class="math inline">\(\bar{x}\)</span> in einer Stichprobe zu erhalten obwohl <span class="math inline">\(\mu_0\)</span> in der Grundgesamtheit richtig ist?</p>
+<p>In der Wissenschaft hat sich als Konvention etabliert, von einem signifikanten Unterschied zu sprechen wenn die Irrtumswahrscheinlichkeit unter 5% liegt. Das bedeutet:</p>
+<blockquote>
+<p><em>Assuming that the null hypothesis is true and the study is repeated an infinite number times by drawing random samples from the same populations(s), less than 5% of these results will be more extreme than the current result.</em><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+</blockquote>
+<div id="beiseitiger-t-test" class="section level3">
+<h3><span class="header-section-number">8.2.1</span> beiseitiger t-Test</h3>
+<p>Ein <strong>beid</strong>seitiger Test testet die <span class="math inline">\(H_0\)</span> im Vergleich zur folgenden Aussage der <span class="math inline">\(H_A\)</span>: “die wahren Mietausgaben der Studierenden in Oldenburg sind <em>ungleich</em> 320 Euro”. Dazu formalisieren wir zunächst die <span class="math inline">\(H_0\)</span> und <span class="math inline">\(H_A\)</span>:</p>
+<p><span class="math inline">\(H_0: \mu = 320 Euro \qquad H_A: \mu \neq 320 Euro\)</span></p>
+<p>Für die Entscheidung hinsichtlich der Hypothesen ist beim beidseitigen Test wichtig, dass hier jeweils das Ergebnis aus <code>pt()</code> <strong>verdoppelt</strong> werden muss! <span class="math inline">\(\Rightarrow\)</span> hier testen wir auf “größer oder kleiner” und <code>invttail</code> gibt uns die Wahrscheinlichkeit dafür, einen t-Wert größer als den eingetragenen zu erhalten:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="inf2.html#cb3-1"></a><span class="kw">display</span> (305-320)/(52.053/<span class="fu">sqrt</span>(40))</span></code></pre></div>
+<pre><code>-1.8225334</code></pre>
+<p>Fläche links von -1.822533 (<code>ttail</code> gibt immer rechte Fläche an, daher 1-<code>ttail</code> um Fläche links zu erhalten):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="inf2.html#cb5-1"></a><span class="kw">display</span> 1-<span class="fu">ttail</span>(40-1,-1.8225334) </span></code></pre></div>
+<pre><code>.03802395</code></pre>
+<p>Wir müssen aber die “rechte Seite” mitberücksichtigen, daher <span class="math inline">\(\times2\)</span>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="inf2.html#cb7-1"></a><span class="kw">display</span> (1-<span class="fu">ttail</span>(40-1,-1.8225334)) *2</span></code></pre></div>
+<pre><code>.07604791</code></pre>
+<p>Das Ergebnis liegt also deutlich über 0,05. Wir würden also die <span class="math inline">\(H_0\)</span> nicht verwerfen.</p>
+<p>Neben der händischen Berechnung können wir in Stata die Funktion <code>ttest</code> nutzen, diese nimmt auch die Anpassung des p-Wertes beim beidseitigen Test vor. Neben den zu testenden Werten geben wir mit <code>mu</code> den in der Nullhypothese festgehaltenen Mittelwert an und wählen mit <code>two.sided</code> einen beiseitigen Test aus:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="inf2.html#cb9-1"></a><span class="kw">ttest</span> miete==320</span></code></pre></div>
+<pre><code>          miete
+
+
+One-sample t test
+------------------------------------------------------------------------------
+Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+   miete |      40         305    8.230338    52.05323    288.3526    321.6474
+------------------------------------------------------------------------------
+    mean = mean(miete)                                            t =  -1.8225
+Ho: mean = 320                                   degrees of freedom =       39
+
+   Ha: mean &lt; 320               Ha: mean != 320               Ha: mean &gt; 320
+ Pr(T &lt; t) = 0.0380         Pr(|T| &gt; |t|) = 0.0760          Pr(T &gt; t) = 0.9620</code></pre>
+<p>Hier werden auch gleich die Ergebnisse für den linksseitigen und rechtsseitigen Test angezeigt. Diese sehen uns noch</p>
+</div>
+<div id="linksseitiger-t-test" class="section level3">
+<h3><span class="header-section-number">8.2.2</span> linksseitiger t-Test</h3>
+<p>Ein <strong>links</strong>seitiger Test testet die <span class="math inline">\(H_0\)</span> im Vergleich zu folgender Aussage: “die wahren Mietausgaben der Studierenden in Oldenburg sind <em>kleiner</em> als 320 Euro”. Formal sehen die <span class="math inline">\(H_0\)</span> und <span class="math inline">\(H_A\)</span> so aus:</p>
+<p><span class="math inline">\(H_0:\, \mu \geqslant 320Euro \qquad H_A:\, \mu &lt; 320 Euro\)</span></p>
+<p>Hier würden wir also nur die Fläche links vom berechneten t-Wert nachsehen:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="inf2.html#cb11-1"></a><span class="kw">display</span> (305-320)/(52.053/<span class="fu">sqrt</span>(40))</span></code></pre></div>
+<pre><code>-1.8225334</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="inf2.html#cb13-1"></a><span class="kw">display</span> 1-<span class="fu">ttail</span>(40-1,-1.8225334) <span class="co">// Fläche links</span></span></code></pre></div>
+<pre><code>.03802395</code></pre>
+<p>Der Wert 0.038 ist kleiner als 0,05, dementsprechend würden wir auf Basis eines linksseitigen Hypothesentests die <span class="math inline">\(H_0\)</span> verwerfen.</p>
+</div>
+<div id="rechtsseitiger-t-test" class="section level3">
+<h3><span class="header-section-number">8.2.3</span> rechtsseitiger t-Test</h3>
+<p>Ein <strong>rechts</strong>seitiger Test testet die <span class="math inline">\(H_0\)</span> im Vergleich zu folgender Aussage: “die wahren Mietausgaben der Studierenden in Oldenburg sind <em>größer</em> als 320 Euro”. Formal sehen die <span class="math inline">\(H_0\)</span> und <span class="math inline">\(H_A\)</span> so aus:</p>
+<p><span class="math inline">\(H_0: \mu \leqslant 320 Euro \qquad H_A: \mu &gt; 320 Euro\)</span></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="inf2.html#cb15-1"></a><span class="kw">display</span> (305-320)/(52.053/<span class="fu">sqrt</span>(40))  </span></code></pre></div>
+<pre><code>-1.8225334</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="inf2.html#cb17-1"></a><span class="kw">display</span> <span class="fu">ttail</span>(40-1,-1.822533)  <span class="co">// Fläche rechts</span></span></code></pre></div>
+<pre><code>.96197602</code></pre>
+<p>Wir sehen hier dass der Wert <code>1-pt(q = -1.822533, df = 40-1)=</code>0.962 deutlich größer als 0,05 ist - dementsprechend würden wir auf Basis eines rechtsseitigen Hypothesentests die <span class="math inline">\(H_0\)</span> <strong>nicht</strong> verwerfen.</p>
+<p>All das haben wir eben auch schon in <code>ttest</code> gesehen:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="inf2.html#cb19-1"></a><span class="kw">ttest</span> miete==320</span></code></pre></div>
+<pre><code>          miete
+
+
+One-sample t test
+------------------------------------------------------------------------------
+Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+   miete |      40         305    8.230338    52.05323    288.3526    321.6474
+------------------------------------------------------------------------------
+    mean = mean(miete)                                            t =  -1.8225
+Ho: mean = 320                                   degrees of freedom =       39
+
+   Ha: mean &lt; 320               Ha: mean != 320               Ha: mean &gt; 320
+ Pr(T &lt; t) = 0.0380         Pr(|T| &gt; |t|) = 0.0760          Pr(T &gt; t) = 0.9620</code></pre>
+</div>
+</div>
+<div id="übungen-8" class="section level2">
+<h2><span class="header-section-number">8.3</span> Übungen 8</h2>
+<p>(Nutzen Sie für die Aufgaben 1 &amp; 2 jeweils die Methode “per Hand” als auch <code>ttest()</code>, um beide Berechnungswege zu verstehen)</p>
+<ol class="example" style="list-style-type: decimal">
+<li>Sie betrachten die Körpergröße von Menschen und fragen sich, ob diese sich von 172cm signifikant unterscheidet. Sie gehen davon aus, dass die Körpergröße eine normalverteilte Variable ist. In einer Stichprobe von 50 Personen finden Sie einen arithmetischen Mittelwert von 170cm und einer Standardabweichung von 9.26 cm. Sie können sich die Daten wie folgt erstellen:</li>
+</ol>
+<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="inf2.html#cb21-1"></a><span class="kw">clear</span></span>
+<span id="cb21-2"><a href="inf2.html#cb21-2"></a><span class="kw">set</span> <span class="dv">seed</span> 0441</span>
+<span id="cb21-3"><a href="inf2.html#cb21-3"></a><span class="kw">set</span> <span class="kw">obs</span> 50</span>
+<span id="cb21-4"><a href="inf2.html#cb21-4"></a><span class="kw">gen</span> height_sample =  rnormal(170,9.26)</span></code></pre></div>
+<ul>
+<li>Wie lauten die Hypothesen?</li>
+<li>Berechnen Sie den t-Wert und die Irrtumswahrscheinlichkeit, mit der die <span class="math inline">\(H_0\)</span> verworfen werden kann</li>
+<li>Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?</li>
+</ul>
+<ol start="2" class="example" style="list-style-type: decimal">
+<li><p>Wenn Sie die vorherige Fragestellung mit einer gerichteten Hypothese: “sind Menschen im Mittel signifikant größer als 172cm?” untersuchen würden - was würde sich ändern?</p></li>
+<li><p>Sie erheben erneut eine Stichprobe mit 50 Personen und erhalten einen Mittelwert von 173cm und eine Standardabweichung von 6.15.</p></li>
+</ol>
+<ul>
+<li><p>Wie hoch ist die Irrtumswahrscheinlichkeit für die Hypothese, dass der wahre Wert der Körpergröße in der Grundpopulation größer als 172cm ist? Stellen Sie die passenden formalen Hypothesen auf!</p></li>
+<li><p>Sie können sich auch diese Daten wie folgt erstellen:</p></li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="inf2.html#cb22-1"></a><span class="kw">clear</span></span>
+<span id="cb22-2"><a href="inf2.html#cb22-2"></a><span class="kw">set</span> <span class="dv">seed</span> 0441</span>
+<span id="cb22-3"><a href="inf2.html#cb22-3"></a><span class="kw">set</span> <span class="kw">obs</span> 50</span>
+<span id="cb22-4"><a href="inf2.html#cb22-4"></a><span class="kw">gen</span> height_sample2 =  rnormal(173,6.15)</span></code></pre></div>
+<ol start="4" class="example" style="list-style-type: decimal">
+<li>Die Schätzung eines Experten ergab, dass das mittlere logarithmierte Einkommen von Vollzeiterwerbstätigen in Deutschland für das Jahr 2018 bei 7,6 log(EUR) liegt.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> Sie vermuten, dass sich die wahren Werte davon signifikant unterscheiden. Überprüfen Sie diese These! (<em>Berechnen Sie die p-Werte jeweils mit <code>ttest</code> und per Hand!</em>)</li>
+</ol>
+<ul>
+<li>Laden Sie den kumulierten Allbus (<code>Allbus_1980-2018.dta</code>). Wählen Sie alle Befagten für das Jahr 2018 aus, die Vollzeit arbeiten (<code>work == 1</code>) und ein Einkommen größer als 0 EUR angeben. (siehe <em>Hinweise</em> am Ende)</li>
+<li>Denken Sie daran, die Missings mit <code>.</code> zu überschreiben! (Siehe Hinweise für Hilfe beim Einlesen und Aufbereiten des Datensatzes!)</li>
+<li>Vergleichen Sie die Angaben des logarithmierten Einkommens der Befragten (<code>log_inc</code>) mit der Aussage des Experten.</li>
+<li>Formulieren Sie die Hypothesen!</li>
+<li>Führen Sie den passenden Test durch!</li>
+<li>Was müssten Sie verändern, wenn Sie vermuten dass die wahren Werte signifikant <em>höher</em> sind?</li>
+<li>Formulieren Sie auch für diese Variante die Hypothesen und führen Sie den entsprechenden Test durch! Berechnen Sie den Test neben <code>ttest</code> auch “per Hand”! Kommen Sie auf das selbe Ergebnis?</li>
+</ul>
+</div>
+<div id="profi-übungen-8" class="section level2">
+<h2><span class="header-section-number">8.4</span> Profi-Übungen 8</h2>
+<p>Für alle, die noch etwas mehr machen möchten:</p>
+<ol start="5" class="example" style="list-style-type: decimal">
+<li>Eine Umfrage von 15 zufällig ausgewählten Betrieben ergab, dass im Durchschnitt an 5,25 Tagen im vergangenen Jahr gestreikt wurde. Die Standardabweichung in der Stichprobe beträgt 0.25 Tage. Ein Experte behauptet, es wären im arithmetischen Mittel 7 Streiktage für das vergangene Jahr gewesen. Liegt der Wert aus der Stichprobe signifikant darunter?</li>
+</ol>
+<ul>
+<li>Formulieren Sie die Hypothesen!</li>
+<li>Berechnen Sie die Irrtumswahrscheinlichkeit für die Ablehnung von <span class="math inline">\(H_0\)</span>!</li>
+<li>Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?</li>
+</ul>
+<ol start="6" class="example" style="list-style-type: decimal">
+<li>Allgemein wird angenommen, dass Studierende ihrem Studium pro Tag durchschnittlich 3,5 Stunden widmen. Sie machen eine Umfrage unter 6000 Studierenden und kommen auf ein arithmetisches Mittel von 5 Stunden und eine Varianz <span class="math inline">\(s^2= 4\)</span>. Daher vermuten Sie nun, dass die Lerndauer signifikant über 3.5 Stunden liegt.<br />
+</li>
+</ol>
+<ul>
+<li>Formulieren Sie die Hypothesen!</li>
+<li>Berechnen Sie die Irrtumswahrscheinlichkeit für die Ablehung von <span class="math inline">\(H_0\)</span>!</li>
+<li>Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?</li>
+</ul>
+</div>
+<div id="hinweise" class="section level2">
+<h2><span class="header-section-number">8.5</span> Hinweise</h2>
+<div id="auswahl-der-in-vollzeit-beschäftigten-befragten" class="section level3">
+<h3><span class="header-section-number">8.5.1</span> Auswahl der in Vollzeit beschäftigten Befragten</h3>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="inf2.html#cb23-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
+<span id="cb23-2"><a href="inf2.html#cb23-2"></a>cd <span class="st">&quot;...&quot;</span></span>
+<span id="cb23-3"><a href="inf2.html#cb23-3"></a><span class="co">// einlesen</span></span>
+<span id="cb23-4"><a href="inf2.html#cb23-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
+<span id="cb23-5"><a href="inf2.html#cb23-5"></a></span>
+<span id="cb23-6"><a href="inf2.html#cb23-6"></a><span class="co">// missings als NA:</span></span>
+<span id="cb23-7"><a href="inf2.html#cb23-7"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt;0 </span>
+<span id="cb23-8"><a href="inf2.html#cb23-8"></a></span>
+<span id="cb23-9"><a href="inf2.html#cb23-9"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2018  &amp; work == 1 &amp; inc &gt; 0</span>
+<span id="cb23-10"><a href="inf2.html#cb23-10"></a></span>
+<span id="cb23-11"><a href="inf2.html#cb23-11"></a><span class="co">// logarithmieren des Einkommens:</span></span>
+<span id="cb23-12"><a href="inf2.html#cb23-12"></a><span class="kw">gen</span> log_inc = <span class="fu">log</span>(inc)</span></code></pre></div>
+<!-- ### Plot der Körpergrößenangaben -->
+<!-- ```{r,echo =F} -->
+<!-- library(dplyr) -->
+<!-- library(ggplot2) -->
+<!-- a14gr1 <- filter(ak, year == 2014, !is.na(hs16)) %>%  -->
+<!--   mutate( sex = factor(sex, levels =c(1,2), labels = c("Männer", "Frauen")))  -->
+<!-- ggplot(a14gr1, aes(x = hs16, color = sex)) +  -->
+<!--   geom_density(bw = 2) + -->
+<!--   geom_vline(data = a14gr1 %>% group_by(sex) %>% summarise(mean = mean(hs16,na.rm = T)), -->
+<!--              aes(xintercept = mean), color = c("#29304E","#2473D5"), size = .75 ) + -->
+<!--   scale_color_manual(values = c("#29304E","#2473D5")) + -->
+<!--   labs(x = "Körpergröße (cm)", y = "Häufigkeitsdichte", -->
+<!--        fill = "", color = "", -->
+<!--        title = "Körpergröße der Befragten im Allbus 2014") + -->
+<!--   ggthemes::theme_stata()   -->
+<!-- ``` -->
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p><a href="https://doi.org/10.1177/2515245919858072">Failing Grade: 89% of Introduction-to-Psychology Textbooks That Define or Explain Statistical Significance Do So Incorrectly. Advances in Methods and Practices in Psychological Science, 2515245919858072.</a><a href="inf2.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Durch die Logarithmierung sind die Einkommensangaben (annähernd) normalverteilt.<a href="inf2.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
