@@ -547,15 +547,17 @@ KEINS VON BEIDEN |         0      2,374 |     2,374
        _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
 ------------------------------------------------------------------------------</code></pre>
 <p>Diese Logik überträgt ANOVA auf kategoriale Variablen, indem hier die Varianz in eine Streuung zwischen (<code>between</code>) und innerhalb der (<code>within</code>) der Gruppen aufgeteilt wird:</p>
-<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<pre><code>Error: `size` must be less or equal than 14 (size of data), set `replace` = TRUE to use sampling with replacement.</code></pre>
+<pre><code>Error: `size` must be less or equal than 14 (size of data), set `replace` = TRUE to use sampling with replacement.</code></pre>
+<pre><code>Error in eval(expr, envir, enclos): Objekt &#39;bet_plt&#39; nicht gefunden</code></pre>
 <p>Aus diesen beiden Streuungen berechnen wir wieder <code>Sum of squares</code>, welche dann ins Verhältnis gesetzt werden, um den sog. F-Wertb zu berechnen:</p>
 <p><span class="math display">\[F=\frac{\textbf{between}\;\texttt{Sum of Squares}}{\textbf{within}\;\texttt{Sum of Squares}}\]</span></p>
 <p>Wenn der durchschnittliche Unterschied zwischen den Gruppen ähnlich ist wie innerhalb der Gruppen, beträgt das F-Verhältnis etwa 1. Wenn der durchschnittliche Unterschied zwischen den Gruppen größer wird als der innerhalb der Gruppen, wird das F-Verhältnis größer als 1. Um einen P-Wert zu erhalten, kann er gegen die F-Verteilung einer Zufallsvariablen mit den mit dem Zähler und Nenner des Verhältnisses verbundenen Freiheitsgraden getestet werden (ähnlich wie beim F-Test oben). Der P-Wert ist die Wahrscheinlichkeit, dieses oder ein größeres F-Verhältnis zu erhalten. Größere F-Verhältnisse ergeben kleinere P-Werte.</p>
 <p>Mit <code>oneway inc sex, tabulate</code> bekommen wir bspw. die Varianzzerlegung der Einkommensangaben nach Geschlechtern:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb14-1"><a href="hypo.html#cb14-1"></a>cd <span class="st">&quot;&quot;</span></span>
-<span id="cb14-2"><a href="hypo.html#cb14-2"></a><span class="kw">use</span> Allbus_2018.dta, <span class="kw">clear</span></span>
-<span id="cb14-3"><a href="hypo.html#cb14-3"></a><span class="kw">keep</span> <span class="kw">if</span> inc &gt; 0 &amp; educ &gt; 0</span>
-<span id="cb14-4"><a href="hypo.html#cb14-4"></a><span class="kw">oneway</span> inc sex, <span class="kw">tabulate</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="hypo.html#cb17-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb17-2"><a href="hypo.html#cb17-2"></a><span class="kw">use</span> Allbus_2018.dta, <span class="kw">clear</span></span>
+<span id="cb17-3"><a href="hypo.html#cb17-3"></a><span class="kw">keep</span> <span class="kw">if</span> inc &gt; 0 &amp; educ &gt; 0</span>
+<span id="cb17-4"><a href="hypo.html#cb17-4"></a><span class="kw">oneway</span> inc sex, <span class="kw">tabulate</span></span></code></pre></div>
 <pre><code>            |             Summary of
             | BFR.:NETTOEINKOMMEN(OFFENE+LISTENAN
 GESCHLECHT, |                GABE)
@@ -578,13 +580,13 @@ Bartlett&#39;s test for equal variances:  chi2(1) = 419.3118  Prob&gt;chi2 = 0.0
 <p>Die deskriptive Zusammenfassung oben liefert einige Deskriptionen: das arith. Mittel (<code>Mean</code>), die Standardabweichung (<code>Std. Dev.</code>) und die Stichprobengrößen (<code>Freq.</code>) für die abhängige Variable (Einkommen in unserem Beispiel) für jede Gruppe der unabhängigen Variable <code>sex</code> (also Frauen und Männer) sowie wenn alle Gruppen kombiniert werden (<code>Total</code>).</p>
 <p>Die Stata-Ausgabe der einseitige ANOVA findet sich in der unteren Tabelle und zeigt an, ob wir einen statistisch signifikanten Unterschied zwischen unseren beiden Gruppenmittelwerten haben. Das Verhältnis von <code>between</code> und <code>within</code> wird unter <code>F</code> angegeben. Wir können sehen, dass das Signifikanzniveau <code>Prob &gt; F</code> deutlich unter 0,05 liegt. Das legt einen statistisch signifikanten Unterschied im mittleren Einkommen den beiden Gruppen nahe.</p>
 <p>Außerdem werden uns die Sum of Squares für die Unterschiede innerhalb und zwischen den Gruppen angezeigt. Wir sehen hier, dass die Varianz innerhalb der Gruppen die Gruppendifferenz deutlich übersteigt: die Sum of Squares zwischen den Gruppen sind mit <code>506278204</code> deutlich geringer als die Within-group SS <code>4.8843e+09</code>. (<code>4.8843e+09</code> steht für <code>4884300000</code>, also <code>4.883</code> “mit dem Komma um 9 Stellen nach rechts verschoben”). Wir können aus den Zahlen für die Sum of Squares auch die Varianzaufklärung durch die Variable <code>sex</code> berechnen (<code>between</code>/<code>Total</code>):</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="hypo.html#cb16-1"></a>dis  (506278204/ 5.3905e+09)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="hypo.html#cb19-1"></a>dis  (506278204/ 5.3905e+09)</span></code></pre></div>
 <pre><code>.09392045</code></pre>
 <p>Durch Kenntnis der Varibale <code>sex</code> können also 9.39% der gesamten Varianz (“Unterschiede”) des Einkommens erklärt werden.</p>
 <div id="anova-vs.-t-tests" class="section level3">
 <h3><span class="header-section-number">9.4.1</span> ANOVA vs. t-Tests</h3>
 <p>Der t-Test wird beim Vergleich zweier Gruppen verwendet, während die ANOVA für den Vergleich von mehr als 2 Gruppen verwendet wird. Wenn wir den p-Wert unter Verwendung der ANOVA für 2 Gruppen berechnen, erhalten wir die gleichen Ergebnisse wie beim t-Test - hier also einen signifikanten Gruppenunterschied:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="hypo.html#cb18-1"></a><span class="kw">ttest</span> inc, <span class="kw">by</span>( sex) unequ</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="hypo.html#cb21-1"></a><span class="kw">ttest</span> inc, <span class="kw">by</span>( sex) unequ</span></code></pre></div>
 <pre><code>Two-sample t test with equal variances
 ------------------------------------------------------------------------------
    Group |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
@@ -605,7 +607,7 @@ Ho: diff = 0                                     degrees of freedom =     3085
 <div id="anova-vs.-lineare-regression" class="section level3">
 <h3><span class="header-section-number">9.4.2</span> ANOVA vs. lineare Regression</h3>
 <p>Die lineare Regression wird zur Analyse kontinuierlicher Beziehungen verwendet; die Regression ist jedoch im Wesentlichen die gleiche wie die ANOVA. Bei der ANOVA berechnen wir Mittelwerte und Abweichungen unserer Daten von den Mittelwerten. Bei der linearen Regression berechnen wir die beste Linie durch die Daten und berechnen die Abweichungen der Daten von dieser Linie. Stata gibt uns das F-Verhältnis bei Regressionsmodellen direkt mit aus. Zu beachten ist aber hier, dass wir für eine kategoriale unabhängige Variable <code>i.</code> voranstellen müssen:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="hypo.html#cb20-1"></a><span class="kw">reg</span> inc i.sex</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="hypo.html#cb23-1"></a><span class="kw">reg</span> inc i.sex</span></code></pre></div>
 <pre><code>      Source |       SS       df       MS              Number of obs =    3087
 -------------+------------------------------           F(  1,  3085) =  319.29
        Model |   501082717     1   501082717           Prob &gt; F      =  0.0000
@@ -638,7 +640,7 @@ Ho: diff = 0                                     degrees of freedom =     3085
 <h2><span class="header-section-number">9.5</span> ANOVA mehrere Gruppen</h2>
 <p>Der Vorteil von ANOVA ist aber, dass sich auch Gruppenunterschiede über mehrere Gruppen</p>
 <p><img src="Stata_Skript_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="hypo.html#cb22-1"></a><span class="kw">oneway</span> inc educ, <span class="kw">tabulate</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb25-1"><a href="hypo.html#cb25-1"></a><span class="kw">oneway</span> inc educ, <span class="kw">tabulate</span></span></code></pre></div>
 <pre><code>            |             Summary of
 ALLGEMEINER | BFR.:NETTOEINKOMMEN(OFFENE+LISTENAN
 SCHULABSCHL |                GABE)
@@ -663,8 +665,12 @@ Between groups       492795287      6   82132547.9     51.68     0.0000
     Total           5.3905e+09   3088   1745638.99
 
 Bartlett&#39;s test for equal variances:  chi2(6) = 520.5203  Prob&gt;chi2 = 0.000</code></pre>
+<p>Wir erkennen:
++ dass signifikante Gruppenunterschiede bestehen: <code>Prob &gt; F</code> ist deutlich &lt; 0,05
++ Kenntnis von <code>educ</code> kann
++ dass Befragte mit Hochschulreife die höchsten Durchschnittseinkommen haben (<code>Mean</code> = 2336.9612), Schüler*innen die niedrigsten (<code>Mean</code> = 548.125) usw.</p>
 <p>Auch hier der Vergleich zu Regressionsmodellen einer kategorialen UV:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="hypo.html#cb24-1"></a><span class="kw">reg</span> inc i.educ</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb27-1"><a href="hypo.html#cb27-1"></a><span class="kw">reg</span> inc i.educ</span></code></pre></div>
 <pre><code>      Source |       SS       df       MS              Number of obs =    3089
 -------------+------------------------------           F(  6,  3082) =   51.68
        Model |   492795287     6  82132547.9           Prob &gt; F      =  0.0000
@@ -685,6 +691,43 @@ FACHHOCHSCHULREIFE  |   1099.093   211.1412     5.21   0.000     685.1011    151
                     |
               _cons |   1066.024   196.8745     5.41   0.000     680.0058    1452.043
 -------------------------------------------------------------------------------------</code></pre>
+<p><span class="math inline">\(\rightarrow\)</span> hier sind die Koeffizienten jeweils auf den Vergleich zu <code>educ=1</code> zu interpretieren:</p>
+<ul>
+<li>Befragte mit VOLKS-,HAUPTSCHULE verdienen im Schnitt 347.3831 EUR mehr als Befragte ohne Abschluss (<code>educ = 1</code>). Der Unterschied ist aber <strong>nicht statistisch signifikant</strong> (<code>P&gt;|t|</code> &gt; 0,05).</li>
+<li>Befragte mit MITTLERE REIFE verdienen im Schnitt 544.888 EUR mehr als Befragte ohne Abschluss (<code>educ = 1</code>). Der Unterschied ist statistisch signifikant (<code>P&gt;|t|</code> &lt; 0,05).</li>
+<li>Befragte mit FACHHOCHSCHULREIFE verdienen im Schnitt 1099.093 EUR mehr als Befragte ohne Abschluss (<code>educ = 1</code>). Der Unterschied ist statistisch signifikant (<code>P&gt;|t|</code> &lt; 0,05).</li>
+<li>Befragte, die noch zur Schule gehen, verdienen im Schnitt 517.8994 EUR weniger als Befragte ohne Abschluss (<code>educ = 1</code>). Der Unterschied ist statistisch signifikant (<code>P&gt;|t|</code> &lt; 0,05).</li>
+</ul>
+<p>Wir können die Referenzgruppe mit <code>ib3.</code> auf Realschulabsolvent*innen setzen:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="hypo.html#cb29-1"></a><span class="kw">reg</span> inc ib3.educ</span></code></pre></div>
+<pre><code>      Source |       SS       df       MS              Number of obs =    3089
+-------------+------------------------------           F(  6,  3082) =   51.68
+       Model |   492795287     6  82132547.9           Prob &gt; F      =  0.0000
+    Residual |  4.8977e+09  3082  1589142.74           R-squared     =  0.0914
+-------------+------------------------------           Adj R-squared =  0.0896
+       Total |  5.3905e+09  3088  1745638.99           Root MSE      =  1260.6
+
+-------------------------------------------------------------------------------------
+                inc |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+               educ |
+    OHNE ABSCHLUSS  |   -544.888   200.6006    -2.72   0.007    -938.2125   -151.5636
+VOLKS-,HAUPTSCHULE  |  -197.5049   60.62983    -3.26   0.001    -316.3839   -78.62597
+FACHHOCHSCHULREIFE  |   554.2048   85.45211     6.49   0.000      386.656    721.7537
+    HOCHSCHULREIFE  |   726.0488   56.09631    12.94   0.000     616.0589    836.0388
+ ANDERER ABSCHLUSS  |  -195.5999    317.494    -0.62   0.538    -818.1212    426.9214
+     NOCH SCHUELER  |  -1062.787   447.3521    -2.38   0.018    -1939.926    -185.649
+                    |
+              _cons |   1610.912   38.48412    41.86   0.000     1535.455     1686.37
+-------------------------------------------------------------------------------------</code></pre>
+<p><span class="math inline">\(\rightarrow\)</span> jetzt sind die Koeffizienten jeweils auf den Vergleich zu <code>educ=3</code> zu interpretieren:</p>
+<ul>
+<li>Befragte mit VOLKS-,HAUPTSCHULE verdienen im Schnitt 197.5049 EUR weniger als Befragte Realschulabschluss (<code>educ = 3</code>). Der Unterschied ist statistisch signifikant (<code>P&gt;|t|</code> &lt; 0,05).</li>
+<li>Befragte mit FACHHOCHSCHULREIFE verdienen im Schnitt 554.2048 EUR mehr als Befragte Realschulabschluss (<code>educ = 3</code>). Der Unterschied ist statistisch signifikant (<code>P&gt;|t|</code> &lt; 0,05).</li>
+<li>Befragte mit HOCHSCHULREIFE verdienen im Schnitt 726.0488 EUR mehr als Befragte Realschulabschluss (<code>educ = 3</code>). Der Unterschied ist statistisch signifikant (<code>P&gt;|t|</code> &lt; 0,05).</li>
+<li>Befragte mit anderem Abschluss verdienen im Schnitt 195.5999 EUR weniger als Befragte Realschulabschluss (<code>educ = 3</code>). Der Unterschied ist aber <strong>nicht statistisch signifikant</strong> (<code>P&gt;|t|</code> &gt; 0,05).</li>
+<li>Befragte, die noch zur Schule gehen, verdienen im Schnitt 1062.78 EUR weniger als Befragte Realschulabschluss (<code>educ = 3</code>). Der Unterschied ist statistisch signifikant (<code>P&gt;|t|</code> &lt; 0,05).</li>
+</ul>
 
 </div>
 </div>

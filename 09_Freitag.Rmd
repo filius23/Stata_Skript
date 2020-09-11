@@ -455,6 +455,11 @@ qui keep if inc > 0 & educ > 0
 oneway inc educ, tabulate
 ```
 
+Wir erkennen:
++ dass signifikante Gruppenunterschiede bestehen: `Prob > F` ist deutlich < 0,05
++ Kenntnis von `educ` kann 
++ dass Befragte mit Hochschulreife die höchsten Durchschnittseinkommen haben (`Mean` = 2336.9612), Schüler\*innen die niedrigsten (`Mean` = 548.125) usw.
+
 Auch hier der Vergleich zu Regressionsmodellen einer kategorialen UV:
 
 ```{stata reg_anova3, eval =F }
@@ -468,3 +473,35 @@ qui use Allbus_2018.dta, clear
 qui keep if inc > 0 & educ > 0
 reg inc i.educ
 ```
+
+
+$\rightarrow$ hier sind die Koeffizienten jeweils auf den Vergleich zu `educ=1` zu interpretieren:
+
++ Befragte mit VOLKS-,HAUPTSCHULE  verdienen im Schnitt  347.3831 EUR mehr als Befragte ohne Abschluss (`educ = 1`). Der Unterschied ist aber **nicht statistisch signifikant** (`P>|t|` > 0,05).
++ Befragte mit MITTLERE REIFE   verdienen im Schnitt   544.888 EUR mehr als Befragte ohne Abschluss (`educ = 1`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
++ Befragte mit FACHHOCHSCHULREIFE  verdienen im Schnitt  1099.093 EUR mehr als Befragte ohne Abschluss (`educ = 1`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
++ Befragte, die noch zur Schule gehen, verdienen im Schnitt 517.8994 EUR weniger als Befragte ohne Abschluss (`educ = 1`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
+
+
+
+Wir können die Referenzgruppe mit `ib3.` auf Realschulabsolvent*innen setzen:
+
+```{stata reg_anova3_ib, eval =F }
+reg inc ib3.educ
+```
+
+```{stata  reg_anova4_ib, echo =F }
+set linesize 200
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use Allbus_2018.dta, clear
+qui keep if inc > 0 & educ > 0
+reg inc ib3.educ
+```
+
+$\rightarrow$ jetzt sind die Koeffizienten jeweils auf den Vergleich zu `educ=3` zu interpretieren:
+
++ Befragte mit VOLKS-,HAUPTSCHULE  verdienen im Schnitt 197.5049 EUR weniger als Befragte Realschulabschluss (`educ = 3`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
++ Befragte mit FACHHOCHSCHULREIFE  verdienen im Schnitt  554.2048 EUR mehr als Befragte Realschulabschluss (`educ = 3`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
++ Befragte mit HOCHSCHULREIFE  verdienen im Schnitt 726.0488  EUR mehr als Befragte Realschulabschluss (`educ = 3`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
++ Befragte mit anderem Abschluss  verdienen im Schnitt 195.5999 EUR weniger als Befragte Realschulabschluss (`educ = 3`). Der Unterschied ist aber **nicht statistisch signifikant** (`P>|t|` > 0,05).
++ Befragte, die noch zur Schule gehen, verdienen im Schnitt 1062.78 EUR weniger als Befragte Realschulabschluss (`educ = 3`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
