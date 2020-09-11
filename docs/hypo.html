@@ -331,8 +331,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.2.2" data-path="hypo.html"><a href="hypo.html#chi²-test"><i class="fa fa-check"></i><b>9.2.2</b> Chi²-Test</a></li>
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="hypo.html"><a href="hypo.html#überblick"><i class="fa fa-check"></i><b>9.3</b> Überblick</a></li>
+<li class="chapter" data-level="9.4" data-path="hypo.html"><a href="hypo.html#anova"><i class="fa fa-check"></i><b>9.4</b> ANOVA</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="hypo.html"><a href="hypo.html#anova-vs.-t-tests"><i class="fa fa-check"></i><b>9.4.1</b> ANOVA vs. t-Tests</a></li>
+<li class="chapter" data-level="9.4.2" data-path="hypo.html"><a href="hypo.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>9.4.2</b> ANOVA vs. lineare Regression</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a></li>
+<li class="chapter" data-level="9.5" data-path="hypo.html"><a href="hypo.html#anova-mehrere-gruppen"><i class="fa fa-check"></i><b>9.5</b> ANOVA mehrere Gruppen</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a><ul>
+<li class="chapter" data-level="10.1" data-path="export1.html"><a href="export1.html#graph-export"><i class="fa fa-check"></i><b>10.1</b> graph export</a></li>
+<li class="chapter" data-level="10.2" data-path="export1.html"><a href="export1.html#esttab"><i class="fa fa-check"></i><b>10.2</b> esttab</a></li>
+<li class="chapter" data-level="10.3" data-path="export1.html"><a href="export1.html#log-file"><i class="fa fa-check"></i><b>10.3</b> log file</a></li>
+</ul></li>
 <li class="chapter" data-level="11" data-path="adva.html"><a href="adva.html"><i class="fa fa-check"></i><b>11</b> Fortgeschrittene Themen</a><ul>
 <li class="chapter" data-level="11.1" data-path="adva.html"><a href="adva.html#wertelabels"><i class="fa fa-check"></i><b>11.1</b> Wertelabels</a></li>
 <li class="chapter" data-level="11.2" data-path="adva.html"><a href="adva.html#sortieren"><i class="fa fa-check"></i><b>11.2</b> sortieren</a></li>
@@ -392,17 +401,17 @@ Wir kommen nochmal auf das Beispiel der Körpergrößen aus dem Allbus 2014 aus 
 <span id="cb1-2"><a href="hypo.html#cb1-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_1980-2018.dta&quot;</span>,<span class="kw">clear</span></span>
 <span id="cb1-3"><a href="hypo.html#cb1-3"></a><span class="kw">keep</span>  <span class="kw">if</span> <span class="fu">year</span> == 2014 &amp; hs16 &gt; 0</span></code></pre></div>
 <p>Im konkreten Fall ist also <span class="math inline">\(s^{2}_{Maenner}\)</span> der Schätzer für <span class="math inline">\(\sigma^{2}_{Manner}\)</span> und <span class="math inline">\(s^{2}_{Frauen}\)</span> der Schätzer für die <span class="math inline">\(\sigma^{2}_{Frauen}\)</span>. Wir berechnen also zunächst die Stichprobenvarianzen:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="hypo.html#cb2-1"></a><span class="kw">tabstat</span> hs16, <span class="kw">by</span>(sex)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="hypo.html#cb2-1"></a><span class="kw">tabstat</span> hs16, <span class="fu">s</span>(<span class="kw">var</span> cv) <span class="kw">by</span>(sex)</span></code></pre></div>
 <pre><code>Summary for variables: hs16
      by categories of: sex (GESCHLECHT, BEFRAGTE(R))
 
-   sex |      mean
--------+----------
-  MANN |  178.7179
-  FRAU |  165.8881
--------+----------
- Total |  172.3974
-------------------</code></pre>
+   sex |  variance        cv
+-------+--------------------
+  MANN |  51.55268  .0401752
+  FRAU |  42.40775  .0392561
+-------+--------------------
+ Total |  88.18758   .054472
+----------------------------</code></pre>
 <p>In <code>sdtest()</code> geben wir zunächst die zu testende Variable an, dann die Gruppierungsvariable:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="hypo.html#cb4-1"></a><span class="kw">sdtest</span> hs16, <span class="kw">by</span>(sex)</span></code></pre></div>
 <pre><code>Variance ratio test
@@ -429,16 +438,12 @@ Ho: ratio = 1                                  degrees of freedom = 1757, 1706
 <p>Für dichtome abhängige Variablen eignet sich der Binomialtest. Wir können mit dem Binomialtest testen, ob ein Anteil eines Merkmals sich signifikant von einem Wert unterscheidet. Dieser Anteil wird als <span class="math inline">\(\pi\)</span> bezeichnet und beschreibt Auftrittswahrscheinlichkeit des interessierenden Merkmals in der Grundgesamtheit. In R können wir den Binomialtest mit <code>binom.test</code> aufrufen.
 Auch hier gibt es wieder gerichtete und ungerichtete Hypothesen:</p>
 <ul>
-<li>ungerichtete/beidseitige Hypothese:</li>
-</ul>
-<p><span class="math inline">\(H_0: \pi = p \qquad H_A: \pi \neq p\)</span></p>
-<ul>
-<li>linksseitige Hypothese:</li>
-</ul>
-<p><span class="math inline">\(H_0: \pi \geqslant p \qquad H_A: \pi &lt; p\)</span></p>
-<ul>
-<li>rechtssseitige Hypothese:<br />
-<span class="math inline">\(H_0: \pi \leqslant p \qquad H_A: \pi &gt; p\)</span></li>
+<li><p>ungerichtete/beidseitige Hypothese:
+<span class="math inline">\(H_0: \pi = p \qquad H_A: \pi \neq p\)</span></p></li>
+<li><p>linksseitige Hypothese:<br />
+<span class="math inline">\(H_0: \pi \geqslant p \qquad H_A: \pi &lt; p\)</span></p></li>
+<li><p>rechtssseitige Hypothese:<br />
+<span class="math inline">\(H_0: \pi \leqslant p \qquad H_A: \pi &gt; p\)</span></p></li>
 </ul>
 <p>Wir könnten uns zB. fragen ob der Anteil der Befragten ohne Haustier im Allbus 2014 sich von <span class="math inline">\(67\%\)</span> unterscheidet. Dazu wählen wir zunächst alle Befragten des Allbus 2014 aus, welche die Frage nach den Haustieren (<code>aq03</code>) beantwortet haben (<code>aq &lt; 0</code> sind missings, daher verwenden wir schlicht <code>aq03 &gt; 0</code>). Dazu erstellen wir aus <code>aq03</code> noch eine Dummyvariable, welche 1 für das interessierende Merkmal (kein Haustierbesitz) und 0 in allen anderen Fällen annimmt:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="hypo.html#cb6-1"></a>cd <span class="st">&quot;&quot;</span></span>
@@ -515,10 +520,171 @@ KEINS VON BEIDEN |         0      2,374 |     2,374
 </ul></li>
 <li><p>Anteile vergleichen:</p>
 <ul>
-<li><p>mit einem behaupteten Wert: <code>bitest testvariable == referenzwert</code></p></li>
-<li><p>zwischen Gruppen: Kreuztabelle erstellen und mit <code>tab var1 var2, chi</code> Unabhängigkeit testen</p></li>
+<li>mit einem behaupteten Wert: <code>bitest testvariable == referenzwert</code><br />
+</li>
+<li>zwischen Gruppen: Kreuztabelle erstellen und mit <code>tab var1 var2, chi</code> Unabhängigkeit testen</li>
 </ul></li>
 </ul>
+</div>
+<div id="anova" class="section level2">
+<h2><span class="header-section-number">9.4</span> ANOVA</h2>
+<p>ANOVA steht für <strong>an</strong>alysis <strong>o</strong>f <strong>v</strong>ariance und wird auch als univariate Varianzanalyse bezeichnet.</p>
+<p>ANOVA wird verwendet, um Mittelwertunterschiede zwischen mehr als 2 Gruppen zu vergleichen. Dies geschieht, indem die Varianz in den Daten betrachtet wird (daher der Name). Insbesondere vergleicht ANOVA das Ausmaß der Variation zwischen den Gruppen (<em>between variance</em>) mit dem Ausmaß der Variation innerhalb der Gruppen (<em>within variance</em>). Wir hatten diese Logik Varianzzerlegung schon bei Regressionsmodellen kennengelernt:</p>
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Hier hatten wir die Gesamtvarianz in erklärte und unerklärte Varianz zerlegt. Diese Sum of Squares bezeichnet Stata <code>Model</code> und <code>Residual</code>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb12-1"><a href="hypo.html#cb12-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
+-------------+------------------------------           F(  1,     2) =   11.07
+       Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
+    Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
+-------------+------------------------------           Adj R-squared =  0.7705
+       Total |       14.75     3  4.91666667           Root MSE      =  1.0623
+
+------------------------------------------------------------------------------
+        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------</code></pre>
+<p>Diese Logik überträgt ANOVA auf kategoriale Variablen, indem hier die Varianz in eine Streuung zwischen (<code>between</code>) und innerhalb der (<code>within</code>) der Gruppen aufgeteilt wird:</p>
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Aus diesen beiden Streuungen berechnen wir wieder <code>Sum of squares</code>, welche dann ins Verhältnis gesetzt werden, um den sog. F-Wertb zu berechnen:</p>
+<p><span class="math display">\[F=\frac{\textbf{between}\;\texttt{Sum of Squares}}{\textbf{within}\;\texttt{Sum of Squares}}\]</span></p>
+<p>Wenn der durchschnittliche Unterschied zwischen den Gruppen ähnlich ist wie innerhalb der Gruppen, beträgt das F-Verhältnis etwa 1. Wenn der durchschnittliche Unterschied zwischen den Gruppen größer wird als der innerhalb der Gruppen, wird das F-Verhältnis größer als 1. Um einen P-Wert zu erhalten, kann er gegen die F-Verteilung einer Zufallsvariablen mit den mit dem Zähler und Nenner des Verhältnisses verbundenen Freiheitsgraden getestet werden (ähnlich wie beim F-Test oben). Der P-Wert ist die Wahrscheinlichkeit, dieses oder ein größeres F-Verhältnis zu erhalten. Größere F-Verhältnisse ergeben kleinere P-Werte.</p>
+<p>Mit <code>oneway inc sex, tabulate</code> bekommen wir bspw. die Varianzzerlegung der Einkommensangaben nach Geschlechtern:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb14-1"><a href="hypo.html#cb14-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb14-2"><a href="hypo.html#cb14-2"></a><span class="kw">use</span> Allbus_2018.dta, <span class="kw">clear</span></span>
+<span id="cb14-3"><a href="hypo.html#cb14-3"></a><span class="kw">keep</span> <span class="kw">if</span> inc &gt; 0 &amp; educ &gt; 0</span>
+<span id="cb14-4"><a href="hypo.html#cb14-4"></a><span class="kw">oneway</span> inc sex, <span class="kw">tabulate</span></span></code></pre></div>
+<pre><code>            |             Summary of
+            | BFR.:NETTOEINKOMMEN(OFFENE+LISTENAN
+GESCHLECHT, |                GABE)
+BEFRAGTE(R) |        Mean   Std. Dev.       Freq.
+------------+------------------------------------
+       MANN |   2214.3536   1519.8463        1612
+       FRAU |   1403.8951   887.64216        1477
+------------+------------------------------------
+      Total |   1826.8343   1321.2263        3089
+
+                        Analysis of Variance
+    Source              SS         df      MS            F     Prob &gt; F
+------------------------------------------------------------------------
+Between groups       506278204      1    506278204    319.98     0.0000
+ Within groups      4.8843e+09   3087   1582201.17
+------------------------------------------------------------------------
+    Total           5.3905e+09   3088   1745638.99
+
+Bartlett&#39;s test for equal variances:  chi2(1) = 419.3118  Prob&gt;chi2 = 0.000</code></pre>
+<p>Die deskriptive Zusammenfassung oben liefert einige Deskriptionen: das arith. Mittel (<code>Mean</code>), die Standardabweichung (<code>Std. Dev.</code>) und die Stichprobengrößen (<code>Freq.</code>) für die abhängige Variable (Einkommen in unserem Beispiel) für jede Gruppe der unabhängigen Variable <code>sex</code> (also Frauen und Männer) sowie wenn alle Gruppen kombiniert werden (<code>Total</code>).</p>
+<p>Die Stata-Ausgabe der einseitige ANOVA findet sich in der unteren Tabelle und zeigt an, ob wir einen statistisch signifikanten Unterschied zwischen unseren beiden Gruppenmittelwerten haben. Das Verhältnis von <code>between</code> und <code>within</code> wird unter <code>F</code> angegeben. Wir können sehen, dass das Signifikanzniveau <code>Prob &gt; F</code> deutlich unter 0,05 liegt. Das legt einen statistisch signifikanten Unterschied im mittleren Einkommen den beiden Gruppen nahe.</p>
+<p>Außerdem werden uns die Sum of Squares für die Unterschiede innerhalb und zwischen den Gruppen angezeigt. Wir sehen hier, dass die Varianz innerhalb der Gruppen die Gruppendifferenz deutlich übersteigt: die Sum of Squares zwischen den Gruppen sind mit <code>506278204</code> deutlich geringer als die Within-group SS <code>4.8843e+09</code>. (<code>4.8843e+09</code> steht für <code>4884300000</code>, also <code>4.883</code> “mit dem Komma um 9 Stellen nach rechts verschoben”). Wir können aus den Zahlen für die Sum of Squares auch die Varianzaufklärung durch die Variable <code>sex</code> berechnen (<code>between</code>/<code>Total</code>):</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="hypo.html#cb16-1"></a>dis  (506278204/ 5.3905e+09)</span></code></pre></div>
+<pre><code>.09392045</code></pre>
+<p>Durch Kenntnis der Varibale <code>sex</code> können also 9.39% der gesamten Varianz (“Unterschiede”) des Einkommens erklärt werden.</p>
+<div id="anova-vs.-t-tests" class="section level3">
+<h3><span class="header-section-number">9.4.1</span> ANOVA vs. t-Tests</h3>
+<p>Der t-Test wird beim Vergleich zweier Gruppen verwendet, während die ANOVA für den Vergleich von mehr als 2 Gruppen verwendet wird. Wenn wir den p-Wert unter Verwendung der ANOVA für 2 Gruppen berechnen, erhalten wir die gleichen Ergebnisse wie beim t-Test - hier also einen signifikanten Gruppenunterschied:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="hypo.html#cb18-1"></a><span class="kw">ttest</span> inc, <span class="kw">by</span>( sex) unequ</span></code></pre></div>
+<pre><code>Two-sample t test with equal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+    MANN |    1611    2210.297    37.65982    1511.562    2136.429    2284.164
+    FRAU |    1476    1403.745    23.11175    887.9243     1358.41    1449.081
+---------+--------------------------------------------------------------------
+combined |    3087    1824.657    23.68143    1315.759    1778.224     1871.09
+---------+--------------------------------------------------------------------
+    diff |            806.5515    45.13757                718.0487    895.0542
+------------------------------------------------------------------------------
+    diff = mean(MANN) - mean(FRAU)                                t =  17.8687
+Ho: diff = 0                                     degrees of freedom =     3085
+
+    Ha: diff &lt; 0                 Ha: diff != 0                 Ha: diff &gt; 0
+ Pr(T &lt; t) = 1.0000         Pr(|T| &gt; |t|) = 0.0000          Pr(T &gt; t) = 0.0000</code></pre>
+</div>
+<div id="anova-vs.-lineare-regression" class="section level3">
+<h3><span class="header-section-number">9.4.2</span> ANOVA vs. lineare Regression</h3>
+<p>Die lineare Regression wird zur Analyse kontinuierlicher Beziehungen verwendet; die Regression ist jedoch im Wesentlichen die gleiche wie die ANOVA. Bei der ANOVA berechnen wir Mittelwerte und Abweichungen unserer Daten von den Mittelwerten. Bei der linearen Regression berechnen wir die beste Linie durch die Daten und berechnen die Abweichungen der Daten von dieser Linie. Stata gibt uns das F-Verhältnis bei Regressionsmodellen direkt mit aus. Zu beachten ist aber hier, dass wir für eine kategoriale unabhängige Variable <code>i.</code> voranstellen müssen:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="hypo.html#cb20-1"></a><span class="kw">reg</span> inc i.sex</span></code></pre></div>
+<pre><code>      Source |       SS       df       MS              Number of obs =    3087
+-------------+------------------------------           F(  1,  3085) =  319.29
+       Model |   501082717     1   501082717           Prob &gt; F      =  0.0000
+    Residual |  4.8415e+09  3085  1569356.53           R-squared     =  0.0938
+-------------+------------------------------           Adj R-squared =  0.0935
+       Total |  5.3425e+09  3086  1731220.87           Root MSE      =  1252.7
+
+------------------------------------------------------------------------------
+         inc |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         sex |
+       FRAU  |  -806.5515   45.13757   -17.87   0.000    -895.0542   -718.0487
+       _cons |   2210.297   31.21138    70.82   0.000       2149.1    2271.494
+------------------------------------------------------------------------------</code></pre>
+<ul>
+<li>die obere Tabelle entspricht dem Output von <code>oneway</code>:
+<ul>
+<li>die Sum of Squares innerhalb von <code>sex</code> betragen <code>506278204</code>, zwischen <code>sex</code> ist die Sum of Squares (<code>4.8843e+09</code>)</li>
+<li>Das Verhältnis der within und between Streuung beträgt <code>F(1, 3087) = 319.98</code> (siehe Spalte <code>F</code> in <code>oneway</code>)</li>
+<li>die Variable <code>sex</code> kann 9,38% der Streuung der Einkommen erklären (<code>R-squared =  0.0938</code>), siehe unsere Berechnung oben</li>
+</ul></li>
+<li>die untere Tabelle entspricht dem <code>ttest</code>:
+<ul>
+<li>Frauen verdienen im Mittel <code>806.5515</code> weniger als Männer und dieser Unterschied ist statistisch signifikant (vgl. <code>diff</code> bei <code>ttest</code>)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="anova-mehrere-gruppen" class="section level2">
+<h2><span class="header-section-number">9.5</span> ANOVA mehrere Gruppen</h2>
+<p>Der Vorteil von ANOVA ist aber, dass sich auch Gruppenunterschiede über mehrere Gruppen</p>
+<p><img src="Stata_Skript_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="hypo.html#cb22-1"></a><span class="kw">oneway</span> inc educ, <span class="kw">tabulate</span></span></code></pre></div>
+<pre><code>            |             Summary of
+ALLGEMEINER | BFR.:NETTOEINKOMMEN(OFFENE+LISTENAN
+SCHULABSCHL |                GABE)
+        USS |        Mean   Std. Dev.       Freq.
+------------+------------------------------------
+  OHNE ABSC |   1066.0244   836.64603          41
+  VOLKS-,HA |   1413.4075   946.82151         724
+  MITTLERE  |   1610.9124   912.21029        1073
+  FACHHOCHS |   2165.1172   1373.9449         273
+  HOCHSCHUL |   2336.9612   1714.1057         954
+  ANDERER A |   1415.3125   964.18503          16
+  NOCH SCHU |     548.125   544.93733           8
+------------+------------------------------------
+      Total |   1826.8343   1321.2263        3089
+
+                        Analysis of Variance
+    Source              SS         df      MS            F     Prob &gt; F
+------------------------------------------------------------------------
+Between groups       492795287      6   82132547.9     51.68     0.0000
+ Within groups      4.8977e+09   3082   1589142.74
+------------------------------------------------------------------------
+    Total           5.3905e+09   3088   1745638.99
+
+Bartlett&#39;s test for equal variances:  chi2(6) = 520.5203  Prob&gt;chi2 = 0.000</code></pre>
+<p>Auch hier der Vergleich zu Regressionsmodellen einer kategorialen UV:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="hypo.html#cb24-1"></a><span class="kw">reg</span> inc i.educ</span></code></pre></div>
+<pre><code>      Source |       SS       df       MS              Number of obs =    3089
+-------------+------------------------------           F(  6,  3082) =   51.68
+       Model |   492795287     6  82132547.9           Prob &gt; F      =  0.0000
+    Residual |  4.8977e+09  3082  1589142.74           R-squared     =  0.0914
+-------------+------------------------------           Adj R-squared =  0.0896
+       Total |  5.3905e+09  3088  1745638.99           Root MSE      =  1260.6
+
+-------------------------------------------------------------------------------------
+                inc |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+--------------------+----------------------------------------------------------------
+               educ |
+VOLKS-,HAUPTSCHULE  |   347.3831   202.3723     1.72   0.086    -49.41508    744.1812
+    MITTLERE REIFE  |    544.888   200.6006     2.72   0.007     151.5636    938.2125
+FACHHOCHSCHULREIFE  |   1099.093   211.1412     5.21   0.000     685.1011    1513.085
+    HOCHSCHULREIFE  |   1270.937   201.0606     6.32   0.000     876.7106    1665.163
+ ANDERER ABSCHLUSS  |   349.2881   371.5925     0.94   0.347     -379.306    1077.882
+     NOCH SCHUELER  |  -517.8994   487.2396    -1.06   0.288    -1473.247    437.4478
+                    |
+              _cons |   1066.024   196.8745     5.41   0.000     680.0058    1452.043
+-------------------------------------------------------------------------------------</code></pre>
 
 </div>
 </div>

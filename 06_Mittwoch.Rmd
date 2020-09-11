@@ -4,6 +4,8 @@
 .libPaths("D:/R-library4")
 knitr::opts_chunk$set(collapse = F)
 library(Statamarkdown)
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 ```
 
 Wir betrachten nochmal das Beispiel aus der vorherigen Session:
@@ -14,6 +16,7 @@ keep if year == 2012
 mvdecode age hs18, mv(-32 -13)
 ```
 ```{stata readin71b, echo= F}
+set linesize 200
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
 keep if year == 2012
@@ -25,27 +28,29 @@ mvdecode age hs18, mv(-32 -13)
 Wir können die Zusammenhangsmaße auch jeweils nur für Subgruppen berechnen, indem wir mit `if` entsprechende Bedingungen anhängen. So könnten wir zB. analysieren ob der Zusammenhang zwischen dem BMI (`hs18`) und `age` für Frauen oder Männer stärker ist, indem wir an alle Variablen jeweils `if sex ==1` zur Auswahl der männlichen Befragten bzw. `if sex ==2` für Frauen anhängen:
 
 ```{stata bmiM, eval = F}
-corr age hs18 if sex == 1
+corr hs18 age if sex == 1
 ```
 
 ```{stata bmiM2, echo= F}
+set linesize 200
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
 qui keep if year == 2012
-qui mvdecode age hs18, mv(-32 -13)
-corr age hs18 if sex == 1
+qui mvdecode hs18 age, mv(-32 -13)
+corr hs18 age if sex == 1
 ```
 
 ```{stata bmiF, eval = F}
-corr age hs18 if sex == 2
+corr hs18 age if sex == 2
 ```
 
 ```{stata bmiF2, echo= F}
+set linesize 200
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
 qui keep if year == 2012
 qui mvdecode age hs18, mv(-32 -13)
-corr age hs18 if sex == 2
+corr hs18 age if sex == 2
 ```   
 
 Der Zusammenhang zwischen Alter und BMI ist bei Frauen also (etwas) stärker als bei Männern.
@@ -53,30 +58,32 @@ Der Zusammenhang zwischen Alter und BMI ist bei Frauen also (etwas) stärker als
 Ebenso können wir `if` auch für die Regressionsbefehle verwenden:
 
 ```{stata regM, eval = F}
-reg age hs18 if sex == 1, noheader
+reg hs18 age if sex == 1, noheader
 ```
 
 ```{stata regM2, echo= F}
+set linesize 200
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
-keep if year == 2012
+qui keep if year == 2012
 qui mvdecode age hs18, mv(-32 -13)
-reg age hs18 if sex == 1, noheader
+reg hs18 age if sex == 1, noheader
 ```   
 
 ```{stata regF, eval = F}
-reg age hs18 if sex == 2, noheader
+reg hs18 age if sex == 2, noheader
 ```
 
 ```{stata regF2, echo= F}
+set linesize 200
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
-keep if year == 2012
+qui keep if year == 2012
 qui mvdecode age hs18, mv(-32 -13)
-reg age hs18 if sex == 2, noheader
+reg hs18 age if sex == 2, noheader
 ```   
 
-Während bei Männern also mit einem zusätzlichen Lebensjahr ein um `0.9419718` höherer BMI einher geht, hat die entsprechende Regressionsgerade bei Frauen eine Steigung von `0.7281134`.
+Während bei Männern also mit einem zusätzlichen Lebensjahr ein um `0.0477227` höherer BMI einher geht, hat die entsprechende Regressionsgerade bei Frauen eine Steigung von `0.0696115`.
 
 
 ## Zusammenhänge visualisieren
@@ -124,7 +131,32 @@ graph twoway ///
 knitr::include_graphics("06_scatter_lfit_fancy.png")
 ```
 
-Wir sehen hier also, dass die berechneten Zusammenhänge erfreulicherweise nicht auf einzelne Ausreißer zurückzuführen sind. 
+Wir sehen hier also, dass die berechneten Zusammenhänge erfreulicherweise nicht auf einzelne Ausreißer zurückzuführen sind. Allerdings gibt es bei Frauen zwei Angaben eines BMI > 50, wir können `if` nutzen, um unser Regressionsmodell ohne diese Extremwerte zu berechnen und mit den Ergebnissen auf Basis aller Fälle vergleichen:
+
+```{stata reg_if2, eval = F}
+reg hs18 age if sex == 2 & hs18< 50, noheader
+```
+```{stata regF2a, echo= F}
+set linesize 200
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep if year == 2012
+qui mvdecode age hs18, mv(-32 -13)
+reg hs18 age if sex == 2 & hs18< 50, noheader
+```   
+
+```{stata reg_if3, eval = F}
+reg hs18 age if sex == 2, noheader
+```
+```{stata regF3a, echo= F}
+set linesize 200
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep if year == 2012
+qui mvdecode age hs18, mv(-32 -13)
+reg hs18 age if sex == 2 , noheader
+```   
+
 
 
 ***
@@ -145,6 +177,7 @@ spearman educ mi02 if sex == 1
 ```
 
 ```{stata spearmMT, echo = F}
+set linesize 200
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
 qui keep if year == 1990
@@ -159,6 +192,7 @@ spearman educ mi02 if sex == 2
 ```
 
 ```{stata spearm2FT, echo = F}
+set linesize 200
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
 qui keep if year == 1990
@@ -385,9 +419,9 @@ twoway scatter mi02 educ, by(sex)
 knitr::include_graphics("06_no_jitter.png")
 ```
 
-Eine Möglichkeit ist ein sog. Jitter, dazu hängen wir `jitter(5 5)` an einen `twoway scatter`:
+Eine Möglichkeit ist ein sog. Jitter, der die Punkte zufällig um den exakten Wert verschieben. Dazu hängen wir `jitter(10)` an einen `twoway scatter` - 10 gibt dabei den Radius an, hier ist aber darauf zu achten dass sich die Punkte der verschiedenen Kategorien nicht überlappen:
 ```{stata scatter_jitter1, eval = F}
-twoway scatter mi02 educ, by(sex) jitter(5 5) ///
+twoway scatter mi02 educ, by(sex) jitter(10) ///
   msize(vsmall) mcolor(eggshell) mlcolor(black) mlwidth(vthin) 
 ```
 ```{r scatter_jitter, echo = F,out.width = "90%",out.height="90%", fig.align="center"}

@@ -280,9 +280,9 @@ browse eastwest german sex age mstat if sex == 2 | inc < 1000
 
 Für `if`-Bedingungen stehen uns die üblichen Operatoren zur Verfügung:
 
-`>`, `<`, `==`, `>=`, `<=`, `!=` oder `~=` (ungleich)
+`>`, `<`, `==`, `>=`, `<=`, `!=` (ungleich)
 
-Mit `inrange` können wir Auswahlen bequem auf einen Wertebereich eingrenzen - d.h. diese beiden Auswahlen führen zum gleichen Ergebnis:
+Mit `inrange` können wir Auswahlen bequem auf einen Wertebereich eingrenzen - d.h. diese beiden Auswahlen führen zum gleichen Ergebnis (nur Befragte, die zwischen 20 und 30 Jahre alt sind):
 ```{stata browse_if, eval = F}
 list sex land if age >= 20 & age <= 30
 list sex land if inrange(age,20,30)
