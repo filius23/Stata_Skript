@@ -228,6 +228,37 @@ browse respid age age_mon
 knitr::include_graphics("02_stata_browse_kontrolle.png")
 ```
 
+## keep & drop
+
+Manchmal möchten wir nur bestimmte Beobachtungen im Datensatz behalten. Beispielsweise möchten wir für eine Analyse nur Befragte mit einem Einkommen über 1500 EUR im Datensatz behalten. Dazu können wir `keep` oder `drop` die gewünschten Fälle behalten bzw. die ungewünschten ausschließen:
+```{stata keep, eval = F}
+use Allbus2018.dta
+keep if inc >= 1500
+d,s
+```
+
+```{stata keepb, echo = F}
+set linesize 90
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+keep if inc >= 1500
+d,s
+```
+
+```{stata drop, eval = F}
+use Allbus2018.dta
+drop if inc < 1500
+d,s
+```
+
+```{stata dropb, echo =F}
+set linesize 90
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+drop if inc < 1500
+d,s
+```
+
+Hinweis: wenn die negativen Werte für `inc` bereits als Missing überschrieben sind, verbleiben diese Fälle im Datensatz! Sie werden als unendlich groß erkannt! - siehe [hier](#miss_if)
+
 ## Fehlende Werte
 
 Wenn wir uns nochmal die Variable `age` ansehen, dann fallen die negativen Altersangaben ins Auge:
@@ -272,6 +303,27 @@ qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
 mvdecode dm03 dg03 isced97, mv(-32 -10)
 ```
 
+Häufig hilft ein Blick mit `labelbook`, um die fehlenden Werte zu identifizieren:
+```{stata miss_lab, eval = F}
+labelbook cs06
+```
+```{stata miss_lab2, echo = F}
+set linesize 80
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+labelbook cs06
+```
+Hier sind also `-11`,`-10`,`-9` und `-7` mit `.` zu überschreiben.
+
+Wir können auch mit `/` einen Wertebereich angeben, der als Missing definiert werden soll:
+```{stata miss8, eval = F}
+mvdecode cs06, mv(-11/-1)
+```
+oder wir nutzen `inrange` und `replace`:
+
+```{stata miss9, eval = F}
+replace  cs06 = . if inrange(cs06, -11,-1)
+```
+
 Mit `mdesc` bekommen wir eine Auszählung zu fehlenden Werten. `mdesc` ist allerdings kein Standard-Stata-Befehl, sondern muss extra installiert werden. Das ist allerdings kein größerer Aufwand:
 ```{stata miss4, eval = F}
 ssc install mdesc
@@ -288,7 +340,9 @@ qui mvdecode dm03 dg03 isced97, mv(-32)
 mdesc age dm03 dg03 isced97
 ```
 
-## if Bedingungen und fehlende Werte
+*Hinweis:* In diesem Skript werden wir meistens die fehlenden Werte mit `keep` oder `drop` löschen. Dies geht häufig schneller und wir kommen schneller zum Rechnen. In der Praxis empfiehlt es sich aber, die Missings wirklich mit `.` zu kennzeichnen und mit `mdesc` genauer zu betrachten, bevor sie gänzlich aus dem Speicher gelöscht werden.
+
+## if Bedingungen und fehlende Werte {#miss_if}
 
 Eine häufige Fehlerquelle bei fehlende Werten in Stata ist deren Verhältnis zu `>`. Fehlende Werte werden nämlich von Stata als "unendlich groß" gewertet! Wenn wir uns Befragte mit einem Alter über 92 ausgeben lassen, dann bekommen wir auch diejenigen ohne Altersangabe ausgegegeben:
 
@@ -341,38 +395,8 @@ list sex land age if age > 92 & !missing(age)
       +---------------------------+
 ```
 
-## keep & drop
 
-Manchmal möchten wir nur bestimmte Beobachtungen im Datensatz behalten. Beispielsweise möchten wir für eine Analyse nur Befragte mit einem Einkommen über 1500 EUR im Datensatz behalten. Dazu können wir `keep` oder `drop` die gewünschten Fälle behalten bzw. die ungewünschten ausschließen:
-```{stata keep, eval = F}
-use Allbus2018.dta
-keep if inc >= 1500
-d,s
-```
-
-```{stata keepb, echo = F}
-set linesize 90
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-keep if inc >= 1500
-d,s
-```
-
-```{stata drop, eval = F}
-use Allbus2018.dta
-drop if inc < 1500
-d,s
-```
-
-```{stata dropb, echo =F}
-set linesize 90
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-drop if inc < 1500
-d,s
-```
-
-Hinweis: wenn die negativen Werte für `inc` bereits als Missing überschrieben sind, verbleiben diese Fälle im Datensatz! (Sie werden als unendlich groß erkannt!) 
-
-## Labels und if-Bedingungen
+## Labels und if-Bedingungen 
 
 Genauso könnten wir auch vorgehen wenn wir nur männliche oder weibliche Befragte im Datensatz behalten möchten. Hier nochmal die Auszählung der Variable `sex`:
 ```{stata tab3, eval = F}

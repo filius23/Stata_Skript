@@ -15,9 +15,15 @@ ak <- readr::read_delim("D:/oCloud/RFS/allbus_kumuliert_1980-2018.csv", delim = 
 a14gr <- filter(ak, year == 2014, hs16>0 )
 ```
 
-## Vergleich von Varianzen mit dem F-Test
+## Vergleich von Varianzen mit dem F-Test {#ftest}
 
 Um die Varianzen zweier Stichproben zu überprüfen, steht uns der F-Test zur Verfügung - in Stata mit `sdtest`. Getestet wird beim F-Test die Hypothese, dass die Varianzen zweier Grundgesamtheiten gleich oder ungleich (zweiseitiger Test) sind bzw. dass die Varianz der einen Grundgesamtheit größer ist als die der anderen (einseitiger Test).
+
+Der F-Test hat einige Voraussetzungen: 
+
++	Die Variablen sind (mind.) intervallskaliert 
++	Die Variablen sind in der Grundgesamtheit (annähernd) normalverteilt
++	Die zu vergleichenden Gruppen sind voneinander unabhängig (unverbundene Stichproben)
 
 Es gibt also auch hier wieder gerichtete und ungerichtete Hypothesen. Da allerdings die F-Verteilung nicht symmetrisch ist, wird nur rechtsseitig getestet. Daher sollte beim Test die größere Varianz immer im Zähler stehen.
 
@@ -31,7 +37,7 @@ Es gibt also auch hier wieder gerichtete und ungerichtete Hypothesen. Da allerdi
 
 Wie schon beim t-Test geht es bei den Hypothesen um die Grundgesamtheit. Daher wird hier der griechische Buchstabe für die Varianz, $\sigma^2$, verwendet. Da wir i.d.R. keine Angabe zur Varianz der Grundgesamtheiten vorliegen haben, wird beim F-Test auf die Stichprobenvarianzen ($s^2$) zurückgegriffen. Der Quotient der Varianzen ist F-verteilt. Somit berechnet sich die F-Statistik aus dem Quotienten der beiden Stichprobenvarianzen, wobei – nochmal – die größere Varianz im Zähler steht:
 $$F = \frac{s^{2}_{1}}{s^{2}_{2}}$$
-Wir kommen nochmal auf das Beispiel der Körpergrößen aus dem Allbus 2014 aus Session 8 zurück:
+Wir kommen nochmal auf das Beispiel der Körpergrößen aus dem Allbus 2014 aus Session 8 zurück und fragen uns, ob die Varianz der Körpergröße sich bei Männern und Frauen unterscheidet:
 
 ```{stata readin8, eval = F}
 cd "..."
@@ -51,7 +57,9 @@ qui use  "Allbus_1980-2018.dta",clear
 qui keep  if year == 2014 & hs16>0
 tabstat hs16, s(var cv) by(sex)
 ```
+Wir haben Glück - die Gruppe mit der größeren Stichprobenvarianz hat auch den kleineren Zahlenwert zugewiesen (Männer haben bei `sex` die `1`). Wir können also `sdtest` ohne Umwege anwenden.[^091]
 
+[^091]: Andernfalls hätten wir `sex` umdrehen müssen, zB so: `gen sex_reverse = 3-sex`. So bekommen dann Frauen die `1` und Männer die `2` zugewiesen und Stata setzt bei `sdtest hs16, by(sex_reverse)` dann die Varianz der Frauen in den Zähler.
 
 In `sdtest()` geben wir zunächst die zu testende Variable an, dann die Gruppierungsvariable:
 ```{stata ftest3, eval = F}
@@ -66,6 +74,12 @@ sdtest hs16, by(sex)
 Da der p-Wert für den beidseitigen Test (mittlere Spalte, unter `Ha: ratio != 1`) deutlich unter 0,05 liegt wird die $H_0$ verworfen und wir gehen von ungleichen Varianzen bei den Körpergrößen von Männern und Frauen aus.  
 
 Außerdem kann die $H_0: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} \leqslant 1$ verworfen werden (letzte Spalte, unter `Ha: ratio > 1`). D.h. die Varianz der Körpergröße von Männern ist signifikant größer als die Varianz der Körpergröße bei Frauen.
+
+***
+
+[Übung1](#fueb)
+
+***
 
  
 ## Proportionen und Häufigkeiten
@@ -102,7 +116,7 @@ gen pet = (aq03 == 4)
 tab aq03 pet
 ```
 
-Mit ` bitest` können wir dann den Binomialtest durchführen, dieser test immer auf :
+Mit ` bitest` können wir dann den Binomialtest durchführen, dazu geben wir neben der Variable `pet` den zu testenden Wert als Dezimalwert an. Stata interpretiert dabei die Ausprägung 1 als "Treffer" und 0 als "Nicht-Treffer", daher haben wir eben die interessierende Ausprägung (kein Haustier) als `1` in `pet` definiert.
 ```{stata btest1, eval = F}
 bitest pet == .67
 ```
@@ -171,13 +185,49 @@ In allen Tests (außer $\chi^2$) können beidseitige, linksseitige oder rechtsse
   + zwischen Gruppen: Kreuztabelle erstellen und mit `tab var1 var2, chi` Unabhängigkeit testen
   
   
+## Übungen 9
 
+### Übung 9-1 {#fueb}
+  
+
+(@) Haben die Einkommensangaben von Haustierbesitzer\*innen eine höhere Varianz als die Einkommensangaben von Nicht-Haustierbesitzer\*innen ? 
+
+|  |  |
+|:----------|:---------------------------------------------------------------------------------|
+| `aq03` | Haben Sie einen Hund oder eine Katze in Ihrem Haushalt? 
+| | `1` Ja, Hund  
+| | `2` Ja, Katze 
+| | `3` Ja, beides 
+| | `4` Nein, keines von beiden
+| `inc` | Einkommen
+
+
+  + Laden Sie den Allbus (`Allbus_2018.dta`) und wählen Sie alle Angaben für in Vollzeit arbeitende Befragte (`work==1`) aus, die ein Einkommen (`inc`) größer als 0 angebeben haben. (siehe [Hinweise](#readin091) ) 
+  + Denken Sie daran, die Missings mit `.` zu überschreiben! 
+  + Vergleichen Sie die Angaben des logarithmierten Einkommens der Befragten (`gen log_inc = log(inc)`) - durch die Logarithmierung werden die Einkommensangaben der NV angenähert. Die grundsätzliche Interpretation bleibt aber bestehen (höheres `log_inc` bedeutet auch höheres `inc`).
+  + Wie lauten die Hypothesen für einen rechtsseitigen Test?
+  + Vergleichen Sie die Varianz der (logarithmierten) Einkommensangaben in beiden Gruppen mit `sdtest`! 
+  + Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?
+  
+[Zurück](#ftest)
+
+
+### Übung 9-2
+
+(@) Waren im Jahr 2018 mehr als 4\% der deutschen Bevölkerung Mitglied einer nicht-christlichen Glaubensgemeinschaft?
++
+  + Wählen Sie alle Angaben aus, für welche die Konfession der Befragten vorliegt (`rd01 > 0`). 
+  + Erstellen Sie eine Dummyvariable, welche `1` ist wenn die Befragten einer nicht-christlichen Glaubensgemeinschaft angehören und `0` wenn sie einer christlichen oder keiner Glaubensgemeinschaft angehören ([Hinweise](#binom_help)) 
+  + Welcher Test ist hier der passende?
+  + Formulieren Sie die Hypothesen
+  + Führen Sie den Test durch
+  + Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?
 
 ## ANOVA
 
 ANOVA steht für **an**alysis **o**f **v**ariance und wird auch als univariate Varianzanalyse bezeichnet. 
 
-ANOVA wird verwendet, um Mittelwertunterschiede zwischen mehr als 2 Gruppen zu vergleichen. Dies geschieht, indem die Varianz in den Daten betrachtet wird (daher der Name). Insbesondere vergleicht ANOVA das Ausmaß der Variation zwischen den Gruppen (*between variance*) mit dem Ausmaß der Variation innerhalb der Gruppen (*within variance*).  Wir hatten diese Logik Varianzzerlegung schon bei Regressionsmodellen kennengelernt:
+ANOVA wird verwendet, um Mittelwertunterschiede zwischen 2 oder mehr Gruppen zu vergleichen. Dies geschieht, indem die Varianz in den Daten betrachtet wird (daher der Name). Insbesondere vergleicht ANOVA das Ausmaß der Variation zwischen den Gruppen (*between variance*) mit dem Ausmaß der Variation innerhalb der Gruppen (*within variance*).  Wir hatten diese Logik der Varianzzerlegung schon bei Regressionsmodellen kennengelernt:
 
 ```{r,out.width = "80%",fig.height= 3.5, echo=F, fig.align="center" , eval = T, message=F}
 df <- data.frame(var1 = c(1,2,7,8),
@@ -214,15 +264,42 @@ reg var2 var1
 
 Diese Logik überträgt ANOVA auf kategoriale Variablen, indem hier die Varianz in eine Streuung zwischen (`between`) und innerhalb der (`within`) der Gruppen aufgeteilt wird:
 
-```{r,out.width = "100%", fig.height= 3.5, dpi = 1000, echo=F, fig.align="center" , eval = T, message=F, warning =F}
+```{r,out.width = "100%", fig.height= 8, dpi = 1000, echo=F, fig.align="center" , eval = T, message=F, warning =F}
 eq <-  substitute(italic(bar(inc))) # formel erstellen
 eq2 <-  substitute(italic(bar(inc[m]))) # formel erstellen
 eq3 <-  substitute(italic(bar(inc[f]))) # formel erstellen
 
 
 
-df2 <- tibble(sex = sample(c(1,2),40,replace = T)) %>% mutate(inc = runif(40,1500,3000) + ifelse(sex==1, 1806.5515,0))
+df2 <- tibble(sex = rep(1:2,15)) %>% mutate(inc = runif(30,1500,3000) + ifelse(sex==1, 1806.5515,0))
 
+tot_plt <- 
+    df2 %>% 
+      mutate(mean = mean(inc,na.rm = T)) %>% 
+      group_by(sex) %>% 
+      mutate(mean_s = mean(inc,na.rm = T)) %>%
+      ungroup() %>%
+      sample_n(30) %>% 
+      mutate(id = 1:n() ) %>%  # %>% str_pad(.,width = 2,side = "left",pad = 0) %>%  paste0(sex,. ) %>% parse_number(.) ) %>% 
+      ggplot(.,aes(x = id, y = inc)) +
+      geom_segment(aes(yend= mean, xend = id , color = factor(sex)),
+                   size = .45, linetype = 2 ) +
+      geom_line(aes(x=id,y=mean), size = .75, color = "#B8A369") +
+      geom_point(size = 1.95,aes(color = factor(sex)) ) +
+      geom_label(aes(x = 20, y = mean, label = as.character(as.expression(eq))), 
+                 label.size = .01, hjust = 0.5, color = "#B8A369", fill = "white", parse = T, size = 4.5) +
+      scale_color_manual( values = c("#172869","#5E70B5"), name = "", breaks = 1:2, labels = c("Männer","Frauen")) +
+      guides(color= guide_legend(override.aes = list(shape = 15,size = 6) ,
+                                 label.position ="right" , ncol = 2,reverse = F)  ) + 
+      labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "Total variation") +
+      ggthemes::theme_stata(base_size = 13) +
+      expand_limits(y = c(1000,4800)) +
+      theme(axis.text.x = element_blank(), 
+            plot.title = element_text(hjust=.5),
+            plot.caption = element_text(size = rel(.75)), plot.caption.position = "plot",
+            legend.background = element_rect(fill="grey95", size=.05),
+            legend.title = element_blank(),
+            legend.justification=c(0.5,0), legend.position=c(.5,0))
 wit_plt <-
           df2 %>% 
             mutate(mean = mean(inc,na.rm = T)) %>% 
@@ -257,7 +334,7 @@ wit_plt <-
 
 
 bet_plt <-
-          df2 %>% 
+           df2 %>% 
               mutate(mean = mean(inc,na.rm = T)) %>% 
               group_by(sex) %>% 
               mutate(mean_s = mean(inc,na.rm = T)) %>%
@@ -265,19 +342,20 @@ bet_plt <-
               ungroup() %>%
               mutate(id = 1:n() %>% ifelse(sex==2,.+7,.)) %>%  
               ggplot(.,aes(x = id, y = mean)) +
-              geom_segment(aes(yend= mean_s, xend = id, color = factor(sex), linetype = ifelse(id %in% c(7,30),"1","2" ) ),
-                          size = .65, show.legend = F) +
+              geom_point(size = 1.95,aes(y = inc,color = factor(sex)), alpha = .3 )+ 
+              geom_segment(aes(yend= mean_s, xend = id, color = factor(sex) ),
+                           linetype = "dotted", size = .65, show.legend = F) +
               geom_line(aes(x=id,y=mean_s,color = factor(sex), group =  factor(sex)), size = .75) +
-              geom_hline(aes(yintercept = mean), color = "#AF6125", size = .75)  +
+              geom_hline(aes(yintercept = mean), color = "#B8A369", size = .75)  +
               geom_label(data = data.frame(x1 = 16, mean_s1 = mean(df2$inc[df2$sex==1]), sex = 1),
                          aes(x = x1, y = mean_s1, label = as.character(as.expression(eq2)) , color = factor(sex)), 
                          label.size = .01, hjust = 0, fill = "white", parse = T, size = 4.5, show.legend = F) +
               geom_label(data = data.frame(x1 = 22, mean_s1 = mean(df2$inc[df2$sex==2]), sex = 2),
                          aes(x = x1, y = mean_s1, label = as.character(as.expression(eq3)) , color = factor(sex)), 
                          label.size = .01, hjust = 1, fill = "white", parse = T, size = 4.5, show.legend = F) +
-              geom_label(aes(x = 20, y = mean, label = as.character(as.expression(eq))), label.size = .01, hjust = 0.5, color = "#AF6125", fill = "white", parse = T, size = 4.5) +
+              geom_label(aes(x = 20, y = mean, label = as.character(as.expression(eq))), label.size = .01, hjust = 0.5, color = "#B8A369", fill = "white", parse = T, size = 4.5) +
               scale_color_manual( values = c("#172869","#5E70B5"), name = "", breaks = 1:2, labels = c("Männer","Frauen")) +
-              scale_linetype_manual(values = c(1,NA)) +
+              scale_linetype_manual(values = c(2,NA)) +
               guides(color= guide_legend(override.aes = list(shape = 15,size = 6) ,
                                          label.position ="right" , ncol = 1,reverse = F)  ) + 
               labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "between-group-variation") +
@@ -289,7 +367,7 @@ bet_plt <-
                     legend.title = element_blank(),
                     legend.justification=c(1,1), legend.position=c(1,1))
 
-bet_plt + wit_plt 
+tot_plt / (bet_plt | wit_plt )
 ```
 
 Aus diesen beiden Streuungen berechnen wir wieder `Sum of squares`, welche dann ins Verhältnis gesetzt werden, um den sog. F-Wertb zu berechnen:
@@ -370,16 +448,42 @@ reg inc i.sex
 
 ## ANOVA mehrere Gruppen
 
-Der Vorteil von ANOVA ist aber, dass sich auch Gruppenunterschiede über mehrere Gruppen 
+Der Vorteil von ANOVA ist aber, dass sich auch Gruppenunterschiede für Variablen mit mehr als zwei Ausprägungen untersuchen lassen, bspw. Schulbildungsniveaus:
 
-```{r,out.width = "100%", fig.height= 3.5, dpi = 1000, echo=F, fig.align="center" , eval = T, message=F, warning =F}
+```{r,out.width = "100%", fig.height= 8, dpi = 1000, echo=F, fig.align="center" , eval = T, message=F, warning =F}
 set.seed(023123)
-df3 <- tibble(educ = sample(1:5,40,replace = T)) %>% mutate(inc = runif(40,1500,3000),
+df3 <- tibble(educ = rep(1:5,8)) %>% mutate(inc = runif(40,1500,3000),
                                                             inc = case_when(educ == 2 ~ inc + 347.0904,
                                                                             educ == 3 ~ inc + 544.888 ,
                                                                             educ == 4 ~ inc + 1074.884,
                                                                             educ == 5 ~ inc + 1270.937,
                                                                             TRUE ~ inc))
+
+ tot_plt3 <- 
+    df3 %>% 
+  mutate(mean = mean(inc,na.rm = T)) %>% 
+  group_by(educ) %>% 
+  mutate(mean_s = mean(inc,na.rm = T)) %>%
+  ungroup() %>%
+  mutate(id = 1:n() ) %>%  
+  ggplot(.,aes(x = id, y = inc)) +
+  geom_hline(aes(yintercept = mean), color = "#AF6125", size = .75)  +
+  geom_segment(aes(yend= mean, xend = id , color = factor(educ)),
+                 size = .45, linetype = 2 ) +
+  geom_point(size = 1.95,aes(color = factor(educ)) ) +
+  scale_color_viridis_d(name = "", breaks = 1:5, labels = c("k.Abs.","Hauptschule","Mittlere Reife","Fachabi","Abi"), end = .75) +
+  scale_linetype_manual(values = c(2,NA)) +
+  guides(color= guide_legend(override.aes = list(shape = 15,size = 6) ,
+                             label.position ="right" , ncol = 3,reverse = F)  ) +  
+    labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "Total variation") +
+    ggthemes::theme_stata(base_size = 13) +
+    expand_limits(y = c(1000,4800)) +
+      theme(axis.text.x = element_blank(), 
+            plot.caption = element_text(size = rel(.75)), plot.caption.position = "plot",
+            legend.background = element_rect(fill=NA, color=NA),
+            legend.title = element_blank(),
+            legend.justification=c(1,0), legend.position=c(1,0))
+
 
 wit_plt3 <-
   df3 %>% 
@@ -407,8 +511,6 @@ wit_plt3 <-
         legend.justification=c(1,0), legend.position=c(1,0))
 
   
-  
-
 bet_plt3 <-
   df3 %>% 
   mutate(mean = mean(inc,na.rm = T)) %>% 
@@ -418,14 +520,14 @@ bet_plt3 <-
     arrange(educ) %>% 
   mutate(id = 1:n() ) %>% 
   ggplot(.,aes(x = id, y = mean)) +
-  geom_segment(aes(yend= mean_s, xend = id, color = factor(educ), linetype = ifelse(id %in% c(4,12,21,31,38),"1","2" ) ),
-               size = .45, show.legend = F) +
-  geom_line(aes(x=id,y=mean_s,color = factor(educ), group =  factor(educ)), size = .75) +
+  geom_point(size = 1.95,aes(y = inc,color = factor(educ)), alpha = .3 )+ 
+  geom_segment(aes(yend= mean_s, xend = id, color = factor(educ)), 
+               linetype = "dotted", size = .45, show.legend = F) +
+  geom_line(aes(x=id,y=mean_s,color = factor(educ), group =  factor(educ)), size = .5) +
   geom_hline(aes(yintercept = mean), color = "#AF6125", size = .75)  +
   scale_color_viridis_d(name = "", breaks = 1:5, labels = c("k.Abs.","Hauptschule","Mittlere Reife","Fachabi","Abi"), end = .75) +
   scale_linetype_manual(values = c(1,NA)) +
-  guides(color= guide_legend(override.aes = list(shape = 15,size = 6) ,
-                             label.position ="right" , ncol = 3,reverse = F)  ) + 
+  guides(color= F  ) + 
   labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "Between-group-variation") +
   ggthemes::theme_stata(base_size = 7) +
   expand_limits(y = c(1000,4800)) +
@@ -434,7 +536,8 @@ bet_plt3 <-
         legend.background = element_rect(fill=NA, color=NA),
         legend.title = element_blank(),
         legend.justification=c(1,0), legend.position=c(1,0))
-bet_plt3 + wit_plt3 
+
+tot_plt3 / (bet_plt3 | wit_plt3 )
 ```
 
 
@@ -451,6 +554,7 @@ oneway inc educ, tabulate
 ```
 
 Wir erkennen:
+
 + dass signifikante Gruppenunterschiede bestehen: `Prob > F` ist deutlich < 0,05
 + Kenntnis von `educ` kann 
 + dass Befragte mit Hochschulreife die höchsten Durchschnittseinkommen haben (`Mean` = 2336.9612), Schüler\*innen die niedrigsten (`Mean` = 548.125) usw.
@@ -500,3 +604,11 @@ $\rightarrow$ jetzt sind die Koeffizienten jeweils auf den Vergleich zu `educ=3`
 + Befragte mit HOCHSCHULREIFE  verdienen im Schnitt 726.0488  EUR mehr als Befragte Realschulabschluss (`educ = 3`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
 + Befragte mit anderem Abschluss  verdienen im Schnitt 195.5999 EUR weniger als Befragte Realschulabschluss (`educ = 3`). Der Unterschied ist aber **nicht statistisch signifikant** (`P>|t|` > 0,05).
 + Befragte, die noch zur Schule gehen, verdienen im Schnitt 1062.78 EUR weniger als Befragte Realschulabschluss (`educ = 3`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
+
+
+## Hinweise
+
+### Einlesen und auswählen für Ü9-1 {#readin091}
+
+
+### Einlesen und auswählen für Ü9-2 {#binom_help}

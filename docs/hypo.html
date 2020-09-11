@@ -630,7 +630,7 @@ Ho: diff = 0                                     degrees of freedom =     3085
 </div>
 <div id="anova-mehrere-gruppen" class="section level2">
 <h2><span class="header-section-number">9.5</span> ANOVA mehrere Gruppen</h2>
-<p>Der Vorteil von ANOVA ist aber, dass sich auch Gruppenunterschiede über mehrere Gruppen</p>
+<p>Der Vorteil von ANOVA ist aber, dass sich auch Gruppenunterschiede für Variablen mit mehr als zwei Ausprägungen untersuchen lassen, bspw. Schulbildungsniveaus:</p>
 <p><img src="Stata_Skript_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" /></p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="hypo.html#cb22-1"></a><span class="kw">oneway</span> inc educ, <span class="kw">tabulate</span></span></code></pre></div>
 <pre><code>            |             Summary of
@@ -657,10 +657,12 @@ Between groups       492795287      6   82132547.9     51.68     0.0000
     Total           5.3905e+09   3088   1745638.99
 
 Bartlett&#39;s test for equal variances:  chi2(6) = 520.5203  Prob&gt;chi2 = 0.000</code></pre>
-<p>Wir erkennen:
-+ dass signifikante Gruppenunterschiede bestehen: <code>Prob &gt; F</code> ist deutlich &lt; 0,05
-+ Kenntnis von <code>educ</code> kann
-+ dass Befragte mit Hochschulreife die höchsten Durchschnittseinkommen haben (<code>Mean</code> = 2336.9612), Schüler*innen die niedrigsten (<code>Mean</code> = 548.125) usw.</p>
+<p>Wir erkennen:</p>
+<ul>
+<li>dass signifikante Gruppenunterschiede bestehen: <code>Prob &gt; F</code> ist deutlich &lt; 0,05</li>
+<li>Kenntnis von <code>educ</code> kann</li>
+<li>dass Befragte mit Hochschulreife die höchsten Durchschnittseinkommen haben (<code>Mean</code> = 2336.9612), Schüler*innen die niedrigsten (<code>Mean</code> = 548.125) usw.</li>
+</ul>
 <p>Auch hier der Vergleich zu Regressionsmodellen einer kategorialen UV:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="hypo.html#cb24-1"></a><span class="kw">reg</span> inc i.educ</span></code></pre></div>
 <pre><code>      Source |       SS       df       MS              Number of obs =    3089

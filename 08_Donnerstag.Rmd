@@ -82,84 +82,6 @@ Formal werden die Hypothesen dann wie folgt festgehalten:
 Die grundlegende Idee des Hypothesentests ist, dass wir uns nur dann für die Alternativhypothese entscheiden, wenn wir eine ausreichend große Abweichung von dem in der $H_0$ postulierten Wert feststellen. Dazu berechnen wir den $t$-Wert für den SP-Mittelwert entsprechend der Formel von letzter Woche:  
 
 $$t = \frac{\bar{x}-\mu_{0}}{\frac{\sigma}{\sqrt{n}}} = \frac{\bar{x}-\mu_{0}}{\frac{s_{x}}{\sqrt{n}}}$$
-```{r, fig.align='center', echo=F, out.width="100%", fig.height= 7.1, warning=F}
-data1 <- data.frame(z = seq(-4,4,.01)) ## dataframe erstellen mit Zahlenfolge zwischen -4 & 4
-data1$nv_density <- dnorm(x=data1$z,mean = 0 ,sd =  1) ## Dichtefunktion der Std-NV
-eq2 <- as.expression(substitute(mu[0])) ## µ0 für Grafiken
-
-both <-
-ggplot(data = data1, aes(x=z, y =nv_density)) + 
-  theme_minimal(base_size = 11,base_family = "serif") +
-  labs(y = "Häufigkeitsdichte", title = "ungerichtete Hypothese",x = "t", 
-       subtitle = bquote(H[0]~wird~verworfen~","~wenn~t~weit~genug~von~mu[0]~bold(entfernt)~liegt)
-       ) +
-  geom_segment(data = filter(data1,z==0),aes(xend = 0,yend = 0), size = .2 ) +
-  geom_label(data = filter(data1,z==0),aes(y=.2,label = as.character( eq2 ) ), 
-             label.size = .01, hjust = 0.5, color = "navy", parse = T, size = 4.5) +
-  geom_ribbon(data=filter(data1,z <= -1.959964), aes(ymin=0, ymax = nv_density), fill = "#aaaaaa", alpha = .5 ) +
-  geom_segment(data = data.frame(z = -1.959964,y1 = dnorm(x=-1.959964,mean = 0 ,sd =  1)) , 
-               aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .35, linetype = 2) + ## linke grenze
-  geom_ribbon(data=filter(data1,z >= 1.959964), aes(ymin=0, ymax = nv_density), fill = "#aaaaaa", alpha = .5 ) +
-  geom_segment(data = data.frame(z = 1.959964,y1 = dnorm(x=1.959964,mean = 0 ,sd =  1)) , 
-               aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .35, linetype = 2) + ## rechte grenze
-  geom_line(color = "navy")  +   
-  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1))+
-  theme(aspect.ratio = 1, 
-        plot.title.position = "plot",
-        plot.subtitle = element_text(size = rel(.75)),
-        panel.grid = element_line(size = .5), 
-        panel.grid.minor = element_blank(),
-        panel.grid.major.x = element_blank()) 
-
-left <-
-ggplot(data = data1, aes(x=z, y =nv_density)) + 
-  theme_minimal(base_size = 11,base_family = "serif") +
-  labs(y = "Häufigkeitsdichte", title = "gerichtete, linkssseitige Hypothese", x = "t", 
-       subtitle = bquote(H[0]~wird~verworfen~","~wenn~t~weit~genug~bold(links)~von~mu[0]~liegt)
-  ) +
-  geom_segment(data = filter(data1,z==0),aes(xend = 0,yend = 0), size = .2 ) +
-  geom_label(data = filter(data1,z==0),aes(y=.2,label = as.character( eq2 ) ), 
-             label.size = .01, hjust = 0.5, color = "navy", parse = T, size = 4.5) +
-  geom_ribbon(data=filter(data1,z <= -1.644854), aes(ymin=0, ymax = nv_density), fill = "#c5b358", alpha = .5 ) +
-  geom_segment(data = data.frame(z = -1.644854,y1 = dnorm(x=-1.644854,mean = 0 ,sd =  1)) , 
-               aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .35, linetype = 2) +
-  geom_line(color = "navy")  +   
-  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1)) +
-  theme(aspect.ratio = 1,
-        plot.title.position = "plot",
-        plot.subtitle = element_text(size = rel(.75)),
-        panel.grid = element_line(size = .5), 
-        panel.grid.minor = element_blank(),
-        panel.grid.major.x = element_blank()) 
-
-
-right <-
-  ggplot(data = data1, aes(x=z, y =nv_density)) + 
-  theme_minimal(base_size = 11,base_family = "serif") +
-  labs(y = "Häufigkeitsdichte", title = "gerichtete, rechtsseitige Hypothese", x = "t", 
-       subtitle = bquote(H[0]~wird~verworfen~","~wenn~t~weit~genug~bold(rechts)~von~mu[0]~liegt)
-  ) +
-  geom_segment(data = filter(data1,z==0),aes(xend = 0,yend = 0), size = .2 ) +
-  geom_label(data = filter(data1,z==0),aes(y=.2,label = as.character( eq2 ) ), 
-             label.size = .01, hjust = 0.5, color = "navy", parse = T, size = 4.5) +
-  geom_ribbon(data=filter(data1,z >= 1.644854), aes(ymin=0, ymax = nv_density), fill = "#FF3200", alpha = .5 ) +
-  geom_segment(data = data.frame(z = 1.644854,y1 = dnorm(x=1.644854,mean = 0 ,sd =  1)) , 
-               aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .35, linetype = 2) +
-  geom_line(color = "navy")  +   
-  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1)) +
-  theme(aspect.ratio = 1, 
-        plot.title.position = "plot",
-        plot.subtitle = element_text(size = rel(.75)),
-        panel.grid = element_line(size = .5), 
-        panel.grid.minor = element_blank(),
-        panel.grid.major.x = element_blank()) 
-
-
-## cowplot::plot_grid(both,NA, left , right, nrow = 2, labels = c("1",NA,"2", "3"))
-both + wrap_elements(grid::textGrob("") ) +
-left + right + 
-plot_layout(ncol = 2)
-```
 
 ## t-Test per Hand und in Stata
 
@@ -425,6 +347,7 @@ ttest bp_before==bp_after
 
 ```{stata, echo = F}
 set linesize 200
+qui clear
 qui webuse bpwide
 ttest bp_before==bp_after
 ```
@@ -498,15 +421,18 @@ gen height_sample =  rnormal(170,9.26)
 
 ## Übung 8-3 {#tpaired}
 
-
+(@) 
 
 
 ## weitere Übungen Kap 8
+
+Für alle, die noch etwas mehr machen möchten:
+
 (@) Sie erheben erneut eine Stichprobe mit 50 Personen und erhalten einen Mittelwert von 173cm und eine Standardabweichung von 6.15.
 
 + Wie hoch ist die Irrtumswahrscheinlichkeit für die Hypothese, dass der wahre Wert der Körpergröße in der Grundpopulation größer als 172cm ist? Stellen Sie die passenden formalen Hypothesen auf!
 
-+ Sie können sich auch diese Daten wie folgt erstellen:
+Sie können sich auch diese Daten wie folgt erstellen:
 ```{stata, eval = F}
 clear
 set seed 0441
@@ -528,22 +454,19 @@ gen height_sample2 =  rnormal(173,6.15)
 
 [^072]: Durch die Logarithmierung sind die Einkommensangaben (annähernd) normalverteilt.
 
-## Profi-Übungen 8
 
-Für alle, die noch etwas mehr machen möchten:
 
-(@) Eine Umfrage von 15 zufällig ausgewählten Betrieben ergab, dass im Durchschnitt an 5,25 Tagen im vergangenen Jahr gestreikt wurde. Die Standardabweichung in der Stichprobe beträgt 0.25 Tage. Ein Experte behauptet, es wären im arithmetischen Mittel 7 Streiktage für das vergangene Jahr gewesen. Liegt der Wert aus der Stichprobe signifikant darunter?   
 
-  + Formulieren Sie die Hypothesen!
-  + Berechnen Sie die Irrtumswahrscheinlichkeit für die Ablehnung von $H_0$!
+(@) Sind Befragte, die in den 1960er Jahren geboren wurden, signifikant früher aus dem Elternhaus ausgezogen als Befragte, die in den 1970er Jahren geboren wurden?
+  + Laden Sie den kumulierten Allbus (`Allbus_1980-2018.dta`).
+  + Wählen Sie alle Befragten aus, die zwischen 1960 und 1979 geboren wurden (`yborn` gibt das Geburtsjahr an) und für die das Alter beim Auszug aus dem Elternhaus vorliegt (`dg12 > 0`).
+  + Erstellen Sie eine Dummyvariable, welche den Wert `1` annimmt wenn die Befragten nach 1969 geboren sind und 0 für alle früher geborenen. [Tipp](#genhelp)
+  + Formulieren Sie die Hypothesen zur Fragestellung dieser Aufgabe!
+  + Müssen Sie `unequal` setzen?
+  + Führen Sie den entsprechenden Test durch
   + Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?
 
-
-(@) Allgemein wird angenommen, dass Studierende ihrem Studium pro Tag durchschnittlich 3,5 Stunden widmen.  Sie machen eine Umfrage unter 6000 Studierenden und kommen auf ein arithmetisches Mittel von 5 Stunden und eine Varianz $s^2= 4$. Daher vermuten Sie nun, dass die Lerndauer signifikant über 3.5 Stunden liegt.    
-  + Formulieren Sie die Hypothesen!
-  + Berechnen Sie die Irrtumswahrscheinlichkeit für die Ablehung von $H_0$!
-  + Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?
-  
+(@) Haben kleinere Frauen einen signifikant höheren BMI als größere?
 
 
 
@@ -563,6 +486,32 @@ keep if year == 2018  & work == 1 & inc > 0
 
 // logarithmieren des Einkommens:
 gen log_inc = log(inc)
+```
+
+### Kohortenvergleich Tipps {#genhelp}
+```{stata readin8_p2, eval = F}
+// wo liegt der Datensatz?
+cd "..."
+// einlesen
+use Allbus_1980-2018.dta, clear
+
+keep if inrange(yborn,1960,1979)
+labelbook dg12
+mvdecode dg12, mv(-51/-1)
+```
+
+
+### BMI Aufgaben {#bmihelp}
+
+```{stata readin8_p3, eval = F}
+// wo liegt der Datensatz?
+cd "..."
+// einlesen
+use Allbus_1980-2018.dta, clear
+
+keep if inrange(yborn,1960,1979)
+labelbook dg12
+mvdecode dg12, mv(-51/-1)
 ```
 
 <!-- ### Plot der Körpergrößenangaben -->

@@ -161,9 +161,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="Stata2.html"><a href="Stata2.html#neue-variablen-erstellen"><i class="fa fa-check"></i><b>2.3</b> Neue Variablen erstellen</a></li>
 <li class="chapter" data-level="2.4" data-path="Stata2.html"><a href="Stata2.html#bestehende-variablen-verändern"><i class="fa fa-check"></i><b>2.4</b> Bestehende Variablen verändern</a></li>
 <li class="chapter" data-level="2.5" data-path="Stata2.html"><a href="Stata2.html#gen-ist-gut-kontrolle-ist-besser"><i class="fa fa-check"></i><b>2.5</b> gen ist gut, Kontrolle ist besser</a></li>
-<li class="chapter" data-level="2.6" data-path="Stata2.html"><a href="Stata2.html#fehlende-werte"><i class="fa fa-check"></i><b>2.6</b> Fehlende Werte</a></li>
-<li class="chapter" data-level="2.7" data-path="Stata2.html"><a href="Stata2.html#if-bedingungen-und-fehlende-werte"><i class="fa fa-check"></i><b>2.7</b> if Bedingungen und fehlende Werte</a></li>
-<li class="chapter" data-level="2.8" data-path="Stata2.html"><a href="Stata2.html#keep-drop"><i class="fa fa-check"></i><b>2.8</b> keep &amp; drop</a></li>
+<li class="chapter" data-level="2.6" data-path="Stata2.html"><a href="Stata2.html#keep-drop"><i class="fa fa-check"></i><b>2.6</b> keep &amp; drop</a></li>
+<li class="chapter" data-level="2.7" data-path="Stata2.html"><a href="Stata2.html#fehlende-werte"><i class="fa fa-check"></i><b>2.7</b> Fehlende Werte</a></li>
+<li class="chapter" data-level="2.8" data-path="Stata2.html"><a href="Stata2.html#miss_if"><i class="fa fa-check"></i><b>2.8</b> if Bedingungen und fehlende Werte</a></li>
 <li class="chapter" data-level="2.9" data-path="Stata2.html"><a href="Stata2.html#labels-und-if-bedingungen"><i class="fa fa-check"></i><b>2.9</b> Labels und if-Bedingungen</a></li>
 <li class="chapter" data-level="2.10" data-path="Stata2.html"><a href="Stata2.html#nochmal-von-vorne-daten-neu-laden"><i class="fa fa-check"></i><b>2.10</b> Nochmal von vorne: Daten neu laden</a></li>
 <li class="chapter" data-level="2.11" data-path="Stata2.html"><a href="Stata2.html#speichern"><i class="fa fa-check"></i><b>2.11</b> Speichern</a></li>
@@ -319,23 +319,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.5" data-path="inf2.html"><a href="inf2.html#tgroup"><i class="fa fa-check"></i><b>8.5</b> Übungen 8-2</a></li>
 <li class="chapter" data-level="8.6" data-path="inf2.html"><a href="inf2.html#tpaired"><i class="fa fa-check"></i><b>8.6</b> Übung 8-3</a></li>
 <li class="chapter" data-level="8.7" data-path="inf2.html"><a href="inf2.html#weitere-übungen-kap-8"><i class="fa fa-check"></i><b>8.7</b> weitere Übungen Kap 8</a></li>
-<li class="chapter" data-level="8.8" data-path="inf2.html"><a href="inf2.html#profi-übungen-8"><i class="fa fa-check"></i><b>8.8</b> Profi-Übungen 8</a></li>
-<li class="chapter" data-level="8.9" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>8.9</b> Hinweise</a><ul>
-<li class="chapter" data-level="8.9.1" data-path="inf2.html"><a href="inf2.html#vollz"><i class="fa fa-check"></i><b>8.9.1</b> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
+<li class="chapter" data-level="8.8" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>8.8</b> Hinweise</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="inf2.html"><a href="inf2.html#vollz"><i class="fa fa-check"></i><b>8.8.1</b> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
+<li class="chapter" data-level="8.8.2" data-path="inf2.html"><a href="inf2.html#genhelp"><i class="fa fa-check"></i><b>8.8.2</b> Kohortenvergleich Tipps</a></li>
+<li class="chapter" data-level="8.8.3" data-path="inf2.html"><a href="inf2.html#bmihelp"><i class="fa fa-check"></i><b>8.8.3</b> BMI Aufgaben</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Weitere Hypothesentests</a><ul>
-<li class="chapter" data-level="9.1" data-path="hypo.html"><a href="hypo.html#vergleich-von-varianzen-mit-dem-f-test"><i class="fa fa-check"></i><b>9.1</b> Vergleich von Varianzen mit dem F-Test</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="hypo.html"><a href="hypo.html#beidseitiger-f-test"><i class="fa fa-check"></i><b>9.1.1</b> beidseitiger F-Test</a></li>
-<li class="chapter" data-level="9.1.2" data-path="hypo.html"><a href="hypo.html#rechtsseitiger-f-test"><i class="fa fa-check"></i><b>9.1.2</b> rechtsseitiger F-Test</a></li>
-</ul></li>
+<li class="chapter" data-level="9.1" data-path="hypo.html"><a href="hypo.html#ftest"><i class="fa fa-check"></i><b>9.1</b> Vergleich von Varianzen mit dem F-Test</a></li>
 <li class="chapter" data-level="9.2" data-path="hypo.html"><a href="hypo.html#proportionen-und-häufigkeiten"><i class="fa fa-check"></i><b>9.2</b> Proportionen und Häufigkeiten</a><ul>
 <li class="chapter" data-level="9.2.1" data-path="hypo.html"><a href="hypo.html#binomialtest"><i class="fa fa-check"></i><b>9.2.1</b> Binomialtest</a></li>
 <li class="chapter" data-level="9.2.2" data-path="hypo.html"><a href="hypo.html#chi²-test"><i class="fa fa-check"></i><b>9.2.2</b> Chi²-Test</a></li>
 </ul></li>
 <li class="chapter" data-level="9.3" data-path="hypo.html"><a href="hypo.html#überblick"><i class="fa fa-check"></i><b>9.3</b> Überblick</a></li>
+<li class="chapter" data-level="9.4" data-path="hypo.html"><a href="hypo.html#übungen-9"><i class="fa fa-check"></i><b>9.4</b> Übungen 9</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="hypo.html"><a href="hypo.html#fueb"><i class="fa fa-check"></i><b>9.4.1</b> Übung 9-1</a></li>
+<li class="chapter" data-level="9.4.2" data-path="hypo.html"><a href="hypo.html#übung-9-2"><i class="fa fa-check"></i><b>9.4.2</b> Übung 9-2</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a></li>
+<li class="chapter" data-level="9.5" data-path="hypo.html"><a href="hypo.html#anova"><i class="fa fa-check"></i><b>9.5</b> ANOVA</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="hypo.html"><a href="hypo.html#anova-vs.-t-tests"><i class="fa fa-check"></i><b>9.5.1</b> ANOVA vs. t-Tests</a></li>
+<li class="chapter" data-level="9.5.2" data-path="hypo.html"><a href="hypo.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>9.5.2</b> ANOVA vs. lineare Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="hypo.html"><a href="hypo.html#anova-mehrere-gruppen"><i class="fa fa-check"></i><b>9.6</b> ANOVA mehrere Gruppen</a></li>
+<li class="chapter" data-level="9.7" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>9.7</b> Hinweise</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="hypo.html"><a href="hypo.html#readin091"><i class="fa fa-check"></i><b>9.7.1</b> Einlesen und auswählen für Ü9-1</a></li>
+<li class="chapter" data-level="9.7.2" data-path="hypo.html"><a href="hypo.html#binom_help"><i class="fa fa-check"></i><b>9.7.2</b> Einlesen und auswählen für Ü9-2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a><ul>
+<li class="chapter" data-level="10.1" data-path="export1.html"><a href="export1.html#graph-export"><i class="fa fa-check"></i><b>10.1</b> graph export</a></li>
+<li class="chapter" data-level="10.2" data-path="export1.html"><a href="export1.html#esttab"><i class="fa fa-check"></i><b>10.2</b> esttab</a></li>
+<li class="chapter" data-level="10.3" data-path="export1.html"><a href="export1.html#log-file"><i class="fa fa-check"></i><b>10.3</b> log file</a></li>
+</ul></li>
 <li class="chapter" data-level="11" data-path="adva.html"><a href="adva.html"><i class="fa fa-check"></i><b>11</b> Fortgeschrittene Themen</a><ul>
 <li class="chapter" data-level="11.1" data-path="adva.html"><a href="adva.html#wertelabels"><i class="fa fa-check"></i><b>11.1</b> Wertelabels</a></li>
 <li class="chapter" data-level="11.2" data-path="adva.html"><a href="adva.html#sortieren"><i class="fa fa-check"></i><b>11.2</b> sortieren</a></li>
@@ -418,10 +433,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-43"><a href="inf2.html#cb1-43"></a><span class="kw">tabstat</span> miete, <span class="fu">s</span>(<span class="kw">mean</span> <span class="fu">sd</span>)</span></code></pre></div>
 <pre><code>          miete
 
-    variable |      mean        sd
--------------+--------------------
-       miete |       305  52.05323
-----------------------------------</code></pre>
+unrecognized command:  356 invalid command name
+r(199);
+
+end of do-file
+r(199);</code></pre>
 <p>Die Antworten haben also ein arithmetisches Mittel von 305 Euro und eine Standardabweichung von 52.05 Euro. Der <em>Punktschätzer</em> aus der Stichprobe legt uns also nahe, dass die Mieten in Oldenburg in der Tat unter 320 EUR liegen. Wie wir letzte Woche gesehen haben, sollten wir uns nicht allein auf den Punktschätzer verlassen, sondern auch die Streuung in der Stichprobe mitberücksichtigen. Dies leisten die Hypothesentests. Dabei werden immer zwei sich widersprechende Hypothesen formuliert, die sog. <span class="math inline">\(H_0\)</span> - die Nullhypothese und die <span class="math inline">\(H_A\)</span> - die Alternativhypothese. Die <span class="math inline">\(H_0\)</span> beschreibt dabei immer den bisherigen Kenntnisstand und die <span class="math inline">\(H_A\)</span> formuliert die zu testende Aussage. Die Hypothesen unterscheiden sich dann je nachdem ob wir einen gerichteten oder einen ungerichteten Test durchführen:</p>
 <p>Zunächst müssen wir uns entscheiden ob wir eine gerichtete oder ungerichtete Hypothese testen möchten:</p>
 <ul>
@@ -441,8 +457,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul>
 <p>Die grundlegende Idee des Hypothesentests ist, dass wir uns nur dann für die Alternativhypothese entscheiden, wenn wir eine ausreichend große Abweichung von dem in der <span class="math inline">\(H_0\)</span> postulierten Wert feststellen. Dazu berechnen wir den <span class="math inline">\(t\)</span>-Wert für den SP-Mittelwert entsprechend der Formel von letzter Woche:</p>
-<p><span class="math display">\[t = \frac{\bar{x}-\mu_{0}}{\frac{\sigma}{\sqrt{n}}} = \frac{\bar{x}-\mu_{0}}{\frac{s_{x}}{\sqrt{n}}}\]</span>
-<img src="Stata_Skript_files/figure-html/unnamed-chunk-1-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><span class="math display">\[t = \frac{\bar{x}-\mu_{0}}{\frac{\sigma}{\sqrt{n}}} = \frac{\bar{x}-\mu_{0}}{\frac{s_{x}}{\sqrt{n}}}\]</span></p>
 <div id="t-test-per-hand-und-in-stata" class="section level2">
 <h2><span class="header-section-number">8.1</span> t-Test per Hand und in Stata</h2>
 <p>Wir berechnen also den t-Wert und gleichen diesen dann mit <code>ttail</code> mit der kumulierten Verteilung der t-Verteilung ab. Das Ergebnis von <code>ttail</code> gibt uns dann an, mit welcher Irrtumswahrscheinlichkeit wir die <span class="math inline">\(H_0\)</span> verwerfen können. Anders formuliert: wie wahrscheinlich ist es, das <span class="math inline">\(\bar{x}\)</span> in einer Stichprobe zu erhalten obwohl <span class="math inline">\(\mu_0\)</span> in der Grundgesamtheit richtig ist?</p>
@@ -468,18 +483,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="inf2.html#cb9-1"></a><span class="kw">ttest</span> miete==320</span></code></pre></div>
 <pre><code>          miete
 
+unrecognized command:  356 invalid command name
+r(199);
 
-One-sample t test
-------------------------------------------------------------------------------
-Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
----------+--------------------------------------------------------------------
-   miete |      40         305    8.230338    52.05323    288.3526    321.6474
-------------------------------------------------------------------------------
-    mean = mean(miete)                                            t =  -1.8225
-Ho: mean = 320                                   degrees of freedom =       39
-
-   Ha: mean &lt; 320               Ha: mean != 320               Ha: mean &gt; 320
- Pr(T &lt; t) = 0.0380         Pr(|T| &gt; |t|) = 0.0760          Pr(T &gt; t) = 0.9620</code></pre>
+end of do-file
+r(199);</code></pre>
 <p>Hier werden auch gleich die Ergebnisse für den linksseitigen und rechtsseitigen Test angezeigt. Diese sehen uns noch genauer an:</p>
 </div>
 <div id="linksseitiger-t-test" class="section level3">
@@ -506,18 +514,11 @@ Ho: mean = 320                                   degrees of freedom =       39
 <div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="inf2.html#cb19-1"></a><span class="kw">ttest</span> miete==320</span></code></pre></div>
 <pre><code>          miete
 
+unrecognized command:  356 invalid command name
+r(199);
 
-One-sample t test
-------------------------------------------------------------------------------
-Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
----------+--------------------------------------------------------------------
-   miete |      40         305    8.230338    52.05323    288.3526    321.6474
-------------------------------------------------------------------------------
-    mean = mean(miete)                                            t =  -1.8225
-Ho: mean = 320                                   degrees of freedom =       39
-
-   Ha: mean &lt; 320               Ha: mean != 320               Ha: mean &gt; 320
- Pr(T &lt; t) = 0.0380         Pr(|T| &gt; |t|) = 0.0760          Pr(T &gt; t) = 0.9620</code></pre>
+end of do-file
+r(199);</code></pre>
 <hr />
 <p><a href="inf2.html#tvsmu">Übung 1</a>
 ***</p>
@@ -588,20 +589,11 @@ Für einen linksseitigen Test ist hingegen <code>Ha: diff &lt; 0</code> ausschla
 <p><img src="08_bpwide.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
 <p>Diese vorher/nachher Werte können wir jetzt mit einem verbundenen t-Test vergleichen:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb28-1"><a href="inf2.html#cb28-1"></a><span class="kw">ttest</span> bp_before==bp_after</span></code></pre></div>
-<pre><code>Paired t test
-------------------------------------------------------------------------------
-Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
----------+--------------------------------------------------------------------
-bp_bef~e |     120      156.45    1.039746    11.38985    154.3912    158.5088
-bp_after |     120    151.3583    1.294234    14.17762    148.7956     153.921
----------+--------------------------------------------------------------------
-    diff |     120    5.091667    1.525736     16.7136    2.070557    8.112776
-------------------------------------------------------------------------------
-     mean(diff) = mean(bp_before - bp_after)                      t =   3.3372
- Ho: mean(diff) = 0                              degrees of freedom =      119
+<pre><code>no; data in memory would be lost
+r(4);
 
- Ha: mean(diff) &lt; 0           Ha: mean(diff) != 0           Ha: mean(diff) &gt; 0
- Pr(T &lt; t) = 0.9994         Pr(|T| &gt; |t|) = 0.0011          Pr(T &gt; t) = 0.0006</code></pre>
+end of do-file
+r(4);</code></pre>
 <p>Auch hier sehen wir wieder die Ergebnisse für einen links- (<code>Ha: mean(diff) &lt; 0</code>) beid- (<code>Ha: mean(diff) != 0</code>) und rechtsseitigen (<code>Ha: mean(diff) &gt; 0</code>) Test. Wir erkennen aus den Ergebnissen, dass der Blutdruck der Patient*innen:</p>
 <ul>
 <li>nach dem Treatment nicht signifikant höher ist - linksseitiger Test (<em>bp_before &lt; bp_after</em>), linke Spalte</li>
@@ -670,21 +662,25 @@ Hier könnten wir dann mit <code>ttest</code>
 </div>
 <div id="tpaired" class="section level2">
 <h2><span class="header-section-number">8.6</span> Übung 8-3</h2>
+<ol start="3" class="example" style="list-style-type: decimal">
+<li></li>
+</ol>
 </div>
 <div id="weitere-übungen-kap-8" class="section level2">
 <h2><span class="header-section-number">8.7</span> weitere Übungen Kap 8</h2>
-<ol start="3" class="example" style="list-style-type: decimal">
+<p>Für alle, die noch etwas mehr machen möchten:</p>
+<ol start="4" class="example" style="list-style-type: decimal">
 <li>Sie erheben erneut eine Stichprobe mit 50 Personen und erhalten einen Mittelwert von 173cm und eine Standardabweichung von 6.15.</li>
 </ol>
 <ul>
-<li><p>Wie hoch ist die Irrtumswahrscheinlichkeit für die Hypothese, dass der wahre Wert der Körpergröße in der Grundpopulation größer als 172cm ist? Stellen Sie die passenden formalen Hypothesen auf!</p></li>
-<li><p>Sie können sich auch diese Daten wie folgt erstellen:</p></li>
+<li>Wie hoch ist die Irrtumswahrscheinlichkeit für die Hypothese, dass der wahre Wert der Körpergröße in der Grundpopulation größer als 172cm ist? Stellen Sie die passenden formalen Hypothesen auf!</li>
 </ul>
+<p>Sie können sich auch diese Daten wie folgt erstellen:</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb32-1"><a href="inf2.html#cb32-1"></a><span class="kw">clear</span></span>
 <span id="cb32-2"><a href="inf2.html#cb32-2"></a><span class="kw">set</span> <span class="dv">seed</span> 0441</span>
 <span id="cb32-3"><a href="inf2.html#cb32-3"></a><span class="kw">set</span> <span class="kw">obs</span> 50</span>
 <span id="cb32-4"><a href="inf2.html#cb32-4"></a><span class="kw">gen</span> height_sample2 =  rnormal(173,6.15)</span></code></pre></div>
-<ol start="4" class="example" style="list-style-type: decimal">
+<ol start="5" class="example" style="list-style-type: decimal">
 <li>Die Schätzung eines Experten ergab, dass das mittlere logarithmierte Einkommen von Vollzeiterwerbstätigen in Deutschland für das Jahr 2018 bei 7,6 log(EUR) liegt.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> Sie vermuten, dass sich die wahren Werte davon signifikant unterscheiden. Überprüfen Sie diese These! (<em>Berechnen Sie die p-Werte jeweils mit <code>ttest</code> und per Hand!</em>)</li>
 </ol>
 <ul>
@@ -697,11 +693,19 @@ Hier könnten wir dann mit <code>ttest</code>
 <li>Was müssten Sie verändern, wenn Sie vermuten dass die wahren Werte signifikant <em>höher</em> sind?</li>
 <li>Formulieren Sie auch für diese Variante die Hypothesen und führen Sie den entsprechenden Test durch! Berechnen Sie den Test neben <code>ttest</code> auch “per Hand”! Kommen Sie auf das selbe Ergebnis?</li>
 </ul>
-</div>
-<div id="profi-übungen-8" class="section level2">
-<h2><span class="header-section-number">8.8</span> Profi-Übungen 8</h2>
-<p>Für alle, die noch etwas mehr machen möchten:</p>
-<ol start="5" class="example" style="list-style-type: decimal">
+<ol start="6" class="example" style="list-style-type: decimal">
+<li>Sind Befragte, die in den 1960er Jahren geboren wurden, signifikant früher aus dem Elternhaus ausgezogen als Befragte, die in den 1970er Jahren geboren wurden?</li>
+</ol>
+<ul>
+<li>Laden Sie den kumulierten Allbus (<code>Allbus_1980-2018.dta</code>).</li>
+<li>Wählen Sie alle Befragten aus, die zwischen 1960 und 1979 geboren wurden (<code>yborn</code> gibt das Geburtsjahr an) und für die das Alter beim Auszug aus dem Elternhaus vorliegt (<code>dg12 &gt; 0</code>).</li>
+<li>Erstellen Sie eine Dummyvariable, welche den Wert <code>1</code> annimmt wenn die Befragten nach 1969 geboren sind und 0 für alle früher geborenen. <a href="inf2.html#genhelp">Tipp</a></li>
+<li>Formulieren Sie die Hypothesen zur Fragestellung dieser Aufgabe!</li>
+<li>Müssen Sie <code>unequal</code> setzen?</li>
+<li>Führen Sie den entsprechenden Test durch</li>
+<li>Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?</li>
+</ul>
+<ol start="7" class="example" style="list-style-type: decimal">
 <li>Eine Umfrage von 15 zufällig ausgewählten Betrieben ergab, dass im Durchschnitt an 5,25 Tagen im vergangenen Jahr gestreikt wurde. Die Standardabweichung in der Stichprobe beträgt 0.25 Tage. Ein Experte behauptet, es wären im arithmetischen Mittel 7 Streiktage für das vergangene Jahr gewesen. Liegt der Wert aus der Stichprobe signifikant darunter?</li>
 </ol>
 <ul>
@@ -709,32 +713,53 @@ Hier könnten wir dann mit <code>ttest</code>
 <li>Berechnen Sie die Irrtumswahrscheinlichkeit für die Ablehnung von <span class="math inline">\(H_0\)</span>!</li>
 <li>Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?</li>
 </ul>
-<ol start="6" class="example" style="list-style-type: decimal">
-<li>Allgemein wird angenommen, dass Studierende ihrem Studium pro Tag durchschnittlich 3,5 Stunden widmen. Sie machen eine Umfrage unter 6000 Studierenden und kommen auf ein arithmetisches Mittel von 5 Stunden und eine Varianz <span class="math inline">\(s^2= 4\)</span>. Daher vermuten Sie nun, dass die Lerndauer signifikant über 3.5 Stunden liegt.<br />
-</li>
+<p>Sie können sich auch diese Daten wie folgt erstellen:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="inf2.html#cb33-1"></a><span class="kw">clear</span></span>
+<span id="cb33-2"><a href="inf2.html#cb33-2"></a><span class="kw">set</span> <span class="dv">seed</span> 0441</span>
+<span id="cb33-3"><a href="inf2.html#cb33-3"></a><span class="kw">set</span> <span class="kw">obs</span> 15</span>
+<span id="cb33-4"><a href="inf2.html#cb33-4"></a><span class="kw">gen</span> streik =  rnormal(5.25,.25)</span></code></pre></div>
+<ol start="8" class="example" style="list-style-type: decimal">
+<li>Haben kleinere Frauen einen signifikant höheren BMI als größere?</li>
 </ol>
-<ul>
-<li>Formulieren Sie die Hypothesen!</li>
-<li>Berechnen Sie die Irrtumswahrscheinlichkeit für die Ablehung von <span class="math inline">\(H_0\)</span>!</li>
-<li>Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?</li>
-</ul>
 </div>
 <div id="hinweise" class="section level2">
-<h2><span class="header-section-number">8.9</span> Hinweise</h2>
+<h2><span class="header-section-number">8.8</span> Hinweise</h2>
 <div id="vollz" class="section level3">
-<h3><span class="header-section-number">8.9.1</span> Auswahl der in Vollzeit beschäftigten Befragten</h3>
-<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="inf2.html#cb33-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
-<span id="cb33-2"><a href="inf2.html#cb33-2"></a>cd <span class="st">&quot;...&quot;</span></span>
-<span id="cb33-3"><a href="inf2.html#cb33-3"></a><span class="co">// einlesen</span></span>
-<span id="cb33-4"><a href="inf2.html#cb33-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
-<span id="cb33-5"><a href="inf2.html#cb33-5"></a></span>
-<span id="cb33-6"><a href="inf2.html#cb33-6"></a><span class="co">// missings als NA:</span></span>
-<span id="cb33-7"><a href="inf2.html#cb33-7"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt;0 </span>
-<span id="cb33-8"><a href="inf2.html#cb33-8"></a></span>
-<span id="cb33-9"><a href="inf2.html#cb33-9"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2018  &amp; work == 1 &amp; inc &gt; 0</span>
-<span id="cb33-10"><a href="inf2.html#cb33-10"></a></span>
-<span id="cb33-11"><a href="inf2.html#cb33-11"></a><span class="co">// logarithmieren des Einkommens:</span></span>
-<span id="cb33-12"><a href="inf2.html#cb33-12"></a><span class="kw">gen</span> log_inc = <span class="fu">log</span>(inc)</span></code></pre></div>
+<h3><span class="header-section-number">8.8.1</span> Auswahl der in Vollzeit beschäftigten Befragten</h3>
+<div class="sourceCode" id="cb34"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb34-1"><a href="inf2.html#cb34-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
+<span id="cb34-2"><a href="inf2.html#cb34-2"></a>cd <span class="st">&quot;...&quot;</span></span>
+<span id="cb34-3"><a href="inf2.html#cb34-3"></a><span class="co">// einlesen</span></span>
+<span id="cb34-4"><a href="inf2.html#cb34-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
+<span id="cb34-5"><a href="inf2.html#cb34-5"></a></span>
+<span id="cb34-6"><a href="inf2.html#cb34-6"></a><span class="co">// missings als NA:</span></span>
+<span id="cb34-7"><a href="inf2.html#cb34-7"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt;0 </span>
+<span id="cb34-8"><a href="inf2.html#cb34-8"></a></span>
+<span id="cb34-9"><a href="inf2.html#cb34-9"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2018  &amp; work == 1 &amp; inc &gt; 0</span>
+<span id="cb34-10"><a href="inf2.html#cb34-10"></a></span>
+<span id="cb34-11"><a href="inf2.html#cb34-11"></a><span class="co">// logarithmieren des Einkommens:</span></span>
+<span id="cb34-12"><a href="inf2.html#cb34-12"></a><span class="kw">gen</span> log_inc = <span class="fu">log</span>(inc)</span></code></pre></div>
+</div>
+<div id="genhelp" class="section level3">
+<h3><span class="header-section-number">8.8.2</span> Kohortenvergleich Tipps</h3>
+<div class="sourceCode" id="cb35"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb35-1"><a href="inf2.html#cb35-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
+<span id="cb35-2"><a href="inf2.html#cb35-2"></a>cd <span class="st">&quot;...&quot;</span></span>
+<span id="cb35-3"><a href="inf2.html#cb35-3"></a><span class="co">// einlesen</span></span>
+<span id="cb35-4"><a href="inf2.html#cb35-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
+<span id="cb35-5"><a href="inf2.html#cb35-5"></a></span>
+<span id="cb35-6"><a href="inf2.html#cb35-6"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">inrange</span>(yborn,1960,1979)</span>
+<span id="cb35-7"><a href="inf2.html#cb35-7"></a><span class="kw">labelbook</span> dg12</span>
+<span id="cb35-8"><a href="inf2.html#cb35-8"></a><span class="kw">mvdecode</span> dg12, mv(-51/-1)</span></code></pre></div>
+</div>
+<div id="bmihelp" class="section level3">
+<h3><span class="header-section-number">8.8.3</span> BMI Aufgaben</h3>
+<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="inf2.html#cb36-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
+<span id="cb36-2"><a href="inf2.html#cb36-2"></a>cd <span class="st">&quot;...&quot;</span></span>
+<span id="cb36-3"><a href="inf2.html#cb36-3"></a><span class="co">// einlesen</span></span>
+<span id="cb36-4"><a href="inf2.html#cb36-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
+<span id="cb36-5"><a href="inf2.html#cb36-5"></a></span>
+<span id="cb36-6"><a href="inf2.html#cb36-6"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">inrange</span>(yborn,1960,1979)</span>
+<span id="cb36-7"><a href="inf2.html#cb36-7"></a><span class="kw">labelbook</span> dg12</span>
+<span id="cb36-8"><a href="inf2.html#cb36-8"></a><span class="kw">mvdecode</span> dg12, mv(-51/-1)</span></code></pre></div>
 <!-- ### Plot der Körpergrößenangaben -->
 <!-- ```{r,echo =F} -->
 <!-- library(dplyr) -->
