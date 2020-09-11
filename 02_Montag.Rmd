@@ -491,8 +491,8 @@ Damit sind die Originaldaten aber natürlich weg.
 Für alle, die noch etwas mehr machen möchten: 
 
 (@)  Laden Sie den Datensatz `Allbus2018` in Stata. 
-      + Behalten Sie die Befragte, die zwischen 1970 und 1980 geboren wurden im Speicher!
       + Unter welchem Variablennamen ist das Geburtsjahr abgelegt? Nutzen Sie `lookfor`!
+      + Behalten Sie die Befragte, die zwischen 1970 und 1980 geboren wurden im Speicher!
       + Wie hilft Ihnen `inrange` hier weiter?
       
 
