@@ -17,13 +17,7 @@ a14gr <- filter(ak, year == 2014, hs16>0 )
 
 ## Vergleich von Varianzen mit dem F-Test
 
-Um die Varianzen zweier Stichproben zu überprüfen, steht uns der F-Test zur Verfügung - in Stata mit `sdtest`. Der F-Test hat einige Voraussetzungen: 
-
-+	Die Variablen sind (mind.) intervallskaliert 
-+	Die Variablen sind in der Grundgesamtheit (annähernd) normalverteilt
-+	Die zu vergleichenden Gruppen sind voneinander unabhängig (unverbundene Stichproben)
-
-Getestet wird beim F-Test die Hypothese, dass die Varianzen zweier Grundgesamtheiten gleich oder ungleich (zweiseitiger Test) sind bzw. dass die Varianz der einen Grundgesamtheit größer ist als die der anderen (einseitiger Test).
+Um die Varianzen zweier Stichproben zu überprüfen, steht uns der F-Test zur Verfügung - in Stata mit `sdtest`. Getestet wird beim F-Test die Hypothese, dass die Varianzen zweier Grundgesamtheiten gleich oder ungleich (zweiseitiger Test) sind bzw. dass die Varianz der einen Grundgesamtheit größer ist als die der anderen (einseitiger Test).
 
 Es gibt also auch hier wieder gerichtete und ungerichtete Hypothesen. Da allerdings die F-Verteilung nicht symmetrisch ist, wird nur rechtsseitig getestet. Daher sollte beim Test die größere Varianz immer im Zähler stehen.
 
@@ -402,6 +396,7 @@ wit_plt3 <-
   geom_point(size = 1.95,aes(color = factor(educ)) )+ 
   scale_color_viridis_d(name = "", breaks = 1:5, labels = c("k.Abs.","Hauptschule","Mittlere Reife","Fachabi","Abi"), end = .75) +
   guides(color= F) +
+  labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "Within-group-variation") +
   ggthemes::theme_stata(base_size = 7) +
   expand_limits(y = c(1000,4800)) +
   theme(axis.text.x = element_blank(), 
@@ -431,7 +426,7 @@ bet_plt3 <-
   scale_linetype_manual(values = c(1,NA)) +
   guides(color= guide_legend(override.aes = list(shape = 15,size = 6) ,
                              label.position ="right" , ncol = 3,reverse = F)  ) + 
-  labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "Within-group-variation") +
+  labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "Between-group-variation") +
   ggthemes::theme_stata(base_size = 7) +
   expand_limits(y = c(1000,4800)) +
   theme(axis.text.x = element_blank(), 
