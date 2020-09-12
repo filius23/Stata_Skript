@@ -618,6 +618,7 @@ Die t-Verteilung ähnelt der Standardnormalverteilung, beide haben einen Mittelw
 
 
 ```{r, out.width="100%", fig.align='center', echo = F}
+ # data1 <- data.frame(z = seq(-4,4,.01)) # dataframe erstellen mit Zahlenfolge zwischen -4 & 4
 data1$t.var <- dt(x=data1$z,df =  2) # Dichtefunktion der t-Verteilung mit df=2
 data1$t.var10 <- dt(x=data1$z,df =  10) # Dichtefunktion der t-Verteilung mit df=10
 data2 <- data1 %>% pivot_longer(cols = contains("var"),values_to = "nv",names_to = "Verteilung") %>% 

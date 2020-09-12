@@ -491,50 +491,31 @@ Anmerkung: hier wurden die Missings in `di05` mit `mvdecode di05, mv(-50 -32 -7)
 (@) Wir interessieren uns für die Variable `gkpol`. 
 
 Laden Sie den Allbusdatensatz für 2018 `Allbus2018.dta` in Stata:
-```{r einls, eval=F, echo = T}
-cd("...") # wo liegt der Datensatz?
-use " Allbus2018.dta"
+```{stata einls31, eval=F, echo = T}
+cd "..."  // wo liegt der Datensatz?
+use Allbus2018.dta
 ```
     + Lassen Sie sich eine Tabelle für `gkpol` anzeigen. Welche ist die häufigste Ausprägung?
-    + Hat die Variable fehlende Werte, die Sie ausschließen sollten? Falls ja, ersetzen Sie diese Werte mit `mvdecode` und lassen Sie sich die Tabelle erneut ausgeben.
-    + Wie viele Befragte leben in einem Ort mit höchstens 49.999 Einwohnern?
-    + Wie groß ist der Anteil der Befragten, die in einem Ort mit höchstens 99.999 Einwohnern leben?
-    + Wie groß ist der Anteil der Befragten, die in einem Ort mit *mindestens* 100.000 Einwohnern leben?
+    + Hat die Variable fehlende Werte, die Sie ausschließen sollten? Falls ja, ersetzen Sie diese Werte mit `mvdecode` und lassen Sie sich die Tabelle erneut ausgeben. (Verwenden Sie `labelbook` oder sehen Sie im Codebuch nach).
+    + Welcher Anteil der Befragten leben in einem Ort mit höchstens 49.999 Einwohnern?
+    + Wie groß ist der Anteil der Befragten, die in einem Ort mit mindestens 100.000 Einwohnern leben?
+    + Erstellen Sie nun eine Kontigenztabelle mit `gkpol` und `sex`. Welche Merkmalskombination ist die häufigste? 
+    + Welcher Anteil der Befragten aus Städten mit über 500.000 Einwohnern ist weiblich?
+    + Wie hoch ist der Anteil der Männer an Befragten, die in Orten mit unter 2.000 Einwohnern leben?
+    + Welcher Anteil der Frauen lebt in Städten mit 50.000 bis 99.999 Einwohnern?
+    + Wie hoch ist der Anteil der Bewohner von Städten mit 20.000 bis 49.999 Einwohnern an allen befragten Männern?
 
 ### Übung 3-2 {#met}  
 
-Forschungsfrage: Vergleichen Sie die HH-Einkommensverteilung in Ost und West!
+Forschungsfrage: Vergleichen Sie die Haushaltseinkommensverteilung in Ost und West!
 
 (@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`).
     + Fokussieren Sie zunächst auf das Befragungsjahr 1994 mit Hilfe von `keep` oder `drop`.
     + Betrachten Sie die HH-Einkommensverteilungen (Variable `di05`) 
-    + Denken Sie daran, die negativen Werte für `di05` mit `.` zu überschreiben! (Entweder mit `replace` oder `mvdecode`)
+    + Denken Sie daran, die negativen Werte für `di05` mit `.` zu überschreiben! (Entweder mit `replace` oder `mvdecode`, sehen Sie mit `labelbook` oder im Codebuch nach)
     + Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle aus dem Jahr 1994 - was sagen Ihnen die Werte jeweils?
     + Berechnen Sie den Gini-Koeffizenten! 
     + Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable `eastwest`) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?
-
-(@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`).
-    + Betrachten Sie dann die HH-Einkommensverteilungen für 2010 (Variable `di05`), behalten Sie also mit Hilfe von `keep` oder `drop` nur die Angaben aus dem Befragungsjahr 2010 im Speicher.
-    + Denken Sie daran, die negativen Werte für `di05` mit `.` zu überschreiben!
-    + Berechnen Sie jeweils für Ost und West das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle im Datensatz für 2010 - was sagen Ihnen die Werte jeweils?
-    + Vergleichen Sie die Werte aus 1994 und 2010. Welche Tendenz können Sie für die Ost-West-Unterschiede erkennen?
-
-### Weitere Übungen 3
-
-(@) Erstellen Sie eine Häufigkeitstabelle für das Geburtsjahr der Befragten (`yborn`)!
-    + Müssen Sie die Variable erst klassieren um eine sinnvoll interpretierbare Tabelle zu erhalten? 
-    + Gibt es fehlende Werte, die Sie mit `mvdecode`/`replace` überschreiben sollten?
-    + Verwenden Sie die Jahrzehntgrenzen ab 1910.
-    + Erstellen Sie eine Tabelle für die neu erstellte, kategorisierte Variable.
-    + Wie groß ist der Anteil der Befragten, die bis 1970 geboren wurden?
-    + Wie groß ist der Anteil der Befragten, die nach 1980 geboren wurden?
-  
-(@) Erstellen Sie eine Kontingenztabelle für `sex` und `educ`. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte auszuschließen.
-    + Erstellen Sie für die folgenden Fragen jeweils die passende Variante der Kontingenztabelle mit relativen Häufigkeiten als  Zeilen- oder Spaltenprozenten. 
-    + Welcher Anteil der Befragten mit Fachhochschulreife ist männlich?
-    + Wie hoch ist der Anteil der Frauen an Befragten mit Hauptschulabschluss?
-    + Welcher Anteil der Frauen hat Abitur?
-    + Wie hoch ist der Anteil der Realschulabsolventen an allen befragten Männern?
 
 
 
@@ -542,21 +523,19 @@ Forschungsfrage: Vergleichen Sie die HH-Einkommensverteilung in Ost und West!
 
 Für alle, die noch etwas mehr machen möchten: 
 
-(@) Nutzen Sie den `Allbus2018.dta` und erstellen Sie eine Kontingenztabelle für `sex` und `gkpol`. Welche Merkmalskombination ist die häufigste? 
-    + Denken Sie daran, fehlende Werte mit  `mvdecode` auszuschließen.
-    + Erstellen Sie die Kontingenztabelle der beiden Variablen.
-    + Welcher Anteil der Befragten aus Städten mit über 500.000 Einwohnern ist weiblich?
-    + Wie hoch ist der Anteil der Männer an Befragten, die in Orten mit unter 2.000 Einwohnern leben?
-    + Welcher Anteil der Frauen lebt in Städten mit 50.000 bis 99.999 Einwohnern?
-    + Wie hoch ist der Anteil der Bewohner von Städten mit 20.000 bis 49.999 Einwohnern an allen befragten Männern?
+(@) Laden Sie den Allbus 2018 (`Allbus2018.dta`). Erstellen Sie eine Kontingenztabelle für `sex` und `educ`. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte auszuschließen.
+    + Erstellen Sie für die folgenden Fragen jeweils die passende Variante der Kontingenztabelle mit relativen Häufigkeiten als  Zeilen- oder Spaltenprozenten. 
+    + Welcher Anteil der Befragten mit Fachhochschulreife ist männlich?
+    + Wie hoch ist der Anteil der Frauen an Befragten mit Hauptschulabschluss?
+    + Welcher Anteil der Frauen hat Abitur (die allgemeine Hochschulreife)?
+    + Wie hoch ist der Anteil der Realschulabsolventen an allen befragten Männern?
 
 (@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und analysieren Sie, wie sich die Anteile der geschiedenen Befragten über die Befragungsjahre verändert haben!
-    + Das Befragungsjahr finden Sie in der Variable `year`, `mstat` ist auch hier die Variable für den Familienstand.
-    + In welchem Jahr gab es den höchsten Anteil an geschiedenen Befragten?
+    + Das Befragungsjahr finden Sie in der Variable `year`, `mstat` ist die Variable für den Familienstand.
+    + Überschreiben Sie die Missings für `mstat`.
+    + In welchem Jahr gab es den höchsten Anteil an geschiedenen Befragten? Sie können so eine Variable generieren, welche 1 annimt wenn `mstat` = 4 (geschieden) und 0 für alle andere Familienstände: `gen divorce = (mstat == 4)`
     + Aus welchem Jahr stammen die Angaben der meisten geschiedenen Befragten?
-
-<!-- Vereinfachen: tab , gen -->
-<!-- evtl. sogar Vorgriff auf collapse? -->
+    + In welchem Jahr ist der Anteil der geschiedenen Befragten am höchsten?
 
 
 ## Anhang Kap 3
@@ -585,7 +564,7 @@ Die häufigste Kennzahl zur Beschreibung von Streuung ist aber die **Varianz**. 
 
 Schauen wir erst in den Zähler des Bruchs: $(x_{i}-\bar{x})^2$
 Es geht also um die Abstände der einzelnen Datenpunkte ($x_{i}$) zum arithmetischen Mittel ($\bar{x}$) - mathematisch die Differenz zwischen den einzelnen Datenpunkten $x_{i}-\bar{x}$ - hier eingezeichnet als gestrichelte Linien:
-```{r dpi = 800, echo = F, out.height="70%", out.width="70%", fig.align="center"}
+```{r var_graph,dpi = 800, echo = F, out.height="70%", out.width="70%", fig.align="center"}
 eq <-  substitute(italic(bar(x))) # formel erstellen
 
 a18 %>% 
@@ -612,6 +591,7 @@ Würden wir die Abstände (gestrichelten Linien) einfach aufsummieren, erhielten
 Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert ($\sum_{i=1}^{n}$) und dann durch die Anzahl der Beobachtungen geteilt werden ($\frac{}{n}$)- zusammengefasst hier nochmal die Formel:  $$var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}$$
 
 [Zurück zu Streuungsmaße](#streu)    
+
 ### Schiefe & Wölbung {#sk_kur}
 
 Die Schiefe (skewness) ist ein Maß für die Asymmetrie einer Verteilung. Bei einer symmetrischen Verteilung beträgt die Schiefe 0. Ein negativer Wert für die Schiefe deutet darauf hin, dass Median > Mean und Verteilung wird als links-schief/rechts-steil bezeichnet. Bei einem positiven Wert der Schiefe ist Median < Mean und die Verteilung ist rechts-schief/links-steil. 

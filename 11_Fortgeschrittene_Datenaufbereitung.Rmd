@@ -101,9 +101,9 @@ cd ""
 use "Allbus_1980-2018.dta", clear
 // missings ausschließen:
 replace mstat = . if mstat < 0
-mvdecode *yborn, mv( -41 -32 -10 -9 -7 -8 -6 -5 -4 -3 -1 )
-mvdecode *age,   mv( -41 -32 -10 -9 -7 -8 -6 -5 -4 -3 -1 )
-mvdecode *educ,   mv( -41 -32 -10 -9 -7 -8 -6 -5 -4 -3 -1 )
+mvdecode *yborn, mv(-41 / -1 )
+mvdecode *age,   mv(-41 / -1 )
+mvdecode *educ,  mv(-41 / -1 )
 
 // Alter von ihr: entweder Befragtenalter wenn sie befragt wurde oder 
 gen her_age =  age if sex == 2
@@ -238,3 +238,6 @@ Mit `merge` können wir Informationen aus mehreren Datensätzen zusammenfügen.
 
 Dafür helfen uns sog. "regular expressions", in Stata stehen hierfür zb `substr` `regexr` und `regexm` zur Verfügung.
 
+## Link Liste
+
++ [Internet Guide to Stata](http://wlm.userweb.mwn.de/Stata/)

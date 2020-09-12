@@ -229,7 +229,7 @@ ANOVA steht für **an**alysis **o**f **v**ariance und wird auch als univariate V
 
 ANOVA wird verwendet, um Mittelwertunterschiede zwischen 2 oder mehr Gruppen zu vergleichen. Dies geschieht, indem die Varianz in den Daten betrachtet wird (daher der Name). Insbesondere vergleicht ANOVA das Ausmaß der Variation zwischen den Gruppen (*between variance*) mit dem Ausmaß der Variation innerhalb der Gruppen (*within variance*).  Wir hatten diese Logik der Varianzzerlegung schon bei Regressionsmodellen kennengelernt:
 
-```{r,out.width = "80%",fig.height= 3.5, echo=F, fig.align="center" , eval = T, message=F}
+```{r anova_plt1,out.width = "80%",fig.height= 3.5, echo=F, fig.align="center" , eval = T, message=F}
 df <- data.frame(var1 = c(1,2,7,8),
                  var2 = c(2,4,7,6)) %>% mutate(mean_var2 = mean(var2))
 m1 <- lm(var2~ var1, data = df)  
@@ -264,7 +264,7 @@ reg var2 var1
 
 Diese Logik überträgt ANOVA auf kategoriale Variablen, indem hier die Varianz in eine Streuung zwischen (`between`) und innerhalb der (`within`) der Gruppen aufgeteilt wird:
 
-```{r,out.width = "100%", fig.height= 8, dpi = 1000, echo=F, fig.align="center" , eval = T, message=F, warning =F}
+```{r anova_plot1,out.width = "100%", fig.height= 8, dpi = 1000, echo=F, fig.align="center" , eval = T, message=F, warning =F}
 eq <-  substitute(italic(bar(inc))) # formel erstellen
 eq2 <-  substitute(italic(bar(inc[m]))) # formel erstellen
 eq3 <-  substitute(italic(bar(inc[f]))) # formel erstellen
@@ -450,7 +450,7 @@ reg inc i.sex
 
 Der Vorteil von ANOVA ist aber, dass sich auch Gruppenunterschiede für Variablen mit mehr als zwei Ausprägungen untersuchen lassen, bspw. Schulbildungsniveaus:
 
-```{r,out.width = "100%", fig.height= 8, dpi = 1000, echo=F, fig.align="center" , eval = T, message=F, warning =F}
+```{r anova_plot2,out.width = "100%", fig.height= 8, dpi = 1000, echo=F, fig.align="center" , eval = T, message=F, warning =F}
 set.seed(023123)
 df3 <- tibble(educ = rep(1:5,8)) %>% mutate(inc = runif(40,1500,3000),
                                                             inc = case_when(educ == 2 ~ inc + 347.0904,

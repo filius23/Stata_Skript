@@ -488,21 +488,22 @@ Damit sind die Originaldaten aber natürlich weg.
 
 (@) Laden Sie den Datensatz `Allbus2018` in Stata. 
       + In welcher Variable ist das Geburtsjahr der Befragten abgelegt?
-      + Nutzen Sie `summary` für einen Überblick. Hat die Altersvariable negative Werte, die Sie mit `.` ersetzen sollten? 
+      + Nutzen Sie `summary` für einen Überblick für diese Variable. Hat die Altersvariable negative Werte, die Sie mit `.` ersetzen sollten?   (Denken Sie `labelbook`)
       + Überschreiben Sie diese negativen Werte mit `.`, um sie so Stata kenntlich zu machen.
       + Erstellen Sie eine neue Variable mit dem Alter der Befragten im Jahr 2020! 
       + Lassen Sie sich das Geburtsjahr und die neu erstellte Variable für die ersten 20 Beobachtungen anzeigen - hat alles geklappt wie es soll?
-      + Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Speicher. 
+      + Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Speicher. (Siehe Kap 1.8)
       + Wie viele Spalten hat der Datensatz nach dieser Veränderung? Wie viele Zeilen? 
+      + Sind die Befragten mit fehlenden Geburtsjahrangaben noch im Datensatz? Nutzen Sie `mdesc`!
 
 
-(@)  Laden Sie den Datensatz `Allbus2018` in Stata. 
+(@)  Laden Sie den Datensatz `Allbus2018.dta` erneut in Stata. 
       + Lassen Sie sich mit Hilfe von `tabulate` die Variable `gkpol` anzeigen.
       + Lassen Sie sich die Zahlencodes anstelle der Labels anzeigen.
-      + Überschreiben Sie alle Codes für fehlende Angaben mit `.`
+      + Überschreiben Sie alle Codes für fehlende Angaben mit `.` (Denken Sie wieder an `labelbook` oder sehen Sie Codebuch nach).
       + Lassen Sie sich mit `tabulate` die Häufigkeitsauszählung erneut anzeigen. Hat sich die Fallzahl vorhin verändert?
       + Wie können Sie die fehlenden Werte auch in `tabulate` auszählen lassen? Lassen Sie sich diese Auszählung anzeigen!
-      + Löschen Sie alle Beobachtungen von Befragten aus Städten mit 500.000 Einwohnern und mehr aus dem Speicher.
+      + Löschen Sie alle Beobachtungen von Befragten aus Städten mit 500.000 Einwohnern und mehr aus dem Speicher. Denken Sie an die Unterscheidung zwischen Labels und Zahlenwerten.
       + Kontrollieren Sie mit einem erneuten `tabulate`-Befehl, ob alle Fälle weg sind. (Denken Sie an die fehlenden Werte!)
 
 (@) Kommentieren Sie ihre bisherigen Befehle mit `//`! Was haben Sie jeweils gemacht? Probieren Sie auch aus, mit `///` einen Befehl über mehrere Zeilen zu verteilen!
@@ -514,10 +515,9 @@ Damit sind die Originaldaten aber natürlich weg.
 
 Für alle, die noch etwas mehr machen möchten: 
 
-(@)  Laden Sie den Datensatz `Allbus2018` in Stata. 
-      + Unter welchem Variablennamen ist das Geburtsjahr abgelegt? Nutzen Sie `lookfor`!
-      + Behalten Sie die Befragte, die zwischen 1970 und 1980 geboren wurden im Speicher!
-      + Wie hilft Ihnen `inrange` hier weiter?
+(@)  Laden Sie den Datensatz `Allbus2018` erneut in Stata. 
+      + Behalten Sie nur die Befragten, die zwischen 1970 und 1980 geboren wurden im Speicher!
+      + Wie hilft Ihnen `inrange` hier weiter? (Siehe Kap 1.8)
       
 
 

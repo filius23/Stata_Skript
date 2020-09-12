@@ -284,8 +284,8 @@ Für `if`-Bedingungen stehen uns die üblichen Operatoren zur Verfügung:
 
 Mit `inrange` können wir Auswahlen bequem auf einen Wertebereich eingrenzen - d.h. diese beiden Auswahlen führen zum gleichen Ergebnis (nur Befragte, die zwischen 20 und 30 Jahre alt sind):
 ```{stata browse_if, eval = F}
-list sex land if age >= 20 & age <= 30
-list sex land if inrange(age,20,30)
+bro sex land if age >= 20 & age <= 30
+bro sex land if inrange(age,20,30)
 ```
 
 
@@ -299,14 +299,12 @@ list sex land if inrange(age,20,30)
 
 + Laden Sie die Datensätze aus ILIAS herunter!
 
-+ Wechseln Sie mit `cd` das Arbeitsverzeichnis!
-  + In welchem Arbeitsverzeichnis befinden Sie sich aktuell?
-  + In welchem Ordner haben Sie die Datensätze aus ILIAS abgelegt?
-  + Navigieren Sie Stata mit `cd` in eben diesen Ordner, in dem die Datensätze abgelegt sind!
 
 + Lesen Sie den Allbus 2018 in Stata ein.
-  + Sie finden den Allbus 2018 in ILIAS.
-  + Nutzen Sie `d` und `browse`, um sich einen Überblick über den Datensatz zu verschaffen.
+  + In welchem Arbeitsverzeichnis befinden Sie sich aktuell?
+  + Sie finden den Allbus 2018 in [ILIAS](www.ilias.gesis.org).
+  + In welchem Ordner haben Sie die Datensätze aus ILIAS abgelegt? Navigieren Sie Stata mit `cd` in eben diesen Ordner, in dem die Datensätze abgelegt sind!
+  + Nutzen Sie `describe` und `browse`, um sich einen Überblick über den Datensatz zu verschaffen.
   + Wie viele Variablen und wie viele Fälle enthält der Datensatz?
   + Unter welchem Variablennamen ist die Selbsteinschätzung des Gesundheitszustands der Befragten ablegt?
   + Unter welchem Variablennamen ist die Information abgelegt, in welchem Bundesland die Befragten wohnen?
@@ -321,11 +319,9 @@ list sex land if inrange(age,20,30)
 
 Für alle, die noch etwas mehr machen möchten: 
 
-+ Auf ILIAS finden Sie auch eine csv-Datei mit aktuellen Daten zu Testzahlen, Fallzahlen und regionalen Gegebenheiten rund um COVID19 aus dem [tidycovid19](https://joachim-gassen.github.io/2020/05/tidycovid19-new-data-and-doc/)-Projekt. Importieren Sie diesen Datensatz per csv-Import! (Siehe [weitere Anmerkungen](#otherfmts))
++ Auf ILIAS finden Sie auch eine SPSS-Version (.sav-Datei) des Allbus 2018. Lesen Sie diese Dateiversion in Stata ein! (Siehe [weitere Anmerkungen](#otherfmts))
++ Auf ILIAS finden Sie auch eine csv-Datei des Allbus 2018. Lesen Sie diese Dateiversion in Stata ein! (Siehe [weitere Anmerkungen](#otherfmts))
 
-+ Wie viele Zeilen und Spalten hat dieser Datensatz?
-+ Welcher Variablentyp ist für die Variable `country` hinterlegt?
-+ Löschen Sie alle Beobachtungen für die USA! Wie viele Fälle bleiben übrig?
 
 
 ## Anhang 1

@@ -162,9 +162,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="Stata2.html"><a href="Stata2.html#neue-variablen-erstellen"><i class="fa fa-check"></i><b>2.3</b> Neue Variablen erstellen</a></li>
 <li class="chapter" data-level="2.4" data-path="Stata2.html"><a href="Stata2.html#bestehende-variablen-verändern"><i class="fa fa-check"></i><b>2.4</b> Bestehende Variablen verändern</a></li>
 <li class="chapter" data-level="2.5" data-path="Stata2.html"><a href="Stata2.html#gen-ist-gut-kontrolle-ist-besser"><i class="fa fa-check"></i><b>2.5</b> gen ist gut, Kontrolle ist besser</a></li>
-<li class="chapter" data-level="2.6" data-path="Stata2.html"><a href="Stata2.html#fehlende-werte"><i class="fa fa-check"></i><b>2.6</b> Fehlende Werte</a></li>
-<li class="chapter" data-level="2.7" data-path="Stata2.html"><a href="Stata2.html#if-bedingungen-und-fehlende-werte"><i class="fa fa-check"></i><b>2.7</b> if Bedingungen und fehlende Werte</a></li>
-<li class="chapter" data-level="2.8" data-path="Stata2.html"><a href="Stata2.html#keep-drop"><i class="fa fa-check"></i><b>2.8</b> keep &amp; drop</a></li>
+<li class="chapter" data-level="2.6" data-path="Stata2.html"><a href="Stata2.html#keep-drop"><i class="fa fa-check"></i><b>2.6</b> keep &amp; drop</a></li>
+<li class="chapter" data-level="2.7" data-path="Stata2.html"><a href="Stata2.html#fehlende-werte"><i class="fa fa-check"></i><b>2.7</b> Fehlende Werte</a></li>
+<li class="chapter" data-level="2.8" data-path="Stata2.html"><a href="Stata2.html#miss_if"><i class="fa fa-check"></i><b>2.8</b> if Bedingungen und fehlende Werte</a></li>
 <li class="chapter" data-level="2.9" data-path="Stata2.html"><a href="Stata2.html#labels-und-if-bedingungen"><i class="fa fa-check"></i><b>2.9</b> Labels und if-Bedingungen</a></li>
 <li class="chapter" data-level="2.10" data-path="Stata2.html"><a href="Stata2.html#nochmal-von-vorne-daten-neu-laden"><i class="fa fa-check"></i><b>2.10</b> Nochmal von vorne: Daten neu laden</a></li>
 <li class="chapter" data-level="2.11" data-path="Stata2.html"><a href="Stata2.html#speichern"><i class="fa fa-check"></i><b>2.11</b> Speichern</a></li>
@@ -188,7 +188,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="desc1.html"><a href="desc1.html#übungen-3"><i class="fa fa-check"></i><b>3.3</b> Übungen 3</a><ul>
 <li class="chapter" data-level="3.3.1" data-path="desc1.html"><a href="desc1.html#tab"><i class="fa fa-check"></i><b>3.3.1</b> Übung 3-1</a></li>
 <li class="chapter" data-level="3.3.2" data-path="desc1.html"><a href="desc1.html#met"><i class="fa fa-check"></i><b>3.3.2</b> Übung 3-2</a></li>
-<li class="chapter" data-level="3.3.3" data-path="desc1.html"><a href="desc1.html#weitere-übungen-3"><i class="fa fa-check"></i><b>3.3.3</b> Weitere Übungen 3</a></li>
 </ul></li>
 <li class="chapter" data-level="3.4" data-path="desc1.html"><a href="desc1.html#profi-übungen-3"><i class="fa fa-check"></i><b>3.4</b> Profi-Übungen 3</a></li>
 <li class="chapter" data-level="3.5" data-path="desc1.html"><a href="desc1.html#anhang-kap-3"><i class="fa fa-check"></i><b>3.5</b> Anhang Kap 3</a><ul>
@@ -307,22 +306,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8" data-path="inf2.html"><a href="inf2.html"><i class="fa fa-check"></i><b>8</b> t-Tests</a><ul>
 <li class="chapter" data-level="8.1" data-path="inf2.html"><a href="inf2.html#t-test-per-hand-und-in-stata"><i class="fa fa-check"></i><b>8.1</b> t-Test per Hand und in Stata</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="inf2.html"><a href="inf2.html#beiseitiger-t-test"><i class="fa fa-check"></i><b>8.1.1</b> beiseitiger t-Test</a></li>
+<li class="chapter" data-level="8.1.1" data-path="inf2.html"><a href="inf2.html#ttest1"><i class="fa fa-check"></i><b>8.1.1</b> beiseitiger t-Test</a></li>
 <li class="chapter" data-level="8.1.2" data-path="inf2.html"><a href="inf2.html#linksseitiger-t-test"><i class="fa fa-check"></i><b>8.1.2</b> linksseitiger t-Test</a></li>
 <li class="chapter" data-level="8.1.3" data-path="inf2.html"><a href="inf2.html#rechtsseitiger-t-test"><i class="fa fa-check"></i><b>8.1.3</b> rechtsseitiger t-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="inf2.html"><a href="inf2.html#mittelwertvergleiche-mit-dem-t-test"><i class="fa fa-check"></i><b>8.2</b> Mittelwertvergleiche mit dem t-Test</a><ul>
+<li class="chapter" data-level="8.2" data-path="inf2.html"><a href="inf2.html#mittelwertttest"><i class="fa fa-check"></i><b>8.2</b> Mittelwertvergleiche mit dem t-Test</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="inf2.html"><a href="inf2.html#unverbundener-t-test"><i class="fa fa-check"></i><b>8.2.1</b> Unverbundener t-Test</a></li>
 <li class="chapter" data-level="8.2.2" data-path="inf2.html"><a href="inf2.html#verbundener-t-test"><i class="fa fa-check"></i><b>8.2.2</b> Verbundener t-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="inf2.html"><a href="inf2.html#varianten-für-ttest"><i class="fa fa-check"></i><b>8.3</b> Varianten für <code>ttest</code></a></li>
+<li class="chapter" data-level="8.3" data-path="inf2.html"><a href="inf2.html#übersicht-zu-varianten-für-ttest"><i class="fa fa-check"></i><b>8.3</b> Übersicht zu Varianten für <code>ttest</code></a></li>
 <li class="chapter" data-level="8.4" data-path="inf2.html"><a href="inf2.html#tvsmu"><i class="fa fa-check"></i><b>8.4</b> Übungen 8-1</a></li>
 <li class="chapter" data-level="8.5" data-path="inf2.html"><a href="inf2.html#tgroup"><i class="fa fa-check"></i><b>8.5</b> Übungen 8-2</a></li>
-<li class="chapter" data-level="8.6" data-path="inf2.html"><a href="inf2.html#weitere-übungen-kap-8"><i class="fa fa-check"></i><b>8.6</b> weitere Übungen Kap 8</a></li>
-<li class="chapter" data-level="8.7" data-path="inf2.html"><a href="inf2.html#profi-übungen-8"><i class="fa fa-check"></i><b>8.7</b> Profi-Übungen 8</a></li>
+<li class="chapter" data-level="8.6" data-path="inf2.html"><a href="inf2.html#tpaired"><i class="fa fa-check"></i><b>8.6</b> Übung 8-3</a></li>
+<li class="chapter" data-level="8.7" data-path="inf2.html"><a href="inf2.html#weitere-übungen-kap-8"><i class="fa fa-check"></i><b>8.7</b> weitere Übungen Kap 8</a></li>
 <li class="chapter" data-level="8.8" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>8.8</b> Hinweise</a><ul>
-<li class="chapter" data-level="8.8.1" data-path="inf2.html"><a href="inf2.html#auswahl-der-in-vollzeit-beschäftigten-befragten"><i class="fa fa-check"></i><b>8.8.1</b> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
+<li class="chapter" data-level="8.8.1" data-path="inf2.html"><a href="inf2.html#vollz"><i class="fa fa-check"></i><b>8.8.1</b> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
+<li class="chapter" data-level="8.8.2" data-path="inf2.html"><a href="inf2.html#genhelp"><i class="fa fa-check"></i><b>8.8.2</b> Kohortenvergleich Tipps</a></li>
+<li class="chapter" data-level="8.8.3" data-path="inf2.html"><a href="inf2.html#bmihelp"><i class="fa fa-check"></i><b>8.8.3</b> BMI Aufgaben</a></li>
 </ul></li>
+<li class="chapter" data-level="8.9" data-path="inf2.html"><a href="inf2.html#gruppenunterschiede-visualisieren"><i class="fa fa-check"></i><b>8.9</b> Gruppenunterschiede visualisieren</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Weitere Hypothesentests</a><ul>
+<li class="chapter" data-level="9.1" data-path="hypo.html"><a href="hypo.html#ftest"><i class="fa fa-check"></i><b>9.1</b> Vergleich von Varianzen mit dem F-Test</a></li>
+<li class="chapter" data-level="9.2" data-path="hypo.html"><a href="hypo.html#proportionen-und-häufigkeiten"><i class="fa fa-check"></i><b>9.2</b> Proportionen und Häufigkeiten</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="hypo.html"><a href="hypo.html#binomialtest"><i class="fa fa-check"></i><b>9.2.1</b> Binomialtest</a></li>
+<li class="chapter" data-level="9.2.2" data-path="hypo.html"><a href="hypo.html#chi²-test"><i class="fa fa-check"></i><b>9.2.2</b> Chi²-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="hypo.html"><a href="hypo.html#überblick"><i class="fa fa-check"></i><b>9.3</b> Überblick</a></li>
+<li class="chapter" data-level="9.4" data-path="hypo.html"><a href="hypo.html#übungen-9"><i class="fa fa-check"></i><b>9.4</b> Übungen 9</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="hypo.html"><a href="hypo.html#fueb"><i class="fa fa-check"></i><b>9.4.1</b> Übung 9-1</a></li>
+<li class="chapter" data-level="9.4.2" data-path="hypo.html"><a href="hypo.html#übung-9-2"><i class="fa fa-check"></i><b>9.4.2</b> Übung 9-2</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="hypo.html"><a href="hypo.html#anova"><i class="fa fa-check"></i><b>9.5</b> ANOVA</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="hypo.html"><a href="hypo.html#anova-vs.-t-tests"><i class="fa fa-check"></i><b>9.5.1</b> ANOVA vs. t-Tests</a></li>
+<li class="chapter" data-level="9.5.2" data-path="hypo.html"><a href="hypo.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>9.5.2</b> ANOVA vs. lineare Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="hypo.html"><a href="hypo.html#anova-mehrere-gruppen"><i class="fa fa-check"></i><b>9.6</b> ANOVA mehrere Gruppen</a></li>
+<li class="chapter" data-level="9.7" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>9.7</b> Hinweise</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="hypo.html"><a href="hypo.html#readin091"><i class="fa fa-check"></i><b>9.7.1</b> Einlesen und auswählen für Ü9-1</a></li>
+<li class="chapter" data-level="9.7.2" data-path="hypo.html"><a href="hypo.html#binom_help"><i class="fa fa-check"></i><b>9.7.2</b> Einlesen und auswählen für Ü9-2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a><ul>
+<li class="chapter" data-level="10.1" data-path="export1.html"><a href="export1.html#graph-export"><i class="fa fa-check"></i><b>10.1</b> graph export</a></li>
+<li class="chapter" data-level="10.2" data-path="export1.html"><a href="export1.html#esttab"><i class="fa fa-check"></i><b>10.2</b> esttab</a></li>
+<li class="chapter" data-level="10.3" data-path="export1.html"><a href="export1.html#log-file"><i class="fa fa-check"></i><b>10.3</b> log file</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="adva.html"><a href="adva.html"><i class="fa fa-check"></i><b>11</b> Fortgeschrittene Themen</a><ul>
+<li class="chapter" data-level="11.1" data-path="adva.html"><a href="adva.html#wertelabels"><i class="fa fa-check"></i><b>11.1</b> Wertelabels</a></li>
+<li class="chapter" data-level="11.2" data-path="adva.html"><a href="adva.html#sortieren"><i class="fa fa-check"></i><b>11.2</b> sortieren</a></li>
+<li class="chapter" data-level="11.3" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-variablen"><i class="fa fa-check"></i><b>11.3</b> Informationen aus mehreren Variablen</a></li>
+<li class="chapter" data-level="11.4" data-path="adva.html"><a href="adva.html#egen"><i class="fa fa-check"></i><b>11.4</b> egen</a></li>
+<li class="chapter" data-level="11.5" data-path="adva.html"><a href="adva.html#gruppierte-berechnungen"><i class="fa fa-check"></i><b>11.5</b> gruppierte Berechnungen</a></li>
+<li class="chapter" data-level="11.6" data-path="adva.html"><a href="adva.html#sep1"><i class="fa fa-check"></i><b>11.6</b> Subgruppen-Variablen erstellen mit <code>separate</code></a></li>
+<li class="chapter" data-level="11.7" data-path="adva.html"><a href="adva.html#collapse"><i class="fa fa-check"></i><b>11.7</b> collapse</a></li>
+<li class="chapter" data-level="11.8" data-path="adva.html"><a href="adva.html#indikatoren-umdrehen"><i class="fa fa-check"></i><b>11.8</b> Indikatoren umdrehen</a></li>
+<li class="chapter" data-level="11.9" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-datensätzen"><i class="fa fa-check"></i><b>11.9</b> Informationen aus mehreren Datensätzen</a></li>
+<li class="chapter" data-level="11.10" data-path="adva.html"><a href="adva.html#arbeiten-mit-textvariablen"><i class="fa fa-check"></i><b>11.10</b> Arbeiten mit Textvariablen</a></li>
+<li class="chapter" data-level="11.11" data-path="adva.html"><a href="adva.html#link-liste"><i class="fa fa-check"></i><b>11.11</b> Link Liste</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -907,59 +948,34 @@ Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdin
 <li>Wir interessieren uns für die Variable <code>gkpol</code>.</li>
 </ol>
 <p>Laden Sie den Allbusdatensatz für 2018 <code>Allbus2018.dta</code> in Stata:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="desc1.html#cb54-1"></a><span class="kw">cd</span>(<span class="st">&quot;...&quot;</span>) <span class="co"># wo liegt der Datensatz?</span></span>
-<span id="cb54-2"><a href="desc1.html#cb54-2"></a>use <span class="st">&quot; Allbus2018.dta&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb54-1"><a href="desc1.html#cb54-1"></a>cd <span class="st">&quot;...&quot;</span>  <span class="co">// wo liegt der Datensatz?</span></span>
+<span id="cb54-2"><a href="desc1.html#cb54-2"></a><span class="kw">use</span> Allbus2018.dta</span></code></pre></div>
 <ul>
 <li>Lassen Sie sich eine Tabelle für <code>gkpol</code> anzeigen. Welche ist die häufigste Ausprägung?
 <ul>
-<li>Hat die Variable fehlende Werte, die Sie ausschließen sollten? Falls ja, ersetzen Sie diese Werte mit <code>mvdecode</code> und lassen Sie sich die Tabelle erneut ausgeben.</li>
-<li>Wie viele Befragte leben in einem Ort mit höchstens 49.999 Einwohnern?</li>
-<li>Wie groß ist der Anteil der Befragten, die in einem Ort mit höchstens 99.999 Einwohnern leben?</li>
-<li>Wie groß ist der Anteil der Befragten, die in einem Ort mit <em>mindestens</em> 100.000 Einwohnern leben?</li>
+<li>Hat die Variable fehlende Werte, die Sie ausschließen sollten? Falls ja, ersetzen Sie diese Werte mit <code>mvdecode</code> und lassen Sie sich die Tabelle erneut ausgeben. (Verwenden Sie <code>labelbook</code> oder sehen Sie im Codebuch nach).</li>
+<li>Welcher Anteil der Befragten leben in einem Ort mit höchstens 49.999 Einwohnern?</li>
+<li>Wie groß ist der Anteil der Befragten, die in einem Ort mit mindestens 100.000 Einwohnern leben?</li>
+<li>Erstellen Sie nun eine Kontigenztabelle mit <code>gkpol</code> und <code>sex</code>. Welche Merkmalskombination ist die häufigste?</li>
+<li>Welcher Anteil der Befragten aus Städten mit über 500.000 Einwohnern ist weiblich?</li>
+<li>Wie hoch ist der Anteil der Männer an Befragten, die in Orten mit unter 2.000 Einwohnern leben?</li>
+<li>Welcher Anteil der Frauen lebt in Städten mit 50.000 bis 99.999 Einwohnern?</li>
+<li>Wie hoch ist der Anteil der Bewohner von Städten mit 20.000 bis 49.999 Einwohnern an allen befragten Männern?</li>
 </ul></li>
 </ul>
 </div>
 <div id="met" class="section level3">
 <h3><span class="header-section-number">3.3.2</span> Übung 3-2</h3>
-<p>Forschungsfrage: Vergleichen Sie die HH-Einkommensverteilung in Ost und West!</p>
+<p>Forschungsfrage: Vergleichen Sie die Haushaltseinkommensverteilung in Ost und West!</p>
 <ol start="2" class="example" style="list-style-type: decimal">
 <li>Laden Sie den <strong>kumulierten</strong> Allbusdatensatz (<code>Allbus_1980-2018.dta</code>).
 <ul>
 <li>Fokussieren Sie zunächst auf das Befragungsjahr 1994 mit Hilfe von <code>keep</code> oder <code>drop</code>.</li>
 <li>Betrachten Sie die HH-Einkommensverteilungen (Variable <code>di05</code>)</li>
-<li>Denken Sie daran, die negativen Werte für <code>di05</code> mit <code>.</code> zu überschreiben! (Entweder mit <code>replace</code> oder <code>mvdecode</code>)</li>
+<li>Denken Sie daran, die negativen Werte für <code>di05</code> mit <code>.</code> zu überschreiben! (Entweder mit <code>replace</code> oder <code>mvdecode</code>, sehen Sie mit <code>labelbook</code> oder im Codebuch nach)</li>
 <li>Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle aus dem Jahr 1994 - was sagen Ihnen die Werte jeweils?</li>
 <li>Berechnen Sie den Gini-Koeffizenten!</li>
 <li>Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable <code>eastwest</code>) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?</li>
-</ul></li>
-<li>Laden Sie den <strong>kumulierten</strong> Allbusdatensatz (<code>Allbus_1980-2018.dta</code>).
-<ul>
-<li>Betrachten Sie dann die HH-Einkommensverteilungen für 2010 (Variable <code>di05</code>), behalten Sie also mit Hilfe von <code>keep</code> oder <code>drop</code> nur die Angaben aus dem Befragungsjahr 2010 im Speicher.</li>
-<li>Denken Sie daran, die negativen Werte für <code>di05</code> mit <code>.</code> zu überschreiben!</li>
-<li>Berechnen Sie jeweils für Ost und West das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle im Datensatz für 2010 - was sagen Ihnen die Werte jeweils?</li>
-<li>Vergleichen Sie die Werte aus 1994 und 2010. Welche Tendenz können Sie für die Ost-West-Unterschiede erkennen?</li>
-</ul></li>
-</ol>
-</div>
-<div id="weitere-übungen-3" class="section level3">
-<h3><span class="header-section-number">3.3.3</span> Weitere Übungen 3</h3>
-<ol start="4" class="example" style="list-style-type: decimal">
-<li>Erstellen Sie eine Häufigkeitstabelle für das Geburtsjahr der Befragten (<code>yborn</code>)!
-<ul>
-<li>Müssen Sie die Variable erst klassieren um eine sinnvoll interpretierbare Tabelle zu erhalten?</li>
-<li>Gibt es fehlende Werte, die Sie mit <code>mvdecode</code>/<code>replace</code> überschreiben sollten?</li>
-<li>Verwenden Sie die Jahrzehntgrenzen ab 1910.</li>
-<li>Erstellen Sie eine Tabelle für die neu erstellte, kategorisierte Variable.</li>
-<li>Wie groß ist der Anteil der Befragten, die bis 1970 geboren wurden?</li>
-<li>Wie groß ist der Anteil der Befragten, die nach 1980 geboren wurden?</li>
-</ul></li>
-<li>Erstellen Sie eine Kontingenztabelle für <code>sex</code> und <code>educ</code>. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte auszuschließen.
-<ul>
-<li>Erstellen Sie für die folgenden Fragen jeweils die passende Variante der Kontingenztabelle mit relativen Häufigkeiten als Zeilen- oder Spaltenprozenten.</li>
-<li>Welcher Anteil der Befragten mit Fachhochschulreife ist männlich?</li>
-<li>Wie hoch ist der Anteil der Frauen an Befragten mit Hauptschulabschluss?</li>
-<li>Welcher Anteil der Frauen hat Abitur?</li>
-<li>Wie hoch ist der Anteil der Realschulabsolventen an allen befragten Männern?</li>
 </ul></li>
 </ol>
 </div>
@@ -967,25 +983,24 @@ Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdin
 <div id="profi-übungen-3" class="section level2">
 <h2><span class="header-section-number">3.4</span> Profi-Übungen 3</h2>
 <p>Für alle, die noch etwas mehr machen möchten:</p>
-<ol start="6" class="example" style="list-style-type: decimal">
-<li>Nutzen Sie den <code>Allbus2018.dta</code> und erstellen Sie eine Kontingenztabelle für <code>sex</code> und <code>gkpol</code>. Welche Merkmalskombination ist die häufigste?
+<ol start="3" class="example" style="list-style-type: decimal">
+<li>Laden Sie den Allbus 2018 (<code>Allbus2018.dta</code>). Erstellen Sie eine Kontingenztabelle für <code>sex</code> und <code>educ</code>. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte auszuschließen.
 <ul>
-<li>Denken Sie daran, fehlende Werte mit <code>mvdecode</code> auszuschließen.</li>
-<li>Erstellen Sie die Kontingenztabelle der beiden Variablen.</li>
-<li>Welcher Anteil der Befragten aus Städten mit über 500.000 Einwohnern ist weiblich?</li>
-<li>Wie hoch ist der Anteil der Männer an Befragten, die in Orten mit unter 2.000 Einwohnern leben?</li>
-<li>Welcher Anteil der Frauen lebt in Städten mit 50.000 bis 99.999 Einwohnern?</li>
-<li>Wie hoch ist der Anteil der Bewohner von Städten mit 20.000 bis 49.999 Einwohnern an allen befragten Männern?</li>
+<li>Erstellen Sie für die folgenden Fragen jeweils die passende Variante der Kontingenztabelle mit relativen Häufigkeiten als Zeilen- oder Spaltenprozenten.</li>
+<li>Welcher Anteil der Befragten mit Fachhochschulreife ist männlich?</li>
+<li>Wie hoch ist der Anteil der Frauen an Befragten mit Hauptschulabschluss?</li>
+<li>Welcher Anteil der Frauen hat Abitur (die allgemeine Hochschulreife)?</li>
+<li>Wie hoch ist der Anteil der Realschulabsolventen an allen befragten Männern?</li>
 </ul></li>
 <li>Laden Sie den kumulierten Allbusdatensatz (<code>Allbus_1980-2018.dta</code>) in Stata und analysieren Sie, wie sich die Anteile der geschiedenen Befragten über die Befragungsjahre verändert haben!
 <ul>
-<li>Das Befragungsjahr finden Sie in der Variable <code>year</code>, <code>mstat</code> ist auch hier die Variable für den Familienstand.</li>
-<li>In welchem Jahr gab es den höchsten Anteil an geschiedenen Befragten?</li>
+<li>Das Befragungsjahr finden Sie in der Variable <code>year</code>, <code>mstat</code> ist die Variable für den Familienstand.</li>
+<li>Überschreiben Sie die Missings für <code>mstat</code>.</li>
+<li>In welchem Jahr gab es den höchsten Anteil an geschiedenen Befragten? Sie können so eine Variable generieren, welche 1 annimt wenn <code>mstat</code> = 4 (geschieden) und 0 für alle andere Familienstände: <code>gen divorce = (mstat == 4)</code></li>
 <li>Aus welchem Jahr stammen die Angaben der meisten geschiedenen Befragten?</li>
+<li>In welchem Jahr ist der Anteil der geschiedenen Befragten am höchsten?</li>
 </ul></li>
 </ol>
-<!-- Vereinfachen: tab , gen -->
-<!-- evtl. sogar Vorgriff auf collapse? -->
 </div>
 <div id="anhang-kap-3" class="section level2">
 <h2><span class="header-section-number">3.5</span> Anhang Kap 3</h2>
@@ -1008,7 +1023,7 @@ Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdin
 <p>Die häufigste Kennzahl zur Beschreibung von Streuung ist aber die <strong>Varianz</strong>. Die Varianz ist definiert als die durchschnittliche quadrierte Abweichung vom arith. Mittel: <span class="math display">\[var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}\]</span></p>
 <p>Schauen wir erst in den Zähler des Bruchs: <span class="math inline">\((x_{i}-\bar{x})^2\)</span>
 Es geht also um die Abstände der einzelnen Datenpunkte (<span class="math inline">\(x_{i}\)</span>) zum arithmetischen Mittel (<span class="math inline">\(\bar{x}\)</span>) - mathematisch die Differenz zwischen den einzelnen Datenpunkten <span class="math inline">\(x_{i}-\bar{x}\)</span> - hier eingezeichnet als gestrichelte Linien:
-<img src="Stata_Skript_files/figure-html/unnamed-chunk-6-1.png" width="70%" height="70%" style="display: block; margin: auto;" />
+<img src="Stata_Skript_files/figure-html/var_graph-1.png" width="70%" height="70%" style="display: block; margin: auto;" />
 Für Punkte, die über dem arith. Mittel liegen, erhalten wir für die Differenz einen positiven Wert (wir ziehen ja jeweils das arith. Mittel vom Wert für den Datenpunkt ab). Für Punkte mit Werten, die kleiner als das arith. Mittel sind, erhalten wir einen negativen Wert.<br />
 Würden wir die Abstände (gestrichelten Linien) einfach aufsummieren, erhielten wir als Ergebnis immer Null! Das arithmetische Mittel liegt ja per Definition immer genau “in der Mitte”: die Abstände nach oben sind in der Summe genauso groß wie die Abstände nach unten. Daher wird zunächst jeder Abstand quadriert: <span class="math inline">\((\bar{x} - x_{i})^2\)</span><br />
 Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert (<span class="math inline">\(\sum_{i=1}^{n}\)</span>) und dann durch die Anzahl der Beobachtungen geteilt werden (<span class="math inline">\(\frac{}{n}\)</span>)- zusammengefasst hier nochmal die Formel: <span class="math display">\[var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}\]</span></p>
