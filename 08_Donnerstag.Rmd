@@ -556,6 +556,7 @@ gen height_sample2 =  rnormal(173,6.15)
   + Laden Sie den kumulierten Allbus (`Allbus_1980-2018.dta`).
   + Wählen Sie alle weiblichen Befragten aus mit Angaben aus dem Jahr 2014 aus, für die `hs16` (Körpergröße) und `hs18` (BMI) > 0  sind!
   + Generieren Sie eine Variable, welche den Wert `1` annimmt, wenn die Befragte größer als 160cm (der Medianwert) ist und `0`, wenn die Befragte kleiner als 160cm ist. [Tipp](#bmihelp)
+  + Führen Sie einen t-Test durch, ob die BMIs von größeren Frauen signifikant höher (>160cm) sind als die von kleineren Frauen (<160cm)
   
   
 
