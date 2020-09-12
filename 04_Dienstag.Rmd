@@ -343,7 +343,7 @@ graph twoway scatter inc age, msymbol(D) msize(small) mcolor(sand)
 knitr::include_graphics("04_msym_size.png")
 ```
 Dabei können wir aus einer Reihe an Formen, Größen und Farben wählen:
-```{r msymbol_size_overview, echo = F,out.width = "60%",out.height="80%",fig.show='hold', fig.align="center", fig.cap="Marker Optionen"}
+```{r msymbol_size_overview, echo = F,out.width = "60%",out.height="80%",fig.show='hold', fig.align="center"}
 knitr::include_graphics(c("04_msymbol.png","04_msize.png","04_mcolor.png"))
 ```
 
@@ -358,9 +358,7 @@ graph twoway ///
 knitr::include_graphics("04_mcolor_sex.png")
 ```
 
-Mit `mlcolor` und `mlwidth` können wir jedem marker die Farbe und Dicke[^045] der Umrandung angeben:
-
-[^045]: Zur Auswahl stehen: `vthin`,`thin`,`medthin`,`medium `,`medthick`,`thick`,`vthick`,`vvthick`,`vvvthick`
+Mit `mlcolor` und `mlwidth` können wir jedem marker die Farbe und Dicke der Umrandung angeben. Zur Auswahl stehen: `vthin`,`thin`,`medthin`,`medium `,`medthick`,`thick`,`vthick`,`vvthick`,`vvvthick`
 
 ```{stata ml_scatter_color, eval = F}
 graph twoway /// 
@@ -378,8 +376,8 @@ Obwohl es um Darstellungen geht, haben wir noch sehr wenig über Farben gesproch
 
 ```{stata rgb, eval = F}
 graph twoway /// 
-  (scatter inc age if sex==1, mcolor("91	37 97") msize(small)) ///
-  (scatter inc age if sex==2, mcolor("150 196 134") msymbol(D)), ///
+  (scatter inc age if sex==1, mcolor("91 37 97") msize(small)) ///
+  (scatter inc age if sex==2, mcolor("150 196 134") msymbol(D) msize(small)), ///
   legend(lab(1 "Männer") lab(2 "Frauen"))
 ```
 
@@ -387,7 +385,29 @@ graph twoway ///
 knitr::include_graphics("04_col_scatter.png")
 ```
 
-Außerdem können wir mit `plotregion(fcolor( ))` und `graphregion(fcolor( ))` die Hintergrundfarben der Grafik und des Koordinatenbereichs anpassen. Mit `region(fcolor( ))` können wir die den Hintergrund der Legende verändern.
+Farbpaletten sind ein Thema für sich und was gut aussieht ist natürlich subjektiv.... Allerdings gibt es einige Leitlinien, siehe [hier](https://blog.datawrapper.de/beautifulcolors/). Es gibt zahlreiche Möglichkeiten selbst zu erstellen: zB. mit [Adobe Color](https://color.adobe.com/create/color-wheel) oder [Paletton](https://paletton.com/). Außerdem gibt es unzählige Quellen für Farbpaletten: [Instagram](https://www.instagram.com/colours.cafe/) oder [ColorBrewer](https://colorbrewer2.org).
+
+Manchmal ist es ratsam, eine den Markern/Säulen/... eine gewisse Transparenzu geben. Durch anhängen von `%30` können wir bspw. die Deckkraft auf 30% heruntersetzen (je höher die Zahl, desto höher die Deckkfraft):
+```{stata rgb_opac, eval = F}
+graph twoway ///
+  (scatter inc age if sex==1, mcolor("91	37 97 %30") msize(small)) ///
+  (scatter inc age if sex==2, mcolor("150 196 134 %30") msymbol(D) msize(small)), ///
+  legend(lab(1 "Männer") lab(2 "Frauen"))
+```
+
+
+```{r rgb_opac2, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("04_col_scatter_opacity.png")
+```
+
+
+
+**Leider gibt es diese Funktion erst ab Stata 15 aufwärts.**
+
+[^046]: RGB steht dabei als Abkürzung für die Anteile der Grundfarben Rot, Grün und Blau an der Mischfarbe. Andere, zB hex Farbcodes können (`#0D173F`), diese können z.B [hier](https://www.color-hex.com/) umgerechnet werden.
+
+
+Außerdem können wir mit `plotregion(fcolor( ))` und `graphregion(fcolor( ))` die Hintergrundfarben der Grafik und des Koordinatenbereichs anpassen. Mit `region(fcolor( ))` können wir die den Hintergrund der Legende verändern:
 
 ```{stata bg_col, eval = F}
 graph twoway ///
@@ -401,9 +421,7 @@ graph twoway ///
 knitr::include_graphics("04_bg_col.png")
 ```
 
-Farbpaletten sind ein Thema für sich und was gut aussieht ist natürlich subjektiv.... (das letzte Beispiel wohl eher nicht). Allerdings gibt es einige Leitlinien, siehe [hier](https://blog.datawrapper.de/beautifulcolors/). Es gibt zahlreiche Möglichkeiten selbst zu erstellen: zB. mit [Adobe Color](https://color.adobe.com/create/color-wheel) oder [Paletton](https://paletton.com/). Außerdem gibt es unzählige Quellen für Farbpaletten: [Instagram](https://www.instagram.com/colours.cafe/) oder [ColorBrewer](https://colorbrewer2.org)
 
-[^046]: RGB steht dabei als Abkürzung für die Anteile der Grundfarben Rot, Grün und Blau an der Mischfarbe.
 
 #### Boxplots anpassen
 Die Farben in Boxplots können wir mit `box` anpassen - bei mehreren Boxen geben wir zuerst eine Zahl an, auf welche Box sich die Optionen beziehen sollen. Die Ausreißer können wir mit `marker` berarbeiten:

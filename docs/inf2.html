@@ -589,11 +589,20 @@ Für einen linksseitigen Test ist hingegen <code>Ha: diff &lt; 0</code> ausschla
 <p><img src="08_bpwide.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
 <p>Diese vorher/nachher Werte können wir jetzt mit einem verbundenen t-Test vergleichen:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb28-1"><a href="inf2.html#cb28-1"></a><span class="kw">ttest</span> bp_before==bp_after</span></code></pre></div>
-<pre><code>no; data in memory would be lost
-r(4);
+<pre><code>Paired t test
+------------------------------------------------------------------------------
+Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+bp_bef~e |     120      156.45    1.039746    11.38985    154.3912    158.5088
+bp_after |     120    151.3583    1.294234    14.17762    148.7956     153.921
+---------+--------------------------------------------------------------------
+    diff |     120    5.091667    1.525736     16.7136    2.070557    8.112776
+------------------------------------------------------------------------------
+     mean(diff) = mean(bp_before - bp_after)                      t =   3.3372
+ Ho: mean(diff) = 0                              degrees of freedom =      119
 
-end of do-file
-r(4);</code></pre>
+ Ha: mean(diff) &lt; 0           Ha: mean(diff) != 0           Ha: mean(diff) &gt; 0
+ Pr(T &lt; t) = 0.9994         Pr(|T| &gt; |t|) = 0.0011          Pr(T &gt; t) = 0.0006</code></pre>
 <p>Auch hier sehen wir wieder die Ergebnisse für einen links- (<code>Ha: mean(diff) &lt; 0</code>) beid- (<code>Ha: mean(diff) != 0</code>) und rechtsseitigen (<code>Ha: mean(diff) &gt; 0</code>) Test. Wir erkennen aus den Ergebnissen, dass der Blutdruck der Patient*innen:</p>
 <ul>
 <li>nach dem Treatment nicht signifikant höher ist - linksseitiger Test (<em>bp_before &lt; bp_after</em>), linke Spalte</li>
@@ -706,19 +715,6 @@ Hier könnten wir dann mit <code>ttest</code>
 <li>Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?</li>
 </ul>
 <ol start="7" class="example" style="list-style-type: decimal">
-<li>Eine Umfrage von 15 zufällig ausgewählten Betrieben ergab, dass im Durchschnitt an 5,25 Tagen im vergangenen Jahr gestreikt wurde. Die Standardabweichung in der Stichprobe beträgt 0.25 Tage. Ein Experte behauptet, es wären im arithmetischen Mittel 7 Streiktage für das vergangene Jahr gewesen. Liegt der Wert aus der Stichprobe signifikant darunter?</li>
-</ol>
-<ul>
-<li>Formulieren Sie die Hypothesen!</li>
-<li>Berechnen Sie die Irrtumswahrscheinlichkeit für die Ablehnung von <span class="math inline">\(H_0\)</span>!</li>
-<li>Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?</li>
-</ul>
-<p>Sie können sich auch diese Daten wie folgt erstellen:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="inf2.html#cb33-1"></a><span class="kw">clear</span></span>
-<span id="cb33-2"><a href="inf2.html#cb33-2"></a><span class="kw">set</span> <span class="dv">seed</span> 0441</span>
-<span id="cb33-3"><a href="inf2.html#cb33-3"></a><span class="kw">set</span> <span class="kw">obs</span> 15</span>
-<span id="cb33-4"><a href="inf2.html#cb33-4"></a><span class="kw">gen</span> streik =  rnormal(5.25,.25)</span></code></pre></div>
-<ol start="8" class="example" style="list-style-type: decimal">
 <li>Haben kleinere Frauen einen signifikant höheren BMI als größere?</li>
 </ol>
 </div>
@@ -726,21 +722,32 @@ Hier könnten wir dann mit <code>ttest</code>
 <h2><span class="header-section-number">8.8</span> Hinweise</h2>
 <div id="vollz" class="section level3">
 <h3><span class="header-section-number">8.8.1</span> Auswahl der in Vollzeit beschäftigten Befragten</h3>
+<div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="inf2.html#cb33-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
+<span id="cb33-2"><a href="inf2.html#cb33-2"></a>cd <span class="st">&quot;...&quot;</span></span>
+<span id="cb33-3"><a href="inf2.html#cb33-3"></a><span class="co">// einlesen</span></span>
+<span id="cb33-4"><a href="inf2.html#cb33-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
+<span id="cb33-5"><a href="inf2.html#cb33-5"></a></span>
+<span id="cb33-6"><a href="inf2.html#cb33-6"></a><span class="co">// missings als NA:</span></span>
+<span id="cb33-7"><a href="inf2.html#cb33-7"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt;0 </span>
+<span id="cb33-8"><a href="inf2.html#cb33-8"></a></span>
+<span id="cb33-9"><a href="inf2.html#cb33-9"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2018  &amp; work == 1 &amp; inc &gt; 0</span>
+<span id="cb33-10"><a href="inf2.html#cb33-10"></a></span>
+<span id="cb33-11"><a href="inf2.html#cb33-11"></a><span class="co">// logarithmieren des Einkommens:</span></span>
+<span id="cb33-12"><a href="inf2.html#cb33-12"></a><span class="kw">gen</span> log_inc = <span class="fu">log</span>(inc)</span></code></pre></div>
+</div>
+<div id="genhelp" class="section level3">
+<h3><span class="header-section-number">8.8.2</span> Kohortenvergleich Tipps</h3>
 <div class="sourceCode" id="cb34"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb34-1"><a href="inf2.html#cb34-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
 <span id="cb34-2"><a href="inf2.html#cb34-2"></a>cd <span class="st">&quot;...&quot;</span></span>
 <span id="cb34-3"><a href="inf2.html#cb34-3"></a><span class="co">// einlesen</span></span>
 <span id="cb34-4"><a href="inf2.html#cb34-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
 <span id="cb34-5"><a href="inf2.html#cb34-5"></a></span>
-<span id="cb34-6"><a href="inf2.html#cb34-6"></a><span class="co">// missings als NA:</span></span>
-<span id="cb34-7"><a href="inf2.html#cb34-7"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt;0 </span>
-<span id="cb34-8"><a href="inf2.html#cb34-8"></a></span>
-<span id="cb34-9"><a href="inf2.html#cb34-9"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2018  &amp; work == 1 &amp; inc &gt; 0</span>
-<span id="cb34-10"><a href="inf2.html#cb34-10"></a></span>
-<span id="cb34-11"><a href="inf2.html#cb34-11"></a><span class="co">// logarithmieren des Einkommens:</span></span>
-<span id="cb34-12"><a href="inf2.html#cb34-12"></a><span class="kw">gen</span> log_inc = <span class="fu">log</span>(inc)</span></code></pre></div>
+<span id="cb34-6"><a href="inf2.html#cb34-6"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">inrange</span>(yborn,1960,1979)</span>
+<span id="cb34-7"><a href="inf2.html#cb34-7"></a><span class="kw">labelbook</span> dg12</span>
+<span id="cb34-8"><a href="inf2.html#cb34-8"></a><span class="kw">mvdecode</span> dg12, mv(-51/-1)</span></code></pre></div>
 </div>
-<div id="genhelp" class="section level3">
-<h3><span class="header-section-number">8.8.2</span> Kohortenvergleich Tipps</h3>
+<div id="bmihelp" class="section level3">
+<h3><span class="header-section-number">8.8.3</span> BMI Aufgaben</h3>
 <div class="sourceCode" id="cb35"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb35-1"><a href="inf2.html#cb35-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
 <span id="cb35-2"><a href="inf2.html#cb35-2"></a>cd <span class="st">&quot;...&quot;</span></span>
 <span id="cb35-3"><a href="inf2.html#cb35-3"></a><span class="co">// einlesen</span></span>
@@ -749,17 +756,6 @@ Hier könnten wir dann mit <code>ttest</code>
 <span id="cb35-6"><a href="inf2.html#cb35-6"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">inrange</span>(yborn,1960,1979)</span>
 <span id="cb35-7"><a href="inf2.html#cb35-7"></a><span class="kw">labelbook</span> dg12</span>
 <span id="cb35-8"><a href="inf2.html#cb35-8"></a><span class="kw">mvdecode</span> dg12, mv(-51/-1)</span></code></pre></div>
-</div>
-<div id="bmihelp" class="section level3">
-<h3><span class="header-section-number">8.8.3</span> BMI Aufgaben</h3>
-<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="inf2.html#cb36-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
-<span id="cb36-2"><a href="inf2.html#cb36-2"></a>cd <span class="st">&quot;...&quot;</span></span>
-<span id="cb36-3"><a href="inf2.html#cb36-3"></a><span class="co">// einlesen</span></span>
-<span id="cb36-4"><a href="inf2.html#cb36-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
-<span id="cb36-5"><a href="inf2.html#cb36-5"></a></span>
-<span id="cb36-6"><a href="inf2.html#cb36-6"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">inrange</span>(yborn,1960,1979)</span>
-<span id="cb36-7"><a href="inf2.html#cb36-7"></a><span class="kw">labelbook</span> dg12</span>
-<span id="cb36-8"><a href="inf2.html#cb36-8"></a><span class="kw">mvdecode</span> dg12, mv(-51/-1)</span></code></pre></div>
 <!-- ### Plot der Körpergrößenangaben -->
 <!-- ```{r,echo =F} -->
 <!-- library(dplyr) -->
