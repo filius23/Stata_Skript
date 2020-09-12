@@ -324,6 +324,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.8.2" data-path="inf2.html"><a href="inf2.html#genhelp"><i class="fa fa-check"></i><b>8.8.2</b> Kohortenvergleich Tipps</a></li>
 <li class="chapter" data-level="8.8.3" data-path="inf2.html"><a href="inf2.html#bmihelp"><i class="fa fa-check"></i><b>8.8.3</b> BMI Aufgaben</a></li>
 </ul></li>
+<li class="chapter" data-level="8.9" data-path="inf2.html"><a href="inf2.html#gruppenunterschiede-visualisieren"><i class="fa fa-check"></i><b>8.9</b> Gruppenunterschiede visualisieren</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Weitere Hypothesentests</a><ul>
 <li class="chapter" data-level="9.1" data-path="hypo.html"><a href="hypo.html#ftest"><i class="fa fa-check"></i><b>9.1</b> Vergleich von Varianzen mit dem F-Test</a></li>
@@ -362,6 +363,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.8" data-path="adva.html"><a href="adva.html#indikatoren-umdrehen"><i class="fa fa-check"></i><b>11.8</b> Indikatoren umdrehen</a></li>
 <li class="chapter" data-level="11.9" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-datensätzen"><i class="fa fa-check"></i><b>11.9</b> Informationen aus mehreren Datensätzen</a></li>
 <li class="chapter" data-level="11.10" data-path="adva.html"><a href="adva.html#arbeiten-mit-textvariablen"><i class="fa fa-check"></i><b>11.10</b> Arbeiten mit Textvariablen</a></li>
+<li class="chapter" data-level="11.11" data-path="adva.html"><a href="adva.html#link-liste"><i class="fa fa-check"></i><b>11.11</b> Link Liste</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -433,11 +435,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-43"><a href="inf2.html#cb1-43"></a><span class="kw">tabstat</span> miete, <span class="fu">s</span>(<span class="kw">mean</span> <span class="fu">sd</span>)</span></code></pre></div>
 <pre><code>          miete
 
-unrecognized command:  356 invalid command name
-r(199);
-
-end of do-file
-r(199);</code></pre>
+    variable |      mean        sd
+-------------+--------------------
+       miete |       305  52.05323
+----------------------------------</code></pre>
 <p>Die Antworten haben also ein arithmetisches Mittel von 305 Euro und eine Standardabweichung von 52.05 Euro. Der <em>Punktschätzer</em> aus der Stichprobe legt uns also nahe, dass die Mieten in Oldenburg in der Tat unter 320 EUR liegen. Wie wir letzte Woche gesehen haben, sollten wir uns nicht allein auf den Punktschätzer verlassen, sondern auch die Streuung in der Stichprobe mitberücksichtigen. Dies leisten die Hypothesentests. Dabei werden immer zwei sich widersprechende Hypothesen formuliert, die sog. <span class="math inline">\(H_0\)</span> - die Nullhypothese und die <span class="math inline">\(H_A\)</span> - die Alternativhypothese. Die <span class="math inline">\(H_0\)</span> beschreibt dabei immer den bisherigen Kenntnisstand und die <span class="math inline">\(H_A\)</span> formuliert die zu testende Aussage. Die Hypothesen unterscheiden sich dann je nachdem ob wir einen gerichteten oder einen ungerichteten Test durchführen:</p>
 <p>Zunächst müssen wir uns entscheiden ob wir eine gerichtete oder ungerichtete Hypothese testen möchten:</p>
 <ul>
@@ -479,15 +480,23 @@ r(199);</code></pre>
 <div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="inf2.html#cb7-1"></a><span class="kw">display</span> (1-<span class="fu">ttail</span>(40-1,-1.8225334)) *2</span></code></pre></div>
 <pre><code>.07604791</code></pre>
 <p>Das Ergebnis liegt also deutlich über 0,05. Wir würden also die <span class="math inline">\(H_0\)</span> nicht verwerfen.</p>
+<p><img src="Stata_Skript_files/figure-html/ttest_bsp_beid_illu-1.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
 <p>Neben der händischen Berechnung können wir in Stata die Funktion <code>ttest</code> nutzen, diese nimmt auch die Anpassung des p-Wertes beim beidseitigen Test vor. Neben den zu testenden Werten geben wir mit <code>mu</code> den in der Nullhypothese festgehaltenen Mittelwert an und wählen mit <code>two.sided</code> einen beiseitigen Test aus:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="inf2.html#cb9-1"></a><span class="kw">ttest</span> miete==320</span></code></pre></div>
 <pre><code>          miete
 
-unrecognized command:  356 invalid command name
-r(199);
 
-end of do-file
-r(199);</code></pre>
+One-sample t test
+------------------------------------------------------------------------------
+Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+   miete |      40         305    8.230338    52.05323    288.3526    321.6474
+------------------------------------------------------------------------------
+    mean = mean(miete)                                            t =  -1.8225
+Ho: mean = 320                                   degrees of freedom =       39
+
+   Ha: mean &lt; 320               Ha: mean != 320               Ha: mean &gt; 320
+ Pr(T &lt; t) = 0.0380         Pr(|T| &gt; |t|) = 0.0760          Pr(T &gt; t) = 0.9620</code></pre>
 <p>Hier werden auch gleich die Ergebnisse für den linksseitigen und rechtsseitigen Test angezeigt. Diese sehen uns noch genauer an:</p>
 </div>
 <div id="linksseitiger-t-test" class="section level3">
@@ -500,6 +509,7 @@ r(199);</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="inf2.html#cb13-1"></a><span class="kw">display</span> 1-<span class="fu">ttail</span>(40-1,-1.8225334) <span class="co">// Fläche links</span></span></code></pre></div>
 <pre><code>.03802395</code></pre>
 <p>Der Wert 0.038 ist kleiner als 0,05, dementsprechend würden wir auf Basis eines linksseitigen Hypothesentests die <span class="math inline">\(H_0\)</span> verwerfen.</p>
+<p><img src="Stata_Skript_files/figure-html/ttest_bsp_links_illu-1.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="rechtsseitiger-t-test" class="section level3">
 <h3><span class="header-section-number">8.1.3</span> rechtsseitiger t-Test</h3>
@@ -510,18 +520,26 @@ r(199);</code></pre>
 <div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="inf2.html#cb17-1"></a><span class="kw">display</span> <span class="fu">ttail</span>(40-1,-1.822533)  <span class="co">// Fläche rechts</span></span></code></pre></div>
 <pre><code>.96197602</code></pre>
 <p>Wir sehen hier dass der Wert <code>1-pt(q = -1.822533, df = 40-1)=</code>0.962 deutlich größer als 0,05 ist - dementsprechend würden wir auf Basis eines rechtsseitigen Hypothesentests die <span class="math inline">\(H_0\)</span> <strong>nicht</strong> verwerfen.</p>
+<p><img src="Stata_Skript_files/figure-html/ttest_bsp_rechts_illu-1.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
 <p>All das haben wir eben auch schon in <code>ttest</code> gesehen:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="inf2.html#cb19-1"></a><span class="kw">ttest</span> miete==320</span></code></pre></div>
 <pre><code>          miete
 
-unrecognized command:  356 invalid command name
-r(199);
 
-end of do-file
-r(199);</code></pre>
+One-sample t test
+------------------------------------------------------------------------------
+Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+   miete |      40         305    8.230338    52.05323    288.3526    321.6474
+------------------------------------------------------------------------------
+    mean = mean(miete)                                            t =  -1.8225
+Ho: mean = 320                                   degrees of freedom =       39
+
+   Ha: mean &lt; 320               Ha: mean != 320               Ha: mean &gt; 320
+ Pr(T &lt; t) = 0.0380         Pr(|T| &gt; |t|) = 0.0760          Pr(T &gt; t) = 0.9620</code></pre>
 <hr />
-<p><a href="inf2.html#tvsmu">Übung 1</a>
-***</p>
+<p><a href="inf2.html#tvsmu">Übung 1</a></p>
+<hr />
 </div>
 </div>
 <div id="mittelwertttest" class="section level2">
@@ -554,10 +572,7 @@ r(199);</code></pre>
 <pre><code>12.8298</code></pre>
 <p>Aber ist diese, in der Stichprobe festgestellte Differenz auch bezogen auf die <strong>Grundgesamtheit</strong> von Bedeutung? Dazu greifen wieder auf den <code>ttest</code> zurück, aber hier geben wir anstelle von <code>== XYZ</code> mit <code>by(sex)</code> die Gruppenvariable an:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb25-1"><a href="inf2.html#cb25-1"></a><span class="kw">ttest</span> hs16, <span class="kw">by</span>(sex) unequal</span></code></pre></div>
-<pre><code>(64696 observations deleted)
-
-
-Two-sample t test with unequal variances
+<pre><code>Two-sample t test with unequal variances
 ------------------------------------------------------------------------------
    Group |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
 ---------+--------------------------------------------------------------------
@@ -620,7 +635,7 @@ bp_after |     120    151.3583    1.294234    14.17762    148.7956     153.921
 <ul>
 <li>Vergleich zu einem Referenzwert: <code>ttest testvariable == referenzwert</code></li>
 </ul>
-<p>Für Mittelwertvergleich gibt es insgesamt zwei Aspekte, anhand derer sich t-Tests allgemein unterscheiden:</p>
+<p>Für Mittelwertvergleich gibt es insgesamt zwei Aspekte, anhand derer sich t-Tests unterscheiden:</p>
 <ul>
 <li>Die Varianz der Messwerte in den verglichenen Gruppen ist …
 <ul>
@@ -631,9 +646,7 @@ bp_after |     120    151.3583    1.294234    14.17762    148.7956     153.921
 <ul>
 <li>Sind die einzelnen Messwerte voneinander unabhängig? D.h. ein Messwert steht in keinem direkten Zusammenhang mit einem anderen <span class="math inline">\(\Rightarrow\)</span> <code>ttest testvariable, by(gruppenvariable)</code> für eine unverbundene Stichprobe (mit ggf. <code>unequal</code>)</li>
 <li>Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen <span class="math inline">\(\Rightarrow\)</span> Werte für beide Variablen sollten “nebeneinander” abgelegt sein (<em>wide</em>-Format), dann kann mit <code>ttest vorher==nachher</code> ein verbundener <code>ttest</code> durchgeführt werden.</li>
-</ul>
-Hier könnten wir dann mit <code>ttest</code>
-<code>paired = T</code> für eine verbundene Stichprobe, zB. ähneln sich bei wiederholten Messungen die Messwerte für die gleiche Person (Vorher-/Nachhermessungen)</li>
+</ul></li>
 </ul>
 </div>
 <div id="tvsmu" class="section level2">
@@ -707,7 +720,8 @@ Hier könnten wir dann mit <code>ttest</code>
 </ol>
 <ul>
 <li>Laden Sie den kumulierten Allbus (<code>Allbus_1980-2018.dta</code>).</li>
-<li>Wählen Sie alle Befragten aus, die zwischen 1960 und 1979 geboren wurden (<code>yborn</code> gibt das Geburtsjahr an) und für die das Alter beim Auszug aus dem Elternhaus vorliegt (<code>dg12 &gt; 0</code>).</li>
+<li>Wählen Sie alle Befragten aus, die zwischen 1960 und 1979 geboren wurden (<code>yborn</code> gibt das Geburtsjahr an)</li>
+<li>Überschreiben Sie die Missings für das Alter beim Auszug aus dem Elternhaus.</li>
 <li>Erstellen Sie eine Dummyvariable, welche den Wert <code>1</code> annimmt wenn die Befragten nach 1969 geboren sind und 0 für alle früher geborenen. <a href="inf2.html#genhelp">Tipp</a></li>
 <li>Formulieren Sie die Hypothesen zur Fragestellung dieser Aufgabe!</li>
 <li>Müssen Sie <code>unequal</code> setzen?</li>
@@ -715,8 +729,13 @@ Hier könnten wir dann mit <code>ttest</code>
 <li>Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?</li>
 </ul>
 <ol start="7" class="example" style="list-style-type: decimal">
-<li>Haben kleinere Frauen einen signifikant höheren BMI als größere?</li>
+<li>Haben kleinere Frauen einen signifikant höheren BMI als größere Frauen?</li>
 </ol>
+<ul>
+<li>Laden Sie den kumulierten Allbus (<code>Allbus_1980-2018.dta</code>).</li>
+<li>Wählen Sie alle weiblichen Befragten aus mit Angaben aus dem Jahr 2014 aus, für die <code>hs16</code> (Körpergröße) und <code>hs18</code> (BMI) &gt; 0 sind!</li>
+<li>Generieren Sie eine Variable, welche den Wert <code>1</code> annimmt, wenn die Befragte größer als 160cm (der Medianwert) ist und <code>0</code>, wenn die Befragte kleiner als 160cm ist. <a href="inf2.html#bmihelp">Tipp</a></li>
+</ul>
 </div>
 <div id="hinweise" class="section level2">
 <h2><span class="header-section-number">8.8</span> Hinweise</h2>
@@ -744,7 +763,9 @@ Hier könnten wir dann mit <code>ttest</code>
 <span id="cb34-5"><a href="inf2.html#cb34-5"></a></span>
 <span id="cb34-6"><a href="inf2.html#cb34-6"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">inrange</span>(yborn,1960,1979)</span>
 <span id="cb34-7"><a href="inf2.html#cb34-7"></a><span class="kw">labelbook</span> dg12</span>
-<span id="cb34-8"><a href="inf2.html#cb34-8"></a><span class="kw">mvdecode</span> dg12, mv(-51/-1)</span></code></pre></div>
+<span id="cb34-8"><a href="inf2.html#cb34-8"></a><span class="kw">mvdecode</span> dg12, mv(-51/-1)</span>
+<span id="cb34-9"><a href="inf2.html#cb34-9"></a></span>
+<span id="cb34-10"><a href="inf2.html#cb34-10"></a><span class="kw">gen</span> b70s = (yborn &gt; 1969)</span></code></pre></div>
 </div>
 <div id="bmihelp" class="section level3">
 <h3><span class="header-section-number">8.8.3</span> BMI Aufgaben</h3>
@@ -753,9 +774,11 @@ Hier könnten wir dann mit <code>ttest</code>
 <span id="cb35-3"><a href="inf2.html#cb35-3"></a><span class="co">// einlesen</span></span>
 <span id="cb35-4"><a href="inf2.html#cb35-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
 <span id="cb35-5"><a href="inf2.html#cb35-5"></a></span>
-<span id="cb35-6"><a href="inf2.html#cb35-6"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">inrange</span>(yborn,1960,1979)</span>
-<span id="cb35-7"><a href="inf2.html#cb35-7"></a><span class="kw">labelbook</span> dg12</span>
-<span id="cb35-8"><a href="inf2.html#cb35-8"></a><span class="kw">mvdecode</span> dg12, mv(-51/-1)</span></code></pre></div>
+<span id="cb35-6"><a href="inf2.html#cb35-6"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2014 &amp; hs18 &gt; 0 &amp; hs16&gt;0 &amp; sex == 2</span>
+<span id="cb35-7"><a href="inf2.html#cb35-7"></a></span>
+<span id="cb35-8"><a href="inf2.html#cb35-8"></a><span class="kw">tabstat</span> hs16, <span class="fu">s</span>(<span class="kw">median</span>) </span>
+<span id="cb35-9"><a href="inf2.html#cb35-9"></a><span class="kw">gen</span> tall = (hs16 &gt; 160)</span>
+<span id="cb35-10"><a href="inf2.html#cb35-10"></a><span class="kw">tab</span> hs16 tall <span class="co">// Kontrolle</span></span></code></pre></div>
 <!-- ### Plot der Körpergrößenangaben -->
 <!-- ```{r,echo =F} -->
 <!-- library(dplyr) -->
@@ -772,8 +795,48 @@ Hier könnten wir dann mit <code>ttest</code>
 <!--        title = "Körpergröße der Befragten im Allbus 2014") + -->
 <!--   ggthemes::theme_stata()   -->
 <!-- ``` -->
-
 </div>
+</div>
+<div id="gruppenunterschiede-visualisieren" class="section level2">
+<h2><span class="header-section-number">8.9</span> Gruppenunterschiede visualisieren</h2>
+<p>Auch für t-Tests empfiehlt sich eine grafische Darstellung:
+<img src="08_Gruppen_Differenzen.PNG" width="80%" height="80%" style="display: block; margin: auto;" />
+<a href="https://twitter.com/Prokaryota/status/1298575505956974593?s=09">Quelle</a></p>
+<p>Also visualisieren wir das Ergebnis des Gruppenvergleichs aus <a href="inf2.html#tgroup">Aufgabe 8-2</a>:
+<img src="08_strip_bar_text_opts.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>Zur Erinnerung, das hier war unsere Vorbereitung:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="inf2.html#cb36-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb36-2"><a href="inf2.html#cb36-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_2018.dta&quot;</span>,<span class="kw">clear</span></span>
+<span id="cb36-3"><a href="inf2.html#cb36-3"></a><span class="kw">keep</span> <span class="kw">if</span> work == 1 &amp; inc &gt; 0</span>
+<span id="cb36-4"><a href="inf2.html#cb36-4"></a><span class="co">// Einkommensangaben logarithmieren:</span></span>
+<span id="cb36-5"><a href="inf2.html#cb36-5"></a><span class="kw">gen</span> log_inc = <span class="fu">log</span>(inc)</span></code></pre></div>
+<p>Die Darstellung ist ein sog. <code>stripplot</code>, diese Funktion müssen wir erst installieren:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb37-1"><a href="inf2.html#cb37-1"></a><span class="kw">ssc</span> install stripplot <span class="co">// ado installieren</span></span></code></pre></div>
+<p>Als ersten Schritt können wir den Basis-Plot erstellen: wir möchten einen <code>stripplot</code> für <code>log_inc</code>, getrennt nach <code>sex</code>. Doppelt vorkommende Ausprägungen sollen aufeinander gestapelt werden (<code>stack</code>) und wir möchten <code>log_inc</code> auf der y-Achse abgetragen (<code>vertical</code>)</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb38-1"><a href="inf2.html#cb38-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical</span></code></pre></div>
+<p><img src="08_strip_base.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Dann passen wir die gezeigten <code>marker</code> mit den entsprechenden <code>m</code>_optionen an:
+<code>height(0.6)</code> verringert die Höhe (hier Breite) der aufgestapelten Punkte. Mit <code>width(.15)</code> bestimmen wir, dass auf einer Breite von <code>.15</code> nebeneinanderliegender Werte zusammengefasst werden sollen.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb39-1"><a href="inf2.html#cb39-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical mcolor(<span class="st">&quot;navy %70&quot;</span>) msize(small) <span class="bn">msymbol</span>(sh) height(0.6) <span class="kw">width</span>(.15)</span></code></pre></div>
+<p><img src="08_strip_marker.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Mit der Option <code>bar</code> können wir jetzt den Mittelwert und 95% KI hinzufügen:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="inf2.html#cb40-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical mcolor(<span class="st">&quot;navy %70&quot;</span>) msize(small) <span class="bn">msymbol</span>(sh) height(0.6) <span class="kw">width</span>(.15) <span class="co">///</span></span>
+<span id="cb40-2"><a href="inf2.html#cb40-2"></a>	<span class="bn">bar</span></span></code></pre></div>
+<p><img src="08_strip_bar.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Allerdings sind die Endpunkte für das 95% KI so kaum zu sehen, sodass wir hier auch einige Optionen anwenden. Die Optionen in <code>bar()</code> beziehen sich auf Indikatoren für das 95% KI. Die Optionen die darin in <code>mean()</code> angegeben sind, verändern den Punkt, der den Mittelwert wiedergibt (hier einmal mit verschiedenen Farben um Range und Punkt von einander abzuheben):</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb41-1"><a href="inf2.html#cb41-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical mcolor(<span class="st">&quot;navy %70&quot;</span>) msize(small) <span class="bn">msymbol</span>(sh) height(0.6) <span class="kw">width</span>(.15) <span class="co">///</span></span>
+<span id="cb41-2"><a href="inf2.html#cb41-2"></a>	<span class="bn">bar</span>(lcolor(<span class="bn">black</span>) lwidth(vthin) msize(huge) <span class="kw">mean</span>(mcolor(<span class="bn">orange</span>) <span class="bn">msymbol</span>(o) msize(tiny))) boffset(-0.05)</span></code></pre></div>
+<p><img src="08_strip_bar_opts.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Zum Schluss geben wir noch ein <code>scheme</code> und Beschriftungen an. Außerdem verändern wir mit <code>aspect(1.25)</code> das Verhältnis von Höhe zu Breite (Werte &gt; 1 führen zu schmaleren, Werte &lt; 1 zu breiteren Darstellungen). Details zu den anderen Optionen in Kapitel 4.8.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb42-1"><a href="inf2.html#cb42-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical mcolor(<span class="st">&quot;navy %60&quot;</span>) msize(small) <span class="bn">msymbol</span>(sh) height(0.6) <span class="kw">width</span>(.15) <span class="co">///</span></span>
+<span id="cb42-2"><a href="inf2.html#cb42-2"></a>	<span class="bn">bar</span>(lcolor(<span class="bn">orange</span>) lwidth(vthin) msize(huge) <span class="kw">mean</span>(mcolor(<span class="bn">orange</span>) <span class="bn">msymbol</span>(o) msize(tiny))) boffset(-0.075) <span class="co">///</span></span>
+<span id="cb42-3"><a href="inf2.html#cb42-3"></a>	<span class="dv">scheme</span>(plotplain) <span class="bn">ytitle</span>(<span class="st">&quot;logarithmierte Einkommensangaben&quot;</span>) <span class="bn">xtitle</span>(<span class="st">&quot;&quot;</span>) <span class="co">///</span></span>
+<span id="cb42-4"><a href="inf2.html#cb42-4"></a>	<span class="kw">xlabel</span>(1 <span class="st">&quot;Männer&quot;</span> 2 <span class="st">&quot;Frauen&quot;</span>, <span class="bn">labsize</span>(medlarge)) <span class="co">///</span></span>
+<span id="cb42-5"><a href="inf2.html#cb42-5"></a>	<span class="bn">yscale</span>(<span class="kw">range</span>(3.8 10)) <span class="co">///</span></span>
+<span id="cb42-6"><a href="inf2.html#cb42-6"></a>	<span class="bn">title</span>(<span class="st">&quot;Einkommensunterschiede zwischen Männern und Frauen 2018&quot;</span>) <span class="bn">subtitle</span>(<span class="st">&quot;arith. Mittel &amp; 95% KI&quot;</span>, <span class="kw">color</span>(<span class="bn">orange</span>)) <span class="co">///</span></span>
+<span id="cb42-7"><a href="inf2.html#cb42-7"></a>	<span class="bn">caption</span>(<span class="st">&quot;Allbus 2018, n = 1477&quot;</span>, <span class="kw">size</span>(vsmall) pos(5)) aspect(1.25) </span></code></pre></div>
+<p><img src="08_strip_bar_text_opts.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+
 </div>
 </div>
 <div class="footnotes">

@@ -161,9 +161,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="Stata2.html"><a href="Stata2.html#neue-variablen-erstellen"><i class="fa fa-check"></i><b>2.3</b> Neue Variablen erstellen</a></li>
 <li class="chapter" data-level="2.4" data-path="Stata2.html"><a href="Stata2.html#bestehende-variablen-verändern"><i class="fa fa-check"></i><b>2.4</b> Bestehende Variablen verändern</a></li>
 <li class="chapter" data-level="2.5" data-path="Stata2.html"><a href="Stata2.html#gen-ist-gut-kontrolle-ist-besser"><i class="fa fa-check"></i><b>2.5</b> gen ist gut, Kontrolle ist besser</a></li>
-<li class="chapter" data-level="2.6" data-path="Stata2.html"><a href="Stata2.html#fehlende-werte"><i class="fa fa-check"></i><b>2.6</b> Fehlende Werte</a></li>
-<li class="chapter" data-level="2.7" data-path="Stata2.html"><a href="Stata2.html#if-bedingungen-und-fehlende-werte"><i class="fa fa-check"></i><b>2.7</b> if Bedingungen und fehlende Werte</a></li>
-<li class="chapter" data-level="2.8" data-path="Stata2.html"><a href="Stata2.html#keep-drop"><i class="fa fa-check"></i><b>2.8</b> keep &amp; drop</a></li>
+<li class="chapter" data-level="2.6" data-path="Stata2.html"><a href="Stata2.html#keep-drop"><i class="fa fa-check"></i><b>2.6</b> keep &amp; drop</a></li>
+<li class="chapter" data-level="2.7" data-path="Stata2.html"><a href="Stata2.html#fehlende-werte"><i class="fa fa-check"></i><b>2.7</b> Fehlende Werte</a></li>
+<li class="chapter" data-level="2.8" data-path="Stata2.html"><a href="Stata2.html#miss_if"><i class="fa fa-check"></i><b>2.8</b> if Bedingungen und fehlende Werte</a></li>
 <li class="chapter" data-level="2.9" data-path="Stata2.html"><a href="Stata2.html#labels-und-if-bedingungen"><i class="fa fa-check"></i><b>2.9</b> Labels und if-Bedingungen</a></li>
 <li class="chapter" data-level="2.10" data-path="Stata2.html"><a href="Stata2.html#nochmal-von-vorne-daten-neu-laden"><i class="fa fa-check"></i><b>2.10</b> Nochmal von vorne: Daten neu laden</a></li>
 <li class="chapter" data-level="2.11" data-path="Stata2.html"><a href="Stata2.html#speichern"><i class="fa fa-check"></i><b>2.11</b> Speichern</a></li>
@@ -305,20 +305,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="inf2.html"><a href="inf2.html"><i class="fa fa-check"></i><b>8</b> t-Tests</a><ul>
-<li class="chapter" data-level="8.1" data-path="inf2.html"><a href="inf2.html#hypothesentests"><i class="fa fa-check"></i><b>8.1</b> Hypothesentests</a></li>
-<li class="chapter" data-level="8.2" data-path="inf2.html"><a href="inf2.html#t-test"><i class="fa fa-check"></i><b>8.2</b> t-Test</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="inf2.html"><a href="inf2.html#beiseitiger-t-test"><i class="fa fa-check"></i><b>8.2.1</b> beiseitiger t-Test</a></li>
-<li class="chapter" data-level="8.2.2" data-path="inf2.html"><a href="inf2.html#linksseitiger-t-test"><i class="fa fa-check"></i><b>8.2.2</b> linksseitiger t-Test</a></li>
-<li class="chapter" data-level="8.2.3" data-path="inf2.html"><a href="inf2.html#rechtsseitiger-t-test"><i class="fa fa-check"></i><b>8.2.3</b> rechtsseitiger t-Test</a></li>
+<li class="chapter" data-level="8.1" data-path="inf2.html"><a href="inf2.html#t-test-per-hand-und-in-stata"><i class="fa fa-check"></i><b>8.1</b> t-Test per Hand und in Stata</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="inf2.html"><a href="inf2.html#ttest1"><i class="fa fa-check"></i><b>8.1.1</b> beiseitiger t-Test</a></li>
+<li class="chapter" data-level="8.1.2" data-path="inf2.html"><a href="inf2.html#linksseitiger-t-test"><i class="fa fa-check"></i><b>8.1.2</b> linksseitiger t-Test</a></li>
+<li class="chapter" data-level="8.1.3" data-path="inf2.html"><a href="inf2.html#rechtsseitiger-t-test"><i class="fa fa-check"></i><b>8.1.3</b> rechtsseitiger t-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="inf2.html"><a href="inf2.html#übungen-8"><i class="fa fa-check"></i><b>8.3</b> Übungen 8</a></li>
-<li class="chapter" data-level="8.4" data-path="inf2.html"><a href="inf2.html#profi-übungen-8"><i class="fa fa-check"></i><b>8.4</b> Profi-Übungen 8</a></li>
-<li class="chapter" data-level="8.5" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>8.5</b> Hinweise</a><ul>
-<li class="chapter" data-level="8.5.1" data-path="inf2.html"><a href="inf2.html#auswahl-der-in-vollzeit-beschäftigten-befragten"><i class="fa fa-check"></i><b>8.5.1</b> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
+<li class="chapter" data-level="8.2" data-path="inf2.html"><a href="inf2.html#mittelwertttest"><i class="fa fa-check"></i><b>8.2</b> Mittelwertvergleiche mit dem t-Test</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="inf2.html"><a href="inf2.html#unverbundener-t-test"><i class="fa fa-check"></i><b>8.2.1</b> Unverbundener t-Test</a></li>
+<li class="chapter" data-level="8.2.2" data-path="inf2.html"><a href="inf2.html#verbundener-t-test"><i class="fa fa-check"></i><b>8.2.2</b> Verbundener t-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="inf2.html"><a href="inf2.html#übersicht-zu-varianten-für-ttest"><i class="fa fa-check"></i><b>8.3</b> Übersicht zu Varianten für <code>ttest</code></a></li>
+<li class="chapter" data-level="8.4" data-path="inf2.html"><a href="inf2.html#tvsmu"><i class="fa fa-check"></i><b>8.4</b> Übungen 8-1</a></li>
+<li class="chapter" data-level="8.5" data-path="inf2.html"><a href="inf2.html#tgroup"><i class="fa fa-check"></i><b>8.5</b> Übungen 8-2</a></li>
+<li class="chapter" data-level="8.6" data-path="inf2.html"><a href="inf2.html#tpaired"><i class="fa fa-check"></i><b>8.6</b> Übung 8-3</a></li>
+<li class="chapter" data-level="8.7" data-path="inf2.html"><a href="inf2.html#weitere-übungen-kap-8"><i class="fa fa-check"></i><b>8.7</b> weitere Übungen Kap 8</a></li>
+<li class="chapter" data-level="8.8" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>8.8</b> Hinweise</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="inf2.html"><a href="inf2.html#vollz"><i class="fa fa-check"></i><b>8.8.1</b> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
+<li class="chapter" data-level="8.8.2" data-path="inf2.html"><a href="inf2.html#genhelp"><i class="fa fa-check"></i><b>8.8.2</b> Kohortenvergleich Tipps</a></li>
+<li class="chapter" data-level="8.8.3" data-path="inf2.html"><a href="inf2.html#bmihelp"><i class="fa fa-check"></i><b>8.8.3</b> BMI Aufgaben</a></li>
+</ul></li>
+<li class="chapter" data-level="8.9" data-path="inf2.html"><a href="inf2.html#gruppenunterschiede-visualisieren"><i class="fa fa-check"></i><b>8.9</b> Gruppenunterschiede visualisieren</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Weitere Hypothesentests</a><ul>
+<li class="chapter" data-level="9.1" data-path="hypo.html"><a href="hypo.html#ftest"><i class="fa fa-check"></i><b>9.1</b> Vergleich von Varianzen mit dem F-Test</a></li>
+<li class="chapter" data-level="9.2" data-path="hypo.html"><a href="hypo.html#proportionen-und-häufigkeiten"><i class="fa fa-check"></i><b>9.2</b> Proportionen und Häufigkeiten</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="hypo.html"><a href="hypo.html#binomialtest"><i class="fa fa-check"></i><b>9.2.1</b> Binomialtest</a></li>
+<li class="chapter" data-level="9.2.2" data-path="hypo.html"><a href="hypo.html#chi²-test"><i class="fa fa-check"></i><b>9.2.2</b> Chi²-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="hypo.html"><a href="hypo.html#überblick"><i class="fa fa-check"></i><b>9.3</b> Überblick</a></li>
+<li class="chapter" data-level="9.4" data-path="hypo.html"><a href="hypo.html#übungen-9"><i class="fa fa-check"></i><b>9.4</b> Übungen 9</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="hypo.html"><a href="hypo.html#fueb"><i class="fa fa-check"></i><b>9.4.1</b> Übung 9-1</a></li>
+<li class="chapter" data-level="9.4.2" data-path="hypo.html"><a href="hypo.html#übung-9-2"><i class="fa fa-check"></i><b>9.4.2</b> Übung 9-2</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="hypo.html"><a href="hypo.html#anova"><i class="fa fa-check"></i><b>9.5</b> ANOVA</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="hypo.html"><a href="hypo.html#anova-vs.-t-tests"><i class="fa fa-check"></i><b>9.5.1</b> ANOVA vs. t-Tests</a></li>
+<li class="chapter" data-level="9.5.2" data-path="hypo.html"><a href="hypo.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>9.5.2</b> ANOVA vs. lineare Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="hypo.html"><a href="hypo.html#anova-mehrere-gruppen"><i class="fa fa-check"></i><b>9.6</b> ANOVA mehrere Gruppen</a></li>
+<li class="chapter" data-level="9.7" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>9.7</b> Hinweise</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="hypo.html"><a href="hypo.html#readin091"><i class="fa fa-check"></i><b>9.7.1</b> Einlesen und auswählen für Ü9-1</a></li>
+<li class="chapter" data-level="9.7.2" data-path="hypo.html"><a href="hypo.html#binom_help"><i class="fa fa-check"></i><b>9.7.2</b> Einlesen und auswählen für Ü9-2</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Hypothesentests</a></li>
-<li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a></li>
+<li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a><ul>
+<li class="chapter" data-level="10.1" data-path="export1.html"><a href="export1.html#graph-export"><i class="fa fa-check"></i><b>10.1</b> graph export</a></li>
+<li class="chapter" data-level="10.2" data-path="export1.html"><a href="export1.html#esttab"><i class="fa fa-check"></i><b>10.2</b> esttab</a></li>
+<li class="chapter" data-level="10.3" data-path="export1.html"><a href="export1.html#log-file"><i class="fa fa-check"></i><b>10.3</b> log file</a></li>
+</ul></li>
 <li class="chapter" data-level="11" data-path="adva.html"><a href="adva.html"><i class="fa fa-check"></i><b>11</b> Fortgeschrittene Themen</a><ul>
 <li class="chapter" data-level="11.1" data-path="adva.html"><a href="adva.html#wertelabels"><i class="fa fa-check"></i><b>11.1</b> Wertelabels</a></li>
 <li class="chapter" data-level="11.2" data-path="adva.html"><a href="adva.html#sortieren"><i class="fa fa-check"></i><b>11.2</b> sortieren</a></li>
@@ -330,6 +363,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.8" data-path="adva.html"><a href="adva.html#indikatoren-umdrehen"><i class="fa fa-check"></i><b>11.8</b> Indikatoren umdrehen</a></li>
 <li class="chapter" data-level="11.9" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-datensätzen"><i class="fa fa-check"></i><b>11.9</b> Informationen aus mehreren Datensätzen</a></li>
 <li class="chapter" data-level="11.10" data-path="adva.html"><a href="adva.html#arbeiten-mit-textvariablen"><i class="fa fa-check"></i><b>11.10</b> Arbeiten mit Textvariablen</a></li>
+<li class="chapter" data-level="11.11" data-path="adva.html"><a href="adva.html#link-liste"><i class="fa fa-check"></i><b>11.11</b> Link Liste</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>

@@ -109,11 +109,44 @@ Fläche links von -1.822533 (`ttail` gibt immer rechte Fläche an, daher 1-`ttai
 ```{stata}
 display 1-ttail(40-1,-1.8225334) 
 ```
+
 Wir müssen aber die "rechte Seite" mitberücksichtigen, daher $\times2$:
 ```{stata}
 display (1-ttail(40-1,-1.8225334)) *2
 ```
 Das Ergebnis liegt also deutlich über 0,05. Wir würden also die $H_0$ nicht verwerfen.
+
+
+```{r ttest_bsp_beid_illu, out.height="60%", out.width="60%", fig.align='center', echo=F}
+data1 <- data.frame(z = seq(-4,4,.01)) ## dataframe erstellen mit Zahlenfolge zwischen -4 & 4
+data1$t.var <- dt(x=data1$z,df =  40-1) 
+
+ggplot(data = data1, aes(x=z, y =t.var)) + 
+  theme_minimal(base_size = 15) +
+  labs(y = "Häufigkeitsdichte", x = "t") +
+  geom_ribbon(data=filter(data1,z <= - 1.8225334), aes(ymin=0, ymax = t.var), fill = "#F5CC71") + ## fläche links
+  geom_segment(data = data.frame(z = - 1.8225334,y1 = dt(x=- 1.8225334,df =  1757)) , 
+            aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .5, linetype = 2) + ## grenze links
+  geom_ribbon(data=filter(data1,z >=  1.8225334), aes(ymin=0, ymax = t.var), fill = "#F5CC71") + ## fläche rechts
+  geom_segment(data = data.frame(z =  1.8225334,y1 = dt(x= 1.8225334,df =  1757)) , 
+            aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .5, linetype = 2) + ## grenze rechts
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+            aes(x=z,y=y1,xend = z, yend = 0), color = "grey50", size = .5, linetype = 3) + ## mittellinie
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+            aes(x=z,y=-0.0125,xend = -1.82, yend = -0.0125), color = "grey25", size = .5,
+            arrow = arrow(length = unit(0.5, "lines"), type = "closed")) + ## pfeil nach links
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+            aes(x=z,y=-0.0125,xend = 1.82, yend = -0.0125), color = "grey25", size = .5,
+            arrow = arrow(length = unit(0.5, "lines"), type = "closed")) + #pfeil nach rechts
+  geom_label(data=data.frame(z = 0 , y1 = -0.0125, lab1 = "+/- 1.8225334", t.var = 0),aes(label = lab1), size = 3.5 ) +
+  geom_line(color = "navy")  +   
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1))+
+  theme(aspect.ratio = 1, panel.grid = element_line(size = rel(.25))) +
+  geom_text(data=data.frame(z = c(-3,3), t.var = 0.015, label = rep(paste0(round(pt(q = -1.8225334,df = 40-1)*100,2),"%"),2) ), 
+                            aes(x = z, y = t.var, label = label),
+                            size = 3.25,vjust= 0, hjust = c(1,0))
+```
+
 
 Neben der händischen Berechnung können wir in Stata die Funktion `ttest` nutzen, diese nimmt auch die Anpassung des p-Wertes beim beidseitigen Test vor. Neben den zu testenden Werten geben wir mit `mu` den in der Nullhypothese festgehaltenen Mittelwert an und wählen mit `two.sided` einen beiseitigen Test aus:
 ```{stata, eval = F}
@@ -186,6 +219,31 @@ display 1-ttail(40-1,-1.8225334) // Fläche links
 
 Der Wert `r round(pt(q = -1.8225334, df = 40-1),4)` ist kleiner als 0,05, dementsprechend würden wir auf Basis eines linksseitigen Hypothesentests die $H_0$ verwerfen.
 
+
+```{r ttest_bsp_links_illu, out.height="60%", out.width="60%", fig.align='center', echo=F}
+data1 <- data.frame(z = seq(-4,4,.01)) ## dataframe erstellen mit Zahlenfolge zwischen -4 & 4
+data1$t.var <- dt(x=data1$z,df =  40-1) 
+
+ggplot(data = data1, aes(x=z, y =t.var)) + 
+  theme_minimal(base_size = 15) +
+  labs(y = "Häufigkeitsdichte", x = "t") +
+  geom_ribbon(data=filter(data1,z <= - 1.8225334), aes(ymin=0, ymax = t.var), fill = "#F5CC71") + ## fläche links
+  geom_segment(data = data.frame(z = - 1.8225334,y1 = dt(x=- 1.8225334,df =  1757)) , 
+            aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .5, linetype = 2) + ## grenze links
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+            aes(x=z,y=y1,xend = z, yend = 0), color = "grey50", size = .5, linetype = 3) + ## mittellinie
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+            aes(x=z,y=-0.0125,xend = -1.82, yend = -0.0125), color = "grey25", size = .5,
+            arrow = arrow(length = unit(0.5, "lines"), type = "closed")) + ## pfeil nach links
+  geom_label(data=data.frame(z = 0 , y1 = -0.0125, lab1 = "- 1.8225334", t.var = 0),aes(label = lab1), size = 3.5 ) +
+  geom_line(color = "navy")  +   
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1))+
+  theme(aspect.ratio = 1, panel.grid = element_line(size = rel(.25))) +
+  geom_text(data=data.frame(z = -3, t.var = 0.015, label = paste0(round(pt(q = -1.8225334,df = 40-1)*100,2),"%") ), 
+                            aes(x = z, y = t.var, label = label),
+                            size = 3.25,vjust= 0, hjust = 1)
+```
+
 ### rechtsseitiger t-Test 
 
 Ein **rechts**seitiger Test testet die $H_0$ im Vergleich zu folgender Aussage: "die wahren Mietausgaben der Studierenden in Oldenburg sind *größer* als 320 Euro". Formal sehen die $H_0$ und $H_A$ so aus:
@@ -202,6 +260,30 @@ display ttail(40-1,-1.822533)  // Fläche rechts
 ```
 
 Wir sehen hier dass der Wert `1-pt(q = -1.822533, df = 40-1)=``r round(1-pt(q = -1.822533, df = 40-1),4)` deutlich größer als 0,05 ist - dementsprechend würden wir auf Basis eines rechtsseitigen Hypothesentests die $H_0$ **nicht** verwerfen.
+
+```{r ttest_bsp_rechts_illu, out.height="60%", out.width="60%", fig.align='center', echo=F}
+data1 <- data.frame(z = seq(-4,4,.01)) ## dataframe erstellen mit Zahlenfolge zwischen -4 & 4
+data1$t.var <- dt(x=data1$z,df =  40-1) 
+
+ggplot(data = data1, aes(x=z, y =t.var)) + 
+  theme_minimal(base_size = 15) +
+  labs(y = "Häufigkeitsdichte", x = "t") +
+  geom_ribbon(data=filter(data1,z >=  1.8225334), aes(ymin=0, ymax = t.var), fill = "#F5CC71") + ## fläche rechts
+  geom_segment(data = data.frame(z =  1.8225334,y1 = dt(x= 1.8225334,df =  1757)) , 
+            aes(x=z,y=y1,xend = z, yend = 0), color = "#404040", size = .5, linetype = 2) + ## grenze rechts
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+            aes(x=z,y=y1,xend = z, yend = 0), color = "grey50", size = .5, linetype = 3) + ## mittellinie
+  geom_segment(data = data.frame(z = 0,y1 = dt(x=0,df = 9999)) , 
+            aes(x=z,y=-0.0125,xend = 1.82, yend = -0.0125), color = "grey25", size = .5,
+            arrow = arrow(length = unit(0.5, "lines"), type = "closed")) + #pfeil nach rechts
+  geom_label(data=data.frame(z = 0 , y1 = -0.0125, lab1 = "+s 1.8225334", t.var = 0),aes(label = lab1), size = 3.5 ) +
+  geom_line(color = "navy")  +   
+  scale_x_continuous(breaks = seq(-3,3,1),minor_breaks = seq(-3,3,1))+
+  theme(aspect.ratio = 1, panel.grid = element_line(size = rel(.25))) +
+  geom_text(data=data.frame(z = 3, t.var = 0.015, label = paste0(round(pt(q = -1.8225334,df = 40-1)*100,2),"%") ), 
+                            aes(x = z, y = t.var, label = label),
+                            size = 3.25,vjust= 0, hjust = 0 )
+```
 
 All das haben wir eben auch schon in `ttest` gesehen:
 ```{stata, eval = F}
@@ -255,8 +337,11 @@ end
 ttest miete==320
 ```
 
+
 ***
+
 [Übung 1](#tvsmu)
+
 ***
 
 ## Mittelwertvergleiche mit dem t-Test {#mittelwertttest}
@@ -310,7 +395,7 @@ ttest hs16, by(sex) unequal
 ```{stata, echo=F}
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
-keep  if year == 2014 & hs16>0
+qui keep  if year == 2014 & hs16>0
 ttest hs16, by(sex) unequal
 ```
 
@@ -348,7 +433,7 @@ ttest bp_before==bp_after
 ```{stata, echo = F}
 set linesize 200
 qui clear
-qui webuse bpwide
+qui webuse bpwide,clear
 ttest bp_before==bp_after
 ```
 
@@ -372,19 +457,19 @@ Für alle `ttest`-Varianten können wir mit `, level(..)` auch ein anderes Signi
 
 + Vergleich zu einem Referenzwert: `ttest testvariable == referenzwert`
 
-Für Mittelwertvergleich gibt es insgesamt zwei Aspekte, anhand derer sich t-Tests allgemein unterscheiden:
+Für Mittelwertvergleich gibt es insgesamt zwei Aspekte, anhand derer sich t-Tests unterscheiden:
 
 + Die Varianz der Messwerte in den verglichenen Gruppen ist ...
   + gleich: $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` 
-  + verschieden: $\Rightarrow$ `ttest testvariable, by(gruppenvariable) unequal` (wie oben)
+  + verschieden: $\Rightarrow$ `ttest testvariable, by(gruppenvariable) unequal` (wie oben)  
 
-
+   
+   
 + 	Verbundene oder unverbundene Stichprobe?
+
   +  Sind die einzelnen Messwerte voneinander unabhängig? D.h. ein Messwert steht in keinem direkten Zusammenhang mit einem anderen $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` für eine unverbundene Stichprobe (mit ggf. `unequal`)
   +  Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen $\Rightarrow$ Werte für beide Variablen sollten "nebeneinander" abgelegt sein (*wide*-Format), dann kann mit `ttest vorher==nachher` ein verbundener `ttest` durchgeführt werden.
 
-  Hier könnten wir dann mit `ttest `
-  `paired = T` für eine verbundene Stichprobe, zB. ähneln sich bei wiederholten Messungen die Messwerte für die gleiche Person (Vorher-/Nachhermessungen)
 
 
 
@@ -459,15 +544,20 @@ gen height_sample2 =  rnormal(173,6.15)
 
 (@) Sind Befragte, die in den 1960er Jahren geboren wurden, signifikant früher aus dem Elternhaus ausgezogen als Befragte, die in den 1970er Jahren geboren wurden?
   + Laden Sie den kumulierten Allbus (`Allbus_1980-2018.dta`).
-  + Wählen Sie alle Befragten aus, die zwischen 1960 und 1979 geboren wurden (`yborn` gibt das Geburtsjahr an) und für die das Alter beim Auszug aus dem Elternhaus vorliegt (`dg12 > 0`).
+  + Wählen Sie alle Befragten aus, die zwischen 1960 und 1979 geboren wurden (`yborn` gibt das Geburtsjahr an) 
+  + Überschreiben Sie die Missings für das Alter beim Auszug aus dem Elternhaus.
   + Erstellen Sie eine Dummyvariable, welche den Wert `1` annimmt wenn die Befragten nach 1969 geboren sind und 0 für alle früher geborenen. [Tipp](#genhelp)
   + Formulieren Sie die Hypothesen zur Fragestellung dieser Aufgabe!
   + Müssen Sie `unequal` setzen?
   + Führen Sie den entsprechenden Test durch
   + Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?
 
-(@) Haben kleinere Frauen einen signifikant höheren BMI als größere?
-
+(@) Haben kleinere Frauen einen signifikant höheren BMI als größere Frauen?
+  + Laden Sie den kumulierten Allbus (`Allbus_1980-2018.dta`).
+  + Wählen Sie alle weiblichen Befragten aus mit Angaben aus dem Jahr 2014 aus, für die `hs16` (Körpergröße) und `hs18` (BMI) > 0  sind!
+  + Generieren Sie eine Variable, welche den Wert `1` annimmt, wenn die Befragte größer als 160cm (der Medianwert) ist und `0`, wenn die Befragte kleiner als 160cm ist. [Tipp](#bmihelp)
+  
+  
 
 
 ## Hinweise
@@ -498,6 +588,8 @@ use Allbus_1980-2018.dta, clear
 keep if inrange(yborn,1960,1979)
 labelbook dg12
 mvdecode dg12, mv(-51/-1)
+
+gen b70s = (yborn > 1969)
 ```
 
 
@@ -509,9 +601,11 @@ cd "..."
 // einlesen
 use Allbus_1980-2018.dta, clear
 
-keep if inrange(yborn,1960,1979)
-labelbook dg12
-mvdecode dg12, mv(-51/-1)
+keep if year == 2014 & hs18 > 0 & hs16>0 & sex == 2
+
+tabstat hs16, s(median) 
+gen tall = (hs16 > 160)
+tab hs16 tall // Kontrolle
 ```
 
 <!-- ### Plot der Körpergrößenangaben -->
@@ -531,3 +625,86 @@ mvdecode dg12, mv(-51/-1)
 <!--        title = "Körpergröße der Befragten im Allbus 2014") + -->
 <!--   ggthemes::theme_stata()   -->
 <!-- ``` -->
+
+## Gruppenunterschiede visualisieren
+
+Auch für t-Tests empfiehlt sich eine grafische Darstellung:
+```{r group_differences, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("08_Gruppen_Differenzen.PNG")
+```
+[Quelle](https://twitter.com/Prokaryota/status/1298575505956974593?s=09)
+
+Also visualisieren wir das Ergebnis des Gruppenvergleichs aus [Aufgabe 8-2](#tgroup):
+```{r tt_viz, echo = F,out.width = "90%", fig.align="center"}
+knitr::include_graphics("08_strip_bar_text_opts.png")
+```
+
+Zur Erinnerung, das hier war unsere Vorbereitung:
+```{stata, eval = F}
+cd ""
+use  "Allbus_2018.dta",clear
+keep if work == 1 & inc > 0
+// Einkommensangaben logarithmieren:
+gen log_inc = log(inc)
+```
+
+Die Darstellung ist ein sog. `stripplot`, diese Funktion müssen wir erst installieren:
+```{stata, eval = F}
+ssc install stripplot // ado installieren
+```
+
+
+Als ersten Schritt können wir den Basis-Plot erstellen: wir möchten einen `stripplot` für `log_inc`, getrennt nach `sex`. Doppelt vorkommende Ausprägungen sollen aufeinander gestapelt werden (`stack`) und wir möchten `log_inc` auf der y-Achse abgetragen (`vertical`)
+```{stata, eval = F}
+stripplot log_inc, over(sex) stack vertical
+```
+
+```{r tt_viz_base, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("08_strip_base.png")
+```
+
+Dann passen wir die gezeigten `marker` mit den entsprechenden `m`_optionen an: 
+`height(0.6)` verringert die Höhe (hier Breite) der aufgestapelten Punkte. Mit `width(.15)` bestimmen wir, dass auf einer Breite von `.15` nebeneinanderliegender Werte zusammengefasst werden sollen.
+```{stata, eval = F}
+stripplot log_inc, over(sex) stack vertical mcolor("navy %70") msize(small) msymbol(sh) height(0.6) width(.15)
+```
+```{r tt_viz_marker, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("08_strip_marker.png")
+```
+
+
+Mit der Option `bar` können wir jetzt den Mittelwert und 95% KI hinzufügen:
+```{stata, eval = F}
+stripplot log_inc, over(sex) stack vertical mcolor("navy %70") msize(small) msymbol(sh) height(0.6) width(.15) ///
+	bar
+```
+```{r tt_viz_bar, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("08_strip_bar.png")
+```
+
+Allerdings sind die Endpunkte für das 95% KI so kaum zu sehen, sodass wir hier auch einige Optionen anwenden. Die Optionen in `bar()`  beziehen sich auf Indikatoren für das 95% KI. Die Optionen die darin in `mean()` angegeben sind, verändern den Punkt, der den Mittelwert wiedergibt (hier einmal mit verschiedenen Farben um Range und Punkt von einander abzuheben):
+```{stata, eval = F}
+stripplot log_inc, over(sex) stack vertical mcolor("navy %70") msize(small) msymbol(sh) height(0.6) width(.15) ///
+	bar(lcolor(black) lwidth(vthin) msize(huge) mean(mcolor(orange) msymbol(o) msize(tiny))) boffset(-0.05)
+```
+
+```{r tt_viz_baropts, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("08_strip_bar_opts.png")
+```
+
+Zum Schluss geben wir noch ein `scheme` und Beschriftungen an. Außerdem verändern wir mit `aspect(1.25)` das Verhältnis von Höhe zu Breite (Werte > 1 führen zu schmaleren, Werte < 1 zu breiteren Darstellungen). Details zu den anderen Optionen in Kapitel 4.8.
+```{stata, eval = F}
+stripplot log_inc, over(sex) stack vertical mcolor("navy %60") msize(small) msymbol(sh) height(0.6) width(.15) ///
+	bar(lcolor(orange) lwidth(vthin) msize(huge) mean(mcolor(orange) msymbol(o) msize(tiny))) boffset(-0.075) ///
+	scheme(plotplain) ytitle("logarithmierte Einkommensangaben") xtitle("") ///
+	xlabel(1 "Männer" 2 "Frauen", labsize(medlarge)) ///
+	yscale(range(3.8 10)) ///
+	title("Einkommensunterschiede zwischen Männern und Frauen 2018") subtitle("arith. Mittel & 95% KI", color(orange)) ///
+	caption("Allbus 2018, n = 1477", size(vsmall) pos(5)) aspect(1.25) 
+```
+
+
+```{r tt_viz_final, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("08_strip_bar_text_opts.png")
+```
+
