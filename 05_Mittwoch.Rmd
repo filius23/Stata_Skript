@@ -619,11 +619,6 @@ knitr::include_graphics("05_cdb_df44.png")
     + Verwenden Sie `egen cut()`, um `age` in eine ordinale Variable zu überführen! (siehe Kapitel 3, verwenden Sie zB die Lebensjahrzehnte)
     + Berechnen Sie (mind.) ein passendes Zusammenhangsmaß! Ist der Zusammenhang als stark einzustufen?
 
-## Profi-Übungen 5
-
-Für alle, die noch etwas mehr machen möchten:
-
-
 
 ## Anhang 
 
