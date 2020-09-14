@@ -238,6 +238,8 @@ Ein klassisches ordinales Merkmal ist die Bildung (`educ`):
 | `3` | Mittlere Reife, Realschulabschluss bzw. Polytechnische Oberschule (10. Klasse)
 | `4` | Fachhochschulreife (Abschluss einer Fachoberschule etc.)
 | `5` | Abitur bzw. Erweiterte Oberschule mit Abschluss 12. Klasse (Hochschulreife)
+| `6` | Anderer Schulabschluss, und zwar: ______
+| `7` | Noch Schüler
 
 Wir sehen uns den Zusammenhang der Bildung der Befragten mit der Einstellung zum Zuzug von Asylsuchenden (`mi02`) an:
 
@@ -482,10 +484,10 @@ tab1 <- xtabs(~ aq03 + dh04, data = filter(a14, year == 2014 & dh01 > 0 & dh04 >
 tx <- chisq.test(tab1)
 ```
 
-```{stata, chitabF, eval =F}
+```{stata chitabF, eval =F}
 tab aq03 dh04, chi
 ```
-```{stata, chitabT, echo =F}
+```{stata chitabT, echo =F}
 set linesize 200
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
@@ -500,7 +502,7 @@ $$ Cramer's\,\,\upsilon = \sqrt{\frac{\chi^2}{n*\,min(k-1,m-1)}}=\sqrt{\frac{157
   
 Dieser Wert für Cramer's $\upsilon$ legt einen praktisch keinen Zusammenhang nahe.
 
-```{stata, vcalc, echo =T}
+```{stata vcalc, echo =T}
 dis sqrt(157.1103/(3466*3))
 ```
 
@@ -513,7 +515,7 @@ tab aq03b dh01, chi
 ```
 
 
-```{stata, phitabT, echo =F}
+```{stata phitabT, echo =F}
 set linesize 90
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
@@ -524,7 +526,7 @@ tab aq03b dh01, chi
 ```
 
 $$\phi= \sqrt{\frac{\chi^2}{n}}=\sqrt{\frac{89.0092}{3466}} = 0.1602$$ 
-```{stata, phicalc, echo =T}
+```{stata phicalc, echo =T}
 dis sqrt(89.0092/3466)
 ```
 
@@ -560,7 +562,7 @@ Ausschlaggebend ist dabei die Variable mit dem niedrigeren Skalenniveau! Ggf. k�
 ### Übung 5-1 {#auf_met}
 (@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2014 aus! Untersuchen Sie den Zusammenhang zwischen dem Alter der Befragten `age` und der Dauer des Fernsehkonsums (`lm02`) in Minuten! Verwenden Sie `age` als unabhängige Variable.  
     + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
-    + Überprüfen Sie z.B. mit `summary` für beide Variablen, ob alle negativen Werte ausgeschlossen wurden.
+    + Überprüfen Sie z.B. mit `summarize` für beide Variablen, ob alle negativen Werte ausgeschlossen wurden.
     + Berechnen Sie das passende Zusammenhangsmaß!
     + Wie stark ist der Zusammenhang?
     + Welche Fernsehdauer würden Sie für eine\*n 50-jährigen Befragte\*n vorhersagen? 
@@ -572,7 +574,7 @@ Ausschlaggebend ist dabei die Variable mit dem niedrigeren Skalenniveau! Ggf. k�
 
 ### Übung 5-2 {#auf_ord}
 
-(@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2016 aus! Untersuchen Sie den Zusammenhang zwischen der Bildung der Befragten `educ` und ihrer Einstellung zur Erwerbstätigkeit von Müttern (`fr03b`)!
+(@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2016 aus! Untersuchen Sie den Zusammenhang zwischen der Bildung der Befragten `educ` und ihrer Einstellung zur Erwerbstätigkeit von Müttern (`fr03b`)!
     + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
     + Erstellen Sie eine Kontingenztabelle, um zu kontrollieren, ob alle negativen Werte ausgeschlossen wurden.
     + Berechnen Sie die passenden Zusammenhangsmaße!
@@ -588,7 +590,7 @@ knitr::include_graphics("05_cdb_fr03b.png")
 
 ### Übung 5-3 {#auf_nom}
 
-(@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2016 aus! Untersuchen Sie den Zusammenhang zwischen ost/westdeutschem Wohnort der Befragten `eastwest` und der Frage, ob Sie mit 15 Jahren mit beiden Eltern zusammengewohnt haben (`df44`)!
+(@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2016 aus! Untersuchen Sie den Zusammenhang zwischen ost/westdeutschem Wohnort der Befragten `eastwest` und der Frage, ob Sie mit 15 Jahren mit beiden Eltern zusammengewohnt haben (`df44`)!
     + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
     + Erstellen Sie eine Kontingenztabelle für `eastwest` und `df44`, um zu kontrollieren, ob alle negativen Werte ausgeschlossen wurden.
     + Erstellen Sie eine Variable `df44b`, welche den Wert 1 annimmt wenn `df44`=4 (also Befragte, die mit 15 Jahren ohne Eltern gelebt haben) und 0 für alle anderen Konstellationen.
@@ -613,12 +615,21 @@ knitr::include_graphics("05_cdb_df44.png")
     + Berechnen Sie dementsprechend die Zusammenhängsstärke!
 
 (@) Leben ältere Menschen eher in kleineren Orten? Berechnen Sie ein geeignetes Maß für den Zusammenhang zwischen `gkpol` und dem Alter der Befragten (`age`)! 
-    + Berechnen Sie diesen Zusammenhang für das Jahr 2014!
-    + Welche Skalenniveaus haben beide Variablen jeweils? 
+    + Berechnen Sie diesen Zusammenhang für das Jahr 2014! Laden Sie also den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2014 aus.
     + Welches Zusammenhangsmaß können Sie dementsprechend verwenden? (Zur Erinnerung: das niedrigere Skalenniveau ist ausschlaggebend!) 
     + Verwenden Sie `egen cut()`, um `age` in eine ordinale Variable zu überführen! (siehe Kapitel 3, verwenden Sie zB die Lebensjahrzehnte)
-    + Berechnen Sie (mind.) ein passendes Zusammenhangsmaß! Ist der Zusammenhang als stark einzustufen?
+    + Berechnen Sie (mind.) ein passendes Zusammenhangsmaß, wenn Siese neue, kategorisierte Altersvariable anstelle von `age` verwenden! Ist der Zusammenhang als stark einzustufen?
+    
 
+
+(@) Häufig werden auch quasi-metrischen Skalen aus mehreren Variablen gebildet, z.B. wenn mehrere Indikatorfragen die Einstellung der Befragen zum Islam wiedergeben wie in `mm01` - `mm05`:
+```{stata d_mm, echo =F}
+set linesize 90
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep if year == 2016
+d mm0?
+```
 
 ## Anhang 
 
