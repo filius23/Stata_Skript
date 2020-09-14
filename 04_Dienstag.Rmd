@@ -448,6 +448,15 @@ knitr::include_graphics("04_bar_col.png")
 Leider ist die unterschiedliche Einfärbung von Balken etwas komplizierter, hierzu müssen wir erst mit `collapse` den Datensatz umformen. Siehe [hier](#pyramid).
 
 
+## export 
+
+Natürlich können wir diese Grafiken auch speichern - entweder einfach über das Speichern-Symbol im Grafikfenster. Oder mit dem Befehl `graph export`, es stehen die üblichen Dateiformate (`png`,`svg`, `jpg`) zur Verfügung. Einfach die gewünschte Endung anhängen, Stata regelt den Rest:
+
+```{stata, eval = F}
+graph export "C:/Mein/Projekt/Ordner/meine_grafik.png"
+```
+
+
 ### Vorlagen
 
 Eine Alternative ist auf Grafik-Schemata zuzückzugreifen. Beispielsweise wird mit `, scheme(sj)`  die Grafik nach den Vorlage des Stata Journals erstellt:
