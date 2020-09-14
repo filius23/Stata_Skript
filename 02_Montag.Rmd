@@ -197,6 +197,14 @@ drop age_mon
 gen age_mon = age * 12
 ```
 
+Eine weiteren Option, neue Variablen zu erstellen ist `egen` "Extensions to generate". Hier stehen dann eine ganze Menge an Funktionen zur Verfügung. Wir werden beispielsweise Optionen zur Einteilung in Gruppen (`cut`) kennenlernen.
+
+So könnten wir bspw. eine Variable `age_mean` mit dem Mittelwert für `age` erstellen:
+```{stata, eval = F}
+egen age_mean = mean(age)
+```
+Eine Liste aller Optionen für `egen` findet sich unter `help egen`.
+
 ## Bestehende Variablen verändern
 Alternativ können wir auch mit `replace` explizit eine bestehende Variable überschreiben:
 ```{stata rep, eval = F, echo = T}
