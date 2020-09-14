@@ -177,7 +177,6 @@ knitr::include_graphics("04_box_educ_bysex.png")
 
 (@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2014 aus! Erstellen Sie einen Boxplot, ein Histogramm und einen k-Density-Plot für den BMI der Befragten (`hs18`).  
     + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
-    + Überprüfen Sie z.B. mit `summary`, ob alle negativen Werte ausgeschlossen wurden.
     + Erstellen Sie eine weitere Variante dieser Grafiken, welche die Verteilung des BMIs jeweils nach Geschlecht zeigen.
     
 (@) Erstellen Sie ebenfalls für die Befragten aus dem Jahr 2014 eine Grafik, welche die Häufigkeit der Befragten aus den alten und neuen Bundesländern (`eastwest`) wiedergibt!  
