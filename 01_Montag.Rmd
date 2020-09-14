@@ -293,9 +293,9 @@ bro sex land if inrange(age,20,30)
 ## Übungen 1 {#U1}
 
 + Führen Sie folgende (oder beliebige andere) Taschenrechneraufgaben mit Stata durch:
-  + 2 * 4
-  + 2 / 8
-  + 2 ^ sqrt(4) + 5
+  + `2 * 4`
+  + `2 / 8`
+  + `2 ^ sqrt(4) + 5`
 
 + Laden Sie die Datensätze und Codebücher aus [ILIAS](www.ilias.gesis.org) herunter und legen Sie alle Dateien in einem Ordner Ihrer Wahl! 
 
@@ -309,7 +309,7 @@ bro sex land if inrange(age,20,30)
   + Lassen Sie sich diese Variable mit den Zahlencodes anstatt der labels anzeigen.
   + Welche Information ist in der Variable `respid` abgelegt? 
   + Wie können Sie sich die Zeile anzeigen lassen, welche den/die Befragte*n mit der `respid` 3469 enthält?
-  + Wie alt ist der/die Befragte mit der `respid` 3469? Welches Geschlecht und welche Wahlabsicht hat die Person angegeben? Tipp: Das Alter ist in `age` ablegt, die Absicht in `pv01`.
+  + Wie alt ist der/die Befragte mit der `respid` 3469? Welches Geschlecht und welche Wahlabsicht hat die Person angegeben? Tipp: Das Alter ist in `age` ablegt, die Wahlabsicht in `pv01`.
   
   
 
@@ -318,7 +318,7 @@ bro sex land if inrange(age,20,30)
 Für alle, die noch etwas mehr machen möchten: 
 
 + Auf ILIAS finden Sie auch eine SPSS-Version (.sav-Datei) des Allbus 2018. Lesen Sie diese Dateiversion in Stata ein! (Siehe [weitere Anmerkungen](#otherfmts))
-+ Auf ILIAS finden Sie auch eine csv-Datei des Allbus 2018. Lesen Sie diese Dateiversion in Stata ein! (Siehe [weitere Anmerkungen](#otherfmts))
++ Auf ILIAS finden Sie außerdem auch eine csv-Datei des Allbus 2018. Lesen Sie diese Dateiversion in Stata ein! (Siehe [weitere Anmerkungen](#otherfmts))
 
 
 
