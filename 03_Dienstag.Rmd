@@ -47,6 +47,7 @@ tab xr20,nol
 Aus dem Codebuch (oder mit `labelbook`) erfahren wir, dass `-10`,`-9`,`-8` für `TNZ: FILTER`,`KEINE ANGABE`,`WEISS NICHT`. Wie in Session 2 gezeigt, können wir mit `mvdecode` diese Ausprägungen auf `.` setzen und Stata so mitteilen, dass es sich um fehlende Werte handelt. Dazu müssen wir in `,mv()` die entsprechenden Zahlencodes angeben:Details im Codebuch):
 ```{stata 03_miss, eval = F}
 mvdecode xr20, mv(-10 -9 -8)
+mvdecode xr20, mv(-10/-8) // macht das gleiche
 ```
 ```{stata 03_missb, echo = F}
 set linesize 100
@@ -400,7 +401,7 @@ $\Rightarrow$ Für welches Geschlecht ist die Streuung also größer?[^034]
 
 
 
-### Gini-Koeffizient
+### Gini-Koeffizient {#gini}
 
 Zur Beschreibung der (Ungleich-)Verteilung von metrischen Variablen, insbesondere bei Einkommens- und Vermögensdaten wird häufig der Gini-Koeffizient verwendet. Der Gini-Koeffizient beruht auf der Fläche zwischen der Lorenzkurve und der Gleichverteilung. Auf der x-Achse werden die kumulierten Perzentile der Befragten abgetragen, auf der y-Achse die Perzentile des HH-Einkommens:
 
@@ -514,14 +515,11 @@ Forschungsfrage: Vergleichen Sie die Haushaltseinkommensverteilung in Ost und We
     + Betrachten Sie die HH-Einkommensverteilungen (Variable `di05`) 
     + Denken Sie daran, die negativen Werte für `di05` mit `.` zu überschreiben! (Entweder mit `replace` oder `mvdecode`, sehen Sie mit `labelbook` oder im Codebuch nach)
     + Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle aus dem Jahr 1994 - was sagen Ihnen die Werte jeweils?
-    + Berechnen Sie den Gini-Koeffizenten! 
+    + Berechnen Sie den Gini-Koeffizenten! (Denken Sie daran, vor der ersten Verwendung `fastgini` zu installieren - siehe [hier](#gini))
     + Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable `eastwest`) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?
 
 
-
-## Profi-Übungen 3
-
-Für alle, die noch etwas mehr machen möchten: 
+## Weitere Übungen 3
 
 (@) Laden Sie den Allbus 2018 (`Allbus2018.dta`). Erstellen Sie eine Kontingenztabelle für `sex` und `educ`. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte auszuschließen.
     + Erstellen Sie für die folgenden Fragen jeweils die passende Variante der Kontingenztabelle mit relativen Häufigkeiten als  Zeilen- oder Spaltenprozenten. 
