@@ -496,7 +496,7 @@ Damit sind die Originaldaten aber natürlich weg.
 
 (@) Laden Sie den Datensatz `Allbus2018` in Stata. 
       + In welcher Variable ist das Geburtsjahr der Befragten abgelegt?
-      + Nutzen Sie `summary` für einen Überblick für diese Variable. Hat die Altersvariable negative Werte, die Sie mit `.` ersetzen sollten?   (Denken Sie `labelbook`)
+      + Nutzen Sie `summarize` für einen Überblick für diese Variable. Hat die Variable zum Geburtsjahr negative Werte, die Sie mit `.` ersetzen sollten?   (Denken Sie `labelbook`)
       + Überschreiben Sie diese negativen Werte mit `.`, um sie so Stata kenntlich zu machen.
       + Erstellen Sie eine neue Variable mit dem Alter der Befragten im Jahr 2020! 
       + Lassen Sie sich das Geburtsjahr und die neu erstellte Variable für die ersten 20 Beobachtungen anzeigen - hat alles geklappt wie es soll?
