@@ -171,6 +171,17 @@ knitr::include_graphics("04_box_educ_bysex.png")
 
 ***
 
+## dot charts
+
+Mit `graph dot` lassen sich relativ einfach grafische Übersichten zu deskriptiven Maßzahlen erstellen. Dazu geben wir in Klammern jeweils die gewünschte Statistik an (die Optionen entsprechen denen aus `tabstat`) und dann wie entsprechende Variable. Mit `over()` können wir diese Auswertung zudem nach einer zweiten Variable aufsplitten. Wir können auch mehrere Kennzahlen gleichzeitig angeben:
+```{stata dot_graph1, eval = F}
+graph dot (p25) age ( mean ) age (p75) age, over(sex)
+```
+
+```{r dot_graph2, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("04_dot.png")
+```
+
 ## Übungen 4
 
 ### Übung 4-1 {#plt1}
@@ -189,19 +200,25 @@ knitr::include_graphics("04_box_educ_bysex.png")
 
 (@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) erneut und wählen Sie die Befragten aus dem Jahr 2016 aus! Erstellen Sie einen Mosaikplot, welcher die Bildung der Befragten (`educ`) sowie deren Kontakte zu Ausländern bei der Arbeit (`mc02`) abbildet.  
     + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
-    + Überprüfen Sie z.B. mit `table`, ob alle negativen Werte ausgeschlossen wurden.
+    + Überprüfen Sie z.B. mit `tabulate`, ob alle negativen Werte ausgeschlossen wurden.
     + Betrachten Sie die Darstellung: welche Merkmalskombination aus `educ` und `mc02` ist die häufigste? Überprüfen Sie ihre Einschätzung mit Hilfe einer Kontingenztabelle (`tab educ mc02`)
-    
-(@) Erstellen Sie einen Scatterplot für das Alter `age` und `xt11`, die Bearbeitungsdauer des Politikquiz. Erstellen Sie den Scatterplot so, dass die Befragte aus Ost und West durch unterschiedliche Farben markert sind - so wie es [hier](#twoway_comb) gemacht wurde!
     
 (@) Laden Sie den Allbus 2018 (`Allbus_2018.dta`) und erstellen Sie einen Boxplot zur Bearbeitungsdauer des Politikquiz!
     + Erstellen Sie einen gruppierte Darstellung, je nachdem ob die Befragten aus den alten und neuen Bundesländern (`eastwest`) kommen! 
     + Splitten Sie diese Darstellung zusätzlich nach dem Geschlecht der Befragten auf!
+    
+    + Erstellen Sie einen Scatterplot für das Alter `age` und `xt11`, die Bearbeitungsdauer des Politikquiz. Erstellen Sie den Scatterplot so, dass die Befragte aus Ost und West durch unterschiedliche Farben markert sind - so wie es [hier](#twoway_comb) gemacht wurde!
 
 ```{r xt11_cdb, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
 knitr::include_graphics("04_xt11_cdb.png")
 ```
 
+(@) Beschreiben Sie die Verteilung der Variable `xt11` im Allbus 2018 mit Hilfe einer `dot`-Grafik! 
+    + Lassen Sie sich den Median, das 25%- und 75%-Quantil anzeigen!
+    + Verändern Sie Farben und Formen der jeweiligen Marker mit Hilfe der [unten gezeigten Optionen](#m1opts)!
+    + Wie können Sie die Verteilung getrennt nach Bildungsabschlüssen erstellen?
+    + Schließen Sie mit `if` ggf. extreme Werte aus!
+    
 [Zurück zu bivariaten Grafiken](#bivar_plot)
 
 ### Weitere Übungen Kap4
@@ -213,6 +230,7 @@ knitr::include_graphics("04_xt11_cdb.png")
 (@) Verändern Sie die Legende des Scatterplots aus Aufgabe 4 - siehe [hier](#color)
 
 (@) Erstellen Sie eine Alterspyramide für ein Jahr aus dem kumulierten Allbus! Laden Sie dafür den kumulierten Allbus und wählen ein Jahr aus (`tab year` zeigt Ihnen, welche Auswahl sie haben). Vollziehen Sie dann die [hier](#pyramid) gezeigten Schritte nach! Passen Sie Farben, Schrift usw. nach Ihren Vorstellungen an! Sie können anstatt der Altersgruppen auch bspw. die Bildungsgruppen `educ` oder Wohnortgröße `gkpol` verwenden!
+
 
 ## Optionen
 
@@ -367,6 +385,19 @@ graph twoway ///
 ```
 ```{r ml_scatter, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
 knitr::include_graphics("04_ml_sex.png")
+```
+
+### marker bei `over` {m1opts}
+
+Möchten wir nur den ersten Marker in einem Dot graph ändern, können wir mit `marker(1,` den ersten Marker auswählen:
+```{stata dot_opts1, eval = F}
+graph dot (p25) age ( mean ) age (p75) age, over(sex) ///
+  marker(1, msymbol(d) mcolor(orange)) ///
+  marker(2, msymbol(Oh) mcolor(navy)) 
+```
+
+```{r dot_opts2, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("04_dot_opts.png")
 ```
 
 ### Farben {#color}
