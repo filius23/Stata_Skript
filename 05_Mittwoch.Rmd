@@ -227,7 +227,7 @@ Die Grafik oben zeigt wie Vorhersagen auf Basis des Regressionsmodells aussehen:
 
 ***
 
-## Ordinal skalierte Merkmale {#zshg_ord}
+## Ordinal skalierte Variablen {#zshg_ord}
 
 Ein klassisches ordinales Merkmal ist die Bildung (`educ`):
  
@@ -477,13 +477,13 @@ $\rightarrow$ Haben allein lebende Befragte eher Katzen als Befragte in einem Ha
 
 $\chi^2$  basiert auf dem Vergleich der beobachteten Häufigkeit mit einer (theoretischen) Verteilung, welche statistische Unabhängigkeit abbildet (Indifferenztabelle - [mehr dazu](#indiff)). Wir bleiben bei `aq03` und `dh01`. Den $\chi^2$-Wert für diese Häufigkeitstabelle bekommen wir mit `, chi2`:
   
-```{r, echo=F}
+```{r, echo=F, warning=F}
 tab1 <- xtabs(~ aq03 + dh04, data = filter(a14, year == 2014 & dh01 > 0 & dh04 > 0 & aq03 > 0))
 tx <- chisq.test(tab1)
 ```
 
 ```{stata, chitabF, eval =F}
-tab aq03 dh01, chi
+tab aq03 dh04, chi
 ```
 ```{stata, chitabT, echo =F}
 set linesize 200
