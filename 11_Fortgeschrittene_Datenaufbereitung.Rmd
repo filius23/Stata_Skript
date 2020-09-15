@@ -283,5 +283,6 @@ Dafür helfen uns sog. "regular expressions", in Stata stehen hierfür zb `subst
 
 + [Internet Guide to Stata](http://wlm.userweb.mwn.de/Stata/)
 + [Hilfeseiten der UCLA](https://stats.idre.ucla.edu/stata/)
-+ [StatList-Forum](https://statalist.org/forums/)
-+ oder am besten:
++ [StataList-Forum](https://statalist.org/forums/)
++ [Germán Rodríguez](https://data.princeton.edu/stata)s Seiten enthalten viele Beispiele, Tricks und Erklärungen
+
