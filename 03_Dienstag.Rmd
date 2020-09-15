@@ -516,10 +516,10 @@ use Allbus2018.dta
     + Betrachten Sie die HH-Einkommensverteilungen mit `summarize` (Variable `inc`) 
     + Denken Sie daran, die negativen Werte für `inc` mit `.` zu überschreiben! (Entweder mit `replace` oder `mvdecode`, sehen Sie mit `labelbook` oder im Codebuch nach)
     + Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz und den Variationskoeffizienten zunächst für alle Fälle - was sagen Ihnen die Werte jeweils?
-    + Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable `eastwest`) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?
+    + Berechnen Sie nun alle Werte getrennt für Männer und Frauen (Variable `sex`) - welche Werte erhalten Sie jeweils für die Kennzahlen?
     + Vergleichen Sie die Werte!
     + Berechnen Sie den Gini-Koeffizenten! (Denken Sie daran, vor der ersten Verwendung `fastgini` zu installieren - siehe [hier](#gini))
-    + Vergleichen Sie auch hier jeweils die Werte für die neuen und alten Bundesländer!
+    + Vergleichen Sie auch hier jeweils die Werte für Männer und Frauen!
 
 
 
