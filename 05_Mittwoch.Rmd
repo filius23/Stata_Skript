@@ -575,7 +575,7 @@ Ausschlaggebend ist dabei die Variable mit dem niedrigeren Skalenniveau! Ggf. k�
 ### Übung 5-2 {#auf_ord}
 
 (@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2016 aus! Untersuchen Sie den Zusammenhang zwischen der Bildung der Befragten `educ` und ihrer Einstellung zur Erwerbstätigkeit von Müttern (`fr03b`)!
-    + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
+    + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen. Schließen Sie auch `6` und `7` in `educ` als Missing aus!
     + Erstellen Sie eine Kontingenztabelle, um zu kontrollieren, ob alle negativen Werte ausgeschlossen wurden.
     + Berechnen Sie die passenden Zusammenhangsmaße!
     + Wie stark ist der Zusammenhang? 
@@ -590,46 +590,66 @@ knitr::include_graphics("05_cdb_fr03b.png")
 
 ### Übung 5-3 {#auf_nom}
 
-(@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2016 aus! Untersuchen Sie den Zusammenhang zwischen ost/westdeutschem Wohnort der Befragten `eastwest` und der Frage, ob Sie mit 15 Jahren mit beiden Eltern zusammengewohnt haben (`df44`)!
-    + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
-    + Erstellen Sie eine Kontingenztabelle für `eastwest` und `df44`, um zu kontrollieren, ob alle negativen Werte ausgeschlossen wurden.
-    + Erstellen Sie eine Variable `df44b`, welche den Wert 1 annimmt wenn `df44`=4 (also Befragte, die mit 15 Jahren ohne Eltern gelebt haben) und 0 für alle anderen Konstellationen.
-    + Kontrollieren Sie diesen Schritt mit einer Kreuztabelle für `df44` und `df44b`.
-    + Erstellen Sie dann eine Kreuztabelle für `df44b` und `eastwest`, um die Odds Ratios für die Chance ohne Eltern gelebt zu haben zwischen Ost und West zu berechnen.
-    + Berechnen Sie die Odds Ratio!
-    + In welche Richtung deutet der Zusammenhang? 
-    + Wie stark ist der Zusammenhang? Berechnen Sie das passende $\chi^2$-basierte Maß!
+(@) Untersuchen Sie den Zusammenhang zwischen dem Geschlecht der Befragten (`cf01`) und deren Unsicherheitsgefühl (`cf01`)?
+    + Verwenden Sie den `Allbus2018.dta`
+    + Denken Sie daran, die Missings in `cf01` auszuschließen
+    + Berechnen Sie den Odds Ratio für Frauen sich nachts unsicher zu fühlen im Vergleich zu Männern!
+    + Wie stark ist der Zusammenhang? Berechnen Sie das passende $\chi^2$-Maß!
+    
 
-Hier die Frage zu `df44` aus dem Codebuch:
-```{r codebuch_df44, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
-knitr::include_graphics("05_cdb_df44.png")
+Hier die Frage zu `cf01` aus dem Codebuch:
+```{r codebuch_cf01, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("05_cdb_cf01.png")
 ```
+
 [Zurück zu Zusammenhangsmaße für nominale Variablen](#zshg_nom)
 
 
 ### Weitere Übungen 5
 
 (@) Gibt es einen Zusammenhang zwischen dem BMI (`hs18`) und dem Einkommen (`inc`) der Befragten aus dem Jahr 2014?
+    + Laden Sie also den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2014 aus.
     + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben. 
     + Welches ist das passende Zusammenhangsmaß für diesen Zusammenhang?
     + Berechnen Sie dementsprechend die Zusammenhängsstärke!
 
-(@) Leben ältere Menschen eher in kleineren Orten? Berechnen Sie ein geeignetes Maß für den Zusammenhang zwischen `gkpol` und dem Alter der Befragten (`age`)! 
-    + Berechnen Sie diesen Zusammenhang für das Jahr 2014! Laden Sie also den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2014 aus.
-    + Welches Zusammenhangsmaß können Sie dementsprechend verwenden? (Zur Erinnerung: das niedrigere Skalenniveau ist ausschlaggebend!) 
-    + Verwenden Sie `egen cut()`, um `age` in eine ordinale Variable zu überführen! (siehe Kapitel 3, verwenden Sie zB die Lebensjahrzehnte)
-    + Berechnen Sie (mind.) ein passendes Zusammenhangsmaß, wenn Siese neue, kategorisierte Altersvariable anstelle von `age` verwenden! Ist der Zusammenhang als stark einzustufen?
-    
+(@) Ist die Zustimmung zur Aussage "Ich bin stolz, ein Deutscher zu sein" in kleineren Orten größer? Berechnen Sie ein geeignetes Maß für den Zusammenhang zwischen `gkpol` und der entsprechenden Variable (`px01`)! 
+    + Berechnen Sie diesen Zusammenhang für das Jahr 2018! Laden Sie also den `Allbus2018.dta`
+    + Welches Zusammenhangsmaß können Sie verwenden? (Zur Erinnerung: das niedrigere Skalenniveau ist ausschlaggebend!)
+    + Berechnen Sie dementsprechend die Zusammenhängsstärke!
 
-
-(@) Häufig werden auch quasi-metrischen Skalen aus mehreren Variablen gebildet, z.B. wenn mehrere Indikatorfragen die Einstellung der Befragen zum Islam wiedergeben wie in `mm01` - `mm05`:
-```{stata d_mm, echo =F}
-set linesize 90
-qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
-qui use  "Allbus_1980-2018.dta",clear
-qui keep if year == 2016
-d mm0?
+Hier die Frage zu `px01` aus dem Codebuch:
+```{r codebuch_px01, echo = F,out.width = "80%",out.height="80%", fig.align="center"}
+knitr::include_graphics("05_cdb_px01.png")
 ```
+
+
+<!-- (@) Leben ältere Menschen eher in kleineren Orten? Berechnen Sie ein geeignetes Maß für den Zusammenhang zwischen `gkpol` und dem Alter der Befragten (`age`)!  -->
+<!--     + Berechnen Sie diesen Zusammenhang für das Jahr 2018! Laden Sie also den `Allbus2018.dta` -->
+<!--     + Welches Zusammenhangsmaß können Sie dementsprechend verwenden? (Zur Erinnerung: das niedrigere Skalenniveau ist ausschlaggebend!)  -->
+<!--     + Verwenden Sie `egen cut()`, um `age` in eine ordinale Variable zu überführen! (siehe Kapitel 3, verwenden Sie zB die Lebensjahrzehnte) -->
+<!--     + Berechnen Sie (mind.) ein passendes Zusammenhangsmaß, wenn Siese neue, kategorisierte Altersvariable anstelle von `age` verwenden! Ist der Zusammenhang als stark einzustufen? -->
+    
+    
+(@) Untersuchen Sie den Zusammenhang zwischen dem Wohnortgröße (`gkpol`) und dem Unsicherheitsgefühl (`cf01`) der befragten Frauen im `Allbus2018.dta`
+    + Denken Sie daran, die Missings in `cf01` auszuschließen
+    + Berechnen Sie den Odds Ratio sich nachts unsicher zu fühlen  für Bewohnerinnen aus Orten mit 5.000-19.999 Einwohnern im Vergleich im Vergleich zu  Frauen aus Großstädten mit > 500.000 Einwohnern!
+    + Wie stark ist der Zusammenhang zwischen `gkpol` und `cf01` hier? Berechnen Sie das passende $\chi^2$-Maß!    
+    
+<!-- (@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2016 aus! Untersuchen Sie den Zusammenhang zwischen ost/westdeutschem Wohnort der Befragten `eastwest` und der Frage, ob Sie mit 15 Jahren mit beiden Eltern zusammengewohnt haben (`df44`)! -->
+<!--     + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen. -->
+<!--     + Erstellen Sie eine Kontingenztabelle für `eastwest` und `df44`, um zu kontrollieren, ob alle negativen Werte ausgeschlossen wurden. -->
+<!--     + Erstellen Sie eine Variable `df44b`, welche den Wert 1 annimmt wenn `df44`=4 (also Befragte, die mit 15 Jahren ohne Eltern gelebt haben) und 0 für alle anderen Konstellationen. -->
+<!--     + Kontrollieren Sie diesen Schritt mit einer Kreuztabelle für `df44` und `df44b`. -->
+<!--     + Erstellen Sie dann eine Kreuztabelle für `df44b` und `eastwest`, um die Odds Ratios für die Chance ohne Eltern gelebt zu haben zwischen Ost und West zu berechnen. -->
+<!--     + Berechnen Sie die Odds Ratio! -->
+<!--     + In welche Richtung deutet der Zusammenhang?  -->
+<!--     + Wie stark ist der Zusammenhang? Berechnen Sie das passende $\chi^2$-basierte Maß! -->
+
+<!-- Hier die Frage zu `df44` aus dem Codebuch: -->
+<!-- ```{r codebuch_df44, echo = F,out.width = "80%",out.height="80%", fig.align="center"} -->
+<!-- knitr::include_graphics("05_cdb_df44.png") -->
+<!-- ``` -->
 
 ## Anhang 
 

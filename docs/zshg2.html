@@ -161,9 +161,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="Stata2.html"><a href="Stata2.html#neue-variablen-erstellen"><i class="fa fa-check"></i><b>2.3</b> Neue Variablen erstellen</a></li>
 <li class="chapter" data-level="2.4" data-path="Stata2.html"><a href="Stata2.html#bestehende-variablen-verändern"><i class="fa fa-check"></i><b>2.4</b> Bestehende Variablen verändern</a></li>
 <li class="chapter" data-level="2.5" data-path="Stata2.html"><a href="Stata2.html#gen-ist-gut-kontrolle-ist-besser"><i class="fa fa-check"></i><b>2.5</b> gen ist gut, Kontrolle ist besser</a></li>
-<li class="chapter" data-level="2.6" data-path="Stata2.html"><a href="Stata2.html#fehlende-werte"><i class="fa fa-check"></i><b>2.6</b> Fehlende Werte</a></li>
-<li class="chapter" data-level="2.7" data-path="Stata2.html"><a href="Stata2.html#if-bedingungen-und-fehlende-werte"><i class="fa fa-check"></i><b>2.7</b> if Bedingungen und fehlende Werte</a></li>
-<li class="chapter" data-level="2.8" data-path="Stata2.html"><a href="Stata2.html#keep-drop"><i class="fa fa-check"></i><b>2.8</b> keep &amp; drop</a></li>
+<li class="chapter" data-level="2.6" data-path="Stata2.html"><a href="Stata2.html#keep-drop"><i class="fa fa-check"></i><b>2.6</b> keep &amp; drop</a></li>
+<li class="chapter" data-level="2.7" data-path="Stata2.html"><a href="Stata2.html#fehlende-werte"><i class="fa fa-check"></i><b>2.7</b> Fehlende Werte</a></li>
+<li class="chapter" data-level="2.8" data-path="Stata2.html"><a href="Stata2.html#miss_if"><i class="fa fa-check"></i><b>2.8</b> if Bedingungen und fehlende Werte</a></li>
 <li class="chapter" data-level="2.9" data-path="Stata2.html"><a href="Stata2.html#labels-und-if-bedingungen"><i class="fa fa-check"></i><b>2.9</b> Labels und if-Bedingungen</a></li>
 <li class="chapter" data-level="2.10" data-path="Stata2.html"><a href="Stata2.html#nochmal-von-vorne-daten-neu-laden"><i class="fa fa-check"></i><b>2.10</b> Nochmal von vorne: Daten neu laden</a></li>
 <li class="chapter" data-level="2.11" data-path="Stata2.html"><a href="Stata2.html#speichern"><i class="fa fa-check"></i><b>2.11</b> Speichern</a></li>
@@ -182,14 +182,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.2" data-path="desc1.html"><a href="desc1.html#tabstat"><i class="fa fa-check"></i><b>3.2.2</b> <code>tabstat</code></a></li>
 <li class="chapter" data-level="3.2.3" data-path="desc1.html"><a href="desc1.html#by_vgl"><i class="fa fa-check"></i><b>3.2.3</b> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
 <li class="chapter" data-level="3.2.4" data-path="desc1.html"><a href="desc1.html#streu"><i class="fa fa-check"></i><b>3.2.4</b> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
-<li class="chapter" data-level="3.2.5" data-path="desc1.html"><a href="desc1.html#gini-koeffizient"><i class="fa fa-check"></i><b>3.2.5</b> Gini-Koeffizient</a></li>
+<li class="chapter" data-level="3.2.5" data-path="desc1.html"><a href="desc1.html#gini"><i class="fa fa-check"></i><b>3.2.5</b> Gini-Koeffizient</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="desc1.html"><a href="desc1.html#übungen-3"><i class="fa fa-check"></i><b>3.3</b> Übungen 3</a><ul>
 <li class="chapter" data-level="3.3.1" data-path="desc1.html"><a href="desc1.html#tab"><i class="fa fa-check"></i><b>3.3.1</b> Übung 3-1</a></li>
 <li class="chapter" data-level="3.3.2" data-path="desc1.html"><a href="desc1.html#met"><i class="fa fa-check"></i><b>3.3.2</b> Übung 3-2</a></li>
-<li class="chapter" data-level="3.3.3" data-path="desc1.html"><a href="desc1.html#weitere-übungen-3"><i class="fa fa-check"></i><b>3.3.3</b> Weitere Übungen 3</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="desc1.html"><a href="desc1.html#profi-übungen-3"><i class="fa fa-check"></i><b>3.4</b> Profi-Übungen 3</a></li>
+<li class="chapter" data-level="3.4" data-path="desc1.html"><a href="desc1.html#weitere-übungen-3"><i class="fa fa-check"></i><b>3.4</b> Weitere Übungen 3</a></li>
 <li class="chapter" data-level="3.5" data-path="desc1.html"><a href="desc1.html#anhang-kap-3"><i class="fa fa-check"></i><b>3.5</b> Anhang Kap 3</a><ul>
 <li class="chapter" data-level="3.5.1" data-path="desc1.html"><a href="desc1.html#vlabel"><i class="fa fa-check"></i><b>3.5.1</b> labels vergeben</a></li>
 <li class="chapter" data-level="3.5.2" data-path="desc1.html"><a href="desc1.html#variance"><i class="fa fa-check"></i><b>3.5.2</b> Varianz erklärt</a></li>
@@ -212,26 +211,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.4" data-path="dataviz.html"><a href="dataviz.html#weitere-twoway-grafiken"><i class="fa fa-check"></i><b>4.4</b> Weitere <code>twoway</code> Grafiken</a></li>
 <li class="chapter" data-level="4.5" data-path="dataviz.html"><a href="dataviz.html#twoway_comb"><i class="fa fa-check"></i><b>4.5</b> Kombinieren von zwei twoway-Grafiken</a></li>
 <li class="chapter" data-level="4.6" data-path="dataviz.html"><a href="dataviz.html#gruppierte-boxplots"><i class="fa fa-check"></i><b>4.6</b> Gruppierte Boxplots</a></li>
-<li class="chapter" data-level="4.7" data-path="dataviz.html"><a href="dataviz.html#übungen-4"><i class="fa fa-check"></i><b>4.7</b> Übungen 4</a><ul>
-<li class="chapter" data-level="4.7.1" data-path="dataviz.html"><a href="dataviz.html#plt1"><i class="fa fa-check"></i><b>4.7.1</b> Übung 4-1</a></li>
-<li class="chapter" data-level="4.7.2" data-path="dataviz.html"><a href="dataviz.html#plt2"><i class="fa fa-check"></i><b>4.7.2</b> Übung 4-2</a></li>
-<li class="chapter" data-level="4.7.3" data-path="dataviz.html"><a href="dataviz.html#weitere-übungen-kap4"><i class="fa fa-check"></i><b>4.7.3</b> Weitere Übungen Kap4</a></li>
+<li class="chapter" data-level="4.7" data-path="dataviz.html"><a href="dataviz.html#dot-charts"><i class="fa fa-check"></i><b>4.7</b> dot charts</a></li>
+<li class="chapter" data-level="4.8" data-path="dataviz.html"><a href="dataviz.html#übungen-4"><i class="fa fa-check"></i><b>4.8</b> Übungen 4</a><ul>
+<li class="chapter" data-level="4.8.1" data-path="dataviz.html"><a href="dataviz.html#plt1"><i class="fa fa-check"></i><b>4.8.1</b> Übung 4-1</a></li>
+<li class="chapter" data-level="4.8.2" data-path="dataviz.html"><a href="dataviz.html#plt2"><i class="fa fa-check"></i><b>4.8.2</b> Übung 4-2</a></li>
+<li class="chapter" data-level="4.8.3" data-path="dataviz.html"><a href="dataviz.html#weitere-übungen-kap4"><i class="fa fa-check"></i><b>4.8.3</b> Weitere Übungen Kap4</a></li>
 </ul></li>
-<li class="chapter" data-level="4.8" data-path="dataviz.html"><a href="dataviz.html#optionen"><i class="fa fa-check"></i><b>4.8</b> Optionen</a><ul>
-<li class="chapter" data-level="4.8.1" data-path="dataviz.html"><a href="dataviz.html#title"><i class="fa fa-check"></i><b>4.8.1</b> Titel</a></li>
-<li class="chapter" data-level="4.8.2" data-path="dataviz.html"><a href="dataviz.html#achsenbeschriftung"><i class="fa fa-check"></i><b>4.8.2</b> Achsenbeschriftung</a></li>
-<li class="chapter" data-level="4.8.3" data-path="dataviz.html"><a href="dataviz.html#text-einfügen"><i class="fa fa-check"></i><b>4.8.3</b> Text einfügen</a></li>
-<li class="chapter" data-level="4.8.4" data-path="dataviz.html"><a href="dataviz.html#font"><i class="fa fa-check"></i><b>4.8.4</b> Schriftart &amp; Textgröße</a></li>
-<li class="chapter" data-level="4.8.5" data-path="dataviz.html"><a href="dataviz.html#legend"><i class="fa fa-check"></i><b>4.8.5</b> Legende</a></li>
-<li class="chapter" data-level="4.8.6" data-path="dataviz.html"><a href="dataviz.html#mark"><i class="fa fa-check"></i><b>4.8.6</b> Marker</a></li>
-<li class="chapter" data-level="4.8.7" data-path="dataviz.html"><a href="dataviz.html#color"><i class="fa fa-check"></i><b>4.8.7</b> Farben</a></li>
-<li class="chapter" data-level="4.8.8" data-path="dataviz.html"><a href="dataviz.html#vorlagen"><i class="fa fa-check"></i><b>4.8.8</b> Vorlagen</a></li>
+<li class="chapter" data-level="4.9" data-path="dataviz.html"><a href="dataviz.html#optionen"><i class="fa fa-check"></i><b>4.9</b> Optionen</a><ul>
+<li class="chapter" data-level="4.9.1" data-path="dataviz.html"><a href="dataviz.html#title"><i class="fa fa-check"></i><b>4.9.1</b> Titel</a></li>
+<li class="chapter" data-level="4.9.2" data-path="dataviz.html"><a href="dataviz.html#achsenbeschriftung"><i class="fa fa-check"></i><b>4.9.2</b> Achsenbeschriftung</a></li>
+<li class="chapter" data-level="4.9.3" data-path="dataviz.html"><a href="dataviz.html#text-einfügen"><i class="fa fa-check"></i><b>4.9.3</b> Text einfügen</a></li>
+<li class="chapter" data-level="4.9.4" data-path="dataviz.html"><a href="dataviz.html#font"><i class="fa fa-check"></i><b>4.9.4</b> Schriftart &amp; Textgröße</a></li>
+<li class="chapter" data-level="4.9.5" data-path="dataviz.html"><a href="dataviz.html#legend"><i class="fa fa-check"></i><b>4.9.5</b> Legende</a></li>
+<li class="chapter" data-level="4.9.6" data-path="dataviz.html"><a href="dataviz.html#mark"><i class="fa fa-check"></i><b>4.9.6</b> Marker</a></li>
+<li class="chapter" data-level="4.9.7" data-path="dataviz.html"><a href="dataviz.html#marker-bei-over-m1opts"><i class="fa fa-check"></i><b>4.9.7</b> marker bei <code>over</code> {m1opts}</a></li>
+<li class="chapter" data-level="4.9.8" data-path="dataviz.html"><a href="dataviz.html#color"><i class="fa fa-check"></i><b>4.9.8</b> Farben</a></li>
 </ul></li>
-<li class="chapter" data-level="4.9" data-path="dataviz.html"><a href="dataviz.html#anhang-beispiele-zum-selbst-anpassen"><i class="fa fa-check"></i><b>4.9</b> Anhang &amp; Beispiele zum selbst anpassen</a><ul>
-<li class="chapter" data-level="4.9.1" data-path="dataviz.html"><a href="dataviz.html#boxplot"><i class="fa fa-check"></i><b>4.9.1</b> Boxplot</a></li>
-<li class="chapter" data-level="4.9.2" data-path="dataviz.html"><a href="dataviz.html#scatterplot"><i class="fa fa-check"></i><b>4.9.2</b> Scatterplot</a></li>
-<li class="chapter" data-level="4.9.3" data-path="dataviz.html"><a href="dataviz.html#pyramid"><i class="fa fa-check"></i><b>4.9.3</b> Bevölkerungspyramide</a></li>
-<li class="chapter" data-level="4.9.4" data-path="dataviz.html"><a href="dataviz.html#boxplot1"><i class="fa fa-check"></i><b>4.9.4</b> Boxplot</a></li>
+<li class="chapter" data-level="4.10" data-path="dataviz.html"><a href="dataviz.html#export"><i class="fa fa-check"></i><b>4.10</b> export</a><ul>
+<li class="chapter" data-level="4.10.1" data-path="dataviz.html"><a href="dataviz.html#vorlagen"><i class="fa fa-check"></i><b>4.10.1</b> Vorlagen</a></li>
+</ul></li>
+<li class="chapter" data-level="4.11" data-path="dataviz.html"><a href="dataviz.html#anhang-beispiele-zum-selbst-anpassen"><i class="fa fa-check"></i><b>4.11</b> Anhang &amp; Beispiele zum selbst anpassen</a><ul>
+<li class="chapter" data-level="4.11.1" data-path="dataviz.html"><a href="dataviz.html#boxplot"><i class="fa fa-check"></i><b>4.11.1</b> Boxplot</a></li>
+<li class="chapter" data-level="4.11.2" data-path="dataviz.html"><a href="dataviz.html#scatterplot"><i class="fa fa-check"></i><b>4.11.2</b> Scatterplot</a></li>
+<li class="chapter" data-level="4.11.3" data-path="dataviz.html"><a href="dataviz.html#pyramid"><i class="fa fa-check"></i><b>4.11.3</b> Bevölkerungspyramide</a></li>
+<li class="chapter" data-level="4.11.4" data-path="dataviz.html"><a href="dataviz.html#boxplot1"><i class="fa fa-check"></i><b>4.11.4</b> Boxplot</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="zshg.html"><a href="zshg.html"><i class="fa fa-check"></i><b>5</b> Zusammenhangsmaße</a><ul>
@@ -240,7 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.1.2" data-path="zshg.html"><a href="zshg.html#regression"><i class="fa fa-check"></i><b>5.1.2</b> Regression</a></li>
 <li class="chapter" data-level="5.1.3" data-path="zshg.html"><a href="zshg.html#vorhergesagte-werte"><i class="fa fa-check"></i><b>5.1.3</b> vorhergesagte Werte</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="zshg.html"><a href="zshg.html#zshg_ord"><i class="fa fa-check"></i><b>5.2</b> Ordinal skalierte Merkmale</a><ul>
+<li class="chapter" data-level="5.2" data-path="zshg.html"><a href="zshg.html#zshg_ord"><i class="fa fa-check"></i><b>5.2</b> Ordinal skalierte Variablen</a><ul>
 <li class="chapter" data-level="5.2.1" data-path="zshg.html"><a href="zshg.html#spear"><i class="fa fa-check"></i><b>5.2.1</b> Spearman- Rangkorrelation</a></li>
 <li class="chapter" data-level="5.2.2" data-path="zshg.html"><a href="zshg.html#tau"><i class="fa fa-check"></i><b>5.2.2</b> Konkordanzmaße</a></li>
 </ul></li>
@@ -257,16 +260,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.5.3" data-path="zshg.html"><a href="zshg.html#auf_nom"><i class="fa fa-check"></i><b>5.5.3</b> Übung 5-3</a></li>
 <li class="chapter" data-level="5.5.4" data-path="zshg.html"><a href="zshg.html#weitere-übungen-5"><i class="fa fa-check"></i><b>5.5.4</b> Weitere Übungen 5</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="zshg.html"><a href="zshg.html#profi-übungen-5"><i class="fa fa-check"></i><b>5.6</b> Profi-Übungen 5</a></li>
-<li class="chapter" data-level="5.7" data-path="zshg.html"><a href="zshg.html#anhang"><i class="fa fa-check"></i><b>5.7</b> Anhang</a><ul>
-<li class="chapter" data-level="5.7.1" data-path="zshg.html"><a href="zshg.html#reg"><i class="fa fa-check"></i><b>5.7.1</b> Idee einer Regression</a></li>
-<li class="chapter" data-level="5.7.2" data-path="zshg.html"><a href="zshg.html#resid"><i class="fa fa-check"></i><b>5.7.2</b> Residuen</a></li>
-<li class="chapter" data-level="5.7.3" data-path="zshg.html"><a href="zshg.html#quad_res"><i class="fa fa-check"></i><b>5.7.3</b> Quadrierte Residuen</a></li>
-<li class="chapter" data-level="5.7.4" data-path="zshg.html"><a href="zshg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>5.7.4</b> Interpretation der Regression</a></li>
-<li class="chapter" data-level="5.7.5" data-path="zshg.html"><a href="zshg.html#reg_pred"><i class="fa fa-check"></i><b>5.7.5</b> Vorhergesagte Werte</a></li>
-<li class="chapter" data-level="5.7.6" data-path="zshg.html"><a href="zshg.html#resid2"><i class="fa fa-check"></i><b>5.7.6</b> Residuen Teil 2</a></li>
-<li class="chapter" data-level="5.7.7" data-path="zshg.html"><a href="zshg.html#r2"><i class="fa fa-check"></i><b>5.7.7</b> Modellgüte</a></li>
-<li class="chapter" data-level="5.7.8" data-path="zshg.html"><a href="zshg.html#indiff"><i class="fa fa-check"></i><b>5.7.8</b> Indifferenztabelle</a></li>
+<li class="chapter" data-level="5.6" data-path="zshg.html"><a href="zshg.html#anhang"><i class="fa fa-check"></i><b>5.6</b> Anhang</a><ul>
+<li class="chapter" data-level="5.6.1" data-path="zshg.html"><a href="zshg.html#reg"><i class="fa fa-check"></i><b>5.6.1</b> Idee einer Regression</a></li>
+<li class="chapter" data-level="5.6.2" data-path="zshg.html"><a href="zshg.html#resid"><i class="fa fa-check"></i><b>5.6.2</b> Residuen</a></li>
+<li class="chapter" data-level="5.6.3" data-path="zshg.html"><a href="zshg.html#quad_res"><i class="fa fa-check"></i><b>5.6.3</b> Quadrierte Residuen</a></li>
+<li class="chapter" data-level="5.6.4" data-path="zshg.html"><a href="zshg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>5.6.4</b> Interpretation der Regression</a></li>
+<li class="chapter" data-level="5.6.5" data-path="zshg.html"><a href="zshg.html#reg_pred"><i class="fa fa-check"></i><b>5.6.5</b> Vorhergesagte Werte</a></li>
+<li class="chapter" data-level="5.6.6" data-path="zshg.html"><a href="zshg.html#resid2"><i class="fa fa-check"></i><b>5.6.6</b> Residuen Teil 2</a></li>
+<li class="chapter" data-level="5.6.7" data-path="zshg.html"><a href="zshg.html#r2"><i class="fa fa-check"></i><b>5.6.7</b> Modellgüte</a></li>
+<li class="chapter" data-level="5.6.8" data-path="zshg.html"><a href="zshg.html#indiff"><i class="fa fa-check"></i><b>5.6.8</b> Indifferenztabelle</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="zshg2.html"><a href="zshg2.html"><i class="fa fa-check"></i><b>6</b> Zusammenhänge 2</a><ul>
@@ -282,10 +284,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4.2" data-path="zshg2.html"><a href="zshg2.html#ord_vgl"><i class="fa fa-check"></i><b>6.4.2</b> Übung 6-2</a></li>
 <li class="chapter" data-level="6.4.3" data-path="zshg2.html"><a href="zshg2.html#nom_vgl"><i class="fa fa-check"></i><b>6.4.3</b> Übung 6-3</a></li>
 <li class="chapter" data-level="6.4.4" data-path="zshg2.html"><a href="zshg2.html#weitere-übungen-kap-6"><i class="fa fa-check"></i><b>6.4.4</b> Weitere Übungen Kap 6</a></li>
+<li class="chapter" data-level="6.4.5" data-path="zshg2.html"><a href="zshg2.html#profi-übungen-kap-6"><i class="fa fa-check"></i><b>6.4.5</b> Profi-Übungen Kap 6</a></li>
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="zshg.html"><a href="zshg.html#anhang"><i class="fa fa-check"></i><b>6.5</b> Anhang</a><ul>
 <li class="chapter" data-level="6.5.1" data-path="zshg2.html"><a href="zshg2.html#lpattern"><i class="fa fa-check"></i><b>6.5.1</b> Optionen für <code>lpattern</code></a></li>
-<li class="chapter" data-level="6.5.2" data-path="zshg2.html"><a href="zshg2.html#scatterplot-für-kategoriale-merkmale"><i class="fa fa-check"></i><b>6.5.2</b> Scatterplot für kategoriale Merkmale</a></li>
+<li class="chapter" data-level="6.5.2" data-path="zshg2.html"><a href="zshg2.html#twoinone"><i class="fa fa-check"></i><b>6.5.2</b> Zwei Gerade in einer Grafik</a></li>
+<li class="chapter" data-level="6.5.3" data-path="zshg2.html"><a href="zshg2.html#scatterplot-für-kategoriale-variablen"><i class="fa fa-check"></i><b>6.5.3</b> Scatterplot für kategoriale Variablen</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="inf1.html"><a href="inf1.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik I</a><ul>
@@ -319,19 +323,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.5" data-path="inf2.html"><a href="inf2.html#tgroup"><i class="fa fa-check"></i><b>8.5</b> Übungen 8-2</a></li>
 <li class="chapter" data-level="8.6" data-path="inf2.html"><a href="inf2.html#tpaired"><i class="fa fa-check"></i><b>8.6</b> Übung 8-3</a></li>
 <li class="chapter" data-level="8.7" data-path="inf2.html"><a href="inf2.html#weitere-übungen-kap-8"><i class="fa fa-check"></i><b>8.7</b> weitere Übungen Kap 8</a></li>
-<li class="chapter" data-level="8.8" data-path="inf2.html"><a href="inf2.html#profi-übungen-8"><i class="fa fa-check"></i><b>8.8</b> Profi-Übungen 8</a></li>
-<li class="chapter" data-level="8.9" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>8.9</b> Hinweise</a><ul>
-<li class="chapter" data-level="8.9.1" data-path="inf2.html"><a href="inf2.html#vollz"><i class="fa fa-check"></i><b>8.9.1</b> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
+<li class="chapter" data-level="8.8" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>8.8</b> Hinweise</a><ul>
+<li class="chapter" data-level="8.8.1" data-path="inf2.html"><a href="inf2.html#vollz"><i class="fa fa-check"></i><b>8.8.1</b> Auswahl der in Vollzeit beschäftigten Befragten</a></li>
+<li class="chapter" data-level="8.8.2" data-path="inf2.html"><a href="inf2.html#genhelp"><i class="fa fa-check"></i><b>8.8.2</b> Kohortenvergleich Tipps</a></li>
+<li class="chapter" data-level="8.8.3" data-path="inf2.html"><a href="inf2.html#bmihelp"><i class="fa fa-check"></i><b>8.8.3</b> BMI Aufgaben</a></li>
 </ul></li>
+<li class="chapter" data-level="8.9" data-path="inf2.html"><a href="inf2.html#gruppenunterschiede-visualisieren"><i class="fa fa-check"></i><b>8.9</b> Gruppenunterschiede visualisieren</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>9</b> Weitere Hypothesentests</a><ul>
-<li class="chapter" data-level="9.1" data-path="hypo.html"><a href="hypo.html#anova"><i class="fa fa-check"></i><b>9.1</b> ANOVA</a></li>
-<li class="chapter" data-level="9.2" data-path="hypo.html"><a href="hypo.html#vergleich-von-varianzen-mit-dem-f-test"><i class="fa fa-check"></i><b>9.2</b> Vergleich von Varianzen mit dem F-Test</a></li>
-<li class="chapter" data-level="9.3" data-path="hypo.html"><a href="hypo.html#proportionen-und-häufigkeiten"><i class="fa fa-check"></i><b>9.3</b> Proportionen und Häufigkeiten</a><ul>
-<li class="chapter" data-level="9.3.1" data-path="hypo.html"><a href="hypo.html#binomialtest"><i class="fa fa-check"></i><b>9.3.1</b> Binomialtest</a></li>
-<li class="chapter" data-level="9.3.2" data-path="hypo.html"><a href="hypo.html#chi²-test"><i class="fa fa-check"></i><b>9.3.2</b> Chi²-Test</a></li>
+<li class="chapter" data-level="9.1" data-path="hypo.html"><a href="hypo.html#ftest"><i class="fa fa-check"></i><b>9.1</b> Vergleich von Varianzen mit dem F-Test</a></li>
+<li class="chapter" data-level="9.2" data-path="hypo.html"><a href="hypo.html#proportionen-und-häufigkeiten"><i class="fa fa-check"></i><b>9.2</b> Proportionen und Häufigkeiten</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="hypo.html"><a href="hypo.html#binomialtest"><i class="fa fa-check"></i><b>9.2.1</b> Binomialtest</a></li>
+<li class="chapter" data-level="9.2.2" data-path="hypo.html"><a href="hypo.html#chi²-test"><i class="fa fa-check"></i><b>9.2.2</b> Chi²-Test</a></li>
 </ul></li>
-<li class="chapter" data-level="9.4" data-path="hypo.html"><a href="hypo.html#überblick"><i class="fa fa-check"></i><b>9.4</b> Überblick</a></li>
+<li class="chapter" data-level="9.3" data-path="hypo.html"><a href="hypo.html#überblick"><i class="fa fa-check"></i><b>9.3</b> Überblick</a></li>
+<li class="chapter" data-level="9.4" data-path="hypo.html"><a href="hypo.html#übungen-9"><i class="fa fa-check"></i><b>9.4</b> Übungen 9</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="hypo.html"><a href="hypo.html#fueb"><i class="fa fa-check"></i><b>9.4.1</b> Übung 9-1</a></li>
+<li class="chapter" data-level="9.4.2" data-path="hypo.html"><a href="hypo.html#übung-9-2"><i class="fa fa-check"></i><b>9.4.2</b> Übung 9-2</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="hypo.html"><a href="hypo.html#anova"><i class="fa fa-check"></i><b>9.5</b> ANOVA</a><ul>
+<li class="chapter" data-level="9.5.1" data-path="hypo.html"><a href="hypo.html#anova-vs.-t-tests"><i class="fa fa-check"></i><b>9.5.1</b> ANOVA vs. t-Tests</a></li>
+<li class="chapter" data-level="9.5.2" data-path="hypo.html"><a href="hypo.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>9.5.2</b> ANOVA vs. lineare Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="hypo.html"><a href="hypo.html#anova-mehrere-gruppen"><i class="fa fa-check"></i><b>9.6</b> ANOVA mehrere Gruppen</a></li>
+<li class="chapter" data-level="9.7" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>9.7</b> Hinweise</a><ul>
+<li class="chapter" data-level="9.7.1" data-path="hypo.html"><a href="hypo.html#readin091"><i class="fa fa-check"></i><b>9.7.1</b> Einlesen und auswählen für Ü9-1</a></li>
+<li class="chapter" data-level="9.7.2" data-path="hypo.html"><a href="hypo.html#binom_help"><i class="fa fa-check"></i><b>9.7.2</b> Einlesen und auswählen für Ü9-2</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a><ul>
 <li class="chapter" data-level="10.1" data-path="export1.html"><a href="export1.html#graph-export"><i class="fa fa-check"></i><b>10.1</b> graph export</a></li>
@@ -349,6 +367,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.8" data-path="adva.html"><a href="adva.html#indikatoren-umdrehen"><i class="fa fa-check"></i><b>11.8</b> Indikatoren umdrehen</a></li>
 <li class="chapter" data-level="11.9" data-path="adva.html"><a href="adva.html#informationen-aus-mehreren-datensätzen"><i class="fa fa-check"></i><b>11.9</b> Informationen aus mehreren Datensätzen</a></li>
 <li class="chapter" data-level="11.10" data-path="adva.html"><a href="adva.html#arbeiten-mit-textvariablen"><i class="fa fa-check"></i><b>11.10</b> Arbeiten mit Textvariablen</a></li>
+<li class="chapter" data-level="11.11" data-path="adva.html"><a href="adva.html#link-liste"><i class="fa fa-check"></i><b>11.11</b> Link Liste</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -447,6 +466,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
          age |   .0696115   .0107594     6.47   0.000     .0484908    .0907321
        _cons |   21.93095   .5704298    38.45   0.000      20.8112    23.05071
 ------------------------------------------------------------------------------</code></pre>
+<p>Oder wir nutzen <code>if</code> in <code>scatter</code> und <code>lfit</code>, um alles in einer <a href="zshg2.html#twoinone">Grafik anzuzeigen</a>.</p>
 <hr />
 <p><a href="zshg2.html#met_vgl">Übung 1</a></p>
 <hr />
@@ -619,7 +639,24 @@ KEINS VON BEIDEN |       274        433        187        159         46        
 <li>Berechnen Sie ebenfalls für beide Gruppen ein Regressionsmodell zur Vorhersage des Bearbeitungszeit des Politikquiz auf Basis des Alters.</li>
 <li>Welche Bearbeitungszeit des Politikquiz würden Sie auf Basis dieser Modelle jeweils für 30- und 31-jährige Männer und Frauen vorhersagen?</li>
 <li>Erstellen Sie einen Scatterplot für den Zusammenhang, welcher zwischen Männern und Frauen unterscheidet!</li>
-<li>Fallen Ihnen Ausreißer auf, die evtl. den Zusammenhang maßgeblich beeinflussen?</li>
+<li>Fallen Ihnen Ausreißer auf, die evtl. den Zusammenhang maßgeblich beeinflussen? Schließen Sie diese mit einer <code>if</code> - Bedingung aus!</li>
+</ul></li>
+</ol>
+</div>
+<div id="profi-übungen-kap-6" class="section level3">
+<h3><span class="header-section-number">6.4.5</span> Profi-Übungen Kap 6</h3>
+<p>Für alle, die noch etwa mehr machen möchten.</p>
+<ol start="5" class="example" style="list-style-type: decimal">
+<li>Mit der <code>rowmean()</code>-Option von <code>egen</code> können wir Mittelwerte über mehrere Variablen hinweg bilden. Dies ist bspw. nützlich, um verschiedene Variablen zu einem Index zusammenzufassen (siehe auch Kapitel 11). Untersuchen Sie den Zusammenhang zwischen dem Alter der Befragten und dem Rechtsradikalismus-Index im Allbus 2018!
+<ul>
+<li>Der Index zum Rechtsradikalismus besteht aus den Variablen: <code>px01</code> <code>px02</code> <code>px03</code> <code>px04</code> <code>px05</code> <code>px06</code> <code>px07</code> <code>px08</code> <code>px09</code> <code>px10</code>. Sehen Sie sich diese Variablen mit Hilfe von <code>tab</code> (auszugsweise) an.</li>
+<li>Schließen Sie die Missings in allen <code>px</code>-Variablen und <code>age</code> aus! Tipp: Sie können in <code>mvdecode</code> auch mehrere Variablen angeben.</li>
+<li>Erstellen Sie mit <code>egen</code> und <code>rowmean()</code> den Rechtsradikalismus-Index aus den oben genannten Variablen. Ein entsprechender Befehl sieht also so aus: <code>egen index = rowmean(var1 var2 var3 var4)</code></li>
+<li>Lassen Sie sich den Index mit <code>summarize</code> anzeigen!</li>
+<li>Berechnen Sie das passende Zusammenhangsmaß für den Zusammenhang des Rechtsradikalismus-Index mit <code>age</code>!</li>
+<li>Wie stark ist der Zusammenhang?</li>
+<li>Welchen Rechtsradikalismusscore würden Sie im Durchschnitt bei einer 30-jährigen Person vorhersagen?</li>
+<li>Welchen Rechtsradikalismusscore würden Sie im Durchschnitt bei einer 70-jährigen Person vorhersagen?</li>
 </ul></li>
 </ol>
 </div>
@@ -630,14 +667,35 @@ KEINS VON BEIDEN |       274        433        187        159         46        
 <h3><span class="header-section-number">6.5.1</span> Optionen für <code>lpattern</code></h3>
 <p><img src="06_lpattern.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="scatterplot-für-kategoriale-merkmale" class="section level3">
-<h3><span class="header-section-number">6.5.2</span> Scatterplot für kategoriale Merkmale</h3>
+<div id="twoinone" class="section level3">
+<h3><span class="header-section-number">6.5.2</span> Zwei Gerade in einer Grafik</h3>
+<p>Oder wir nutzen <code>if</code> in <code>scatter</code> und <code>lfit</code>, um alles in einer Grafik anzuzeigen:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb39-1"><a href="zshg2.html#cb39-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="co">///</span></span>
+<span id="cb39-2"><a href="zshg2.html#cb39-2"></a>	(<span class="kw">scatter</span> hs18 age <span class="kw">if</span> sex == 1,  msize(vsmall) <span class="bn">msymbol</span>(<span class="kw">d</span>)) <span class="co">///</span></span>
+<span id="cb39-3"><a href="zshg2.html#cb39-3"></a>	(<span class="kw">scatter</span> hs18 age <span class="kw">if</span> sex == 2, msize(vsmall) <span class="bn">msymbol</span>(<span class="kw">d</span>)) <span class="co">///</span></span>
+<span id="cb39-4"><a href="zshg2.html#cb39-4"></a>	(<span class="kw">lfit</span> hs18 age <span class="kw">if</span> sex == 1,  lpattern(solid) ) <span class="co">/// </span></span>
+<span id="cb39-5"><a href="zshg2.html#cb39-5"></a>	(<span class="kw">lfit</span> hs18 age <span class="kw">if</span> sex == 2,  lpattern(solid) )</span></code></pre></div>
+<p><img src="06_scatter_lfit2.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>….mehr Optionen:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="zshg2.html#cb40-1"></a><span class="kw">graph</span> <span class="kw">twoway</span> <span class="co">///</span></span>
+<span id="cb40-2"><a href="zshg2.html#cb40-2"></a>	(<span class="kw">scatter</span> hs18 age <span class="kw">if</span> sex == 1, <span class="kw">color</span>(<span class="st">&quot;42 37 92 %20&quot;</span>) msize(vsmall) <span class="bn">msymbol</span>(<span class="kw">d</span>)) <span class="co">///</span></span>
+<span id="cb40-3"><a href="zshg2.html#cb40-3"></a>	(<span class="kw">scatter</span> hs18 age <span class="kw">if</span> sex == 2, <span class="kw">color</span>(<span class="st">&quot;92 83 28 %20&quot;</span>) msize(vsmall) <span class="bn">msymbol</span>(<span class="kw">d</span>)) <span class="co">///</span></span>
+<span id="cb40-4"><a href="zshg2.html#cb40-4"></a>	(<span class="kw">lfit</span> hs18 age <span class="kw">if</span> sex == 1, lcolor(<span class="st">&quot;42 37 92&quot;</span>) lpattern(solid) ) <span class="co">/// </span></span>
+<span id="cb40-5"><a href="zshg2.html#cb40-5"></a>	(<span class="kw">lfit</span> hs18 age <span class="kw">if</span> sex == 2, lcolor(<span class="st">&quot;92 83 28&quot;</span>) lpattern(solid) ) <span class="co">///</span></span>
+<span id="cb40-6"><a href="zshg2.html#cb40-6"></a>	, <span class="dv">scheme</span>(plotplain) <span class="co">///</span></span>
+<span id="cb40-7"><a href="zshg2.html#cb40-7"></a>	<span class="bn">ytitle</span>(<span class="st">&quot;Body Mass Index (hs18)&quot;</span>) <span class="bn">xtitle</span>(<span class="st">&quot;Alter (age)&quot;</span>) <span class="co">///</span></span>
+<span id="cb40-8"><a href="zshg2.html#cb40-8"></a>	<span class="bn">legend</span>(lab(1 <span class="st">&quot;Body Mass Index Männer&quot;</span>) lab(2 <span class="st">&quot;Lineare Regressionsgerade Männer&quot;</span>) <span class="co">///</span></span>
+<span id="cb40-9"><a href="zshg2.html#cb40-9"></a>		   lab(3 <span class="st">&quot;Body Mass Index Frauen&quot;</span>) lab(4 <span class="st">&quot;Lineare Regressionsgerade Frauen&quot;</span>))</span></code></pre></div>
+<p><img src="06_scatter_lfit2_fancy.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="scatterplot-für-kategoriale-variablen" class="section level3">
+<h3><span class="header-section-number">6.5.3</span> Scatterplot für kategoriale Variablen</h3>
 <p>Scatterplots für kategoriale Merkmale sind oft wenig Aussagekräftig.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb39-1"><a href="zshg2.html#cb39-1"></a><span class="kw">twoway</span> <span class="kw">scatter</span> mi02 educ, <span class="kw">by</span>(sex) </span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb41-1"><a href="zshg2.html#cb41-1"></a><span class="kw">twoway</span> <span class="kw">scatter</span> mi02 educ, <span class="kw">by</span>(sex) </span></code></pre></div>
 <p><img src="06_no_jitter.png" width="90%" height="90%" style="display: block; margin: auto;" /></p>
 <p>Eine Möglichkeit ist ein sog. Jitter, der die Punkte zufällig um den exakten Wert verschieben. Dazu hängen wir <code>jitter(10)</code> an einen <code>twoway scatter</code> - 10 gibt dabei den Radius an, hier ist aber darauf zu achten dass sich die Punkte der verschiedenen Kategorien nicht überlappen:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="zshg2.html#cb40-1"></a><span class="kw">twoway</span> <span class="kw">scatter</span> mi02 educ, <span class="kw">by</span>(sex) jitter(10) <span class="co">///</span></span>
-<span id="cb40-2"><a href="zshg2.html#cb40-2"></a>  msize(vsmall) mcolor(<span class="bn">eggshell</span>) mlcolor(<span class="bn">black</span>) mlwidth(vthin) </span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb42-1"><a href="zshg2.html#cb42-1"></a><span class="kw">twoway</span> <span class="kw">scatter</span> mi02 educ, <span class="kw">by</span>(sex) jitter(10) <span class="co">///</span></span>
+<span id="cb42-2"><a href="zshg2.html#cb42-2"></a>  msize(vsmall) mcolor(<span class="bn">eggshell</span>) mlcolor(<span class="bn">black</span>) mlwidth(vthin) </span></code></pre></div>
 <p><img src="06_jitter.png" width="90%" height="90%" style="display: block; margin: auto;" /></p>
 
 </div>

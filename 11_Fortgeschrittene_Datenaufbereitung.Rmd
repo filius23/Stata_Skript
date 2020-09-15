@@ -135,14 +135,47 @@ su age_diff
 egen age_cat = cut(age), at(18 30 60 80) 
 ```
 
++ Mittelwert über mehrere Variablen erstellen mit `rowmean`, hier zum Vertrauen in staatliche Institutionen (siehe `d pt01 pt02 pt03 pt04 pt08 pt12 pt14`)
+```{stata egen_rowmean, eval = F}
+use "Allbus2018.dta", clear
+mvdecode pt01 pt02 pt03 pt04 pt08 pt12 pt14, mv(-9) // missings raus
+egen trust = rowmean(pt01 pt02 pt03 pt04 pt08 pt12 pt14)
+```
+
 Eine vollständige Liste findet sich unter `help egen`.
 
 
 ## gruppierte Berechnungen
 
-```{stata, cleanlog = F, eval = F}
+Mit dem Präfix `bys` können wir Berechnungen innerhalb von Gruppen durchführen. So können wir beispielsweise eine Variable erstellen, die jeweils den Mittelwert von `inc` für jede Altergruppe (`agec`) spezifischen Mittelwert enthält:
+
+```{stata, eval = F}
+cd 
+use  "Allbus2018.dta",clear
+drop if inc < 0
+drop if agec < 0
 bys agec: egen mean_inc = mean(inc)
+sort respid // sonst ist alles nach agec sortiert
 list agec mean_inc in 1/10
+```
+
+```{r, eval = F}
+     +------------------------+
+     |        agec   mean_inc |
+     |------------------------|
+  1. | 60-74 JAHRE   1565.642 |
+  2. | 60-74 JAHRE   1565.642 |
+  3. | 18-29 JAHRE   1026.236 |
+  4. | 45-59 JAHRE   1915.664 |
+  5. | 30-44 JAHRE   1729.861 |
+     |------------------------|
+  6. | 30-44 JAHRE   1729.861 |
+  7. | 30-44 JAHRE   1729.861 |
+  8. | 30-44 JAHRE   1729.861 |
+  9. | 30-44 JAHRE   1729.861 |
+ 10. | 60-74 JAHRE   1565.642 |
+     +------------------------+
+
 ```
 
 
@@ -219,7 +252,6 @@ gen mm01a = 8 - mm01
 tab mm01a mm01
 ```
 
-
 ```{stata rev_indik4,echo = F}
 set linesize 200
 qui use  "D:\Studium\01_Oldenburg\Lehre\Datensaetze\Allbus_1980-2018.dta",clear
@@ -228,6 +260,15 @@ qui mvdecode mm01 mm02, mv(-10 -9 -1)
 gen mm01a = 8 - mm01
 tab mm01a mm01
 ```
+
+Nachdem wir mm05 ebenfalls zu mm05a umgedreht haben, können wir einen Mittelwert aus den Indikatoren `mm01`-`mm05` bilden:
+```{stata rev_indik5, eval = F}
+d mm05a // höherer wert -> positive einstellung
+gen mm05a = 8 - mm05 //umdrehen
+
+egen islam_einst = rowmean(mm01a mm02 mm03 mm04 mm05a)
+```
+
 
 ## Informationen aus mehreren Datensätzen
 

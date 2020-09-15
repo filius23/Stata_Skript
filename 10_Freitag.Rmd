@@ -1,7 +1,5 @@
 # Ergebnisexport & weitere Tipps {#export1}
 
-
-
 ## graph export
 
 

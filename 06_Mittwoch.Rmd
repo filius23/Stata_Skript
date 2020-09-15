@@ -157,7 +157,7 @@ qui mvdecode age hs18, mv(-32 -13)
 reg hs18 age if sex == 2 , noheader
 ```   
 
-
+Oder wir nutzen `if` in `scatter` und `lfit`, um alles in einer [Grafik anzuzeigen](#twoinone).
 
 ***
 
@@ -398,7 +398,22 @@ knitr::include_graphics("06_cdb_hw01.png")
     + Berechnen Sie ebenfalls für beide Gruppen ein Regressionsmodell zur Vorhersage des Bearbeitungszeit des Politikquiz auf Basis des Alters. 
     + Welche Bearbeitungszeit des Politikquiz würden Sie auf Basis dieser Modelle jeweils für 30- und 31-jährige Männer und Frauen vorhersagen?
     + Erstellen Sie einen Scatterplot für den Zusammenhang, welcher zwischen Männern und Frauen unterscheidet!
-    + Fallen Ihnen Ausreißer auf, die evtl. den Zusammenhang maßgeblich beeinflussen?
+    + Fallen Ihnen Ausreißer auf, die evtl. den Zusammenhang maßgeblich beeinflussen? Schließen Sie diese mit einer `if` - Bedingung aus!
+    
+
+### Profi-Übungen Kap 6
+
+Für alle, die noch etwa mehr machen möchten.
+
+(@) Mit der `rowmean()`-Option von `egen` können wir Mittelwerte über mehrere Variablen hinweg bilden. Dies ist bspw. nützlich, um verschiedene Variablen zu einem Index zusammenzufassen (siehe auch Kapitel 11). Untersuchen Sie den Zusammenhang zwischen dem Alter der Befragten und dem Rechtsradikalismus-Index im Allbus 2018!
+    + Der Index zum Rechtsradikalismus besteht aus den Variablen: `px01` `px02` `px03` `px04` `px05` `px06` `px07` `px08` `px09` `px10`. Sehen Sie sich diese Variablen mit Hilfe von `tab` (auszugsweise) an. 
+    + Schließen Sie die Missings in allen `px`-Variablen und `age` aus! Tipp: Sie können in `mvdecode` auch mehrere Variablen angeben.
+    + Erstellen Sie mit `egen` und `rowmean()` den Rechtsradikalismus-Index aus den oben genannten Variablen. Ein entsprechender Befehl sieht also so aus: `egen index = rowmean(var1 var2 var3 var4)`
+    + Lassen Sie sich den Index mit `summarize` anzeigen!
+    + Berechnen Sie das passende Zusammenhangsmaß für den Zusammenhang des Rechtsradikalismus-Index mit `age`!
+    + Wie stark ist der Zusammenhang?
+    + Welchen Rechtsradikalismusscore würden Sie im Durchschnitt bei einer 30-jährigen Person vorhersagen?
+    + Welchen Rechtsradikalismusscore würden Sie im Durchschnitt bei einer 70-jährigen Person vorhersagen?
 
 ## Anhang
 
@@ -408,7 +423,40 @@ knitr::include_graphics("06_cdb_hw01.png")
 knitr::include_graphics("06_lpattern.png")
 ```
 
-### Scatterplot für kategoriale Merkmale
+
+### Zwei Gerade in einer Grafik {#twoinone}
+
+Oder wir nutzen `if` in `scatter` und `lfit`, um alles in einer Grafik anzuzeigen:
+```{stata scatter_allinone, eval = F}
+graph twoway ///
+	(scatter hs18 age if sex == 1,  msize(vsmall) msymbol(d)) ///
+	(scatter hs18 age if sex == 2, msize(vsmall) msymbol(d)) ///
+	(lfit hs18 age if sex == 1,  lpattern(solid) ) /// 
+	(lfit hs18 age if sex == 2,  lpattern(solid) )
+```
+```{r scatter_allinonep, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
+knitr::include_graphics("06_scatter_lfit2.png")
+```
+
+
+....mehr Optionen:
+```{stata scatter_allinone2, eval = F}
+graph twoway ///
+	(scatter hs18 age if sex == 1, color("42 37 92 %20") msize(vsmall) msymbol(d)) ///
+	(scatter hs18 age if sex == 2, color("92 83 28 %20") msize(vsmall) msymbol(d)) ///
+	(lfit hs18 age if sex == 1, lcolor("42 37 92") lpattern(solid) ) /// 
+	(lfit hs18 age if sex == 2, lcolor("92 83 28") lpattern(solid) ) ///
+	, scheme(plotplain) ///
+	ytitle("Body Mass Index (hs18)") xtitle("Alter (age)") ///
+	legend(lab(1 "Body Mass Index Männer") lab(2 "Lineare Regressionsgerade Männer") ///
+		   lab(3 "Body Mass Index Frauen") lab(4 "Lineare Regressionsgerade Frauen"))
+```
+
+```{r scatter_allinone2p, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
+knitr::include_graphics("06_scatter_lfit2_fancy.png")
+```
+
+### Scatterplot für kategoriale Variablen
 
 Scatterplots für kategoriale Merkmale sind oft wenig Aussagekräftig. 
 
