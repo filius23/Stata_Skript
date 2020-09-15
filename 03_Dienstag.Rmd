@@ -497,10 +497,13 @@ cd "..."  // wo liegt der Datensatz?
 use Allbus2018.dta
 ```
     + Lassen Sie sich eine Tabelle für `gkpol` anzeigen. Welche ist die häufigste Ausprägung?
-    + Hat die Variable fehlende Werte, die Sie ausschließen sollten? Falls ja, ersetzen Sie diese Werte mit `mvdecode` und lassen Sie sich die Tabelle erneut ausgeben. (Verwenden Sie `labelbook` oder sehen Sie im Codebuch nach).
+    + Hat die Variable fehlende Werte, die Sie ausschließen sollten? Falls ja, ersetzen Sie diese Werte mit `mvdecode`. Tipp: Verwenden Sie `labelbook` oder sehen Sie im Codebuch nach.
+    + Lassen Sie sich die Tabelle erneut ausgeben. Sind die fehlenden Angaben noch in der Tabelle?
+    + Lassen Sie sich die Tabelle *inklusive der Missings* ausgeben. 
+    + Beantworten Sie die folgenden Fragen auf Basis der Tabelle ohne Missings:
     + Welcher Anteil der Befragten leben in einem Ort mit höchstens 49.999 Einwohnern?
     + Wie groß ist der Anteil der Befragten, die in einem Ort mit mindestens 100.000 Einwohnern leben?
-    + Erstellen Sie nun eine Kontigenztabelle mit `gkpol` und `sex`. Welche Merkmalskombination ist die häufigste? 
+    + Erstellen Sie nun eine Kontigenztabelle mit `gkpol` und `sex` (Anm.: `sex` hat keine Missings). Welche Merkmalskombination ist die häufigste? 
     + Welcher Anteil der Befragten aus Städten mit über 500.000 Einwohnern ist weiblich?
     + Wie hoch ist der Anteil der Männer an Befragten, die in Orten mit unter 2.000 Einwohnern leben?
     + Welcher Anteil der Frauen lebt in Städten mit 50.000 bis 99.999 Einwohnern?

@@ -282,3 +282,6 @@ Dafür helfen uns sog. "regular expressions", in Stata stehen hierfür zb `subst
 ## Link Liste
 
 + [Internet Guide to Stata](http://wlm.userweb.mwn.de/Stata/)
++ [Hilfeseiten der UCLA](https://stats.idre.ucla.edu/stata/)
++ [StatList-Forum](https://statalist.org/forums/)
++ oder am besten:
