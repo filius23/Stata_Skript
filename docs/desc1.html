@@ -975,23 +975,34 @@ NEUE BUNDESLAEND |  53.90083        55  287.4093  .3145249
 </div>
 <div id="met" class="section level3">
 <h3><span class="header-section-number">3.3.2</span> Übung 3-2</h3>
-<p>Forschungsfrage: Vergleichen Sie die Haushaltseinkommensverteilung in Ost und West!</p>
 <ol start="2" class="example" style="list-style-type: decimal">
-<li>Laden Sie den <strong>kumulierten</strong> Allbusdatensatz (<code>Allbus_1980-2018.dta</code>).
+<li>Laden Sie den Allbus 2018 (<code>Allbus2018.dta</code>). Vergleichen Sie die Einkommensangaben (<code>inc</code>) von Frauen und Männern!
 <ul>
-<li>Fokussieren Sie zunächst auf das Befragungsjahr 1994 mit Hilfe von <code>keep</code> oder <code>drop</code>.</li>
-<li>Betrachten Sie die HH-Einkommensverteilungen (Variable <code>di05</code>)</li>
-<li>Denken Sie daran, die negativen Werte für <code>di05</code> mit <code>.</code> zu überschreiben! (Entweder mit <code>replace</code> oder <code>mvdecode</code>, sehen Sie mit <code>labelbook</code> oder im Codebuch nach)</li>
-<li>Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle aus dem Jahr 1994 - was sagen Ihnen die Werte jeweils?</li>
-<li>Berechnen Sie den Gini-Koeffizenten! (Denken Sie daran, vor der ersten Verwendung <code>fastgini</code> zu installieren - siehe <a href="desc1.html#gini">hier</a>)</li>
+<li>Betrachten Sie die HH-Einkommensverteilungen mit <code>summarize</code> (Variable <code>inc</code>)</li>
+<li>Denken Sie daran, die negativen Werte für <code>inc</code> mit <code>.</code> zu überschreiben! (Entweder mit <code>replace</code> oder <code>mvdecode</code>, sehen Sie mit <code>labelbook</code> oder im Codebuch nach)</li>
+<li>Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz und den Variationskoeffizienten zunächst für alle Fälle - was sagen Ihnen die Werte jeweils?</li>
 <li>Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable <code>eastwest</code>) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?</li>
+<li>Vergleichen Sie die Werte!</li>
+<li>Berechnen Sie den Gini-Koeffizenten! (Denken Sie daran, vor der ersten Verwendung <code>fastgini</code> zu installieren - siehe <a href="desc1.html#gini">hier</a>)</li>
+<li>Vergleichen Sie auch hier jeweils die Werte für die neuen und alten Bundesländer!</li>
 </ul></li>
 </ol>
 </div>
 </div>
 <div id="weitere-übungen-3" class="section level2">
 <h2><span class="header-section-number">3.4</span> Weitere Übungen 3</h2>
+<p>Forschungsfrage: Vergleichen Sie die Haushaltseinkommensverteilung in Ost und West!</p>
 <ol start="3" class="example" style="list-style-type: decimal">
+<li>Laden Sie den <strong>kumulierten</strong> Allbusdatensatz (<code>Allbus_1980-2018.dta</code>).
+<ul>
+<li>Fokussieren Sie zunächst auf das Befragungsjahr 1994 mit Hilfe von <code>keep if year == 1994</code> oder <code>drop if year != 1994</code>.</li>
+<li>Betrachten Sie die HH-Einkommensverteilungen (Variable <code>di05</code>)</li>
+<li>Denken Sie daran, die negativen Werte für <code>di05</code> mit <code>.</code> zu überschreiben! (Entweder mit <code>replace</code> oder <code>mvdecode</code>, sehen Sie mit <code>labelbook</code> oder im Codebuch nach)</li>
+<li>Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle aus dem Jahr 1994 - was sagen Ihnen die Werte jeweils?</li>
+<li>Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable <code>eastwest</code>) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?</li>
+<li>Berechnen Sie den Gini-Koeffizenten! (Denken Sie daran, vor der ersten Verwendung <code>fastgini</code> zu installieren - siehe <a href="desc1.html#gini">hier</a>)</li>
+<li>Vergleichen Sie auch hier jeweils die Werte für die neuen und alten Bundesländer!</li>
+</ul></li>
 <li>Laden Sie den Allbus 2018 (<code>Allbus2018.dta</code>). Erstellen Sie eine Kontingenztabelle für <code>sex</code> und <code>educ</code>. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte auszuschließen.
 <ul>
 <li>Erstellen Sie für die folgenden Fragen jeweils die passende Variante der Kontingenztabelle mit relativen Häufigkeiten als Zeilen- oder Spaltenprozenten.</li>

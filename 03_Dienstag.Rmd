@@ -511,18 +511,32 @@ use Allbus2018.dta
 
 ### Übung 3-2 {#met}  
 
-Forschungsfrage: Vergleichen Sie die Haushaltseinkommensverteilung in Ost und West!
 
-(@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`).
-    + Fokussieren Sie zunächst auf das Befragungsjahr 1994 mit Hilfe von `keep` oder `drop`.
-    + Betrachten Sie die HH-Einkommensverteilungen (Variable `di05`) 
-    + Denken Sie daran, die negativen Werte für `di05` mit `.` zu überschreiben! (Entweder mit `replace` oder `mvdecode`, sehen Sie mit `labelbook` oder im Codebuch nach)
-    + Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle aus dem Jahr 1994 - was sagen Ihnen die Werte jeweils?
-    + Berechnen Sie den Gini-Koeffizenten! (Denken Sie daran, vor der ersten Verwendung `fastgini` zu installieren - siehe [hier](#gini))
+(@) Laden Sie den Allbus 2018 (`Allbus2018.dta`). Vergleichen Sie die Einkommensangaben (`inc`) von Frauen und Männern!
+    + Betrachten Sie die HH-Einkommensverteilungen mit `summarize` (Variable `inc`) 
+    + Denken Sie daran, die negativen Werte für `inc` mit `.` zu überschreiben! (Entweder mit `replace` oder `mvdecode`, sehen Sie mit `labelbook` oder im Codebuch nach)
+    + Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz und den Variationskoeffizienten zunächst für alle Fälle - was sagen Ihnen die Werte jeweils?
     + Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable `eastwest`) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?
+    + Vergleichen Sie die Werte!
+    + Berechnen Sie den Gini-Koeffizenten! (Denken Sie daran, vor der ersten Verwendung `fastgini` zu installieren - siehe [hier](#gini))
+    + Vergleichen Sie auch hier jeweils die Werte für die neuen und alten Bundesländer!
+
 
 
 ## Weitere Übungen 3
+
+
+Forschungsfrage: Vergleichen Sie die Haushaltseinkommensverteilung in Ost und West!
+
+(@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`).
+    + Fokussieren Sie zunächst auf das Befragungsjahr 1994 mit Hilfe von `keep if year == 1994` oder `drop if year != 1994`.
+    + Betrachten Sie die HH-Einkommensverteilungen (Variable `di05`) 
+    + Denken Sie daran, die negativen Werte für `di05` mit `.` zu überschreiben! (Entweder mit `replace` oder `mvdecode`, sehen Sie mit `labelbook` oder im Codebuch nach)
+    + Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle aus dem Jahr 1994 - was sagen Ihnen die Werte jeweils?
+    + Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable `eastwest`) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?
+    + Berechnen Sie den Gini-Koeffizenten! (Denken Sie daran, vor der ersten Verwendung `fastgini` zu installieren - siehe [hier](#gini))
+    + Vergleichen Sie auch hier jeweils die Werte für die neuen und alten Bundesländer!
+
 
 (@) Laden Sie den Allbus 2018 (`Allbus2018.dta`). Erstellen Sie eine Kontingenztabelle für `sex` und `educ`. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte auszuschließen.
     + Erstellen Sie für die folgenden Fragen jeweils die passende Variante der Kontingenztabelle mit relativen Häufigkeiten als  Zeilen- oder Spaltenprozenten. 
