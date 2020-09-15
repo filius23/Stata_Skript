@@ -932,15 +932,15 @@ NEUE BUNDESLAEND |  53.90083        55  287.4093  .3145249
 <div id="gini" class="section level3">
 <h3><span class="header-section-number">3.2.5</span> Gini-Koeffizient</h3>
 <p>Zur Beschreibung der (Ungleich-)Verteilung von metrischen Variablen, insbesondere bei Einkommens- und Vermögensdaten wird häufig der Gini-Koeffizient verwendet. Der Gini-Koeffizient beruht auf der Fläche zwischen der Lorenzkurve und der Gleichverteilung. Auf der x-Achse werden die kumulierten Perzentile der Befragten abgetragen, auf der y-Achse die Perzentile des HH-Einkommens:</p>
-<p><img src="Stata_Skript_files/figure-html/gini_plot-1.png" width="75%" height="75%" style="display: block; margin: auto;" />
-Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdings müssen wir diesen Befehl erst (einmalig) installieren:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb48-1"><a href="desc1.html#cb48-1"></a><span class="kw">ssc</span> install fastgini</span>
-<span id="cb48-2"><a href="desc1.html#cb48-2"></a>fastgini di05</span></code></pre></div>
+<pre><code>Error: &#39;\i&#39; ist eine unbekannte Escape-Sequenz in der Zeichenkette beginnend mit &quot;&quot;Gini Koeffizient:\nFläche zwischen Diagonale und Lorenzkurve\i&quot;</code></pre>
+<p>Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdings müssen wir diesen Befehl erst (einmalig) installieren:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb49-1"><a href="desc1.html#cb49-1"></a><span class="kw">ssc</span> install fastgini</span>
+<span id="cb49-2"><a href="desc1.html#cb49-2"></a>fastgini di05</span></code></pre></div>
 <pre><code>Gini coefficient = 0.3194886</code></pre>
 <p>Leider funktioniert <code>bys eastwest:</code> bei <code>fastgini</code> nicht, wir müssen hier auf die Variante mit <a href="desc1.html#if_vgl"><code>if</code></a> zurückgreifen:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb50-1"><a href="desc1.html#cb50-1"></a>fastgini di05 <span class="kw">if</span> eastwest == 1</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb51-1"><a href="desc1.html#cb51-1"></a>fastgini di05 <span class="kw">if</span> eastwest == 1</span></code></pre></div>
 <pre><code>Gini coefficient = 0.3148267</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb52-1"><a href="desc1.html#cb52-1"></a>fastgini di05 <span class="kw">if</span> eastwest == 2</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb53-1"><a href="desc1.html#cb53-1"></a>fastgini di05 <span class="kw">if</span> eastwest == 2</span></code></pre></div>
 <pre><code>Gini coefficient = 0.3101288</code></pre>
 <p><span class="math inline">\(\Rightarrow\)</span> <em>Wo sind die Haushaltseinkommen also ungleicher verteilt?</em><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
 <p>Anmerkung: hier wurden die Missings in <code>di05</code> mit <code>mvdecode di05, mv(-50 -32 -7)</code> ausgeschlossen.</p>
@@ -954,8 +954,8 @@ Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdin
 <li>Wir interessieren uns für die Variable <code>gkpol</code>.</li>
 </ol>
 <p>Laden Sie den Allbusdatensatz für 2018 <code>Allbus2018.dta</code> in Stata:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb54-1"><a href="desc1.html#cb54-1"></a>cd <span class="st">&quot;...&quot;</span>  <span class="co">// wo liegt der Datensatz?</span></span>
-<span id="cb54-2"><a href="desc1.html#cb54-2"></a><span class="kw">use</span> Allbus2018.dta</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb55-1"><a href="desc1.html#cb55-1"></a>cd <span class="st">&quot;...&quot;</span>  <span class="co">// wo liegt der Datensatz?</span></span>
+<span id="cb55-2"><a href="desc1.html#cb55-2"></a><span class="kw">use</span> Allbus2018.dta</span></code></pre></div>
 <ul>
 <li>Lassen Sie sich eine Tabelle für <code>gkpol</code> anzeigen. Welche ist die häufigste Ausprägung?
 <ul>
@@ -1015,9 +1015,9 @@ Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdin
 <div id="vlabel" class="section level3">
 <h3><span class="header-section-number">3.5.1</span> labels vergeben</h3>
 <p>Wir können natürlich auch Werte in selbst erstellten Variablen, wie zB <code>age_cat</code>, beschriften. Dazu definieren wir ein Wertelabel an. Dazu verwenden wir <code>label define</code>, gefolgt von einem Objektnamen für dieses Label (hier <code>age_cat_lab</code>) und dann jeweils die Ausprägungen zusammen mit dem entsprechenden label in <code>""</code>. Dieses Label-Objekt wenden wir dann mit <code>label values</code> auf die Variable <code>age_cat</code> an:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb55-1"><a href="desc1.html#cb55-1"></a><span class="kw">label</span> <span class="kw">define</span> age_cat_lab 18 <span class="st">&quot;18-34 Jahre&quot;</span> 35 <span class="st">&quot;35-29 Jahre&quot;</span> 60 <span class="st">&quot;über 60 Jahre&quot;</span> </span>
-<span id="cb55-2"><a href="desc1.html#cb55-2"></a><span class="kw">label</span> <span class="kw">values</span> age_cat age_cat_lab</span>
-<span id="cb55-3"><a href="desc1.html#cb55-3"></a><span class="kw">tab</span> age_cat</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb56-1"><a href="desc1.html#cb56-1"></a><span class="kw">label</span> <span class="kw">define</span> age_cat_lab 18 <span class="st">&quot;18-34 Jahre&quot;</span> 35 <span class="st">&quot;35-29 Jahre&quot;</span> 60 <span class="st">&quot;über 60 Jahre&quot;</span> </span>
+<span id="cb56-2"><a href="desc1.html#cb56-2"></a><span class="kw">label</span> <span class="kw">values</span> age_cat age_cat_lab</span>
+<span id="cb56-3"><a href="desc1.html#cb56-3"></a><span class="kw">tab</span> age_cat</span></code></pre></div>
 <pre><code>      age_cat |      Freq.     Percent        Cum.
 --------------+-----------------------------------
   18-34 Jahre |        718       20.68       20.68
@@ -1047,7 +1047,7 @@ Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert 
 <div id="bys_su" class="section level3">
 <h3><span class="header-section-number">3.5.4</span> Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</h3>
 <p>Bspw. können wir die Altersangaben aus den alten (<code>eastwest</code>=1) und neuen Bundesländern (<code>eastwest</code>=2) vergleichen, indem wir das Befehls-Präfix <code>bys varX:</code> verwenden. <code>bys</code> steht für “by sort” und damit sagen wir Stata, dass die folgende Berechnung getrennt nach den Werten für <code>varX</code> ausgeführt werden soll. Wenn wir also <code>summarize</code> für beide Ausprägungen von <code>eastwest</code> berechnen möchten, gehen wir wir folgt vor:</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb57-1"><a href="desc1.html#cb57-1"></a><span class="kw">bys</span> eastwest: <span class="kw">summarize</span> age </span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb58-1"><a href="desc1.html#cb58-1"></a><span class="kw">bys</span> eastwest: <span class="kw">summarize</span> age </span></code></pre></div>
 <pre><code>-&gt; eastwest = ALTE BUNDESL
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
@@ -1065,8 +1065,8 @@ Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert 
 <div id="if_vgl" class="section level3">
 <h3><span class="header-section-number">3.5.5</span> Kennzahlvergleiche mit <code>if</code></h3>
 <p>Neben der Variante <a href="desc1.html#by_vgl"><code>bys var:</code></a> können wir auch mit Hilfe der <code>if</code>-Option Kennzahlen miteinander vergleichen:</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb59-1"><a href="desc1.html#cb59-1"></a><span class="kw">summarize</span> age <span class="kw">if</span> eastwest == 1</span>
-<span id="cb59-2"><a href="desc1.html#cb59-2"></a><span class="kw">summarize</span> age <span class="kw">if</span> eastwest == 2</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb60-1"><a href="desc1.html#cb60-1"></a><span class="kw">summarize</span> age <span class="kw">if</span> eastwest == 1</span>
+<span id="cb60-2"><a href="desc1.html#cb60-2"></a><span class="kw">summarize</span> age <span class="kw">if</span> eastwest == 2</span></code></pre></div>
 <pre><code>    Variable |       Obs        Mean    Std. Dev.       Min        Max
 -------------+--------------------------------------------------------
          age |      2383    50.66093    17.85982         18         95
@@ -1075,7 +1075,7 @@ Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert 
 -------------+--------------------------------------------------------
          age |      1089    53.90083    16.95315         18         94</code></pre>
 <p>Das führt natürlich im Kern zum gleichen Ergebnis wie die oben gezeigte Variante:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb61-1"><a href="desc1.html#cb61-1"></a><span class="kw">bys</span> eastwest: <span class="kw">summarize</span> age </span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb62-1"><a href="desc1.html#cb62-1"></a><span class="kw">bys</span> eastwest: <span class="kw">summarize</span> age </span></code></pre></div>
 <pre><code>-&gt; eastwest = ALTE BUNDESL
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
@@ -1092,7 +1092,7 @@ Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert 
 <div id="kennzahlvergleich-mit-tabulate-und-der-option-summarize" class="section level3">
 <h3><span class="header-section-number">3.5.6</span> Kennzahlvergleich mit <code>tabulate</code> und der Option <code>summarize()</code></h3>
 <p>Wir können aber auch zwei Variablen für den Kennzahlenvergleich verwenden. Bspw. sind neben Ost-West-Vergleichen auch häufig Geschlechterunterschiede von Interesse. Stata stellt uns damit mit der <code>summarise</code>-Option eine einfache Möglichkeit zur Verfügung:</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb63-1"><a href="desc1.html#cb63-1"></a><span class="kw">tab</span> sex eastwest, <span class="kw">summarize</span>(age)</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb64-1"><a href="desc1.html#cb64-1"></a><span class="kw">tab</span> sex eastwest, <span class="kw">summarize</span>(age)</span></code></pre></div>
 <pre><code>     Means, Standard Deviations and Frequencies of ALTER: BEFRAGTE(R)
 
 GESCHLECHT |   ERHEBUNGSGEBIET

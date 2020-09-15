@@ -420,7 +420,7 @@ gini_ann_df <- gdf %>% filter(sampl<.0151, between(pct_id,.5,.6 ) ) %>% slice(1)
          labl1 = paste0("(Theoretische) Diagonale:\n\"",
                        round(pct_id*100,0),"% der Befragten verfügen über\n",
                        round(pct_id*100,0),"% des gesamten HH-Einkommens\""),
-         labl2 = "Gini Koeffizient:\nFläche zwischen Diagonale und Lorenzkurve\n(0=Gleichverteilung,1=Maximale Konzentration)")
+         labl2 = "Gini Koeffizient:\nFläche zwischen Diagonale und Lorenzkurve\im Verhältnis zu Fläche unter Lorenzkurve (weiß)\n(0=Gleichverteilung,1=Maximale Konzentration)")
 
 ggplot(gdf, aes(x = pct_id, y = pct_di05)) + 
   geom_ribbon(aes(ymin = pct_di05, ymax = pct_id, xmin = pct_id, xmax = pct_id), fill = "#1BB6AF" ) +
@@ -537,6 +537,7 @@ Forschungsfrage: Vergleichen Sie die Haushaltseinkommensverteilung in Ost und We
     + In welchem Jahr gab es den höchsten Anteil an geschiedenen Befragten? Sie können so eine Variable generieren, welche 1 annimt wenn `mstat` = 4 (geschieden) und 0 für alle andere Familienstände: `gen divorce = (mstat == 4)`
     + Aus welchem Jahr stammen die Angaben der meisten geschiedenen Befragten?
     + In welchem Jahr ist der Anteil der geschiedenen Befragten am höchsten?
+
 
 
 ## Anhang Kap 3
