@@ -45,21 +45,17 @@ knitr::include_graphics("04_dist_plots.png")
 ```
 
 
-### Kategoriale Variablen {#bar_col}
+## dot charts
 
-Die Darstellung einer kategorialen Variable ist häufig eine grafische Übersetzung einer Häufigkeitsauszählung. Insbesondere bieten sich dafür Säulen- und Balkendiagramme an. Beispielsweise könnten wir die Schulabschlüsse der Befragen auszählen. Dazu zählen[^041] wir die `respid`s pro Ausprägung von `educ`[^042], mit `graph bar` bzw `graph bar, horizontal` bekommen wir dann ein Säulen- bw. Balkendiagramm.
-
-[^041]: Daher die Angabe `(count)`.
-[^042]: `over(educ)` legt dabei fest, dass innerhalb der Kategorien von `educ` gezählt werden soll.
-
-```{stata, eval = F}
-graph bar (count) respid, over(educ)  
-graph bar (count) respid, over(educ) horizontal
+Mit `graph dot` lassen sich relativ einfach grafische Übersichten zu deskriptiven Maßzahlen erstellen. Dazu geben wir in Klammern jeweils die gewünschte Statistik an (die Optionen entsprechen denen aus `tabstat`) und dann wie entsprechende Variable. Mit `over()` können wir diese Auswertung zudem nach einer zweiten Variable aufsplitten. Wir können auch mehrere Kennzahlen gleichzeitig angeben:
+```{stata dot_graph1, eval = F}
+graph dot (p25) age ( mean ) age (p75) age, over(sex)
 ```
 
-```{r bar_plots, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
-knitr::include_graphics("04_bar_plots.png")
+```{r dot_graph2, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
+knitr::include_graphics("04_dot.png")
 ```
+
 
 ## Verteilungen vergleichen mit Facetten
 
@@ -90,6 +86,24 @@ knitr::include_graphics("04_bar_plots2.png")
 **[Übung1](#plt1)**
 
 ***
+
+## Kategoriale Variablen {#bar_col}
+
+Die Darstellung einer kategorialen Variable ist häufig eine grafische Übersetzung einer Häufigkeitsauszählung. Insbesondere bieten sich dafür Säulen- und Balkendiagramme an. Beispielsweise könnten wir die Schulabschlüsse der Befragen auszählen. Dazu zählen[^041] wir die `respid`s pro Ausprägung von `educ`[^042], mit `graph bar` bzw `graph bar, horizontal` bekommen wir dann ein Säulen- bw. Balkendiagramm.
+
+[^041]: Daher die Angabe `(count)`.
+[^042]: `over(educ)` legt dabei fest, dass innerhalb der Kategorien von `educ` gezählt werden soll.
+
+```{stata, eval = F}
+graph bar (count) respid, over(educ)  
+graph bar (count) respid, over(educ) horizontal
+```
+
+```{r bar_plots, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
+knitr::include_graphics("04_bar_plots.png")
+```
+
+
 
 ## Gemeinsame Verteilung zweier Variablen {#bivar_plot}
 
@@ -171,25 +185,20 @@ knitr::include_graphics("04_box_educ_bysex.png")
 
 ***
 
-## dot charts
 
-Mit `graph dot` lassen sich relativ einfach grafische Übersichten zu deskriptiven Maßzahlen erstellen. Dazu geben wir in Klammern jeweils die gewünschte Statistik an (die Optionen entsprechen denen aus `tabstat`) und dann wie entsprechende Variable. Mit `over()` können wir diese Auswertung zudem nach einer zweiten Variable aufsplitten. Wir können auch mehrere Kennzahlen gleichzeitig angeben:
-```{stata dot_graph1, eval = F}
-graph dot (p25) age ( mean ) age (p75) age, over(sex)
-```
-
-```{r dot_graph2, echo = F,out.width = "80%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("04_dot.png")
-```
 
 ## Übungen 4
 
 ### Übung 4-1 {#plt1}
 
-(@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2014 aus! Erstellen Sie einen Boxplot, ein Histogramm und einen k-Density-Plot für den BMI der Befragten (`hs18`).  
+(@) Laden Sie den Allbus 2018 (`Allbus2018.dta`) in Stata und erstellen Sie einen Boxplot, ein Histogramm und einen k-Density-Plot für das Alter der Befragten (`age`).  
     + Vergessen Sie nicht, die Missings mit `mvdecode` zu überschreiben oder mit `keep`/`drop` auszuschließen.
-    + Erstellen Sie eine weitere Variante dieser Grafiken, welche die Verteilung des BMIs jeweils nach Geschlecht zeigen.
+    + Erstellen Sie eine weitere Variante dieser Grafiken, welche die Verteilung des Alters jeweils nach Geschlecht zeigen.
+    + Erstellen Sie zudem einen Dot Chart mit einigen Kennzahlen (zB arith Mittel, Median, 25% und 75%-Grenze) für `age`
+    + Splitten Sie die Darstellung ebenfalls nach Geschlecht auf.
     
+(@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2014 aus! Erstellen Sie einen Boxplot, ein Histogramm und einen k-Density-Plot für den BMI der Befragten (`hs18`).  
+
 (@) Erstellen Sie ebenfalls für die Befragten aus dem Jahr 2014 eine Grafik, welche die Häufigkeit der Befragten aus den alten und neuen Bundesländern (`eastwest`) wiedergibt!  
     + Erstellen Sie sowohl ein Säulen- als auch ein Balkendiagramm!
     + Erstellen Sie eine weitere Darstellung, welche zusätzlich nach dem Geschlecht unterscheidet!
