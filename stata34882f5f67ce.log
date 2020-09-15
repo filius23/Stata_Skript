@@ -1,0 +1,18 @@
+
+
+running D:\oCloud\Home-Cloud\Lehre\Methodenseminar\S
+> tata_Skript\profile.do ...
+
+
+. set linesize 80
+
+. qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+
+. qui mvdecode di05, mv(-50 -32 -7)
+
+. fastgini di05 if eastwest == 2
+
+Gini coefficient = 0.3101288
+
+. 
+end of do-file
