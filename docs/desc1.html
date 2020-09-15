@@ -1042,7 +1042,7 @@ Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert 
 <p>Die Schiefe (skewness) ist ein Maß für die Asymmetrie einer Verteilung. Bei einer symmetrischen Verteilung beträgt die Schiefe 0. Ein negativer Wert für die Schiefe deutet darauf hin, dass Median &gt; Mean und Verteilung wird als links-schief/rechts-steil bezeichnet. Bei einem positiven Wert der Schiefe ist Median &lt; Mean und die Verteilung ist rechts-schief/links-steil.</p>
 <p>Die Wölbung (Kurtosis) ist ein Maß für die Steilheit bzw. “Spitzigkeit” einer Verteilung. Je kleiner der Wert der Kurtosis, desto desto flacher die Verteilung. Bspw. hat die Normalverteilung hat eine Kurtosis von 3.</p>
 <p><img src="Stata_Skript_files/figure-html/skew_kurt_graph-1.png" width="100%" height="75%" style="display: block; margin: auto;" /></p>
-<p>In Stata bekommen wir die Schiefe und Wölbung einer Verteilung mit <code>summary varname,detail</code> angezeigt.</p>
+<p>In Stata bekommen wir die Schiefe und Wölbung einer Verteilung mit <code>summary varname,detail</code> oder mit <code>tabstat varname, s(skewness kurtosis)</code> angezeigt.</p>
 </div>
 <div id="bys_su" class="section level3">
 <h3><span class="header-section-number">3.5.4</span> Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</h3>
