@@ -35,7 +35,7 @@ Wenn wir jetzt die durchschnittliche Körpergröße berechnen, ist das zwar für
 tabstat hs16 , s(mean)
 ```
 
-```{stata mean2, eval = F}
+```{stata mean2, echo = F}
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
 qui keep if year == 2012 & sex ==  1 & hs16 > 0
@@ -43,9 +43,9 @@ tabstat hs16 , s(mean)
 ```
 
 
-Allerdings ist sehr unwahrscheinlich, dass die durchschnittliche Körpergröße in Deutschland im Jahr 2014 genau `r mean(a14m$hs16)` cm betrug. Jedoch kann auf Basis des zentralen Grenzwertsatzes angenommen werden, dass bei genügend großer Fallzahl die Mittelwerte bei wiederholten SP normalverteilt sind.
+Allerdings ist sehr unwahrscheinlich, dass die durchschnittliche Körpergröße in Deutschland im Jahr 2014 genau  178.7179 cm betrug. Jedoch kann auf Basis des zentralen Grenzwertsatzes angenommen werden, dass bei genügend großer Fallzahl die Mittelwerte bei wiederholten SP normalverteilt sind.
 
-Somit können wir auf Basis einer Stichprobe das Konfidenzintervall einer Schätzung bestimmen, indem wir um den Punktschätzer (den Stichproben-Mittelwert, also die 178.71cm) mit Hilfe des eines geeigneten $t$-Werts und des Standardfehlers ($\frac{s}{\sqrt{n}}$[^11]) einen Wertebereich um den Mittelwert $\bar{x}$ konstruieren.
+Somit können wir auf Basis einer Stichprobe das Konfidenzintervall einer Schätzung bestimmen, indem wir um den Punktschätzer (den Stichproben-Mittelwert, also die 178.7179 cm) mit Hilfe des eines geeigneten $t$-Werts und des Standardfehlers ($\frac{s}{\sqrt{n}}$[^11]) einen Wertebereich um den Mittelwert $\bar{x}$ konstruieren.
 
 [^11]: Also die Standardabweichung ($s$) dividiert durch die Wurzel der Stichprobengröße ($n$)
 
@@ -331,28 +331,35 @@ Zum Vergleich: oben mit der t-Verteilung kamen wir auf 177.8101 - 178.627.
 
 ## Übungen 7
 
-(@) Berechnen Sie den Punktschätzer für die Körpergröße (`hs16`) von Frauen (`sex == 2`) in Deutschland 2014!
+(@) Berechnen Sie den Punktschätzer und das Konfidenzintervall für die Körpergröße (`hs16`) von Frauen (`sex == 2`) in Deutschland 2014!
   + Lesen Sie dazu den kumulierten Allbus (`Allbus_1980-2018.dta`) ein
   + Behalten Sie nur die nicht-fehlenden Angaben zur Körpergröße (`hs16`>0) für Frauen (`sex == 2`) aus dem Jahr 2014 im Speicher. Die Zahl der enthaltenen Zeilen entspricht der Zahl der Fälle für die weiteren Berechnungen ($n$).
   + Berechnen Sie den Punktschätzer für die durchschnittliche Körpergröße von Frauen in Deutschland 2014!
-  
-(@) Berechnen Sie das 95%- Konfidenzintervall für diese Punktschätzung nach der parametrischen Methode! 
+  + Berechnen Sie das 95%- Konfidenzintervall für diese Punktschätzung nach der parametrischen Methode! 
   + Wie hoch ist die untere Grenze für das Konfidenzintervall?
   + Wie hoch ist die obere Grenze für das Konfidenzintervall?
   + Wie sind die Grenzen für das 99%-KI?
-  
-(@) Berechnen Sie das Konfidenzintervall mit Hilfe des Bootstrapping-Verfahrens! (Für die Ergebnisse aus der Lösung verwenden Sie `set seed 1212`)
+  + Berechnen Sie das Konfidenzintervall mit Hilfe des Bootstrapping-Verfahrens! (Für die Ergebnisse aus der Lösung verwenden Sie `set seed 1212`)
   + Berechnen Sie auch hier das 95%- und 99%-Konfidenzintervall.
-  
-(@) Berechnen Sie den Punktschätzer und die Konfidenzintervalle für das Einkommen von in Vollzeit erwerbstätigen Männern aus dem Jahr 2016!
 
+
+## Weitere Übungen Kap 7 
+
+(@) Berechnen Sie den Punktschätzer und die Konfidenzintervalle für das Einkommen von in Vollzeit erwerbstätigen Frauen aus dem Jahr 2016!
   + Lesen Sie dazu den kumulierten Allbus (`Allbus_1980-2018.dta`) ein
   + Überschreiben Sie die fehlenden Werte für `inc` mit `.` 
   + Behalten Sie nur die nicht-fehlenden Angaben zum Einkommen (`inc`) für in Vollzeit erwerbstätige Männer aus dem Jahr 2016 im Speicher. Die Erwerbstätigkeit der Befragten wird in `work` erfasst, `work == 1` steht für in Vollzeit Erwerbstätige.
   + Berechnen Sie den Punktschätzer für das durchschnittliche Einkommen von in Vollzeit erwerbstätigen Männern in Deutschland 2016!
-  + Berechnen Sie die Konfidenzintervalle nach der parametrischen und bootstrap Methode (Für die Ergebnisse aus der Lösung verwenden Sie `set.seed(1212)`)
+  + Berechnen Sie die 95%-Konfidenzintervalle nach der parametrischen und bootstrap Methode (Für die Ergebnisse aus der Lösung verwenden Sie `set.seed(1212)`)
     + 95% KI
-    + 99% KI
+    
+(@) Berechnen Sie den Punktschätzer und die Konfidenzintervalle für das Einkommen von in Vollzeit erwerbstätigen Männern aus dem Jahr 2016!
+  + Lesen Sie dazu den kumulierten Allbus (`Allbus_1980-2018.dta`) ein
+  + Überschreiben Sie die fehlenden Werte für `inc` mit `.` 
+  + Behalten Sie nur die nicht-fehlenden Angaben zum Einkommen (`inc`) für in Vollzeit erwerbstätige Männer aus dem Jahr 2016 im Speicher. Die Erwerbstätigkeit der Befragten wird in `work` erfasst, `work == 1` steht für in Vollzeit Erwerbstätige.
+  + Berechnen Sie den Punktschätzer für das durchschnittliche Einkommen von in Vollzeit erwerbstätigen Männern in Deutschland 2016!
+  + Berechnen Sie die 95%-Konfidenzintervalle nach der parametrischen und bootstrap Methode (Für die Ergebnisse aus der Lösung verwenden Sie `set.seed(1212)`)
+
     
     
 ## Anhang Kap7
