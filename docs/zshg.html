@@ -614,7 +614,16 @@ Test of Ho: educ and mi02 are independent
 </div>
 <div id="tau" class="section level3">
 <h3><span class="header-section-number">5.2.2</span> Konkordanzmaße</h3>
-<p>Ein weiteres Zusammenhangsmaß für ordinale Variablen sind Konkordanzmaße wie Kendall’s <span class="math inline">\(\tau\)</span>. Hierfür die Werteverhältnisse gezählt, zur Berechnung in Stata können wir <code>ktau</code> verwenden:</p>
+<p>Ein weiteres Zusammenhangsmaß für ordinale Variablen sind Konkordanzmaße wie Kendall’s <span class="math inline">\(\tau\)</span>. Hierfür die Werteverhältnisse gezählt:</p>
+<p><span class="math inline">\(\tau_{\alpha}\)</span>: Differenz der konkordaten (C) und diskordanten (D) Paarvergleiche als Anteil an allen möglichen Paarvergleichen <span class="math inline">\(\frac{n\times(n-1)}{2}\)</span>:</p>
+<p><span class="math display">\[\tau_a=\frac{C-D}{\frac{n\times(n-1)}{2}}\]</span>
+Nachteil: Bei Bindungen in X u. Y Maximalwerte (-1; +1) nicht zu erreichen</p>
+<p><span class="math inline">\(\tau_{\alpha}\)</span>: Differenz der konkordaten (C) und diskordanten (D) Paarvergleiche als Anteil an allen möglichen Paarvergleichen <span class="math inline">\(\frac{n\times(n-1)}{2}\)</span> <em>unter Ausschluss von Bindungen in X und Y</em></p>
+<p><span class="math display">\[\tau_{b}=\frac{C-D}{\sqrt{(C+D+T_x)\times(C+D+T_y)}}\]</span>
+Bei Bindungen in X o. Y Maximalwerte (-1; +1) nicht zu erreichen</p>
+<p>Goodman &amp; Kruskal’s <span class="math inline">\(\gamma\)</span> ignoriert die Bindungen vollständig:</p>
+<p><span class="math display">\[\gamma=\frac{C-D}{C+D}\]</span></p>
+<p>Zur Berechnung in Stata können wir <code>ktau</code> verwenden:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="zshg.html#cb22-1"></a><span class="kw">ktau</span> educ mi02</span></code></pre></div>
 <pre><code>  Number of obs =    2889
 Kendall&#39;s tau-a =      -0.2151
@@ -852,6 +861,7 @@ KEINS VON BEIDEN |       579        938        388        342         91        
 <li>Vergleichen Sie diese drei Werte: was fällt Ihnen auf wenn Sie die vorhergesagten Werte vergleichen? (Tipp: bilden Sie die Differenz zwischen den Werten!)</li>
 </ul></li>
 </ol>
+<p>Tipp: <code>keep if year == 2014</code> wählt die Befragten aus dem Jahr 2014 aus</p>
 <p><a href="zshg.html#zshg_met">Zurück zu Zusammenhangsmaße für metrische Variablen</a></p>
 </div>
 <div id="auf_ord" class="section level3">
@@ -902,8 +912,8 @@ KEINS VON BEIDEN |       579        938        388        342         91        
 <li>Berechnen Sie dementsprechend die Zusammenhängsstärke!</li>
 </ul></li>
 </ol>
-<p>Hier die Frage zu <code>px01</code> aus dem Codebuch:</p>
-<pre><code>Error in knitr::include_graphics(&quot;05_cdb_px01.png&quot;): Cannot find the file(s): &quot;05_cdb_px01.png&quot;</code></pre>
+<p>Hier die Frage zu <code>px01</code> aus dem Codebuch:
+<img src="05_cdb_px01.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
 <!-- (@) Leben ältere Menschen eher in kleineren Orten? Berechnen Sie ein geeignetes Maß für den Zusammenhang zwischen `gkpol` und dem Alter der Befragten (`age`)!  -->
 <!--     + Berechnen Sie diesen Zusammenhang für das Jahr 2018! Laden Sie also den `Allbus2018.dta` -->
 <!--     + Welches Zusammenhangsmaß können Sie dementsprechend verwenden? (Zur Erinnerung: das niedrigere Skalenniveau ist ausschlaggebend!)  -->
@@ -937,8 +947,8 @@ KEINS VON BEIDEN |       579        938        388        342         91        
 <div id="reg" class="section level3">
 <h3><span class="header-section-number">5.6.1</span> Idee einer Regression</h3>
 <p>Zum Einstieg betrachten wir zunächst einen (fiktiven) Datensatz mit lediglich 4 Fällen und lediglich zwei Variablen: <code>var1</code> und <code>var2</code>:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb45-1"><a href="zshg.html#cb45-1"></a><span class="kw">use</span> <span class="st">&quot;https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta&quot;</span>, <span class="kw">clear</span></span>
-<span id="cb45-2"><a href="zshg.html#cb45-2"></a><span class="ot">list</span></span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb44-1"><a href="zshg.html#cb44-1"></a><span class="kw">use</span> <span class="st">&quot;https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb44-2"><a href="zshg.html#cb44-2"></a><span class="ot">list</span></span></code></pre></div>
 <pre><code>  var1 var2
 1    1    2
 2    2    4
@@ -947,8 +957,8 @@ KEINS VON BEIDEN |       579        938        388        342         91        
 <p><img src="Stata_Skript_files/figure-html/regplot1-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Ziel der Regression ist es, den Zusammenhang zwischen diesen beiden Variablen zu bestimmen. Gibt es einen Trend, in dem Sinn, dass ein höherer Wert von <code>var1</code> mit einem höheren oder niedrigeren Wert von <code>var2</code> einhergeht?</p>
 <p>Etwas anders gesagt könnte man auch fragen, welchen Wert für <code>var2</code> wir vorhersagen würden, wenn wir <code>var1</code> kennen. Ein Ausgangspunkt ist das arithmetische Mittel. Dieses können wir mit <code>mean</code> zB für <code>var2</code> berechnen.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> Diesen Wert fügen wir als neue Spalte <code>mean_var2</code> in den Datensatz ein:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb47-1"><a href="zshg.html#cb47-1"></a><span class="kw">egen</span> mean_var2 = <span class="kw">mean</span>(var2)</span>
-<span id="cb47-2"><a href="zshg.html#cb47-2"></a><span class="ot">list</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb46-1"><a href="zshg.html#cb46-1"></a><span class="kw">egen</span> mean_var2 = <span class="kw">mean</span>(var2)</span>
+<span id="cb46-2"><a href="zshg.html#cb46-2"></a><span class="ot">list</span></span></code></pre></div>
 <pre><code>  var1 var2 mean_var2
 1    1    2      4.75
 2    2    4      4.75
@@ -965,8 +975,8 @@ Müssten wir eine Prognose für die Werte von <code>var2</code> abgeben, wäre d
 Als Formel wird das in der Regel wie folgt dargestellt:
 <span class="math display">\[\epsilon_{\text{i}} = \text{y}_{i} - \hat{\text{y}}_{i}\]</span></p>
 <p>Wir können also die Residuen als Differenz zwischen <code>var2</code> und <code>mean</code> berechnen und in <code>df</code> ablegen:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb49-1"><a href="zshg.html#cb49-1"></a><span class="kw">gen</span> m_abw = var2 - mean_var2</span>
-<span id="cb49-2"><a href="zshg.html#cb49-2"></a><span class="ot">list</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb48-1"><a href="zshg.html#cb48-1"></a><span class="kw">gen</span> m_abw = var2 - mean_var2</span>
+<span id="cb48-2"><a href="zshg.html#cb48-2"></a><span class="ot">list</span></span></code></pre></div>
 <pre><code>  var1 var2 mean_var2 m_abw
 1    1    2      4.75 -2.75
 2    2    4      4.75 -0.75
@@ -979,13 +989,13 @@ Als Formel wird das in der Regel wie folgt dargestellt:
 <div id="quad_res" class="section level3">
 <h3><span class="header-section-number">5.6.3</span> Quadrierte Residuen</h3>
 <p>Mit <code>tabstat ..., s(sum)</code> können wir die Summe für eine Variable bilden:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb51-1"><a href="zshg.html#cb51-1"></a><span class="ot">list</span></span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb50-1"><a href="zshg.html#cb50-1"></a><span class="ot">list</span></span></code></pre></div>
 <pre><code>  var1 var2 mean_var2 m_abw
 1    1    2      4.75 -2.75
 2    2    4      4.75 -0.75
 3    7    7      4.75  2.25
 4    8    6      4.75  1.25</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb53-1"><a href="zshg.html#cb53-1"></a><span class="kw">tabstat</span> m_abw, <span class="fu">s</span>(<span class="kw">sum</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb52-1"><a href="zshg.html#cb52-1"></a><span class="kw">tabstat</span> m_abw, <span class="fu">s</span>(<span class="kw">sum</span>)</span></code></pre></div>
 <pre><code>    variable |       sum
 -------------+----------
        m_abw |         0
@@ -993,8 +1003,8 @@ Als Formel wird das in der Regel wie folgt dargestellt:
 <p><strong>Die Summe der Resiuden auf Basis des arith. Mittels ist immer Null!</strong><br />
 Anders formuliert: die gestrichelten Linien nach oben sind in Summe genauso lang wie gestrichelten Linien nach unten.
 Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wir minimieren können:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb55-1"><a href="zshg.html#cb55-1"></a><span class="kw">gen</span> m_abw2 = m_abw^2 </span>
-<span id="cb55-2"><a href="zshg.html#cb55-2"></a><span class="kw">tabstat</span> m_abw2, <span class="fu">s</span>(<span class="kw">sum</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb54-1"><a href="zshg.html#cb54-1"></a><span class="kw">gen</span> m_abw2 = m_abw^2 </span>
+<span id="cb54-2"><a href="zshg.html#cb54-2"></a><span class="kw">tabstat</span> m_abw2, <span class="fu">s</span>(<span class="kw">sum</span>)</span></code></pre></div>
 <pre><code>      Source |       SS       df       MS              Number of obs =       4
 -------------+------------------------------           F(  1,     2) =   11.07
        Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
@@ -1022,7 +1032,7 @@ Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wi
 <div id="interpretation-der-regression" class="section level3">
 <h3><span class="header-section-number">5.6.4</span> Interpretation der Regression</h3>
 <p>Die Minimierung erledigt <code>reg</code> für uns. Hier geben wir zuerst das Merkmal an, das auf der y-Achse liegt (die <em>abhängige</em> Variable) und dann das Merkmal für die x-Achse (<em>unabhängige</em> Variable) an. Ein positiver Wert unter <code>Coef.</code> in der Zeile von <code>var1</code> bedeutet, dass unsere Gerade von links nach rechts ansteigt und ein negativer eine fallende Linie bedeuten würde. Der Wert unter <code>var1</code> gibt an, um <em>wieviel sich die Gerade pro “Schritt nach rechts” nach oben/unten verändert</em>. Die Gerade steigt also pro Einheit von <code>var1</code> um 0.5810811:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb58-1"><a href="zshg.html#cb58-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb57-1"><a href="zshg.html#cb57-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
 <pre><code>      Source |       SS       df       MS              Number of obs =       4
 -------------+------------------------------           F(  1,     2) =   11.07
        Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
@@ -1043,7 +1053,7 @@ Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wi
 <h3><span class="header-section-number">5.6.5</span> Vorhergesagte Werte</h3>
 <p>Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade?
 Die vohergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der Summe aus dem Wert neben <code>_cons</code> und dem Koeffizienten neben <code>var1</code> multipliziert mit dem jeweiligen Wert für <code>var1</code>.<a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb60-1"><a href="zshg.html#cb60-1"></a><span class="kw">reg</span> var2 var1, <span class="kw">noheader</span></span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb59-1"><a href="zshg.html#cb59-1"></a><span class="kw">reg</span> var2 var1, <span class="kw">noheader</span></span></code></pre></div>
 <pre><code>        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
         var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
@@ -1053,9 +1063,9 @@ Die vohergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der S
 <p><span class="math display">\[\widehat{var2}=\texttt{Intercept} + 0.5811 \times \texttt{var1}\]</span><br />
 Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: 2.1351+0.5811*1= 2.7162</p>
 <p>Also könnten wir mit <code>gen</code> die vorhergesagten Werte “manuell” berechnen:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb62-1"><a href="zshg.html#cb62-1"></a><span class="kw">gen</span> manual_vorhers = 2.1351 + 0.5811 * var1</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb61-1"><a href="zshg.html#cb61-1"></a><span class="kw">gen</span> manual_vorhers = 2.1351 + 0.5811 * var1</span></code></pre></div>
 <p>Die vorhergesagten Werte können wir auch mit <code>predict</code> berechnen und in einer neuen Variable <code>pred_vorher</code> ablegen:</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb63-1"><a href="zshg.html#cb63-1"></a><span class="kw">predict</span> pred_vorher, <span class="kw">xb</span></span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb62-1"><a href="zshg.html#cb62-1"></a><span class="kw">predict</span> pred_vorher, <span class="kw">xb</span></span></code></pre></div>
 <pre><code>  var1 var2 mean_var2 m_abw m_abw2 manual_vorhers pred_vorher
 1    1    2      4.75 -2.75 7.5625         2.7162    2.716216
 2    2    4      4.75 -0.75 0.5625         3.2973    3.297297
@@ -1068,11 +1078,11 @@ Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regre
 <div id="resid2" class="section level3">
 <h3><span class="header-section-number">5.6.6</span> Residuen Teil 2</h3>
 <p>Trotzdem sind auch die hellblauen Punkte nicht deckungsgleich mit den tatsächlichen Werten. Es gibt also auch hier wieder <a href="zshg.html#resid">Residuen</a>, also Abweichungen des beobachteten vom vorhergesagten Wert. Wir können diese per Hand berechnen als Differenz zwischen dem tatsächlichen und dem vorhergesagten Wert:</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb65-1"><a href="zshg.html#cb65-1"></a><span class="kw">gen</span> res = var2 - pred_vorher </span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb64-1"><a href="zshg.html#cb64-1"></a><span class="kw">gen</span> res = var2 - pred_vorher </span></code></pre></div>
 <p>Oder wir können Sie mit <code>predict neue_variable , residuals</code> erstellen:</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb66-1"><a href="zshg.html#cb66-1"></a><span class="kw">reg</span> var2 var1 <span class="co">// zunächst nochmal die regression laufen lassen</span></span>
-<span id="cb66-2"><a href="zshg.html#cb66-2"></a><span class="kw">predict</span> p_res , residuals</span>
-<span id="cb66-3"><a href="zshg.html#cb66-3"></a><span class="ot">list</span></span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb65-1"><a href="zshg.html#cb65-1"></a><span class="kw">reg</span> var2 var1 <span class="co">// zunächst nochmal die regression laufen lassen</span></span>
+<span id="cb65-2"><a href="zshg.html#cb65-2"></a><span class="kw">predict</span> p_res , residuals</span>
+<span id="cb65-3"><a href="zshg.html#cb65-3"></a><span class="ot">list</span></span></code></pre></div>
 <pre><code>  var1 var2 mean_var2 m_abw m_abw2 manual_vorhers pred_vorher        res      p_res
 1    1    2      4.75 -2.75 7.5625         2.7162    2.716216 -0.7162162 -0.7162162
 2    2    4      4.75 -0.75 0.5625         3.2973    3.297297  0.7027027  0.7027027
@@ -1085,26 +1095,26 @@ Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regre
 <div id="r2" class="section level3">
 <h3><span class="header-section-number">5.6.7</span> Modellgüte</h3>
 <p>Um zu beurteilen, um wieviel besser unsere Gerade aus <code>reg</code> die Werte vorhersagen kann als der <code>mean</code> können wir die Summe der quadrierten Residuen vergleichen. Dazu quadrieren wir also die Residuen:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb68-1"><a href="zshg.html#cb68-1"></a><span class="kw">gen</span> res2 = res^2</span>
-<span id="cb68-2"><a href="zshg.html#cb68-2"></a><span class="ot">list</span></span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb67-1"><a href="zshg.html#cb67-1"></a><span class="kw">gen</span> res2 = res^2</span>
+<span id="cb67-2"><a href="zshg.html#cb67-2"></a><span class="ot">list</span></span></code></pre></div>
 <pre><code>  var1 var2 mean_var2 m_abw m_abw2 manual_vorhers pred_vorher        res      res2
 1    1    2      4.75 -2.75 7.5625         2.7162    2.716216 -0.7162162 0.5129657
 2    2    4      4.75 -0.75 0.5625         3.2973    3.297297  0.7027027 0.4937911
 3    7    7      4.75  2.25 5.0625         6.2028    6.202703  0.7972973 0.6356830
 4    8    6      4.75  1.25 1.5625         6.7839    6.783784 -0.7837838 0.6143170</code></pre>
 <p>Dann können wir die Summen der quadierten Abweichungen aus der Mittelwertregel und dem Regressionsmodell vergleichen:</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb70-1"><a href="zshg.html#cb70-1"></a>dis 7.5625+0.5625+5.0625+1.5625 <span class="co">// abw2 aus Mittelwertsregel</span></span>
-<span id="cb70-2"><a href="zshg.html#cb70-2"></a>14.75</span></code></pre></div>
-<div class="sourceCode" id="cb71"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb71-1"><a href="zshg.html#cb71-1"></a>dis 0.5129657+0.4937911+0.6356830+0.6143170 <span class="co">// res2 aus regressionsmodell</span></span>
-<span id="cb71-2"><a href="zshg.html#cb71-2"></a>2.2567568</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb69-1"><a href="zshg.html#cb69-1"></a>dis 7.5625+0.5625+5.0625+1.5625 <span class="co">// abw2 aus Mittelwertsregel</span></span>
+<span id="cb69-2"><a href="zshg.html#cb69-2"></a>14.75</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb70-1"><a href="zshg.html#cb70-1"></a>dis 0.5129657+0.4937911+0.6356830+0.6143170 <span class="co">// res2 aus regressionsmodell</span></span>
+<span id="cb70-2"><a href="zshg.html#cb70-2"></a>2.2567568</span></code></pre></div>
 <p>Zum Beispiel können wir uns fragen, um wieviel sich die Summe der quadrierten Residuen verringert wenn wir statt des <code>mean</code> unser <code>reg</code>-Modell verwenden:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb72-1"><a href="zshg.html#cb72-1"></a>dis 14.75 -  2.256757</span>
-<span id="cb72-2"><a href="zshg.html#cb72-2"></a>12.493243</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb71-1"><a href="zshg.html#cb71-1"></a>dis 14.75 -  2.256757</span>
+<span id="cb71-2"><a href="zshg.html#cb71-2"></a>12.493243</span></code></pre></div>
 <p>Wenn wir diese Veränderung ins Verhältnis mit dem “Ausgangswert”, also den Residuen aus der Mittelwertregel setzen, dann erhalten wir das <span class="math inline">\(R^{2}\)</span> für unser <code>reg</code>-Modell. Dieses gibt die prozentuale Verringerung der Residuen durch das <code>reg</code>-Modell im Vergleich zur Mittelwertregel an:</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb73-1"><a href="zshg.html#cb73-1"></a>dis (14.75 -  2.256757) / 14.75</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb72-1"><a href="zshg.html#cb72-1"></a>dis (14.75 -  2.256757) / 14.75</span></code></pre></div>
 <pre><code>.84699953</code></pre>
 <p>Unser Regressionsmodell kann also 84,7% der Streuung um den Mittelwert erklären. Dieser Wert wird auch als <span class="math inline">\(R^2\)</span> bezeichnet. Im Regressionsoutput können wir das <span class="math inline">\(R^2\)</span> oben rechts unter <code>R-squared</code> ablesen.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb75-1"><a href="zshg.html#cb75-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb74-1"><a href="zshg.html#cb74-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
 <pre><code>      Source |       SS       df       MS              Number of obs =       4
 -------------+------------------------------           F(  1,     2) =   11.07
        Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
@@ -1123,7 +1133,7 @@ Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regre
 <div id="indiff" class="section level3">
 <h3><span class="header-section-number">5.6.8</span> Indifferenztabelle</h3>
 <p><span class="math inline">\(\chi^2\)</span> ergibt sich wie gesagt aus der Differenz zwischen der Indifferenztabelle und den beobachteten Häufigkeiten. Die Indifferenztabelle können wir mit <code>,expected</code> aufrufen (mit <code>nofreq</code> blenden wir die tatsächlichen Häufigkeiten aus):</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb77-1"><a href="zshg.html#cb77-1"></a><span class="kw">tab</span>  aq03  dh01, expected nofreq</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb76-1"><a href="zshg.html#cb76-1"></a><span class="kw">tab</span>  aq03  dh01, expected nofreq</span></code></pre></div>
 <pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
     IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
 -----------------+----------------------+----------
@@ -1134,7 +1144,7 @@ KEINS VON BEIDEN |   1,887.1      475.9 |   2,363.0
 -----------------+----------------------+----------
            Total |   2,752.0      694.0 |   3,446.0 </code></pre>
 <p>Ausgangspunkt für diese Indifferenztabelle sind die relativen Häufigkeiten der tatsächlich beoachteten Werte:</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb79-1"><a href="zshg.html#cb79-1"></a><span class="kw">tab</span>  aq03  dh01, cell nofreq</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb78-1"><a href="zshg.html#cb78-1"></a><span class="kw">tab</span>  aq03  dh01, cell nofreq</span></code></pre></div>
 <pre><code> HUND ODER KATZE | MEHRPERSONENHAUSHALT?
     IM HAUSHALT? | MEHRPERSO  EINPERSON |     Total
 -----------------+----------------------+----------
