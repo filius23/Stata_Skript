@@ -355,20 +355,34 @@ Es zeigt sich also mit einem Korrelationskoeffizienten von 0.37 ein mittel-stark
 ### Konkordanzmaße {#tau}
 
 
+```{stata tabKTF, eval = F}
+tab educ mi02
+```
+
+```{stata tabKTT, echo = F}
+set linesize 120
+qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
+qui use  "Allbus_1980-2018.dta",clear
+qui keep if year == 1990
+qui mvdecode educ, mv(-9 6 7)
+qui mvdecode mi02, mv(-9 -8 -7)
+tab educ mi02
+```
+
 Ein weiteres Zusammenhangsmaß für ordinale Variablen sind Konkordanzmaße wie Kendall's $\tau$. Hierfür die Werteverhältnisse gezählt: 
 
-$\tau_{\alpha}$: Differenz der konkordaten (C) und diskordanten (D) Paarvergleiche als Anteil an allen möglichen Paarvergleichen $\frac{n\times(n-1)}{2}$: 
++ $\tau_a$: Differenz der konkordaten (C) und diskordanten (D) Paarvergleiche als Anteil an allen möglichen Paarvergleichen $\frac{n\times(n-1)}{2}$: 
 
 $$\tau_a=\frac{C-D}{\frac{n\times(n-1)}{2}}$$
-Nachteil: Bei Bindungen in X u. Y Maximalwerte (-1; +1) nicht zu erreichen
+  Nachteil: Bei Bindungen in X u. Y Maximalwerte (-1; +1) nicht zu erreichen
 
 
-$\tau_{\alpha}$: Differenz der konkordaten (C) und diskordanten (D) Paarvergleiche als Anteil an allen möglichen Paarvergleichen $\frac{n\times(n-1)}{2}$ *unter Ausschluss von Bindungen in X und Y* 
++ $\tau_b$: Differenz der konkordaten (C) und diskordanten (D) Paarvergleiche als Anteil an allen möglichen Paarvergleichen $\frac{n\times(n-1)}{2}$ *unter Ausschluss von Bindungen in X und Y* 
 
 $$\tau_{b}=\frac{C-D}{\sqrt{(C+D+T_x)\times(C+D+T_y)}}$$
-Bei Bindungen in X o. Y Maximalwerte (-1; +1) nicht zu erreichen
+  Nachteil: Bei Bindungen in X o. Y Maximalwerte (-1; +1) nicht zu erreichen
 
-Goodman & Kruskal's $\gamma$ ignoriert die Bindungen vollständig:
++ Goodman & Kruskal's $\gamma$ ignoriert die Bindungen vollständig:
 
 $$\gamma=\frac{C-D}{C+D}$$
 
