@@ -16,7 +16,7 @@ path <- "D:/oCloud/RFS/"
 ak <- readr::read_delim(paste0(path,"allbus_kumuliert_1980-2018.csv"), delim = ";", col_types = cols(.default = col_double())) %>%   mutate_all(~ifelse(.<0,NA,.))
 ```
 
-Zusammenhänge sind das Herz (fast) aller statistischer Analysen. Im Folgenden lernen wir die Berechnung einer Reihe von Kennzahlen kennen, welche den Zusammenhang zwischen zwei Variablen ausdrücken. Diese variieren zwischen 0 und 1 oder -1 und +1, der Abstand zur Null dient dabei als Indikator für die Stärke des Zusammenhangs - je größer der Abstand zur Null, desto stärker der Zusammenhang:
+Zusammenhänge sind das Herz (fast) aller statistischer Analysen. Im Folgenden lernen wir die Berechnung einer Reihe von Kennzahlen kennen, welche den Zusammenhang zwischen zwei Variablen ausdrücken. Diese variieren je nachdem ob sie nur die Stäke oder auch die Richtung eines Zusammenhangs ausdrücken. Der Abstand zur Null dient dabei als Indikator für die Stärke des Zusammenhangs - je größer der Abstand zur Null, desto stärker der Zusammenhang:
 
 |  |  |
 |:----------|:---------------------------|
@@ -28,6 +28,8 @@ Zusammenhänge sind das Herz (fast) aller statistischer Analysen. Im Folgenden l
 | 0,50 ≤ $K$ < 1,00 | Starker |
 | $K$ = 1,00 | Perfekter | 
 
+
+Zusammenhangsmaße für metrische und ordinale Variablen geben mittels der Vorzeichen auch die *Zusammenhangsrichtung* an, sie variieren zwischen -1 und +1.
 
 ## Metrisch skalierte Variablen {#zshg_met}
 
@@ -220,6 +222,58 @@ df$pred_vorher <- m1$fitted.values
 df %>% select(matches("(var|pred_)"))
 ```
 Die Grafik oben zeigt wie Vorhersagen auf Basis des Regressionsmodells aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für `var1`. 
+
+### Korrelation und Regression
+```{r reg_korr,out.width = "100%", fig.height=6.5, fig.align="center" , echo = F,warning=F,message=F, dpi = 900}
+eq1 <-  substitute(italic(bar(x))) # formel erstellen
+eq2 <-  substitute(italic(bar(y))) # formel erstellen
+
+set.seed(212221);tibble(x1 = 1:40) %>% mutate(e = runif(n(),-10,10),
+                             y1 = 12 + 2.4*x1  + 0.00000012 * x1^2 - 0.000012 * x1^3 + 3*e,
+                             y2 = 12 + 2.4*x1  + 0.00000012 * x1^2 - 0.000012 * x1^3 + 20*e,
+                             y3 = 12 - 2.4*x1  + 0.00000012 * x1^2 - 0.000012 * x1^3 + 3*e,
+                             y4 = 12 - 2.4*x1  + 0.00000012 * x1^2 - 0.000012 * x1^3 + 20*e
+                             
+                                   ) %>% 
+  pivot_longer(cols=matches("^y"),names_to="var", values_to = "y") %>% 
+  group_by(var) %>% 
+  mutate(meany = mean(y),
+         meanx = mean(x1),
+         laby = ifelse(1:n() !=1,NA,1),
+         labx = ifelse(1:n() !=1,NA,1)) %>% 
+  nest() %>% mutate(corr = map(data,  function(df) cor(df$y,df$x1)) %>% unlist(.),
+                                      reg = lapply(data, function(df) {
+                                                       lm(y ~ x1, data = df) %>% broom::tidy() %>% 
+                                                         mutate(estimate = round(estimate,3), 
+                                                                lab = case_when(lead(estimate,1)>0 ~ "+",
+                                                                                lead(estimate,1)<0 ~ "-",
+                                                                                term == "x1" ~ "* x"),
+                                                                f1 = paste(
+                                                                  ifelse(term=="x1",str_remove(estimate,"-"),estimate),
+                                                                  lab)) %>% 
+                                                         pull(f1) %>% paste(.,collapse = " ")
+                                            }) %>% unlist(.)) %>% 
+  mutate(lab = paste0("Korrelation: ", round(corr,3), 
+                      "\nRegression: ", reg)) %>% 
+  unnest(data) %>% 
+  ggplot(.,aes(x=x1,y=y,color = var)) + 
+  geom_point(alpha = .5, stroke = .24) +
+  geom_smooth(method = "lm", se= F, size = .6) +
+  geom_vline(aes(xintercept = meanx), color = "#19D4EE", size = .25) +
+  geom_hline(aes(yintercept = meany),color = "#2473D5", size = .25) +
+  geom_label(aes(x = meanx,y=300,label =  ifelse(labx==1, as.character(as.expression(eq1)),NA) ), 
+             label.size = .01, hjust = 0.5, color = prismatic::clr_darken("#19D4EE",.1), parse = T, size = 4.5) + 
+  geom_label(aes(x = 0,y=meany,label =  ifelse(laby==1, as.character(as.expression(eq2)),NA) ) ,
+            label.size = .01, hjust = 0.5, vjust=.8, color = prismatic::clr_darken("#19D4EE",.1), parse = T, size = 4.5) +
+  facet_wrap(~lab,ncol = 2) +
+  ggthemes::theme_stata(base_size = 9) +
+  scale_color_manual(values=c("#29304E","#52609C","#575A69","#81869C")) +
+  guides(color = F) +
+  coord_cartesian(xlim = c(0.5,41)) +
+  labs(x="x")+ 
+  theme(axis.text.y=element_text(hjust=0.5))
+```
+
 
 ***
 
