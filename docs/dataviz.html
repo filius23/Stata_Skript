@@ -426,11 +426,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="dataviz.html#cb4-1"></a><span class="kw">graph</span> box inc, <span class="kw">by</span>(sex)</span>
 <span id="cb4-2"><a href="dataviz.html#cb4-2"></a><span class="kw">histogram</span> inc, <span class="kw">by</span>(sex)</span>
 <span id="cb4-3"><a href="dataviz.html#cb4-3"></a><span class="kw">twoway</span> (<span class="kw">kdensity</span> inc), <span class="kw">by</span>(sex) <span class="co">// zur Bedeutung von twoway gleich mehr</span></span></code></pre></div>
-<p><img src="04_dist_plots2.png" width="100%" height="100%" style="display: block; margin: auto;" />
-Das funktioniert auch für die Säulen- und Balkendiagramme:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="dataviz.html#cb5-1"></a><span class="kw">graph</span> <span class="bn">bar</span> (<span class="fu">count</span>) respid, <span class="bn">over</span>(educ)  <span class="kw">by</span>(sex)</span>
-<span id="cb5-2"><a href="dataviz.html#cb5-2"></a><span class="kw">graph</span> <span class="bn">bar</span> (<span class="fu">count</span>) respid, <span class="bn">over</span>(educ)  <span class="kw">by</span>(sex) horizontal</span></code></pre></div>
-<p><img src="04_bar_plots2.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p><img src="04_dist_plots2.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
 <hr />
 <p><strong><a href="dataviz.html#plt1">Übung1</a></strong></p>
 <hr />
@@ -438,9 +434,13 @@ Das funktioniert auch für die Säulen- und Balkendiagramme:</p>
 <div id="bar_col" class="section level2">
 <h2><span class="header-section-number">4.4</span> Kategoriale Variablen</h2>
 <p>Die Darstellung einer kategorialen Variable ist häufig eine grafische Übersetzung einer Häufigkeitsauszählung. Insbesondere bieten sich dafür Säulen- und Balkendiagramme an. Beispielsweise könnten wir die Schulabschlüsse der Befragen auszählen. Dazu zählen<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> wir die <code>respid</code>s pro Ausprägung von <code>educ</code><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, mit <code>graph bar</code> bzw <code>graph bar, horizontal</code> bekommen wir dann ein Säulen- bw. Balkendiagramm.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="dataviz.html#cb6-1"></a><span class="kw">graph</span> <span class="bn">bar</span> (<span class="fu">count</span>) respid, <span class="bn">over</span>(educ)  </span>
-<span id="cb6-2"><a href="dataviz.html#cb6-2"></a><span class="kw">graph</span> <span class="bn">bar</span> (<span class="fu">count</span>) respid, <span class="bn">over</span>(educ) horizontal</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="dataviz.html#cb5-1"></a><span class="kw">graph</span> <span class="bn">bar</span> (<span class="fu">count</span>) respid, <span class="bn">over</span>(educ)  </span>
+<span id="cb5-2"><a href="dataviz.html#cb5-2"></a><span class="kw">graph</span> <span class="bn">bar</span> (<span class="fu">count</span>) respid, <span class="bn">over</span>(educ) horizontal</span></code></pre></div>
 <p><img src="04_bar_plots.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+<p>Auch für die Säulen- und Balkendiagramme können wir mit <code>by</code> Facetten erstellen:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="dataviz.html#cb6-1"></a><span class="kw">graph</span> <span class="bn">bar</span> (<span class="fu">count</span>) respid, <span class="bn">over</span>(educ)  <span class="kw">by</span>(sex)</span>
+<span id="cb6-2"><a href="dataviz.html#cb6-2"></a><span class="kw">graph</span> <span class="bn">bar</span> (<span class="fu">count</span>) respid, <span class="bn">over</span>(educ)  <span class="kw">by</span>(sex) horizontal</span></code></pre></div>
+<p><img src="04_bar_plots2.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="bivar_plot" class="section level2">
 <h2><span class="header-section-number">4.5</span> Gemeinsame Verteilung zweier Variablen</h2>

@@ -70,15 +70,6 @@ twoway (kdensity inc), by(sex) // zur Bedeutung von twoway gleich mehr
 ```{r dist_plots2, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
 knitr::include_graphics("04_dist_plots2.png")
 ```
-Das funktioniert auch für die Säulen- und Balkendiagramme:
-```{stata, eval = F}
-graph bar (count) respid, over(educ)  by(sex)
-graph bar (count) respid, over(educ)  by(sex) horizontal
-```
-
-```{r bar_plots2, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
-knitr::include_graphics("04_bar_plots2.png")
-```
 
 
 ***
@@ -103,6 +94,15 @@ graph bar (count) respid, over(educ) horizontal
 knitr::include_graphics("04_bar_plots.png")
 ```
 
+Auch für die Säulen- und Balkendiagramme können wir mit `by` Facetten erstellen:
+```{stata, eval = F}
+graph bar (count) respid, over(educ)  by(sex)
+graph bar (count) respid, over(educ)  by(sex) horizontal
+```
+
+```{r bar_plots2, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
+knitr::include_graphics("04_bar_plots2.png")
+```
 
 
 ## Gemeinsame Verteilung zweier Variablen {#bivar_plot}
@@ -199,7 +199,7 @@ knitr::include_graphics("04_box_educ_bysex.png")
     
 (@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und wählen Sie die Befragten aus dem Jahr 2014 aus! Erstellen Sie einen Boxplot, ein Histogramm und einen k-Density-Plot für den BMI der Befragten (`hs18`).  
 
-(@) Erstellen Sie ebenfalls für die Befragten aus dem Jahr 2014 eine Grafik, welche die Häufigkeit der Befragten aus den alten und neuen Bundesländern (`eastwest`) wiedergibt!  
+(@) Erstellen Sie ebenfalls für die Befragten aus dem Jahr 2014 eine Grafik, welche die Häufigkeit der Befragten aus den alten und neuen Bundesländern (`eastwest`) wiedergibt!
     + Erstellen Sie sowohl ein Säulen- als auch ein Balkendiagramm!
     + Erstellen Sie eine weitere Darstellung, welche zusätzlich nach dem Geschlecht unterscheidet!
 
