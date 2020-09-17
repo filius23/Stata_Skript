@@ -461,8 +461,8 @@ Für Mittelwertvergleich gibt es insgesamt zwei Aspekte, anhand derer sich t-Tes
 
 + Die Varianz der Messwerte in den verglichenen Gruppen ist ...
   + gleich: $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` 
-  + verschieden: $\Rightarrow$ `ttest testvariable, by(gruppenvariable) unequal` (wie oben)  
-
+  + verschieden: $\Rightarrow$ `ttest testvariable, by(gruppenvariable) unequal` (wie oben)        
+   
    
    
 + 	Verbundene oder unverbundene Stichprobe?
@@ -477,16 +477,16 @@ Für Mittelwertvergleich gibt es insgesamt zwei Aspekte, anhand derer sich t-Tes
 
 (Nutzen Sie für die Aufgaben 1 & 2 jeweils die Methode "per Hand" als auch `ttest()`, um beide Berechnungswege zu verstehen)
 
-(@) Sie betrachten die Körpergröße von Menschen und fragen sich, ob diese sich von 172cm signifikant unterscheidet. Sie gehen davon aus, dass die Körpergröße eine normalverteilte Variable ist. In einer Stichprobe von 50 Personen finden Sie einen arithmetischen Mittelwert von 170cm und einer Standardabweichung von 9.26 cm. Sie können sich die Daten wie folgt erstellen:
-```{stata, eval = F}
+(@) Sie betrachten die Körpergröße von Menschen und fragen sich, ob diese sich von 172cm signifikant unterscheidet. Sie gehen davon aus, dass die Körpergröße eine normalverteilte Variable ist. In einer Stichprobe von 50 Personen finden Sie einen arithmetischen Mittelwert von ~~170cm~~ 170.4774 cm und einer Standardabweichung von ~~9.26~~ 8.513443 cm. Sie können sich die Daten wie folgt erstellen:
+```{stata kap8_sim1, eval = F}
 clear
-set seed 0441
 set obs 50
+set seed 0441
 gen height_sample =  rnormal(170,9.26)
 ```
 
  + Wie lauten die Hypothesen?
- + Berechnen Sie den t-Wert und die Irrtumswahrscheinlichkeit, mit der die $H_0$ verworfen werden kann
+ + Berechnen Sie den t-Wert und die Irrtumswahrscheinlichkeit, mit der die $H_0$ verworfen werden kann.
  + Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?
  + Wenn Sie die vorherige Fragestellung mit einer gerichteten Hypothese: "sind Menschen im Mittel signifikant größer als 172cm?" untersuchen würden - was würde sich ändern?     
  
@@ -504,24 +504,24 @@ gen height_sample =  rnormal(170,9.26)
 
 [Zurück](#mittelwertttest)
 
-## Übung 8-3 {#tpaired}
+## Übungen 8-3 {#tpaired}
 
-(@) 
+(@) Nutzen Sie den Beispieldatensatz `fuel.dta` mit `webuse fuel,clear`. Testen Sie mit einem gepaarten t-Test, ob der eingesetzte Spezialtreibstoff einen signifikanten Verbrauchseffekt in `mpg2` im Vergleich zu `mpg1` hat!
 
 
 ## weitere Übungen Kap 8
 
 Für alle, die noch etwas mehr machen möchten:
 
-(@) Sie erheben erneut eine Stichprobe mit 50 Personen und erhalten einen Mittelwert von 173cm und eine Standardabweichung von 6.15.
+(@) Sie erheben erneut eine Stichprobe mit 50 Personen und erhalten einen Mittelwert von ~~173cm~~ 173.3171 cm und eine Standardabweichung von ~~6.15cm~~ 5.654176 cm.
 
 + Wie hoch ist die Irrtumswahrscheinlichkeit für die Hypothese, dass der wahre Wert der Körpergröße in der Grundpopulation größer als 172cm ist? Stellen Sie die passenden formalen Hypothesen auf!
 
 Sie können sich auch diese Daten wie folgt erstellen:
-```{stata, eval = F}
+```{stata kap8_sim2, eval = F}
 clear
-set seed 0441
 set obs 50
+set seed 0441
 gen height_sample2 =  rnormal(173,6.15)
 ```
 

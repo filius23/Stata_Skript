@@ -75,6 +75,33 @@ Da der p-Wert für den beidseitigen Test (mittlere Spalte, unter `Ha: ratio != 1
 
 Außerdem kann die $H_0: \frac{\sigma^{2}_{1}}{\sigma^{2}_{2}} \leqslant 1$ verworfen werden (letzte Spalte, unter `Ha: ratio > 1`). D.h. die Varianz der Körpergröße von Männern ist signifikant größer als die Varianz der Körpergröße bei Frauen.
 
+
+```{r ftest_bsp_beid_illu, out.height="60%", out.width="60%", fig.align='center', echo=F}
+data3 <- data.frame(x = seq(0,4,.01))
+data3$f.var1 <- df(data3$x, df1 = 20, df2 = 2)
+data3$f.var2 <- df(data3$x, df1 = 20, df2 = 12)
+data3$f.var3 <- df(data3$x, df1 =  1757, df2 = 1706)
+
+data4 <- data3 %>% pivot_longer(contains("var"), names_to = "Verteilung", values_to = "var", names_prefix = "f\\.var")   %>% 
+  mutate(Verteilung = case_when(Verteilung == "1" ~ "df1 = 20, df2 = 2",
+                                Verteilung == "2" ~ "df1 = 20, df2 = 12",
+                                Verteilung == "3" ~ "df1 = 1757, df2 = 1706") )
+
+
+
+ggplot(data = data4, aes(x=x, color = Verteilung)) +   
+  geom_line(aes(y= var), size = .75) +
+  scale_color_manual(values =c(alpha("limegreen",.75),alpha("slateblue4", .5),alpha("red", .5)), name = "") +
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte", x = "") +
+  theme(legend.position = "top") +
+  guides(colour = guide_legend(override.aes = list(shape = 15 ,size = 6) ,
+                               label.position ="right" , ncol = 2) )
+
+```
+
+
+
 ***
 
 [Übung1](#fueb)
@@ -133,6 +160,11 @@ Der rechtsseitige Test (erste Zeile) ergibt, dass der Anteil der Befragten ohne 
 Der linksseitige Test (zweite Zeile) ergibt, dass der Anteil der Befragten ohne Haustier nicht signifikant kleiner als 67% ist.
 Außerdem können wir auf Basis des beidseitigen Tests (letzte Zeile) die $H_0: \pi = .67$ nicht verwerfen, da der p-Wert größer 0,05 ist. Der Anteil der Befragten ohne Haustier unterscheidet sich also nicht signifikant von 67\%.
 
+***
+
+[Übung 2](#binomt)
+
+***
 
 ### Chi²-Test
 
@@ -157,6 +189,34 @@ tab aq03 pet, chi
 
 
 Da der p-Wert deutlich unter 0,05 liegt, können wir davon ausgehen, dass es in der Grundgesamtheit einen Zusammenhang zwischen dem Geschlecht der Befragten und dem Haustierbesitz gibt.
+
+```{r chi2test_bsp_beid_illu, out.height="60%", out.width="60%", fig.align='center', echo=F}
+df3 <- data.frame(x = seq(0,20,.01))
+df3$chi1 <- dchisq(df3$x, df = 1)
+df3$chi2 <- dchisq(df3$x, df = 3)
+df3$chi3 <- dchisq(df3$x, df = 5)
+df3$chi4 <- dchisq(df3$x, df = 10)
+
+df4 <- df3 %>% 
+  pivot_longer(contains("chi"), names_to = "Verteilung", values_to = "var", names_prefix = "chi")   %>% 
+  mutate(Verteilung = case_when(Verteilung == "1" ~ "df = 1",
+                                Verteilung == "2" ~ "df = 3",
+                                Verteilung == "3" ~ "df = 5",
+                                Verteilung == "4" ~ "df = 10") )
+
+
+
+ggplot(data = df4, aes(x=x, color = Verteilung)) +   
+  geom_line(aes(y= var), size = .75) +
+  scale_color_manual(values =c(alpha("limegreen",.75),alpha("slateblue4", .5),alpha("red", .5),alpha("navy", .5)), name = "") +
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte", x = "", title = "Chi² Verteilungen") +
+  theme(legend.position = "top") +
+  guides(colour = guide_legend(override.aes = list(shape = 15 ,size = 6) ,
+                               label.position ="right" , ncol = 2) ) +
+  coord_cartesian(ylim = c(0,1.25))
+
+```
 
 
 ## Überblick
@@ -215,17 +275,7 @@ Was hier also gemacht wird, ist ein t-Test für `1.16511` vs. $\mu=0$. Unter `P>
 ### Übung 9-1 {#fueb}
   
 
-(@) Haben die Einkommensangaben von Haustierbesitzer\*innen eine höhere Varianz als die Einkommensangaben von Nicht-Haustierbesitzer\*innen ? 
-
-|  |  |
-|:----------|:---------------------------------------------------------------------------------|
-| `aq03` | Haben Sie einen Hund oder eine Katze in Ihrem Haushalt? 
-| | `1` Ja, Hund  
-| | `2` Ja, Katze 
-| | `3` Ja, beides 
-| | `4` Nein, keines von beiden
-| `inc` | Einkommen
-
+(@) Haben die Einkommensangaben von Mönnern eine höhere Varianz als die Einkommensangaben von Frauen? 
 
   + Laden Sie den Allbus (`Allbus_2018.dta`) und wählen Sie alle Angaben für in Vollzeit arbeitende Befragte (`work==1`) aus, die ein Einkommen (`inc`) größer als 0 angebeben haben. (siehe [Hinweise](#readin091) ) 
   + Denken Sie daran, die Missings mit `.` zu überschreiben! 
@@ -237,16 +287,38 @@ Was hier also gemacht wird, ist ein t-Test für `1.16511` vs. $\mu=0$. Unter `P>
 [Zurück](#ftest)
 
 
-### Übung 9-2
+### Übung 9-2 {#binomt}
 
 (@) Waren im Jahr 2018 mehr als 4\% der deutschen Bevölkerung Mitglied einer nicht-christlichen Glaubensgemeinschaft?
-+
+  + Laden Sie den Allbus (`Allbus_2018.dta`).
   + Wählen Sie alle Angaben aus, für welche die Konfession der Befragten vorliegt (`rd01 > 0`). 
   + Erstellen Sie eine Dummyvariable, welche `1` ist wenn die Befragten einer nicht-christlichen Glaubensgemeinschaft angehören und `0` wenn sie einer christlichen oder keiner Glaubensgemeinschaft angehören ([Hinweise](#binom_help)) 
   + Welcher Test ist hier der passende?
   + Formulieren Sie die Hypothesen
   + Führen Sie den Test durch
   + Wie lautet Ihre Entscheidung hinsichtlich der Hypothesen?
+  
+
+### Übung 9-3 {#anova1}
+
+(@) Führen Sie eine ANOVA-Analyse des Vertrauens in staatliche Institutionen durch!
+  + Nutzen Sie die unten aufgeführten Befehle, um einen gemeinsamen Indikator für Institutionenvertrauen zu erstellen!
+  + *Erklärung*: Sehen Sie sich mit `browse pt01 pt02 pt03 pt04 pt08 pt12 pt14 trust` das Ergebnis an - `trust` ist jeweils der Mittelwert über die `pt*`-Variablen.
+  + Können Sie Ost-West-Unterschiede beim Vertrauen in feststellen?  Führen Sie eine ANOVA durch!
+  + Nutzen Sie die `eastwest` als kategoriale Variable.
+  + Führen Sie auch einen `ttest` und eine Regression durch - erkennen Sie die parallelen der Werte aus allen drei Modellen? 
+  + Nutzen Sie die Anleitung aus Kapitel 8.9, um die Differenzen zu visualisieren!
+
+
+
+```{stata anov_help, eval=F}
+use "Allbus2018.dta", clear
+mvdecode pt01 pt02 pt03 pt04 pt08 pt12 pt14, mv(-9) // missings raus
+egen trust = rowmean(pt01 pt02 pt03 pt04 pt08 pt12 pt14) // Mittelwert über ptXX
+```
+  
+
+
 
 ## ANOVA
 
@@ -272,18 +344,13 @@ ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_sta
 
 Hier hatten wir die Gesamtvarianz in erklärte und unerklärte Varianz zerlegt. Diese Sum of Squares bezeichnet Stata `Model` und `Residual`:
 ```{stata regx_bsp, eval=F}
+use "https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta", clear
 reg var2 var1
 ```
 
 ```{stata regx_bsp1, collectcode=F, echo = F}
-use "regression_bsp.dta", clear
-egen mean_var2 = mean(var2)
-gen m_abw = var2 - mean_var2
-qui reg var2 var1
-predict pred_vorher, xb
-gen res = var2 - pred_vorher 
-gen res2 = res^2
-set linesize 90
+set linesize 200
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Stata_Skript\regression_bsp.dta", clear
 reg var2 var1
 ```
 
@@ -404,7 +471,7 @@ Wenn der durchschnittliche Unterschied zwischen den Gruppen ähnlich ist wie inn
 Mit `oneway inc sex, tabulate` bekommen wir bspw. die Varianzzerlegung der Einkommensangaben nach Geschlechtern:
 ```{stata anova1, eval =F }
 cd ""
-use Allbus_2018.dta, clear
+use Allbus2018.dta, clear
 keep if inc > 0 & educ > 0
 oneway inc sex, tabulate
 ```
@@ -427,6 +494,7 @@ Außerdem werden uns die Sum of Squares für die Unterschiede innerhalb und zwis
 dis  (506278204/ 5.3905e+09)
 ```
 Durch Kenntnis der Varibale `sex` können also 9.39% der gesamten Varianz ("Unterschiede") des Einkommens erklärt werden.
+
 
 ### ANOVA vs. t-Tests
 
@@ -469,6 +537,11 @@ reg inc i.sex
 - die untere Tabelle entspricht dem `ttest`:
   + Frauen verdienen im Mittel `806.5515` weniger als Männer und dieser Unterschied ist statistisch signifikant  (vgl. `diff` bei `ttest`) 
 
+***
+
+[Übungen 3](#anova1)
+
+***
 
 
 ## ANOVA mehrere Gruppen
