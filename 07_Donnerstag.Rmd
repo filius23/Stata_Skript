@@ -286,7 +286,11 @@ ggplot(data =dfx , aes(x = type, y =m )) +
   theme(plot.margin = margin(0, 0.1, 0, 0.1, "cm"))
 ```
 
+***
 
+[Übung1](#KI_param)
+
+***
 
 ## Bootstrapping
 
@@ -385,7 +389,13 @@ Zum Vergleich: oben mit der t-Verteilung kamen wir auf 177.8101 - 178.627.
 
 *Anmerkung: die Warnmeldung können wir hier ignorieren. Stata warnt uns, dass hier basierend auf allen Fällen im Speicher gebootstrapped wird. Das wäre ein Problem, wenn wir nicht oben nur die hier gewünschten Beobachtungen behalten hätten. Wir hatten ja nur nicht-fehlende Angaben von Männern aus dem Jahr 2014 behalten.*
 
-## Übungen 7
+***
+
+[Übung2](#KI_boot)
+
+***
+
+## Übung 7-1 {#KI_param}
 
 (@) Berechnen Sie den Punktschätzer und das Konfidenzintervall für die Körpergröße (`hs16`) von Frauen (`sex == 2`) in Deutschland 2014!
   + Lesen Sie dazu den kumulierten Allbus (`Allbus_1980-2018.dta`) ein
@@ -395,7 +405,12 @@ Zum Vergleich: oben mit der t-Verteilung kamen wir auf 177.8101 - 178.627.
   + Wie hoch ist die untere Grenze für das Konfidenzintervall?
   + Wie hoch ist die obere Grenze für das Konfidenzintervall?
   + Wie sind die Grenzen für das 99%-KI?
-  + Berechnen Sie das Konfidenzintervall mit Hilfe des Bootstrapping-Verfahrens! (Für die Ergebnisse aus der Lösung verwenden Sie `set seed 1212`)
+
+
+## Übung 7-2 {#KI_boot}
+
+(@) Berechnen Sie den Punktschätzer und das Konfidenzintervall für die Körpergröße (`hs16`) von Frauen (`sex == 2`) in Deutschland 2014! 
+  + Berechnen Sie das Konfidenzintervall mit Hilfe des Bootstrapping-Verfahrens! Verwenden Sie `set seed 1212` für die Ergebnisse aus der Lösung.
   + Berechnen Sie auch hier das 95%- und 99%-Konfidenzintervall.
 
 
