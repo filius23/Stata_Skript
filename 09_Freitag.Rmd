@@ -184,6 +184,31 @@ In allen Tests (außer $\chi^2$) können beidseitige, linksseitige oder rechtsse
   + mit einem behaupteten Wert: `bitest testvariable == referenzwert`  
   + zwischen Gruppen: Kreuztabelle erstellen und mit `tab var1 var2, chi` Unabhängigkeit testen
   
+## Signifikanz in Regressionen
+
+Wir hatten uns in Session 5 u.a. Regressionsmodelle angesehen:
+
+```{stata reg091a, eval = F}
+cd D:\oCloud\Home-Cloud\Lehre\Methodenseminar
+use "Allbus_1980-2018.dta", clear
+keep if year == 2014
+mvdecode lm02 age, mv(-32/-1)
+reg lm02 age
+```
+
+```{stata reg091, collectcode=F, echo = F}
+qui cd D:\oCloud\Home-Cloud\Lehre\Methodenseminar
+qui use "Allbus_1980-2018.dta", clear
+qui keep if year == 2014
+qui mvdecode lm02 age, mv(-32/-1)
+reg lm02 age
+```
+  
+In der Spalte `P>|t|` und `t` sehen wir die Ergebnisse eines t-Tests für die jeweiligen Koeffizienten. Hier wird der Koeffizient (sprich: die Steigung der Geraden) "gegen Null" getestet. Ist der Zusammenhang zwischen dem Alter der Befragten und ihrem Fernsehkonsum in der Population nicht eigentlich 0?
+
+$$H_0:\, \mu_{Koeff(age)} = 0  \qquad H_A: \mu_{Koeff(age)} \neq 0$$
+Was hier also gemacht wird, ist ein t-Test für `1.16511` vs. $\mu=0$. Unter `P>|t|` erkennen wir hier aber, dass die Irrtumswahrscheinlichkeit für die Ablehnung der $H_0$ deutlich kleiner als 0,05 ist. Dementsprechend lehnen wir die Nullhypothese ab (wonach der Zusammenhang = 0 ist) und sprechen von einen statistisch signifikanten Zusammenhang.
+
   
 ## Übungen 9
 
