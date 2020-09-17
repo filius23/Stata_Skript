@@ -270,6 +270,34 @@ egen islam_einst = rowmean(mm01a mm02 mm03 mm04 mm05a)
 ```
 
 
+## recode
+
+Mit der recode Funktion können Variablen umcodiert werden. Hier werden die Werte der Variable `x2` zusammengefasst: 1 und 2 zu 1, aus 3 wird 2 und aus 4 bis 7 wird 3 - diese neue Codierung wird in der Variable `nx2` abgelegt:
+
+```{stata, eval = F}
+// beispiel erzeugen:
+clear
+set obs 7
+egen x2 = seq(), f(1) t(7)
+recode x2 (1 2 = 1) (3 = 2) (4/7 = 3), gen(nx2)
+list x2 nx2
+```
+```{r, eval = F}
+     +----------+
+     | x2   nx2 |
+     |----------|
+  1. |  1     1 |
+  2. |  2     1 |
+  3. |  3     2 |
+  4. |  4     3 |
+  5. |  5     3 |
+     |----------|
+  6. |  6     3 |
+  7. |  7     3 |
+     +----------+
+```
+
+
 ## Informationen aus mehreren Datensätzen
 
 Mit `merge` können wir Informationen aus mehreren Datensätzen zusammenfügen.
