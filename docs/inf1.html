@@ -409,7 +409,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="inf1.html#cb3-1"></a><span class="kw">tabstat</span> hs16 , <span class="fu">s</span>(<span class="kw">mean</span>)</span></code></pre></div>
 <pre><code>    variable |      mean
 -------------+----------
-        hs16 |  178.2185
+        hs16 |  178.7179
 ------------------------</code></pre>
 <p>Allerdings ist sehr unwahrscheinlich, dass die durchschnittliche Körpergröße in Deutschland im Jahr 2014 genau 178.7179 cm betrug. Jedoch kann auf Basis des zentralen Grenzwertsatzes angenommen werden, dass bei genügend großer Fallzahl die Mittelwerte bei wiederholten SP normalverteilt sind.</p>
 <p>Somit können wir auf Basis einer Stichprobe das Konfidenzintervall einer Schätzung bestimmen, indem wir um den Punktschätzer (den Stichproben-Mittelwert, also die 178.7179 cm) mit Hilfe des eines geeigneten <span class="math inline">\(t\)</span>-Werts und des Standardfehlers (<span class="math inline">\(\frac{s}{\sqrt{n}}\)</span><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>) einen Wertebereich um den Mittelwert <span class="math inline">\(\bar{x}\)</span> konstruieren.</p>
@@ -458,7 +458,7 @@ Aufgrund der Symmetrie teilen wir die Irrtumswahrscheinlichkeit also auf jeweils
 <div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="inf1.html#cb21-1"></a><span class="kw">tabstat</span> hs16, <span class="fu">s</span>(<span class="kw">mean</span> <span class="fu">sd</span> n)</span></code></pre></div>
 <pre><code>    variable |      mean        sd         N
 -------------+------------------------------
-        hs16 |  178.2185  7.197386       842
+        hs16 |  178.7179   7.18002      1758
 --------------------------------------------</code></pre>
 <div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="inf1.html#cb23-1"></a><span class="kw">display</span> <span class="fu">invttail</span>( 1758-1,  .025)</span></code></pre></div>
 <pre><code>1.9613151</code></pre>

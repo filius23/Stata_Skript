@@ -38,7 +38,7 @@ tabstat hs16 , s(mean)
 ```{stata mean2, echo = F}
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
-qui keep if year == 2012 & sex ==  1 & hs16 > 0
+qui keep if year == 2014 & sex ==  1 & hs16 > 0
 tabstat hs16 , s(mean)
 ```
 
@@ -193,7 +193,7 @@ tabstat hs16, s(mean sd n)
 ```{stata n2, echo = F}
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use  "Allbus_1980-2018.dta",clear
-qui keep if year == 2012 & sex ==  1 & hs16 > 0
+qui keep if year == 2014 & sex ==  1 & hs16 > 0
 tabstat hs16, s(mean sd n)
 ```
 
