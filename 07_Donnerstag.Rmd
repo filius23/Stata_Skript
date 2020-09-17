@@ -290,7 +290,63 @@ ggplot(data =dfx , aes(x = type, y =m )) +
 
 ## Bootstrapping
 
-Bootstrapping ([Mehr zB hier](https://statisticsbyjim.com/hypothesis-testing/bootstrapping/)) beruht auf der Idee, wiederholt Stichproben *B* aus der Stichprobe zu ziehen und aus dieser *B* die Parameter zu berechnen. Für das Bootstrapping ziehen wir wiederholt SP *mit Zurücklegen* der gleichen Größe wie die Ausgangs-SP, also hier n = `r length(a14m$hs16)` und berechnen anschließend das arith. Mittel für diese simulierte Stichprobe. Diesen Vorgang wiederholen wir x Male und berechnen für die so gesammelten Mittelwerte aus den simulierten Stichproben die Standardabweichung. Analog zur vorhin gezeigten parametrischen Methode können wir das KI dann als $mean\,\pm t * sd()$ berechnen:
+Bootstrapping ([mehr zB hier](https://statisticsbyjim.com/hypothesis-testing/bootstrapping/)) beruht auf der Idee, wiederholt Stichproben *B* aus der Stichprobe zu ziehen und aus dieser *B* die Parameter zu berechnen. Für das Bootstrapping ziehen wir wiederholt SP *mit Zurücklegen* der gleichen Größe wie die Ausgangs-SP, also hier n = `r length(a14m$hs16)` und berechnen anschließend das arith. Mittel $\bar{x}_{1}^{*}$ für diese simulierte Stichprobe. Diesen Vorgang wiederholen wir b Male und berechnen für die so gesammelten Mittelwerte $\bar{x}_{b}^{*}$ aus den simulierten Stichproben die Standardabweichung. Analog zur vorhin gezeigten parametrischen Methode können wir das KI dann als $mean(\bar{x}^{*})\,\pm t * sd(\bar{x}^{*})$ berechnen:
+
+```{r boot_illustration, echo = F,out.width = "90%",fig.align='center', warning=F, message=F}
+library(scico)
+set.seed(90459000)
+df1 <- tibble(x = runif(10,1,25)) %>% 
+  arrange(x) %>% 
+  mutate(id=1:10)
+boot_df <- 
+  df1 %>% 
+  select(-x) %>% 
+  mutate(id0 = id,
+         id1 = sample(id,10,replace = T),
+         id2 = sample(id,10,replace = T),
+         id3 = sample(id,10,replace = T),
+         id4 = sample(id,10,replace = T),
+         id5 = sample(id,10,replace = T)) %>% 
+  relocate(id) %>% 
+  pivot_longer(cols = matches("id\\d"), names_prefix = "id", names_to = "iter", values_to = "sampl1" ) %>% 
+  group_by(iter) %>% 
+  left_join(df1, by = c("sampl1" = "id")) %>% 
+  mutate(rang = rank(sampl1,ties.method = "random"),
+         sampl1 = factor(sampl1,levels = 1:10),
+         meanx = mean(x)) %>% 
+  arrange(iter,id) %>% 
+  ungroup() %>% 
+  mutate(iter = ifelse(iter==0,-1,iter) %>% as.numeric(.))
+
+eq1 <-  substitute(italic(bar(x)~"=")) # formel erstellen
+eq2 <-  substitute(italic(bar(x)^"*"~"=")) # formel erstellen *
+
+ggplot(boot_df) +
+    aes(x= iter, y = rang, fill = sampl1, label = round(x,1) ) +
+    geom_tile(color = "white", size = 3)  +
+    geom_text(hjust = 0.5, size = 7, family = "serif", color = "white") +
+    geom_text(data = filter(boot_df,rang == 1),
+              aes(y = 0,label = round(meanx,1)),
+              hjust = 0.5, size = 6.5, family = "serif", color = "black") +
+    geom_text(data = data.frame(iter = -2, sampl1 = "1"),
+              aes(y = -.05,label = as.character(as.expression(eq1))),
+              hjust = 0.5, size = 7, family = "serif", color = "black", parse = T) + # \bar(x)
+    geom_text(data = data.frame(iter = 0, sampl1 = "1"),
+              aes(y = 0.075,label = as.character(as.expression(eq2))),
+              hjust = 0.5, size = 7, family = "serif", color = "black", parse = T) + # \bar(x)*
+    scale_fill_scico_d(palette = "lapaz",end = .85) +
+    scale_x_continuous(position = "top", breaks = c(-1,1:5), labels = c("orig",1:5) ) +
+    labs(x = "Iteration B =", title = "Bootstrapping mit 5 Iterationen (reps)") +
+    theme_minimal() +
+    guides(fill = FALSE) +
+    theme(plot.title =   element_text(hjust = 0.5, size = 19), 
+          axis.title.x.top = element_text(hjust = 0.5, size = 17, vjust = 1),
+          axis.text.x.top = element_text(hjust = 0.5, size = 15, vjust = 0 ),
+          panel.grid = element_blank(), 
+          axis.title.y = element_blank(), 
+          axis.text.y = element_blank(),
+          aspect.ratio = .8)
+```
 
 
 In Stata ist dieser Prozess sehr einfach mit dem Befehl `bootstrap` zu erledigen. Wir geben dabei an, welche Kennzahl wir berechnen möchten (`r(mean)` für das arith. Mittel) und mit `reps` die Anzahl der Wiederholungen. Mit `summarize hs16` legen wir zudem fest, welchen Befehl Stata auf die wiederholten Stichproben anwenden soll - bootstrapping ist für eine ganze Reihe an Funktionen verfügbar. Hier möchten wir ja aber das arith. Mittel, demensprechend geben wir hier `summarize` mit den gewünschten Variable an.
