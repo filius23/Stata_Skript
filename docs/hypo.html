@@ -350,10 +350,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.6.2" data-path="hypo.html"><a href="hypo.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>9.6.2</b> ANOVA vs. lineare Regression</a></li>
 </ul></li>
 <li class="chapter" data-level="9.7" data-path="hypo.html"><a href="hypo.html#anova-mehrere-gruppen"><i class="fa fa-check"></i><b>9.7</b> ANOVA mehrere Gruppen</a></li>
-<li class="chapter" data-level="9.8" data-path="inf2.html"><a href="inf2.html#hinweise"><i class="fa fa-check"></i><b>9.8</b> Hinweise</a><ul>
-<li class="chapter" data-level="9.8.1" data-path="hypo.html"><a href="hypo.html#readin091"><i class="fa fa-check"></i><b>9.8.1</b> Einlesen und auswählen für Ü9-1</a></li>
-<li class="chapter" data-level="9.8.2" data-path="hypo.html"><a href="hypo.html#binom_help"><i class="fa fa-check"></i><b>9.8.2</b> Einlesen und auswählen für Ü9-2</a></li>
-</ul></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="export1.html"><a href="export1.html"><i class="fa fa-check"></i><b>10</b> Ergebnisexport &amp; weitere Tipps</a><ul>
 <li class="chapter" data-level="10.1" data-path="export1.html"><a href="export1.html#log-file"><i class="fa fa-check"></i><b>10.1</b> log file</a></li>
@@ -591,7 +587,7 @@ Was hier also gemacht wird, ist ein t-Test für <code>1.16511</code> vs. <span 
 <li>Haben die Einkommensangaben von Mönnern eine höhere Varianz als die Einkommensangaben von Frauen?</li>
 </ol>
 <ul>
-<li>Laden Sie den Allbus (<code>Allbus_2018.dta</code>) und wählen Sie alle Angaben für in Vollzeit arbeitende Befragte (<code>work==1</code>) aus, die ein Einkommen (<code>inc</code>) größer als 0 angebeben haben. (siehe <a href="hypo.html#readin091">Hinweise</a> )</li>
+<li>Laden Sie den Allbus (<code>Allbus_2018.dta</code>) und wählen Sie alle Angaben für in Vollzeit arbeitende Befragte (<code>work==1</code>) aus, die ein Einkommen (<code>inc</code>) größer als 0 angebeben haben.</li>
 <li>Denken Sie daran, die Missings mit <code>.</code> zu überschreiben!</li>
 <li>Vergleichen Sie die Angaben des logarithmierten Einkommens der Befragten (<code>gen log_inc = log(inc)</code>) - durch die Logarithmierung werden die Einkommensangaben der NV angenähert. Die grundsätzliche Interpretation bleibt aber bestehen (höheres <code>log_inc</code> bedeutet auch höheres <code>inc</code>).</li>
 <li>Wie lauten die Hypothesen für einen rechtsseitigen Test?</li>
@@ -608,7 +604,7 @@ Was hier also gemacht wird, ist ein t-Test für <code>1.16511</code> vs. <span 
 <ul>
 <li>Laden Sie den Allbus (<code>Allbus_2018.dta</code>).</li>
 <li>Wählen Sie alle Angaben aus, für welche die Konfession der Befragten vorliegt (<code>rd01 &gt; 0</code>).</li>
-<li>Erstellen Sie eine Dummyvariable, welche <code>1</code> ist wenn die Befragten einer nicht-christlichen Glaubensgemeinschaft angehören und <code>0</code> wenn sie einer christlichen oder keiner Glaubensgemeinschaft angehören (<a href="hypo.html#binom_help">Hinweise</a>)</li>
+<li>Erstellen Sie eine Dummyvariable, welche <code>1</code> ist wenn die Befragten einer nicht-christlichen Glaubensgemeinschaft angehören und <code>0</code> wenn sie einer christlichen oder keiner Glaubensgemeinschaft angehören (<a href="#binom_help">Hinweise</a>)</li>
 <li>Welcher Test ist hier der passende?</li>
 <li>Formulieren Sie die Hypothesen</li>
 <li>Führen Sie den Test durch</li>
@@ -697,15 +693,15 @@ Bartlett&#39;s test for equal variances:  chi2(1) = 419.3118  Prob&gt;chi2 = 0.0
 ------------------------------------------------------------------------------
    Group |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
 ---------+--------------------------------------------------------------------
-    MANN |    1611    2210.297    37.65982    1511.562    2136.429    2284.164
-    FRAU |    1476    1403.745    23.11175    887.9243     1358.41    1449.081
+    MANN |    1612    2214.354    37.85447    1519.846    2140.104    2288.603
+    FRAU |    1477    1403.895    23.09658    887.6422    1358.589    1449.201
 ---------+--------------------------------------------------------------------
-combined |    3087    1824.657    23.68143    1315.759    1778.224     1871.09
+combined |    3089    1826.834    23.77214    1321.226    1780.223    1873.445
 ---------+--------------------------------------------------------------------
-    diff |            806.5515    45.13757                718.0487    895.0542
+    diff |            810.4585    45.30718                721.6233    899.2938
 ------------------------------------------------------------------------------
-    diff = mean(MANN) - mean(FRAU)                                t =  17.8687
-Ho: diff = 0                                     degrees of freedom =     3085
+    diff = mean(MANN) - mean(FRAU)                                t =  17.8881
+Ho: diff = 0                                     degrees of freedom =     3087
 
     Ha: diff &lt; 0                 Ha: diff != 0                 Ha: diff &gt; 0
  Pr(T &lt; t) = 1.0000         Pr(|T| &gt; |t|) = 0.0000          Pr(T &gt; t) = 0.0000</code></pre>
@@ -839,16 +835,7 @@ FACHHOCHSCHULREIFE  |   554.2048   85.45211     6.49   0.000      386.656    721
 <li>Befragte mit anderem Abschluss verdienen im Schnitt 195.5999 EUR weniger als Befragte Realschulabschluss (<code>educ = 3</code>). Der Unterschied ist aber <strong>nicht statistisch signifikant</strong> (<code>P&gt;|t|</code> &gt; 0,05).</li>
 <li>Befragte, die noch zur Schule gehen, verdienen im Schnitt 1062.78 EUR weniger als Befragte Realschulabschluss (<code>educ = 3</code>). Der Unterschied ist statistisch signifikant (<code>P&gt;|t|</code> &lt; 0,05).</li>
 </ul>
-</div>
-<div id="hinweise" class="section level2">
-<h2><span class="header-section-number">9.8</span> Hinweise</h2>
-<div id="readin091" class="section level3">
-<h3><span class="header-section-number">9.8.1</span> Einlesen und auswählen für Ü9-1</h3>
-</div>
-<div id="binom_help" class="section level3">
-<h3><span class="header-section-number">9.8.2</span> Einlesen und auswählen für Ü9-2</h3>
 
-</div>
 </div>
 </div>
 <div class="footnotes">

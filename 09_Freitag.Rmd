@@ -277,7 +277,7 @@ Was hier also gemacht wird, ist ein t-Test für `1.16511` vs. $\mu=0$. Unter `P>
 
 (@) Haben die Einkommensangaben von Mönnern eine höhere Varianz als die Einkommensangaben von Frauen? 
 
-  + Laden Sie den Allbus (`Allbus_2018.dta`) und wählen Sie alle Angaben für in Vollzeit arbeitende Befragte (`work==1`) aus, die ein Einkommen (`inc`) größer als 0 angebeben haben. (siehe [Hinweise](#readin091) ) 
+  + Laden Sie den Allbus (`Allbus_2018.dta`) und wählen Sie alle Angaben für in Vollzeit arbeitende Befragte (`work==1`) aus, die ein Einkommen (`inc`) größer als 0 angebeben haben. 
   + Denken Sie daran, die Missings mit `.` zu überschreiben! 
   + Vergleichen Sie die Angaben des logarithmierten Einkommens der Befragten (`gen log_inc = log(inc)`) - durch die Logarithmierung werden die Einkommensangaben der NV angenähert. Die grundsätzliche Interpretation bleibt aber bestehen (höheres `log_inc` bedeutet auch höheres `inc`).
   + Wie lauten die Hypothesen für einen rechtsseitigen Test?
@@ -507,7 +507,7 @@ ttest inc, by( sex) unequ
 set linesize 200
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use Allbus_2018.dta, clear
-qui keep if inc > 0 & age > 0 & educ > 0
+qui keep if inc > 0  & educ > 0
 //ANOVA mit 2 Gruppen
 ttest inc, by(sex)
 ```
@@ -647,7 +647,7 @@ oneway inc educ, tabulate
 set linesize 200
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use Allbus_2018.dta, clear
-qui keep if inc > 0 & educ > 0
+qui keep if inc > 0  & educ > 0
 oneway inc educ, tabulate
 ```
 
@@ -704,9 +704,3 @@ $\rightarrow$ jetzt sind die Koeffizienten jeweils auf den Vergleich zu `educ=3`
 + Befragte, die noch zur Schule gehen, verdienen im Schnitt 1062.78 EUR weniger als Befragte Realschulabschluss (`educ = 3`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
 
 
-## Hinweise
-
-### Einlesen und auswählen für Ü9-1 {#readin091}
-
-
-### Einlesen und auswählen für Ü9-2 {#binom_help}
