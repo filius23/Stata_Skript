@@ -221,7 +221,22 @@ separate inc, by(sex)
 
 ## collapse
 
-Manchmal möchten wir vielleicht nur einen Mittelwert pro Gruppe und die einzelnen Werte interessieren uns gar nicht. Wir möchten unseren Datensatz also verkürzen, sodass er lediglich einen Wert pro Gruppe enthält. Dazu
+Manchmal möchten wir vielleicht nur einen Mittelwert pro Gruppe und die einzelnen Werte interessieren uns gar nicht. Wir möchten unseren Datensatz also verkürzen, sodass er lediglich einen Wert pro Gruppe enthält. Dazu können wir mit `collapse` den Datensatz zusammenfassen. Wir geben dabei zunächst die gewünschte Funktion an, also z.B. `mean`, gefolgt von der zusammenzufassenden Variable. Wenn gewünscht können wir `neuer_varname =` voranstellen, um den Namen der zusammengefassten Variable festzulegen. Mit `by()` können wir Gruppen angeben, für die jeweils separate Werte berechnet werden:
+```{stata collapse, eval = F}
+cd D:\oCloud\Home-Cloud\Lehre\Methodenseminar\ // wo liegt der Datensatz?
+use  "Allbus_1980-2018.dta",clear
+keep  if year == 2014 & inc>0
+
+collapse (mean) mean_inc=inc (median) median_inc=inc, by(educ sex)
+
+browse
+```
+
+```{r collapse_browse, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
+knitr::include_graphics("11_collapse_browse.png")
+```
+
+Anstelle von `mean` können alle Funktionen, die wir auch bei `tabstat` gesehen haben, verwenden siehe [Kapitel 3](#desc1).
 
 ## Indikatoren umdrehen
 
