@@ -21,7 +21,7 @@ cd D:\oCloud\Home-Cloud\Lehre\Methodenseminar
 use "Allbus2018.dta", clear
 mvdecode gkpol, mv(-34)
 tab gkpol sex
-mvdecode age, mv(-32)
+mvdecode age, mv(-32) // dieses log enthält auch kommentare
 su age
 log close
 ```

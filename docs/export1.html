@@ -407,7 +407,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-3"><a href="export1.html#cb1-3"></a><span class="kw">use</span> <span class="st">&quot;Allbus2018.dta&quot;</span>, <span class="kw">clear</span></span>
 <span id="cb1-4"><a href="export1.html#cb1-4"></a><span class="kw">mvdecode</span> gkpol, mv(-34)</span>
 <span id="cb1-5"><a href="export1.html#cb1-5"></a><span class="kw">tab</span> gkpol sex</span>
-<span id="cb1-6"><a href="export1.html#cb1-6"></a><span class="kw">mvdecode</span> age, mv(-32)</span>
+<span id="cb1-6"><a href="export1.html#cb1-6"></a><span class="kw">mvdecode</span> age, mv(-32) <span class="co">// dieses log enthält auch kommentare</span></span>
 <span id="cb1-7"><a href="export1.html#cb1-7"></a>su age</span>
 <span id="cb1-8"><a href="export1.html#cb1-8"></a><span class="fu">log</span> <span class="kw">close</span></span></code></pre></div>
 <p><img src="10_logfile.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
