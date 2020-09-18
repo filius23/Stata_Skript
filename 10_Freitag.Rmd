@@ -34,10 +34,10 @@ knitr::include_graphics("10_logfile.png")
 ## Tabellenexport mit `esttab`
 
 
-`esttab` ist eine Zusatz-Funktion, um Tabellen aus Stata zu exportieren. Im Folgenden finden Sie Beispiele für den Export in eine `.rtf`-Datei, die mit Word weiterverarbeitet werden kann. Auch der Export in LATEX und Excel-Formate ist möglich. Mehr Infos und ausführliche Anleitungen [hier](https://www.ssc.wisc.edu/sscc/pubs/stata_tables.htm) (nach unten scrollen für Tabellen) und [hier](http://repec.org/bocode/e/estout/esttab.html). Wie andere Befehle von Usern muss auch `esttab` zunächst installiert werden:
+`esttab`/`estout` ist eine Zusatz-Funktion, um Tabellen aus Stata zu exportieren. Im Folgenden finden Sie Beispiele für den Export in eine `.rtf`-Datei, die mit Word weiterverarbeitet werden kann. Auch der Export in LATEX und Excel-Formate ist möglich. Mehr Infos und ausführliche Anleitungen [hier](https://www.ssc.wisc.edu/sscc/pubs/stata_tables.htm) (nach unten scrollen für Tabellen) und [hier](http://repec.org/bocode/e/estout/esttab.html). Wie andere Befehle von Usern muss auch `estout` zunächst installiert werden:
 
 ```{stata install, eval = F}
-ssc install esttab
+ssc install estout
 ```
 
 
