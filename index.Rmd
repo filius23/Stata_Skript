@@ -38,5 +38,27 @@ Hier entsteht das Begleitskript zum GESIS Methodenseminar "Uni- und bivariate St
 
 Weitere Informationen zum Methodenseminar, den Link zur Anmeldung und alles weitere finden Sie [hier](https://training.gesis.org/?site=pDetails&child=full&pID=0x387DA6358EF341928F67355388570B76&subID=0x0BFDFA4D3CA1443E9E87F9FFDF305FB3)
 
-Los geht's mit dem [Einstieg](#Stata1)
+```{r kapitel, ft.align = "center",message=F,warning=F, echo = F}
+library(kableExtra)
+opts <- options(knitr.kable.NA = "")
+
+readxl::read_xlsx("00_kapitel.xlsx",sheet = 1) %>% 
+  kable() %>% 
+  kable_styling(bootstrap_options = "condensed", full_width = F) %>% 
+  column_spec(1,bold = T)
+```
+
+
+<!-- Los geht's mit dem [Einstieg](#Stata1) -->
+
+<!-- [Einstieg](#Stata1) -->
+<!-- [Datensätze bearbeiten](#Stata2) -->
+<!-- [Variablen beschreiben](#desc1) -->
+<!-- [Grafiken erstellen](#dataviz) -->
+<!-- [Zusammenhänge berechnen](#zshg) -->
+<!-- [Zusammenhänge vergleichen und visualisieren](#zshg2) -->
+<!-- [Konfidenzintervalle berechnen](#inf1) -->
+<!-- [t-Tests](#inf2) -->
+<!-- [weitere Tests: F-Test, Binomialtest, Chi²-Test, ANOVA](#hypo) -->
+<!-- [Ergebnisse exportieren](#export1) -->
 

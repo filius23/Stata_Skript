@@ -654,7 +654,7 @@ bp_after |     120    151.3583    1.294234    14.17762    148.7956     153.921
 <li>gleich: <span class="math inline">\(\Rightarrow\)</span> <code>ttest testvariable, by(gruppenvariable)</code></li>
 <li>verschieden: <span class="math inline">\(\Rightarrow\)</span> <code>ttest testvariable, by(gruppenvariable) unequal</code> (wie oben)</li>
 </ul></li>
-<li><pre><code>Verbundene oder unverbundene Stichprobe?</code></pre>
+<li>Verbundene oder unverbundene Stichprobe?
 <ul>
 <li>Sind die einzelnen Messwerte voneinander unabhängig? D.h. ein Messwert steht in keinem direkten Zusammenhang mit einem anderen <span class="math inline">\(\Rightarrow\)</span> <code>ttest testvariable, by(gruppenvariable)</code> für eine unverbundene Stichprobe (mit ggf. <code>unequal</code>)</li>
 <li>Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen <span class="math inline">\(\Rightarrow\)</span> Werte für beide Variablen sollten “nebeneinander” abgelegt sein (<em>wide</em>-Format), dann kann mit <code>ttest vorher==nachher</code> ein verbundener <code>ttest</code> durchgeführt werden.</li>
@@ -667,10 +667,10 @@ bp_after |     120    151.3583    1.294234    14.17762    148.7956     153.921
 <ol class="example" style="list-style-type: decimal">
 <li>Sie betrachten die Körpergröße von Menschen und fragen sich, ob diese sich von 172cm signifikant unterscheidet. Sie gehen davon aus, dass die Körpergröße eine normalverteilte Variable ist. In einer Stichprobe von 50 Personen finden Sie einen arithmetischen Mittelwert von <del>170cm</del> 170.4774 cm und einer Standardabweichung von <del>9.26</del> 8.513443 cm. Sie können sich die Daten wie folgt erstellen:</li>
 </ol>
-<div class="sourceCode" id="cb31"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb31-1"><a href="inf2.html#cb31-1"></a><span class="kw">clear</span></span>
-<span id="cb31-2"><a href="inf2.html#cb31-2"></a><span class="kw">set</span> <span class="kw">obs</span> 50</span>
-<span id="cb31-3"><a href="inf2.html#cb31-3"></a><span class="kw">set</span> <span class="dv">seed</span> 0441</span>
-<span id="cb31-4"><a href="inf2.html#cb31-4"></a><span class="kw">gen</span> height_sample =  rnormal(170,9.26)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb30-1"><a href="inf2.html#cb30-1"></a><span class="kw">clear</span></span>
+<span id="cb30-2"><a href="inf2.html#cb30-2"></a><span class="kw">set</span> <span class="kw">obs</span> 50</span>
+<span id="cb30-3"><a href="inf2.html#cb30-3"></a><span class="kw">set</span> <span class="dv">seed</span> 0441</span>
+<span id="cb30-4"><a href="inf2.html#cb30-4"></a><span class="kw">gen</span> height_sample =  rnormal(170,9.26)</span></code></pre></div>
 <ul>
 <li>Wie lauten die Hypothesen?</li>
 <li>Berechnen Sie den t-Wert und die Irrtumswahrscheinlichkeit, mit der die <span class="math inline">\(H_0\)</span> verworfen werden kann.</li>
@@ -710,10 +710,10 @@ bp_after |     120    151.3583    1.294234    14.17762    148.7956     153.921
 <li>Wie hoch ist die Irrtumswahrscheinlichkeit für die Hypothese, dass der wahre Wert der Körpergröße in der Grundpopulation größer als 172cm ist? Stellen Sie die passenden formalen Hypothesen auf!</li>
 </ul>
 <p>Sie können sich auch diese Daten wie folgt erstellen:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb32-1"><a href="inf2.html#cb32-1"></a><span class="kw">clear</span></span>
-<span id="cb32-2"><a href="inf2.html#cb32-2"></a><span class="kw">set</span> <span class="kw">obs</span> 50</span>
-<span id="cb32-3"><a href="inf2.html#cb32-3"></a><span class="kw">set</span> <span class="dv">seed</span> 0441</span>
-<span id="cb32-4"><a href="inf2.html#cb32-4"></a><span class="kw">gen</span> height_sample2 =  rnormal(173,6.15)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb31-1"><a href="inf2.html#cb31-1"></a><span class="kw">clear</span></span>
+<span id="cb31-2"><a href="inf2.html#cb31-2"></a><span class="kw">set</span> <span class="kw">obs</span> 50</span>
+<span id="cb31-3"><a href="inf2.html#cb31-3"></a><span class="kw">set</span> <span class="dv">seed</span> 0441</span>
+<span id="cb31-4"><a href="inf2.html#cb31-4"></a><span class="kw">gen</span> height_sample2 =  rnormal(173,6.15)</span></code></pre></div>
 <ol start="5" class="example" style="list-style-type: decimal">
 <li>Die Schätzung eines Experten ergab, dass das mittlere logarithmierte Einkommen von Vollzeiterwerbstätigen in Deutschland für das Jahr 2018 bei 7,6 log(EUR) liegt.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> Sie vermuten, dass sich die wahren Werte davon signifikant unterscheiden. Überprüfen Sie diese These! (<em>Berechnen Sie die p-Werte jeweils mit <code>ttest</code> und per Hand!</em>)</li>
 </ol>
@@ -754,44 +754,44 @@ bp_after |     120    151.3583    1.294234    14.17762    148.7956     153.921
 <h2><span class="header-section-number">8.8</span> Hinweise</h2>
 <div id="vollz" class="section level3">
 <h3><span class="header-section-number">8.8.1</span> Auswahl der in Vollzeit beschäftigten Befragten</h3>
+<div class="sourceCode" id="cb32"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb32-1"><a href="inf2.html#cb32-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
+<span id="cb32-2"><a href="inf2.html#cb32-2"></a>cd <span class="st">&quot;...&quot;</span></span>
+<span id="cb32-3"><a href="inf2.html#cb32-3"></a><span class="co">// einlesen</span></span>
+<span id="cb32-4"><a href="inf2.html#cb32-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
+<span id="cb32-5"><a href="inf2.html#cb32-5"></a></span>
+<span id="cb32-6"><a href="inf2.html#cb32-6"></a><span class="co">// missings als NA:</span></span>
+<span id="cb32-7"><a href="inf2.html#cb32-7"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt;0 </span>
+<span id="cb32-8"><a href="inf2.html#cb32-8"></a></span>
+<span id="cb32-9"><a href="inf2.html#cb32-9"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2018  &amp; work == 1 &amp; inc &gt; 0</span>
+<span id="cb32-10"><a href="inf2.html#cb32-10"></a></span>
+<span id="cb32-11"><a href="inf2.html#cb32-11"></a><span class="co">// logarithmieren des Einkommens:</span></span>
+<span id="cb32-12"><a href="inf2.html#cb32-12"></a><span class="kw">gen</span> log_inc = <span class="fu">log</span>(inc)</span></code></pre></div>
+</div>
+<div id="genhelp" class="section level3">
+<h3><span class="header-section-number">8.8.2</span> Kohortenvergleich Tipps</h3>
 <div class="sourceCode" id="cb33"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb33-1"><a href="inf2.html#cb33-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
 <span id="cb33-2"><a href="inf2.html#cb33-2"></a>cd <span class="st">&quot;...&quot;</span></span>
 <span id="cb33-3"><a href="inf2.html#cb33-3"></a><span class="co">// einlesen</span></span>
 <span id="cb33-4"><a href="inf2.html#cb33-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
 <span id="cb33-5"><a href="inf2.html#cb33-5"></a></span>
-<span id="cb33-6"><a href="inf2.html#cb33-6"></a><span class="co">// missings als NA:</span></span>
-<span id="cb33-7"><a href="inf2.html#cb33-7"></a><span class="kw">replace</span> inc = . <span class="kw">if</span> inc &lt;0 </span>
-<span id="cb33-8"><a href="inf2.html#cb33-8"></a></span>
-<span id="cb33-9"><a href="inf2.html#cb33-9"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2018  &amp; work == 1 &amp; inc &gt; 0</span>
-<span id="cb33-10"><a href="inf2.html#cb33-10"></a></span>
-<span id="cb33-11"><a href="inf2.html#cb33-11"></a><span class="co">// logarithmieren des Einkommens:</span></span>
-<span id="cb33-12"><a href="inf2.html#cb33-12"></a><span class="kw">gen</span> log_inc = <span class="fu">log</span>(inc)</span></code></pre></div>
+<span id="cb33-6"><a href="inf2.html#cb33-6"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">inrange</span>(yborn,1960,1979)</span>
+<span id="cb33-7"><a href="inf2.html#cb33-7"></a><span class="kw">labelbook</span> dg12</span>
+<span id="cb33-8"><a href="inf2.html#cb33-8"></a><span class="kw">mvdecode</span> dg12, mv(-51/-1)</span>
+<span id="cb33-9"><a href="inf2.html#cb33-9"></a></span>
+<span id="cb33-10"><a href="inf2.html#cb33-10"></a><span class="kw">gen</span> b70s = (yborn &gt; 1969)</span></code></pre></div>
 </div>
-<div id="genhelp" class="section level3">
-<h3><span class="header-section-number">8.8.2</span> Kohortenvergleich Tipps</h3>
+<div id="bmihelp" class="section level3">
+<h3><span class="header-section-number">8.8.3</span> BMI Aufgaben</h3>
 <div class="sourceCode" id="cb34"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb34-1"><a href="inf2.html#cb34-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
 <span id="cb34-2"><a href="inf2.html#cb34-2"></a>cd <span class="st">&quot;...&quot;</span></span>
 <span id="cb34-3"><a href="inf2.html#cb34-3"></a><span class="co">// einlesen</span></span>
 <span id="cb34-4"><a href="inf2.html#cb34-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
 <span id="cb34-5"><a href="inf2.html#cb34-5"></a></span>
-<span id="cb34-6"><a href="inf2.html#cb34-6"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">inrange</span>(yborn,1960,1979)</span>
-<span id="cb34-7"><a href="inf2.html#cb34-7"></a><span class="kw">labelbook</span> dg12</span>
-<span id="cb34-8"><a href="inf2.html#cb34-8"></a><span class="kw">mvdecode</span> dg12, mv(-51/-1)</span>
-<span id="cb34-9"><a href="inf2.html#cb34-9"></a></span>
-<span id="cb34-10"><a href="inf2.html#cb34-10"></a><span class="kw">gen</span> b70s = (yborn &gt; 1969)</span></code></pre></div>
-</div>
-<div id="bmihelp" class="section level3">
-<h3><span class="header-section-number">8.8.3</span> BMI Aufgaben</h3>
-<div class="sourceCode" id="cb35"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb35-1"><a href="inf2.html#cb35-1"></a><span class="co">// wo liegt der Datensatz?</span></span>
-<span id="cb35-2"><a href="inf2.html#cb35-2"></a>cd <span class="st">&quot;...&quot;</span></span>
-<span id="cb35-3"><a href="inf2.html#cb35-3"></a><span class="co">// einlesen</span></span>
-<span id="cb35-4"><a href="inf2.html#cb35-4"></a><span class="kw">use</span> Allbus_1980-2018.dta, <span class="kw">clear</span></span>
-<span id="cb35-5"><a href="inf2.html#cb35-5"></a></span>
-<span id="cb35-6"><a href="inf2.html#cb35-6"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2014 &amp; hs18 &gt; 0 &amp; hs16&gt;0 &amp; sex == 2</span>
-<span id="cb35-7"><a href="inf2.html#cb35-7"></a></span>
-<span id="cb35-8"><a href="inf2.html#cb35-8"></a><span class="kw">tabstat</span> hs16, <span class="fu">s</span>(<span class="kw">median</span>) </span>
-<span id="cb35-9"><a href="inf2.html#cb35-9"></a><span class="kw">gen</span> tall = (hs16 &gt; 160)</span>
-<span id="cb35-10"><a href="inf2.html#cb35-10"></a><span class="kw">tab</span> hs16 tall <span class="co">// Kontrolle</span></span></code></pre></div>
+<span id="cb34-6"><a href="inf2.html#cb34-6"></a><span class="kw">keep</span> <span class="kw">if</span> <span class="fu">year</span> == 2014 &amp; hs18 &gt; 0 &amp; hs16&gt;0 &amp; sex == 2</span>
+<span id="cb34-7"><a href="inf2.html#cb34-7"></a></span>
+<span id="cb34-8"><a href="inf2.html#cb34-8"></a><span class="kw">tabstat</span> hs16, <span class="fu">s</span>(<span class="kw">median</span>) </span>
+<span id="cb34-9"><a href="inf2.html#cb34-9"></a><span class="kw">gen</span> tall = (hs16 &gt; 160)</span>
+<span id="cb34-10"><a href="inf2.html#cb34-10"></a><span class="kw">tab</span> hs16 tall <span class="co">// Kontrolle</span></span></code></pre></div>
 <!-- ### Plot der Körpergrößenangaben -->
 <!-- ```{r,echo =F} -->
 <!-- library(dplyr) -->
@@ -818,36 +818,36 @@ bp_after |     120    151.3583    1.294234    14.17762    148.7956     153.921
 <p>Also visualisieren wir das Ergebnis des Gruppenvergleichs aus <a href="inf2.html#tgroup">Aufgabe 8-2</a>:
 <img src="08_strip_bar_text_opts.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>Zur Erinnerung, das hier war unsere Vorbereitung:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="inf2.html#cb36-1"></a>cd <span class="st">&quot;&quot;</span></span>
-<span id="cb36-2"><a href="inf2.html#cb36-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_2018.dta&quot;</span>,<span class="kw">clear</span></span>
-<span id="cb36-3"><a href="inf2.html#cb36-3"></a><span class="kw">keep</span> <span class="kw">if</span> work == 1 &amp; inc &gt; 0</span>
-<span id="cb36-4"><a href="inf2.html#cb36-4"></a><span class="co">// Einkommensangaben logarithmieren:</span></span>
-<span id="cb36-5"><a href="inf2.html#cb36-5"></a><span class="kw">gen</span> log_inc = <span class="fu">log</span>(inc)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb35-1"><a href="inf2.html#cb35-1"></a>cd <span class="st">&quot;&quot;</span></span>
+<span id="cb35-2"><a href="inf2.html#cb35-2"></a><span class="kw">use</span>  <span class="st">&quot;Allbus_2018.dta&quot;</span>,<span class="kw">clear</span></span>
+<span id="cb35-3"><a href="inf2.html#cb35-3"></a><span class="kw">keep</span> <span class="kw">if</span> work == 1 &amp; inc &gt; 0</span>
+<span id="cb35-4"><a href="inf2.html#cb35-4"></a><span class="co">// Einkommensangaben logarithmieren:</span></span>
+<span id="cb35-5"><a href="inf2.html#cb35-5"></a><span class="kw">gen</span> log_inc = <span class="fu">log</span>(inc)</span></code></pre></div>
 <p>Die Darstellung ist ein sog. <code>stripplot</code>, diese Funktion müssen wir erst installieren:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb37-1"><a href="inf2.html#cb37-1"></a><span class="kw">ssc</span> install stripplot <span class="co">// ado installieren</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="inf2.html#cb36-1"></a><span class="kw">ssc</span> install stripplot <span class="co">// ado installieren</span></span></code></pre></div>
 <p>Als ersten Schritt können wir den Basis-Plot erstellen: wir möchten einen <code>stripplot</code> für <code>log_inc</code>, getrennt nach <code>sex</code>. Doppelt vorkommende Ausprägungen sollen aufeinander gestapelt werden (<code>stack</code>) und wir möchten <code>log_inc</code> auf der y-Achse abgetragen (<code>vertical</code>)</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb38-1"><a href="inf2.html#cb38-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb37-1"><a href="inf2.html#cb37-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical</span></code></pre></div>
 <p><img src="08_strip_base.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
 <p>Dann passen wir die gezeigten <code>marker</code> mit den entsprechenden <code>m</code>_optionen an:
 <code>height(0.6)</code> verringert die Höhe (hier Breite) der aufgestapelten Punkte. Mit <code>width(.15)</code> bestimmen wir, dass auf einer Breite von <code>.15</code> nebeneinanderliegender Werte zusammengefasst werden sollen.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb39-1"><a href="inf2.html#cb39-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical mcolor(<span class="st">&quot;navy %70&quot;</span>) msize(small) <span class="bn">msymbol</span>(sh) height(0.6) <span class="kw">width</span>(.15)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb38-1"><a href="inf2.html#cb38-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical mcolor(<span class="st">&quot;navy %70&quot;</span>) msize(small) <span class="bn">msymbol</span>(sh) height(0.6) <span class="kw">width</span>(.15)</span></code></pre></div>
 <p><img src="08_strip_marker.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
 <p>Mit der Option <code>bar</code> können wir jetzt den Mittelwert und 95% KI hinzufügen:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="inf2.html#cb40-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical mcolor(<span class="st">&quot;navy %70&quot;</span>) msize(small) <span class="bn">msymbol</span>(sh) height(0.6) <span class="kw">width</span>(.15) <span class="co">///</span></span>
-<span id="cb40-2"><a href="inf2.html#cb40-2"></a>	<span class="bn">bar</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb39-1"><a href="inf2.html#cb39-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical mcolor(<span class="st">&quot;navy %70&quot;</span>) msize(small) <span class="bn">msymbol</span>(sh) height(0.6) <span class="kw">width</span>(.15) <span class="co">///</span></span>
+<span id="cb39-2"><a href="inf2.html#cb39-2"></a>	<span class="bn">bar</span></span></code></pre></div>
 <p><img src="08_strip_bar.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
 <p>Allerdings sind die Endpunkte für das 95% KI so kaum zu sehen, sodass wir hier auch einige Optionen anwenden. Die Optionen in <code>bar()</code> beziehen sich auf Indikatoren für das 95% KI. Die Optionen die darin in <code>mean()</code> angegeben sind, verändern den Punkt, der den Mittelwert wiedergibt (hier einmal mit verschiedenen Farben um Range und Punkt von einander abzuheben):</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb41-1"><a href="inf2.html#cb41-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical mcolor(<span class="st">&quot;navy %70&quot;</span>) msize(small) <span class="bn">msymbol</span>(sh) height(0.6) <span class="kw">width</span>(.15) <span class="co">///</span></span>
-<span id="cb41-2"><a href="inf2.html#cb41-2"></a>	<span class="bn">bar</span>(lcolor(<span class="bn">black</span>) lwidth(vthin) msize(huge) <span class="kw">mean</span>(mcolor(<span class="bn">orange</span>) <span class="bn">msymbol</span>(o) msize(tiny))) boffset(-0.05)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb40-1"><a href="inf2.html#cb40-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical mcolor(<span class="st">&quot;navy %70&quot;</span>) msize(small) <span class="bn">msymbol</span>(sh) height(0.6) <span class="kw">width</span>(.15) <span class="co">///</span></span>
+<span id="cb40-2"><a href="inf2.html#cb40-2"></a>	<span class="bn">bar</span>(lcolor(<span class="bn">black</span>) lwidth(vthin) msize(huge) <span class="kw">mean</span>(mcolor(<span class="bn">orange</span>) <span class="bn">msymbol</span>(o) msize(tiny))) boffset(-0.05)</span></code></pre></div>
 <p><img src="08_strip_bar_opts.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
 <p>Zum Schluss geben wir noch ein <code>scheme</code> und Beschriftungen an. Außerdem verändern wir mit <code>aspect(1.25)</code> das Verhältnis von Höhe zu Breite (Werte &gt; 1 führen zu schmaleren, Werte &lt; 1 zu breiteren Darstellungen). Details zu den anderen Optionen in Kapitel 4.8.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb42-1"><a href="inf2.html#cb42-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical mcolor(<span class="st">&quot;navy %60&quot;</span>) msize(small) <span class="bn">msymbol</span>(sh) height(0.6) <span class="kw">width</span>(.15) <span class="co">///</span></span>
-<span id="cb42-2"><a href="inf2.html#cb42-2"></a>	<span class="bn">bar</span>(lcolor(<span class="bn">orange</span>) lwidth(vthin) msize(huge) <span class="kw">mean</span>(mcolor(<span class="bn">orange</span>) <span class="bn">msymbol</span>(o) msize(tiny))) boffset(-0.075) <span class="co">///</span></span>
-<span id="cb42-3"><a href="inf2.html#cb42-3"></a>	<span class="dv">scheme</span>(plotplain) <span class="bn">ytitle</span>(<span class="st">&quot;logarithmierte Einkommensangaben&quot;</span>) <span class="bn">xtitle</span>(<span class="st">&quot;&quot;</span>) <span class="co">///</span></span>
-<span id="cb42-4"><a href="inf2.html#cb42-4"></a>	<span class="kw">xlabel</span>(1 <span class="st">&quot;Männer&quot;</span> 2 <span class="st">&quot;Frauen&quot;</span>, <span class="bn">labsize</span>(medlarge)) <span class="co">///</span></span>
-<span id="cb42-5"><a href="inf2.html#cb42-5"></a>	<span class="bn">yscale</span>(<span class="kw">range</span>(3.8 10)) <span class="co">///</span></span>
-<span id="cb42-6"><a href="inf2.html#cb42-6"></a>	<span class="bn">title</span>(<span class="st">&quot;Einkommensunterschiede zwischen Männern und Frauen 2018&quot;</span>) <span class="bn">subtitle</span>(<span class="st">&quot;arith. Mittel &amp; 95% KI&quot;</span>, <span class="kw">color</span>(<span class="bn">orange</span>)) <span class="co">///</span></span>
-<span id="cb42-7"><a href="inf2.html#cb42-7"></a>	<span class="bn">caption</span>(<span class="st">&quot;Allbus 2018, n = 1477&quot;</span>, <span class="kw">size</span>(vsmall) pos(5)) aspect(1.25) </span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb41-1"><a href="inf2.html#cb41-1"></a>stripplot log_inc, <span class="bn">over</span>(sex) <span class="kw">stack</span> vertical mcolor(<span class="st">&quot;navy %60&quot;</span>) msize(small) <span class="bn">msymbol</span>(sh) height(0.6) <span class="kw">width</span>(.15) <span class="co">///</span></span>
+<span id="cb41-2"><a href="inf2.html#cb41-2"></a>	<span class="bn">bar</span>(lcolor(<span class="bn">orange</span>) lwidth(vthin) msize(huge) <span class="kw">mean</span>(mcolor(<span class="bn">orange</span>) <span class="bn">msymbol</span>(o) msize(tiny))) boffset(-0.075) <span class="co">///</span></span>
+<span id="cb41-3"><a href="inf2.html#cb41-3"></a>	<span class="dv">scheme</span>(plotplain) <span class="bn">ytitle</span>(<span class="st">&quot;logarithmierte Einkommensangaben&quot;</span>) <span class="bn">xtitle</span>(<span class="st">&quot;&quot;</span>) <span class="co">///</span></span>
+<span id="cb41-4"><a href="inf2.html#cb41-4"></a>	<span class="kw">xlabel</span>(1 <span class="st">&quot;Männer&quot;</span> 2 <span class="st">&quot;Frauen&quot;</span>, <span class="bn">labsize</span>(medlarge)) <span class="co">///</span></span>
+<span id="cb41-5"><a href="inf2.html#cb41-5"></a>	<span class="bn">yscale</span>(<span class="kw">range</span>(3.8 10)) <span class="co">///</span></span>
+<span id="cb41-6"><a href="inf2.html#cb41-6"></a>	<span class="bn">title</span>(<span class="st">&quot;Einkommensunterschiede zwischen Männern und Frauen 2018&quot;</span>) <span class="bn">subtitle</span>(<span class="st">&quot;arith. Mittel &amp; 95% KI&quot;</span>, <span class="kw">color</span>(<span class="bn">orange</span>)) <span class="co">///</span></span>
+<span id="cb41-7"><a href="inf2.html#cb41-7"></a>	<span class="bn">caption</span>(<span class="st">&quot;Allbus 2018, n = 1477&quot;</span>, <span class="kw">size</span>(vsmall) pos(5)) aspect(1.25) </span></code></pre></div>
 <p><img src="08_strip_bar_text_opts.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
 
 </div>

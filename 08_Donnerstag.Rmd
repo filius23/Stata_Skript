@@ -461,12 +461,9 @@ Für Mittelwertvergleich gibt es insgesamt zwei Aspekte, anhand derer sich t-Tes
 
 + Die Varianz der Messwerte in den verglichenen Gruppen ist ...
   + gleich: $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` 
-  + verschieden: $\Rightarrow$ `ttest testvariable, by(gruppenvariable) unequal` (wie oben)        
-   
-   
-   
-+ 	Verbundene oder unverbundene Stichprobe?
-
+  + verschieden: $\Rightarrow$ `ttest testvariable, by(gruppenvariable) unequal` (wie oben)
+  
++ Verbundene oder unverbundene Stichprobe?
   +  Sind die einzelnen Messwerte voneinander unabhängig? D.h. ein Messwert steht in keinem direkten Zusammenhang mit einem anderen $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` für eine unverbundene Stichprobe (mit ggf. `unequal`)
   +  Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen $\Rightarrow$ Werte für beide Variablen sollten "nebeneinander" abgelegt sein (*wide*-Format), dann kann mit `ttest vorher==nachher` ein verbundener `ttest` durchgeführt werden.
 
