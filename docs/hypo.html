@@ -710,19 +710,21 @@ Ho: diff = 0                                     degrees of freedom =     3087
 <h3><span class="header-section-number">9.6.2</span> ANOVA vs. lineare Regression</h3>
 <p>Die lineare Regression wird zur Analyse kontinuierlicher Beziehungen verwendet; die Regression ist jedoch im Wesentlichen die gleiche wie die ANOVA. Bei der ANOVA berechnen wir Mittelwerte und Abweichungen unserer Daten von den Mittelwerten. Bei der linearen Regression berechnen wir die beste Linie durch die Daten und berechnen die Abweichungen der Daten von dieser Linie. Stata gibt uns das F-Verhältnis bei Regressionsmodellen direkt mit aus. Zu beachten ist aber hier, dass wir für eine kategoriale unabhängige Variable <code>i.</code> voranstellen müssen:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="hypo.html#cb23-1"></a><span class="kw">reg</span> inc i.sex</span></code></pre></div>
-<pre><code>      Source |       SS       df       MS              Number of obs =    3087
--------------+------------------------------           F(  1,  3085) =  319.29
-       Model |   501082717     1   501082717           Prob &gt; F      =  0.0000
-    Residual |  4.8415e+09  3085  1569356.53           R-squared     =  0.0938
--------------+------------------------------           Adj R-squared =  0.0935
-       Total |  5.3425e+09  3086  1731220.87           Root MSE      =  1252.7
+<pre><code>(388 observations deleted)
+
+      Source |       SS       df       MS              Number of obs =    3089
+-------------+------------------------------           F(  1,  3087) =  319.98
+       Model |   506278204     1   506278204           Prob &gt; F      =  0.0000
+    Residual |  4.8843e+09  3087  1582201.17           R-squared     =  0.0939
+-------------+------------------------------           Adj R-squared =  0.0936
+       Total |  5.3905e+09  3088  1745638.99           Root MSE      =  1257.9
 
 ------------------------------------------------------------------------------
          inc |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
          sex |
-       FRAU  |  -806.5515   45.13757   -17.87   0.000    -895.0542   -718.0487
-       _cons |   2210.297   31.21138    70.82   0.000       2149.1    2271.494
+       FRAU  |  -810.4585   45.30718   -17.89   0.000    -899.2938   -721.6233
+       _cons |   2214.354   31.32913    70.68   0.000     2152.926    2275.782
 ------------------------------------------------------------------------------</code></pre>
 <ul>
 <li>die obere Tabelle entspricht dem Output von <code>oneway</code>:

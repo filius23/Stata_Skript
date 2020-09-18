@@ -524,7 +524,7 @@ reg inc i.sex
 set linesize 200
 qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze"
 qui use Allbus_2018.dta, clear
-qui keep if inc > 0 & age > 0 & educ > 0
+keep if inc > 0 & educ > 0
 //ANOVA mit 2 Gruppen
 reg inc i.sex
 ```
