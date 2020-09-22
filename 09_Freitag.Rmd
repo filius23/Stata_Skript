@@ -112,6 +112,7 @@ ggplot(data = data4, aes(x=x, color = Verteilung)) +
 ## Proportionen und Häufigkeiten
 
 ### Binomialtest
+<!-- https://www.ssc.wisc.edu/sscc/pubs/sfs/sfs-prtest.htm -->
 
 Für dichtome abhängige Variablen eignet sich der Binomialtest. Wir können mit dem Binomialtest testen, ob ein Anteil eines Merkmals sich signifikant von einem Wert unterscheidet. Dieser Anteil wird als $\pi$ bezeichnet und beschreibt Auftrittswahrscheinlichkeit des interessierenden Merkmals in der Grundgesamtheit. In R können wir den Binomialtest mit `binom.test` aufrufen.
 Auch hier gibt es wieder gerichtete und ungerichtete Hypothesen:  

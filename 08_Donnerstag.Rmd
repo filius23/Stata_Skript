@@ -468,6 +468,18 @@ Für Mittelwertvergleich gibt es insgesamt zwei Aspekte, anhand derer sich t-Tes
   +  Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen $\Rightarrow$ Werte für beide Variablen sollten "nebeneinander" abgelegt sein (*wide*-Format), dann kann mit `ttest vorher==nachher` ein verbundener `ttest` durchgeführt werden.
 
 
+<!-- + Cohen's d -->
+
+<!-- Cohen’s d ist das wahrscheinlich gebräuchlichste Maß der Effektstärke bei ungepaarten t-Tests. Cohen’s d ergibt sich aus dem t-Wert und den Freiheitsgraden ($t$ und $df=n-1$): -->
+
+<!-- $$d = \frac{2t}{\sqrt{\mathrm{df}}}$$ -->
+
+<!-- ```{stata cohensd, eval = F} -->
+<!-- qui cd "D:\Studium\01_Oldenburg\Lehre\Datensaetze" -->
+<!-- qui use  "Allbus_1980-2018.dta",clear -->
+<!-- qui keep  if year == 2014 & hs16>0 -->
+<!-- ttest hs16, by(sex) unequal -->
+<!-- ``` -->
 
 
 ## Übungen 8-1 {#tvsmu}
